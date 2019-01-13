@@ -10,6 +10,7 @@ $DEV_MODE: $NODE_ENV == development;
 @import "grid.cfg";
 @import "../../../node_modules/vrhythm/source/vrhythm";
 @import "../../../node_modules/bs-grid-system/source/scss/bs-grid";
+@import "../mixins";
 
 $family-base: "Open Sans", sans-serif;
 $family-head: "Roboto Slab", serif;
