@@ -1,0 +1,12 @@
+////
+/// @author delphinpro <delphinpro@gmail.com>
+/// @copyright copyright © 2019 delphinpro
+/// @license licensed under the MIT license
+////
+
+@include establish-baseline() {
+  font-family: "Open Sans", sans-serif;
+  height: 100%;
+}
+
+@include make-grid-system();
