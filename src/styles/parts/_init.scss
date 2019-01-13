@@ -5,7 +5,7 @@
 ////
 
 @include establish-baseline() {
-  font-family: "Open Sans", sans-serif;
+  font-family: $family-base;
   height: 100%;
 }
 
