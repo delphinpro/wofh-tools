@@ -9,4 +9,24 @@
   height: 100%;
 }
 
+body {
+  min-height: 100%;
+  background: $background-base;
+  color: $main-color;
+}
+
 @include make-grid-system();
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Roboto Slab", serif;
+  color: lighten($main-color, 5%);
+}
+
+a {
+  color: $link-color;
+  transition: 0.3s ease;
+
+  &:hover {
+    color: lighten($link-color, 10%);
+  }
+}
