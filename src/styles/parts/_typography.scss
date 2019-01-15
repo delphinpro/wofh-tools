@@ -1,0 +1,87 @@
+////
+/// @author delphinpro <delphinpro@gmail.com>
+/// @copyright copyright © 2019 delphinpro
+/// @license licensed under the MIT license
+////
+
+//==
+//== Headings
+//== ======================================= ==//
+
+%heading-common {
+  font-family: $family-head;
+  color: lighten($main-color, 5%);
+}
+
+.h1 {
+  @extend %heading-common;
+  @include font(34px, 2);
+  font-weight: 400;
+
+  @at-root h1 {
+    @extend .h1;
+  }
+}
+
+.h2 {
+  @extend %heading-common;
+  @include font(30px, 2);
+  font-weight: 400;
+
+  @at-root h2 {
+    @extend .h2;
+  }
+}
+
+.h3 {
+  @extend %heading-common;
+  @include font(26px, 2);
+  font-weight: 400;
+
+  @at-root h3 {
+    @extend .h3;
+  }
+}
+
+.h4 {
+  @extend %heading-common;
+  @include font(20px, 1);
+  font-weight: 400;
+
+  @at-root h4 {
+    @extend .h4;
+  }
+}
+
+.h5 {
+  @extend %heading-common;
+  @include font(18px, 1);
+  font-weight: 400;
+
+  @at-root h5 {
+    @extend .h5;
+  }
+}
+
+.h6 {
+  @extend %heading-common;
+  @include font(16px, 1);
+  font-weight: 400;
+
+  @at-root h6 {
+    @extend .h6;
+  }
+}
+
+//==
+//== Links
+//== ======================================= ==//
+
+a {
+  color: $link-color;
+  transition: 0.3s ease;
+
+  &:hover {
+    color: $link-hover-color;
+  }
+}

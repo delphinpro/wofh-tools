@@ -5,33 +5,14 @@
 ////
 
 @include establish-baseline() {
-  font-family: $family-base;
   height: 100%;
 }
 
 body {
+  font-family: $family-base;
   min-height: 100%;
   background: $background-base;
   color: $main-color;
 }
 
 @include make-grid-system();
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Roboto Slab", serif;
-  color: lighten($main-color, 5%);
-}
-
-h1 {
-  font-size: 2.2em;
-  font-weight: 400;
-}
-
-a {
-  color: $link-color;
-  transition: 0.3s ease;
-
-  &:hover {
-    color: $link-hover-color;
-  }
-}
