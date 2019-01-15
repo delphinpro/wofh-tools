@@ -8,8 +8,8 @@
 export default {
     data: () => ({}),
     computed: {
-        projectName() { return 'WofhTools'; },
-        projectVer() { return '4.0'; },
+        projectName() { return this.$store.getters.projectName; },
+        projectVer() { return this.$store.getters.projectVer; },
     },
 };
 </script>
