@@ -5,21 +5,31 @@
  * @license     licensed under the MIT license
  */
 
+import { USER_REQUEST } from '@/store/actions/user';
+import AppNavbar from '@/components/AppNavbar';
 import AppFooter from '@/components/AppFooter';
+
 
 export default {
     components: {
+        AppNavbar,
         AppFooter,
     },
 
     data: () => ({}),
+
+    created: function () {
+        if (this.$store.getters.isAuthenticated) {
+            this.$store.dispatch(USER_REQUEST);
+        }
+    },
 };
 </script>
 
 <template>
     <div id="app" class="app">
-        <div class="app__navbar"></div>
-        <div class="app__main"></div>
+        <AppNavbar class="app__navbar"/>
+        <router-view class="app__main"/>
         <AppFooter class="app__footer"/>
     </div>
 </template>
