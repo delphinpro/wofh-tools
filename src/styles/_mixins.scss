@@ -1,0 +1,18 @@
+////
+/// @author delphinpro <delphinpro@gmail.com>
+/// @copyright copyright © 2019 delphinpro
+/// @license licensed under the MIT license
+////
+
+@function rem($font-size) {
+  @return $font-size / $rhythm-base-font-size * 1rem,
+}
+
+@function em($font-size, $base: $rhythm-base-font-size) {
+  @return $font-size / $base * 1em,
+}
+
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
