@@ -5,6 +5,7 @@
  * @license     licensed under the MIT license
  */
 
+import '@/styles/main.scss';
 import Vue from 'vue';
 
 
