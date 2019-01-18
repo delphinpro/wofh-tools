@@ -9,7 +9,7 @@ import '@/styles/main.scss';
 import Vue from 'vue';
 import router from '@/router';
 import store from '@/store';
-import App from '@/App.vue';
+import App from '@/components/App.vue';
 import Loading from '@/components/Loading';
 
 
