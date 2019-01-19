@@ -5,6 +5,7 @@
 ////
 
 $DEV_MODE: $NODE_ENV == development;
+$MAX_INT32: 2147483647;
 
 @import "vrhythm.cfg";
 @import "grid.cfg";
