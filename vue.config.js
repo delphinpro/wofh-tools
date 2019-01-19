@@ -57,7 +57,7 @@ module.exports = {
     },
 
     css: {
-        sourceMap: true,
+        sourceMap: false,
         extract: NODE_ENV === 'production' && !TARGET_NODE,
         loaderOptions: {
             sass: {
