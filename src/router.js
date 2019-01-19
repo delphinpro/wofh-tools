@@ -30,21 +30,25 @@ const ifAuthenticated = (to, from, next) => {
     next('/login');
 };
 
-export default new Router({
-    mode: 'history',
-    base: process.env.BASE_URL,
-    routes: [
-        {
-            path: '/',
-            name: 'home',
-            component: Home,
-        },
-        {
-            path: '/login',
-            name: 'login',
-            component: () => import('./views/Login.vue'),
-            beforeEnter: ifNotAuthenticated,
-        },
-        { path: '*', component: PageNotFound },
-    ],
-});
+export function createRouter() {
+
+    return new Router({
+        mode: 'history',
+        base: process.env.BASE_URL,
+        routes: [
+            {
+                path: '/',
+                name: 'home',
+                component: Home,
+            },
+            {
+                path: '/login',
+                name: 'login',
+                component: () => import('./views/Login.vue'),
+                beforeEnter: ifNotAuthenticated,
+            },
+            { path: '*', component: PageNotFound },
+        ],
+    });
+
+}

@@ -11,7 +11,7 @@ import apiCall from '@/utils/api';
 
 
 const state = {
-    token: localStorage.getItem('user-token') || '',
+    token: '',//localStorage.getItem('user-token') || '',
     status: '',
     hasLoadedOnce: false,
 };

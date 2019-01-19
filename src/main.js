@@ -1,5 +1,6 @@
 /**
  * WofhTools
+ * main.js
  * @author      delphinpro <delphinpro@gmail.com>
  * @copyright   copyright © 2019 delphinpro
  * @license     licensed under the MIT license
@@ -7,31 +8,42 @@
 
 import '@/styles/main.scss';
 import Vue from 'vue';
-import router from '@/router';
+import { createRouter } from '@/router';
 import store from '@/store';
 import App from '@/components/App.vue';
-import Loading from '@/components/Loading';
 
 
 Vue.config.productionTip = false;
 
-Vue.component('Loading', Loading);
+export function createApp(context = null) {
 
-new Vue({
-    el: '#app',
-    router,
-    store,
-    render: h => h(App),
-});
+    const router = createRouter();
 
-if (process.env.NODE_ENV === 'development') {
-    const Debugger = () => import('@/components/Debugger');
-    const dbg = document.createElement('div');
-    dbg.setAttribute('id', 'debugger');
-    document.documentElement.appendChild(dbg);
+    if (context) {
+        router.push({ path: context.URL });
+        //App.propsData = context.STATE;
+    }
 
-    new Vue({
-        el: '#debugger',
-        render: h => h(Debugger),
+    const app = new Vue({
+        router,
+        store,
+        render: h => h(App),
     });
+
+    return {
+        app,
+        router,
+    };
 }
+
+// if (process.env.NODE_ENV === 'development') {
+//     const Debugger = () => import('@/components/Debugger');
+//     const dbg = document.createElement('div');
+//     dbg.setAttribute('id', 'debugger');
+//     document.documentElement.appendChild(dbg);
+//
+//     new Vue({
+//         el: '#debugger',
+//         render: h => h(Debugger),
+//     });
+// }
