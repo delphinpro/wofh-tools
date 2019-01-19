@@ -14,7 +14,7 @@ const { app } = createApp();
 app.$mount('#app');
 
 if (process.env.NODE_ENV === 'development') {
-    const Debugger = () => import('@/components/Debugger');
+    const Debugger = () => import('@/components/Debugger/Debugger');
     const dbg = document.createElement('div');
     dbg.setAttribute('id', 'debugger');
     document.documentElement.appendChild(dbg);
