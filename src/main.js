@@ -1,6 +1,5 @@
 /**
  * WofhTools
- * main.js
  * @author      delphinpro <delphinpro@gmail.com>
  * @copyright   copyright © 2019 delphinpro
  * @license     licensed under the MIT license
@@ -35,15 +34,3 @@ export function createApp(context = null) {
         router,
     };
 }
-
-// if (process.env.NODE_ENV === 'development') {
-//     const Debugger = () => import('@/components/Debugger');
-//     const dbg = document.createElement('div');
-//     dbg.setAttribute('id', 'debugger');
-//     document.documentElement.appendChild(dbg);
-//
-//     new Vue({
-//         el: '#debugger',
-//         render: h => h(Debugger),
-//     });
-// }
