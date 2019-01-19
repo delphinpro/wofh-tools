@@ -9,6 +9,7 @@
 
 $grid-breakpoints: (
     xs: 0,
+    mb: 384px,
     sm: 576px,
     md: 768px,
     lg: 992px,
@@ -33,10 +34,11 @@ $container-max-widths: (
 $grid-columns: 12 !default;
 $grid-gutter-width-base: 30px !default;
 $grid-gutter-widths: (
-    xs: $grid-gutter-width-base,
-    sm: $grid-gutter-width-base,
-    md: $grid-gutter-width-base,
-    lg: $grid-gutter-width-base,
+    xs: 12px,
+    mb: 16px,
+    sm: 16px,
+    md: 20px,
+    lg: 26px,
     xl: $grid-gutter-width-base,
 ) !default;
 
@@ -48,9 +50,9 @@ $grid-container-fluid-class: 'container-fluid' !default;
 $grid-row-class: 'row' !default;
 $grid-col-class: 'col' !default;
 
-$grid-col-push-classes: true !default;
-$grid-col-pull-classes: true !default;
-$grid-col-offset-classes: true !default;
+$grid-col-push-classes: false !default;
+$grid-col-pull-classes: false !default;
+$grid-col-offset-classes: false !default;
 
 // Grid option
 //
