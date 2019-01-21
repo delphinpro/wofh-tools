@@ -20,3 +20,12 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
+
+# Application directories
+/.cache
+/.logs
+/.tmp
+/config
+
+# Generated files
+/private/templates/layouts/base.twig
