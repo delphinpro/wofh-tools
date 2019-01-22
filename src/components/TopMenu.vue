@@ -13,16 +13,16 @@ export default {
 <template>
     <ul class="top-menu">
         <li class="top-menu__item">
-            <a class="top-menu__link" href="#">Статистика</a>
+            <a class="top-menu__link" href="/stat">Статистика</a>
         </li>
         <li class="top-menu__item">
-            <a class="top-menu__link" href="#">Науки</a>
+            <a class="top-menu__link" href="/technology">Науки</a>
         </li>
         <li class="top-menu__item">
-            <a class="top-menu__link" href="#">Квесты</a>
+            <a class="top-menu__link" href="/quests">Квесты</a>
         </li>
         <li class="top-menu__item">
-            <a class="top-menu__link" href="#">Таблицы</a>
+            <a class="top-menu__link" href="/tables">Таблицы</a>
         </li>
     </ul>
 </template>

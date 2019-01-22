@@ -1,0 +1,26 @@
+{
+  "name": "delphinpro/wt",
+  "description": "website wofh-tools.ru",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "delphinpro",
+      "email": "delphinpro@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "WofhTools\\": "private"
+    }
+  },
+  "require": {
+    "php": ">=7.2",
+    "slim/slim": "^3.12",
+    "monolog/monolog": "^1.24",
+    "slim/twig-view": "^2.4",
+    "ext-v8js": "*",
+    "ext-json": "*",
+    "ext-pdo": "*"
+  }
+}

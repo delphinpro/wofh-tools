@@ -8,16 +8,22 @@ const NODE_ENV = process.env.NODE_ENV === 'development'
     ? 'development'
     : 'production';
 
+const IS_DEV = NODE_ENV !== 'production';
+
 const TARGET_NODE = process.env.WEBPACK_TARGET === 'node';
 
 const target = process.env.WEBPACK_TARGET === 'node' ? 'server' : 'client';
 
 const assetsDir = 'static';
 
+let indexTemplate = NODE_ENV === 'production'
+    ? path.join(__dirname, 'private/templates/layouts/index.twig')
+    : path.join(__dirname, 'private/templates/layouts/index.html');
+
 module.exports = {
     outputDir: 'public_html',
     assetsDir,
-    indexPath: 'index.php',
+    indexPath: NODE_ENV === 'production' ? '../private/templates/layouts/base.twig' : 'index.html',
     productionSourceMap: false,
 
     configureWebpack: () => ({
@@ -48,10 +54,19 @@ module.exports = {
                   },
               )
         ;
+        config.module
+              .rule('images')
+              .use('url-loader')
+              .tap(options => ({
+                  ...options,
+                  limit: 1024,
+              }))
+        ;
         config
             .plugin('html')
             .tap(args => {
                 args[0].minify = false;
+                args[0].template = indexTemplate;
                 return args;
             });
     },
