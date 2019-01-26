@@ -10,6 +10,7 @@ import DbgPanel from './DbgPanel';
 
 
 const LS_SHOW_GRID = 'dbg.show.grid';
+const LS_SHOW_RHYTHM = 'dbg.show.rhythm';
 const LS_SHOW_OUTLINE = 'dbg.show.outline';
 
 export default {
@@ -22,13 +23,16 @@ export default {
 
         showPanel: false,
         showGrid: false,
+        showRhythm: false,
         showOutline: false,
     }),
 
     mounted() {
         this.showGrid = !!+localStorage.getItem(LS_SHOW_GRID);
+        this.showRhythm = !!+localStorage.getItem(LS_SHOW_RHYTHM);
         this.showOutline = !!+localStorage.getItem(LS_SHOW_OUTLINE);
 
+        document.documentElement.dataset.rhythm = +this.showRhythm;
         document.documentElement.dataset.outline = +this.showOutline;
         document.addEventListener('click', () => {
             this.showPanel = false;
@@ -39,6 +43,12 @@ export default {
         switchGrid(e) {
             this.showGrid = e.target.checked;
             localStorage.setItem(LS_SHOW_GRID, +this.showGrid);
+        },
+
+        switchRhythm(e) {
+            this.showRhythm = e.target.checked;
+            localStorage.setItem(LS_SHOW_RHYTHM, +this.showRhythm);
+            document.documentElement.dataset.rhythm = +this.showRhythm;
         },
 
         switchOutline(e) {
@@ -63,6 +73,9 @@ export default {
         <DbgPanel v-if="showPanel"
             :show-grid="showGrid"
             @switch-grid="switchGrid"
+
+            :show-rhythm="showRhythm"
+            @switch-rhythm="switchRhythm"
 
             :show-outline="showOutline"
             @switch-outline="switchOutline"
@@ -114,6 +127,7 @@ export default {
         height: 100%;
         pointer-events: none;
         overflow: hidden;
+        z-index: $MAX_INT32 - 10;
 
         &__container {
             @include make-container();
@@ -150,6 +164,25 @@ export default {
                 &:not(:first-child) {
                     display: none;
                 }
+            }
+        }
+    }
+
+    [data-rhythm="1"] body {
+        #app {
+            position: relative;
+            &::after {
+                z-index: $MAX_INT32 - 10;
+                pointer-events: none;
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                height: 100%;
+                @include debug-vertical-alignment($dev-grid-guides-color);
             }
         }
     }

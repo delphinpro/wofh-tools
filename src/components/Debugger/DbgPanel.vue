@@ -9,6 +9,7 @@
 export default {
     props: {
         showGrid: Boolean,
+        showRhythm: Boolean,
         showOutline: Boolean,
     },
 
@@ -23,6 +24,14 @@ export default {
                 <label>
                     <input :checked="showGrid" @change="$emit('switch-grid', $event)" type="checkbox">
                     <i></i><span>Показать сетку</span>
+                </label>
+            </div>
+        </div>
+        <div class="dbg-panel__button">
+            <div class="dbg-checkbox">
+                <label>
+                    <input :checked="showRhythm" @change="$emit('switch-rhythm', $event)" type="checkbox">
+                    <i></i><span>Показать ритм</span>
                 </label>
             </div>
         </div>
