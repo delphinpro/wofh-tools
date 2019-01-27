@@ -50,7 +50,7 @@ export default {
     .dbg-panel {
         user-select: none;
         position: fixed;
-        background: rgba(black, 0.6);
+        background: rgba(6, 11, 17, 0.95);
         color: lime;
         padding: 1rem 1rem 1rem 50px;
         z-index: $MAX_INT32;
