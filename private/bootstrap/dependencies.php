@@ -85,11 +85,13 @@ $dic['view'] = function ($c) {
 
 $dic['notFoundHandler'] = function (\Slim\Container $c) {
     return function (ServerRequestInterface $request, ResponseInterface $response) use ($c) {
-        (new NotFoundController($c))->dispatch($request, $response);
+        $body = (new NotFoundController($c))->dispatch($request, $response);
 
-        return $c['response']
-            ->withStatus(404)
-            ->withHeader('Content-Type', 'text/html');
+        /** @noinspection PhpUndefinedMethodInspection */
+        return $response
+            ->withStatus(404, 'Page not found')
+            ->withHeader('Content-Type', 'text/html')
+            ->write($body);
     };
 };
 

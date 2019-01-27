@@ -33,6 +33,10 @@ class BaseController
     /** @var Logger */
     protected $logger;
 
+    /**
+     * BaseController constructor.
+     * @param \Slim\Container $dic
+     */
     public function __construct(\Slim\Container $dic)
     {
         $this->app = $dic['app'];
@@ -40,6 +44,11 @@ class BaseController
         $this->logger = $dic['logger'];
     }
 
+    /**
+     * @param UriInterface $uri
+     * @param array $state
+     * @return string
+     */
     protected function fetchClientApp(UriInterface $uri, array $state): string
     {
 
@@ -56,6 +65,12 @@ class BaseController
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @param array $state
+     * @return Response
+     */
     protected function renderClientApp(Request $request, Response $response, array $state = [])
     {
         $body = $this->fetchClientApp($request->getUri(), $state);

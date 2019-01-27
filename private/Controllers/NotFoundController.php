@@ -22,10 +22,15 @@ use WofhTools\App\BaseController;
  */
 final class NotFoundController extends BaseController
 {
+    /**
+     * @param Request $request
+     * @param Response $response
+     * @return string
+     */
     public function dispatch(Request $request, Response $response)
     {
         $this->logger->info("Page not found action dispatched");
 
-        return $this->renderClientApp($request, $response);
+        return $this->fetchClientApp($request->getUri(), []);
     }
 }
