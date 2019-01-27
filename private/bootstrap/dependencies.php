@@ -42,14 +42,13 @@ $dic['logger'] = function () {
 
 $dic['db'] = function (\Slim\Container $c) {
 
-    $db = $c->get('settings')->db;
+    $capsule = new \Illuminate\Database\Capsule\Manager;
+    $capsule->addConnection($c->settings['db']);
 
-    $dsn = 'mysql:host='.$db['host'].';dbname='.$db['name'];
-    $pdo = new \PDO($dsn, $db['user'], $db['pass']);
-    $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-    $pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
+    $capsule->setAsGlobal();
+    $capsule->bootEloquent();
 
-    return $pdo;
+    return $capsule;
 };
 
 
