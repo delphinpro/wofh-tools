@@ -41,7 +41,6 @@ export default {
         flex-direction: column;
 
         &__navbar,
-        &__main,
         &__footer {
             width: 100%;
         }
@@ -50,6 +49,7 @@ export default {
         }
 
         &__main {
+            @include padding-trailer(2);
             flex-grow: 1;
         }
 
