@@ -61,7 +61,7 @@ export default {
         box-shadow: $shadow-bar;
 
         &__container {
-            height: rem($navbar-height);
+            height: rhythm($navbar-height-rhythm);
             display: flex;
         }
 

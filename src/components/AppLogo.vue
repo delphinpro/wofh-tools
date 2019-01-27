@@ -28,7 +28,7 @@ export default {
         color: lighten($main-color, 30%) !important;
 
         &__image {
-            @include size(rem($navbar-height - $navbar-padding * 2));
+            @include size(rhythm($navbar-height-rhythm - $navbar-padding-rhythm * 2));
         }
 
         &__name {

@@ -31,8 +31,18 @@ $danger-color: #ef5350;
 $link-color: #42b983;
 $link-hover-color: #42a5f5;
 
+// @formatter:off
+$headings: (
+    h1: (34px, 2,   400, 0, 1),
+    h2: (30px, 2,   400, 0, 1),
+    h3: (26px, 2,   400, 0, 1),
+    h4: (20px, 1.5, 400, 0, 0.5),
+    h5: (16px, 1,   700, 0, 0),
+    h6: (16px, 1,   400, 0, 0),
+);
+// @formatter:on
+
 $shadow-bar: 0 0 10px rgba(0, 0, 0, .5);
 
-$navbar-height: 36px;
-$navbar-padding: 3px;
-
+$navbar-height-rhythm: 2;
+$navbar-padding-rhythm: 0.25;
