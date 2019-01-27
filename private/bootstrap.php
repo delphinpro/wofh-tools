@@ -8,9 +8,6 @@
  */
 
 
-namespace WofhTools;
-
-
 if (version_compare(PHP_VERSION, '7.2') < 0) {
     header('Content-Type: text/html; charset=utf-8');
     die(sprintf('Need version PHP 7.2 or higher. Your version: %s', PHP_VERSION));

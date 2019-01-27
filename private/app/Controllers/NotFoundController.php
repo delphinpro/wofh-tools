@@ -13,7 +13,7 @@ namespace WofhTools\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use WofhTools\App\BaseController;
+use WofhTools\Core\BaseController;
 
 
 /**

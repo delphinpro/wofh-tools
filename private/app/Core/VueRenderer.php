@@ -8,12 +8,12 @@
  */
 
 
-namespace WofhTools\App;
+namespace WofhTools\Core;
 
 
 /**
  * Class VueRenderer
- * @package WofhTools\App
+ * @package WofhTools\Core
  */
 class VueRenderer
 {

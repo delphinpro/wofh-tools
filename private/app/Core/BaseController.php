@@ -8,7 +8,7 @@
  */
 
 
-namespace WofhTools\App;
+namespace WofhTools\Core;
 
 
 use Psr\Http\Message\ResponseInterface as Response;
@@ -20,7 +20,7 @@ use Slim\Views\Twig;
 
 /**
  * Class BaseController
- * @package WofhTools\App
+ * @package WofhTools\Core
  */
 class BaseController
 {
