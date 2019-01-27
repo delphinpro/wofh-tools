@@ -11,6 +11,11 @@
 namespace WofhTools;
 
 
+if (version_compare(PHP_VERSION, '7.2') < 0) {
+    header('Content-Type: text/html; charset=utf-8');
+    die(sprintf('Need version PHP 7.2 or higher. Your version: %s', PHP_VERSION));
+}
+
 define('DIR_ROOT', realpath(__DIR__.'/../'));
 define('DIR_CACHE', DIR_ROOT.DIRECTORY_SEPARATOR.'.cache');
 define('DIR_LOGS', DIR_ROOT.DIRECTORY_SEPARATOR.'.logs');
