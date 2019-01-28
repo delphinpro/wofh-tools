@@ -28,6 +28,6 @@ final class HomeController extends BaseController
     {
         $this->logger->info("Home page action dispatched");
 
-        return $this->renderClientApp($request, $response);
+        return $this->renderApp($request, $response);
     }
 }

@@ -80,7 +80,7 @@ class BaseController
      *
      * @return Response
      */
-    protected function renderClientApp(Request $request, Response $response, array $state = [])
+    protected function renderApp(Request $request, Response $response, array $state = [])
     {
         $body = $this->fetchClientApp($request->getUri(), $state);
         $response->getBody()->write($body);

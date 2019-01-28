@@ -27,6 +27,6 @@ final class UserController extends BaseController
     {
         $this->logger->info("Login page action dispatched");
 
-        return $this->renderClientApp($request, $response);
+        return $this->renderApp($request, $response);
     }
 }
