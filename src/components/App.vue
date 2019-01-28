@@ -27,7 +27,7 @@ export default {
 </script>
 
 <template>
-    <div id="app" class="app">
+    <div class="app">
         <AppNavbar class="app__navbar"/>
         <router-view class="app__main"/>
         <AppFooter class="app__footer"/>
