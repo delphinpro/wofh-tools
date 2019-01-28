@@ -33,6 +33,9 @@ class BaseController
     /** @var Logger */
     protected $logger;
 
+    /** @var AppSettings */
+    protected $config;
+
     /**
      * BaseController constructor.
      * @param \Slim\Container $dic
@@ -42,6 +45,7 @@ class BaseController
         $this->app = $dic['app'];
         $this->view = $dic['view'];
         $this->logger = $dic['logger'];
+        $this->config = $dic['config'];
     }
 
     /**

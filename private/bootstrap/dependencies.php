@@ -10,6 +10,7 @@
 use Slim\Http\Request;
 use Slim\Http\Response;
 use WofhTools\Controllers\NotFoundController;
+use WofhTools\Core\AppSettings;
 
 
 $dic = $app->getContainer();
@@ -20,6 +21,14 @@ $dic = $app->getContainer();
 
 $dic['app'] = function () use ($app) {
     return $app;
+};
+
+/*==
+ *== Application config
+ *== ======================================= ==*/
+
+$dic['config'] = function () use ($config) {
+    return $config;
 };
 
 /*==
@@ -42,8 +51,13 @@ $dic['logger'] = function () {
 
 $dic['db'] = function (\Slim\Container $c) {
 
-    $capsule = new \Illuminate\Database\Capsule\Manager;
-    $capsule->addConnection($c->settings['db']);
+    $c->get('logger')->info('Database init');
+
+    /**  @var AppSettings $config */
+    $config = $c->get('config');
+
+    $capsule = new \Illuminate\Database\Capsule\Manager();
+    $capsule->addConnection($config->db);
 
     $capsule->setAsGlobal();
     $capsule->bootEloquent();
@@ -56,22 +70,29 @@ $dic['db'] = function (\Slim\Container $c) {
  *== View
  *== ======================================= ==*/
 
-$dic['view'] = function ($c) {
+$dic['view'] = function (\Slim\Container $c) {
 
-    $rootPath = $c->settings->get('path.root');
-    $debugMode = $c->settings->get('debug');
-    $useTwigCache = $c->settings->get('twig.cache');
-    $pathTwigCache = prepareTwigCachePath($c->settings->get('twig.cache.path'), $rootPath);
+    $c->get('logger')->info('View init');
 
-    $twigCache = !$useTwigCache || !$pathTwigCache ? false : $pathTwigCache;
+    /**  @var AppSettings $config */
+    $config = $c->get('config');
 
-    $view = new \Slim\Views\Twig(DIR_TWIG_TEMPLATES, [
-        'debug' => $debugMode,
+    /** @var \Slim\Http\Uri $uri */
+    $uri = $c->get('request')->getUri();
+
+    $pathTwigCache = prepareTwigCachePath($config->twigCachePath, $config->rootPath);
+    $twigCache = !$config->twigCacheEnabled || !$pathTwigCache ? false : $pathTwigCache;
+
+    $view = new \Slim\Views\Twig(
+        DIR_TWIG_TEMPLATES,
+        [
+            'debug' => $config->debug,
         'cache' => $twigCache,
-    ]);
+        ]
+    );
 
-    $basePath = rtrim(str_ireplace('index.php', '', $c->request->getUri()->getBasePath()), '/');
-    $view->addExtension(new \Slim\Views\TwigExtension($c['router'], $basePath));
+    $basePath = rtrim($uri->getBasePath(), '/');
+    $view->addExtension(new \Slim\Views\TwigExtension($c->get('router'), $basePath));
     $view->addExtension(new \Twig_Extension_Debug());
 
     return $view;

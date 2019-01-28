@@ -23,20 +23,3 @@ function prepareTwigCachePath(string $cachePath, string $rootPath)
         )
     );
 }
-
-/**
- * @param string $configPath
- * @param string $rootPath
- * @return array
- */
-function loadConfig(string $configPath, string $rootPath): array
-{
-    /** @noinspection PhpIncludeInspection */
-    $env = require $configPath.DIRECTORY_SEPARATOR.'env.php';
-    $configPath = $configPath.DIRECTORY_SEPARATOR.$env['env'];
-    /** @noinspection PhpIncludeInspection */
-    $config = require $configPath.DIRECTORY_SEPARATOR.'application.php';
-    $config['path.root'] = $rootPath;
-
-    return $config;
-}
