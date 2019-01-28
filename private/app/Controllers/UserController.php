@@ -18,6 +18,7 @@ use WofhTools\Core\BaseController;
 
 /**
  * Class UserController
+ *
  * @package WofhTools\Controllers
  */
 final class UserController extends BaseController

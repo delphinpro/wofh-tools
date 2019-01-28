@@ -18,6 +18,7 @@ use WofhTools\Core\BaseController;
 
 /**
  * Class NotFoundController
+ *
  * @package WofhTools\Controllers
  */
 final class NotFoundController extends BaseController
@@ -25,6 +26,7 @@ final class NotFoundController extends BaseController
     /**
      * @param Request $request
      * @param Response $response
+     *
      * @return string
      */
     public function dispatch(Request $request, Response $response)

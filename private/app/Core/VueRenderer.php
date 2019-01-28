@@ -13,6 +13,7 @@ namespace WofhTools\Core;
 
 /**
  * Class VueRenderer
+ *
  * @package WofhTools\Core
  */
 class VueRenderer
@@ -25,6 +26,7 @@ class VueRenderer
 
     /**
      * @param string $nodeModulesPath
+     *
      * @return void
      */
     public function __construct(string $nodeModulesPath)
@@ -35,7 +37,8 @@ class VueRenderer
 
     /**
      * @param string $entry
-     * @param array $data
+     * @param array  $data
+     *
      * @return string
      */
     public function render(string $entry, array $data): string

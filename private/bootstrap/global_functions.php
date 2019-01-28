@@ -10,6 +10,7 @@
 /**
  * @param string $cachePath
  * @param string $rootPath
+ *
  * @return bool|string
  */
 function prepareTwigCachePath(string $cachePath, string $rootPath)
@@ -17,9 +18,6 @@ function prepareTwigCachePath(string $cachePath, string $rootPath)
     return realpath(
         $rootPath
         .DIRECTORY_SEPARATOR
-        .trim(
-            str_replace('/', DIRECTORY_SEPARATOR, $cachePath),
-            DIRECTORY_SEPARATOR
-        )
+        .trim(str_replace('/', DIRECTORY_SEPARATOR, $cachePath), DIRECTORY_SEPARATOR)
     );
 }

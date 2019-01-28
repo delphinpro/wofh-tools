@@ -18,6 +18,7 @@ use WofhTools\Core\BaseController;
 
 /**
  * Class HomeController
+ *
  * @package WofhTools\Controllers
  */
 final class HomeController extends BaseController

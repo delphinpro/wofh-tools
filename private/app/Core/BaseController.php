@@ -20,6 +20,7 @@ use Slim\Views\Twig;
 
 /**
  * Class BaseController
+ *
  * @package WofhTools\Core
  */
 class BaseController
@@ -38,6 +39,7 @@ class BaseController
 
     /**
      * BaseController constructor.
+     *
      * @param \Slim\Container $dic
      */
     public function __construct(\Slim\Container $dic)
@@ -50,7 +52,8 @@ class BaseController
 
     /**
      * @param UriInterface $uri
-     * @param array $state
+     * @param array        $state
+     *
      * @return string
      */
     protected function fetchClientApp(UriInterface $uri, array $state): string
@@ -58,11 +61,11 @@ class BaseController
         $ssrHtml = '';
 
         if ($this->config->ssrEnabled) {
-        $renderer = new VueRenderer(DIR_ROOT.DIRECTORY_SEPARATOR.'node_modules');
+            $renderer = new VueRenderer(DIR_ROOT.DIRECTORY_SEPARATOR.'node_modules');
             $ssrHtml = $renderer->render($this->config->ssrBundle, [
-            'URL'   => $uri->getPath(),
-            'STATE' => $state,
-        ]);
+                'URL'   => $uri->getPath(),
+                'STATE' => $state,
+            ]);
         }
 
         return $this->view->fetch('ssr.twig', [
@@ -71,9 +74,10 @@ class BaseController
     }
 
     /**
-     * @param Request $request
+     * @param Request  $request
      * @param Response $response
-     * @param array $state
+     * @param array    $state
+     *
      * @return Response
      */
     protected function renderClientApp(Request $request, Response $response, array $state = [])
