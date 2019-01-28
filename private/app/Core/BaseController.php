@@ -11,10 +11,10 @@
 namespace WofhTools\Core;
 
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\UriInterface;
 use Psr\Log\LoggerInterface as Logger;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Slim\Views\Twig;
 
 

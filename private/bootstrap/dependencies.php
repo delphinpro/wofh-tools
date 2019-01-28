@@ -7,8 +7,8 @@
  * @license     licensed under the MIT license
  */
 
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use WofhTools\Controllers\NotFoundController;
 
 
