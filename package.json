@@ -9,6 +9,7 @@
     "build:server": "cross-env WEBPACK_TARGET=node vue-cli-service build"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "bs-grid-system": "^2.0.3",
     "vrhythm": "^2.0.3",
     "vue": "^2.5.22",
