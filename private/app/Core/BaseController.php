@@ -55,14 +55,15 @@ class BaseController
      */
     protected function fetchClientApp(UriInterface $uri, array $state): string
     {
+        $ssrHtml = '';
 
-        $serverBundlePath = $this->app->getContainer()->get('settings')->get('serverBundlePath');
-
+        if ($this->config->ssrEnabled) {
         $renderer = new VueRenderer(DIR_ROOT.DIRECTORY_SEPARATOR.'node_modules');
-        $ssrHtml = $renderer->render($serverBundlePath, [
+            $ssrHtml = $renderer->render($this->config->ssrBundle, [
             'URL'   => $uri->getPath(),
             'STATE' => $state,
         ]);
+        }
 
         return $this->view->fetch('ssr.twig', [
             'SSR_HTML' => $ssrHtml,
