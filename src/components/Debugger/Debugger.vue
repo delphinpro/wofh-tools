@@ -169,7 +169,7 @@ export default {
     }
 
     [data-rhythm="1"] body {
-        #app {
+        .app {
             position: relative;
             &::after {
                 z-index: $MAX_INT32 - 10;
