@@ -75,8 +75,6 @@ $dic['db'] = function (\Slim\Container $c) {
 
 $dic['view'] = function (\Slim\Container $c) {
 
-    $c->get('logger')->info('View init');
-
     /**  @var AppSettings $config */
     $config = $c->get('config');
 
