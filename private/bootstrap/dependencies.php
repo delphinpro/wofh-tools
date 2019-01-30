@@ -11,6 +11,9 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use WofhTools\Controllers\NotFoundController;
 use WofhTools\Core\AppSettings;
+use WofhTools\Helpers\Http;
+use WofhTools\Helpers\Json;
+use WofhTools\Tools\Wofh;
 
 
 $dic = $app->getContainer();
@@ -87,7 +90,7 @@ $dic['view'] = function (\Slim\Container $c) {
         DIR_TWIG_TEMPLATES,
         [
             'debug' => $config->debug,
-        'cache' => $twigCache,
+            'cache' => $twigCache,
         ]
     );
 
@@ -98,6 +101,17 @@ $dic['view'] = function (\Slim\Container $c) {
     return $view;
 };
 
+
+/*==
+ *== Wofh
+ *== ======================================= ==*/
+
+$dic['wofh'] = function (\Slim\Container $c) {
+    return new Wofh(
+        new Http(),
+        new Json()
+    );
+};
 
 /*==
  *== Not found handler
