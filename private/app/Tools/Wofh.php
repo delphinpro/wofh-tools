@@ -143,8 +143,13 @@ class Wofh
 
         if (preg_match('/\.waysofhistory\.com/', $domain)) {
             $sign = preg_replace('/\.waysofhistory\.com/', '', $domain);
+            $id = $this->signToId($sign);
 
-            return $this->signToId($sign);
+            if (20000 < $id && $id <= 20005) {
+                return 0;
+            }
+
+            return $id;
         }
 
         return 0;
