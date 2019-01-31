@@ -27,6 +27,7 @@ class HttpTest extends TestCase
         $this->assertStringEqualsFile(__DIR__.'/../../assets/example.com.txt', $html);
     }
 
+
     public function testReadUrlFailed()
     {
         $http = new Http();

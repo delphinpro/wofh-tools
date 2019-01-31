@@ -56,11 +56,13 @@ class Wofh
     /** @var Json */
     private $json;
 
+
     public function __construct(Http $http, Json $json)
     {
         $this->http = $http;
         $this->json = $json;
     }
+
 
     /**
      * Возвращает уникальный идентификатор мира для внутреннего использования
@@ -75,6 +77,7 @@ class Wofh
     {
         return $langIndex * 10000 + $typeIndex * 1000 + $worldIndex;
     }
+
 
     /**
      * Возвращает уникальный идентификатор мира по его сигнатуре
@@ -100,6 +103,7 @@ class Wofh
 
         return false;
     }
+
 
     /**
      * Возвращает сигнатуру мира по его уникальному идентификатору
@@ -130,6 +134,7 @@ class Wofh
         return $lang.$num.$type;
     }
 
+
     /**
      * Возвращает идентификатор мира по домену игрового сервера
      *
@@ -155,6 +160,7 @@ class Wofh
         return 0;
     }
 
+
     /**
      * Возвращает домен игрового сервера по идентификатору мира
      *
@@ -171,6 +177,7 @@ class Wofh
 
         return $domain;
     }
+
 
     /**
      * Возвращает ссылку для получения статуса миров
@@ -192,6 +199,7 @@ class Wofh
         return 'https://ru.waysofhistory.com'.self::$linkStatus.'?lang='.$lang;
     }
 
+
     /**
      * Возвращает список уникальных ссылок на получения статуса миров
      *
@@ -208,6 +216,7 @@ class Wofh
 
         return $links;
     }
+
 
     /**
      * Загружаетданные о статусе миров с игровых серверов.
@@ -246,6 +255,7 @@ class Wofh
 
         return array_key_exists($index, $a) ? $a[$index] : false;
     }
+
 
     private function getTypeOfServer(int $index)
     {

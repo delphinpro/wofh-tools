@@ -13,15 +13,18 @@ class JsonTest extends TestCase
     /** @var Json */
     private $json;
 
+
     public function setUp()
     {
         $this->json = new Json();
     }
 
+
     public function tearDown()
     {
         $this->json = null;
     }
+
 
     public function testEncode()
     {
@@ -53,6 +56,7 @@ class JsonTest extends TestCase
 ]'
         );
     }
+
 
     public function testDecode()
     {

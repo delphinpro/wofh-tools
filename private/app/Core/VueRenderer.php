@@ -1,12 +1,4 @@
 <?php
-/**
- * WofhTools
- *
- * @author      delphinpro <delphinpro@gmail.com>
- * @copyright   copyright © 2019 delphinpro
- * @license     licensed under the MIT license
- */
-
 
 namespace WofhTools\Core;
 
@@ -14,7 +6,10 @@ namespace WofhTools\Core;
 /**
  * Class VueRenderer
  *
- * @package WofhTools\Core
+ * @author      delphinpro <delphinpro@gmail.com>
+ * @copyright   copyright © 2019 delphinpro
+ * @license     licensed under the MIT license
+ * @package     WofhTools\Core
  */
 class VueRenderer
 {
@@ -23,6 +18,7 @@ class VueRenderer
 
     /** @var \V8Js */
     private $v8;
+
 
     /**
      * @param string $nodeModulesPath
@@ -34,6 +30,7 @@ class VueRenderer
         $this->nodePath = rtrim($nodeModulesPath, '/\\').'/';
         $this->v8 = new \V8Js();
     }
+
 
     /**
      * @param string $entry
@@ -54,6 +51,7 @@ class VueRenderer
 
         return ob_get_clean();
     }
+
 
     private function setupVueRenderer()
     {

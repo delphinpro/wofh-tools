@@ -34,6 +34,7 @@ class Json
         return $data;
     }
 
+
     /**
      * Возвращает кодированную JSON-строку
      *

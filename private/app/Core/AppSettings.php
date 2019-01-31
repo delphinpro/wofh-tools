@@ -1,12 +1,4 @@
 <?php
-/**
- * WofhTools
- *
- * @author      delphinpro <delphinpro@gmail.com>
- * @copyright   copyright © 2019 delphinpro
- * @license     licensed under the MIT license
- */
-
 
 namespace WofhTools\Core;
 
@@ -14,7 +6,10 @@ namespace WofhTools\Core;
 /**
  * Class AppSettings
  *
- * @package WofhTools\Core
+ * @author      delphinpro <delphinpro@gmail.com>
+ * @copyright   copyright © 2019 delphinpro
+ * @license     licensed under the MIT license
+ * @package     WofhTools\Core
  *
  * @property boolean debug
  * @property string  rootPath
@@ -29,10 +24,12 @@ class AppSettings
     /** @var array */
     private $data;
 
+
     public function __construct(array $data)
     {
         $this->data = $data;
     }
+
 
     /**
      * @param string $configPath
@@ -51,6 +48,7 @@ class AppSettings
 
         return new AppSettings($config);
     }
+
 
     public function getSlimSettings(): array
     {
@@ -72,6 +70,7 @@ class AppSettings
 
         return $slimSettings;
     }
+
 
     public function __get($key)
     {

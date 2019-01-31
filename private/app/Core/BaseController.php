@@ -1,12 +1,4 @@
 <?php
-/**
- * WofhTools
- *
- * @author      delphinpro <delphinpro@gmail.com>
- * @copyright   copyright © 2019 delphinpro
- * @license     licensed under the MIT license
- */
-
 
 namespace WofhTools\Core;
 
@@ -21,7 +13,10 @@ use Slim\Views\Twig;
 /**
  * Class BaseController
  *
- * @package WofhTools\Core
+ * @author      delphinpro <delphinpro@gmail.com>
+ * @copyright   copyright © 2019 delphinpro
+ * @license     licensed under the MIT license
+ * @package     WofhTools\Core
  */
 class BaseController
 {
@@ -36,6 +31,7 @@ class BaseController
 
     /** @var AppSettings */
     protected $config;
+
 
     /**
      * BaseController constructor.
@@ -72,6 +68,7 @@ class BaseController
             'SSR_HTML' => $ssrHtml,
         ]);
     }
+
 
     /**
      * @param Request  $request
