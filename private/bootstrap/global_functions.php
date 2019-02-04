@@ -21,3 +21,20 @@ function prepareTwigCachePath(string $cachePath, string $rootPath)
         .trim(str_replace('/', DIRECTORY_SEPARATOR, $cachePath), DIRECTORY_SEPARATOR)
     );
 }
+
+
+/**
+ * @param array $settings
+ *
+ * @return \Illuminate\Database\Capsule\Manager
+ */
+function bootEloquent(array $settings): \Illuminate\Database\Capsule\Manager
+{
+    $capsule = new \Illuminate\Database\Capsule\Manager();
+    $capsule->addConnection($settings);
+
+    $capsule->setAsGlobal();
+    $capsule->bootEloquent();
+
+    return $capsule;
+}

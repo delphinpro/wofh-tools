@@ -60,11 +60,7 @@ $dic['db'] = function (\Slim\Container $c) {
     /**  @var AppSettings $config */
     $config = $c->get('config');
 
-    $capsule = new \Illuminate\Database\Capsule\Manager();
-    $capsule->addConnection($config->db);
-
-    $capsule->setAsGlobal();
-    $capsule->bootEloquent();
+    $capsule = bootEloquent($config->db);
 
     return $capsule;
 };
