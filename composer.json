@@ -11,7 +11,8 @@
   "minimum-stability": "stable",
   "autoload": {
     "psr-4": {
-      "WofhTools\\": "private/app"
+      "WofhTools\\": "private/app",
+      "Dolphin\\": "private/dolphin"
     }
   },
   "require": {
