@@ -7,6 +7,7 @@ use WofhTools\Helpers\Http;
 use WofhTools\Helpers\HttpCustomException;
 use WofhTools\Helpers\Json;
 use WofhTools\Helpers\JsonCustomException;
+use WofhTools\Models\Worlds;
 
 
 /**
@@ -248,6 +249,50 @@ class Wofh
             throw new WofhException($e->getMessage());
         }
     }
+
+
+    /**
+     * Проверка и обновление статуса игровых миров
+     *
+     * @param array $links
+     *
+     * @return void
+     * @throws WofhException
+     */
+    public function check(array $links): void
+    {
+        $data = $this->loadStatusOfWorlds($links);
+
+        foreach ($data as $domain => $status) {
+            $id = $this->domainToId($domain);
+            $sign = $this->idToSign($id);
+
+            if ($id === 0) {
+                continue;
+            }
+
+            $name = $status['name'];
+
+            if (preg_match('/[\d]+\s\-\s(\D+)$/Usi', $status['name'], $m)) {
+                $name = $m[1];
+            }
+
+            /** @var Worlds $world */
+            $world = Worlds::findOrNew($id);
+
+            $world->id = $id;
+            $world->title = $name;
+            $world->sign = $sign;
+            $world->can_reg = (bool)(int)$status['canreg'];
+            $world->working = (bool)(int)$status['working'];
+            $world->version = '1.4';
+
+            $world->save();
+
+            unset($world);
+        }
+    }
+
 
     private function getLangOfServer(int $index)
     {
