@@ -28,7 +28,7 @@ class Json
         $data = json_decode($json, $assoc, $depth);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new JsonCustomException(json_last_error_msg());
+            throw new JsonCustomException('JSON: '.json_last_error_msg());
         }
 
         return $data;
