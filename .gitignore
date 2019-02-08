@@ -26,6 +26,7 @@ yarn-error.log*
 /.logs
 /.tmp
 /config
+/data
 
 # Generated files
 /private/templates/layouts/base.twig
