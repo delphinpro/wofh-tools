@@ -27,7 +27,27 @@ class AppSettings
 
     public function __construct(array $data)
     {
-        $this->data = $data;
+        $defaultSettings = [
+            'httpVersion'                       => '1.1',
+            'responseChunkSize'                 => 4096,
+            'outputBuffering'                   => 'append',
+            'determineRouteBeforeAppMiddleware' => false,
+            'displayErrorDetails'               => false,
+            'addContentLengthHeader'            => true,
+            'routerCacheFile'                   => false,
+
+            'debug' => false,
+
+            'ssrEnabled' => true,
+            'ssrBundle'  => 'static/js/server.js',
+
+            'twigCacheEnabled' => true,
+            'twigCachePath'    => '.cache/twig',
+
+            'db' => [],
+        ];
+
+        $this->data = array_merge($defaultSettings, $data);
     }
 
 
