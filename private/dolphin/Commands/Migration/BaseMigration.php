@@ -3,7 +3,7 @@
 namespace Dolphin\Commands\Migration;
 
 
-use Dolphin\Cli;
+use Dolphin\Console;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 
@@ -15,7 +15,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
  * @license     Licensed under the MIT license
  * @package     Dolphin\Commands\Migration
  */
-class BaseMigration extends Cli
+class BaseMigration
 {
     /** @var \Illuminate\Database\Connection */
     protected $db;
@@ -23,11 +23,15 @@ class BaseMigration extends Cli
     /** @var \Illuminate\Database\Schema\Builder */
     protected $schema;
 
+    /** @var Console */
+    protected $console;
+
 
     public function __construct()
     {
         $this->db = Capsule::connection();
         $this->schema = Capsule::schema();
+        $this->console = new Console();
     }
 
 

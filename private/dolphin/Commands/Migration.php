@@ -3,9 +3,11 @@
 namespace Dolphin\Commands;
 
 
-use Dolphin\BaseCommand;
+use Dolphin\Command;
+use Dolphin\CommandInterface;
 use Dolphin\Commands\Migration\Migrator;
 use Dolphin\Help;
+use Psr\Container\ContainerInterface;
 
 
 /**
@@ -17,71 +19,75 @@ use Dolphin\Help;
  * @license     Licensed under the MIT license
  * @package     Dolphin\Commands
  */
-class Migration extends BaseCommand
+class Migration extends Command implements CommandInterface
 {
-    public function __construct()
-    {
-        $this->aliases = [
-            '-d' => '--desc',
-        ];
-    }
+    protected $aliases = [
+        '-d' => '--desc',
+    ];
+
+    /** @var Migrator */
+    private $migrator;
 
 
-    public function getDescription()
+    public static function getDescription()
     {
         return 'Migration manager';
     }
 
 
-    protected function create()
+    public function __construct(ContainerInterface $container)
     {
-        try {
+        parent::__construct($container);
 
-            $migrator = new Migrator(DIR_ROOT.DIRECTORY_SEPARATOR.'.migrations', $this->arguments);
-            $migrator->create();
+        $migrationsPath = DIR_ROOT.DIRECTORY_SEPARATOR.'.migrations';
 
-        } catch (\Exception $e) {
-
-            exit(__FILE__.':'.__LINE__.' '.$e->getMessage());
-
-        }
+        $this->migrator = new Migrator(
+            $migrationsPath,
+            $this->params,
+            $this->console,
+            $this->config,
+            $this->db
+        );
     }
 
 
-    protected function migrate()
+    public function create()
     {
-        $migrator = new Migrator(DIR_ROOT.DIRECTORY_SEPARATOR.'.migrations', $this->arguments);
-        $migrator->migrate();
+        $this->migrator->create();
     }
 
 
-    protected function rollback()
+    public function migrate()
     {
-        $migrator = new Migrator(DIR_ROOT.DIRECTORY_SEPARATOR.'.migrations', $this->arguments);
-        $migrator->rollback();
+        $this->migrator->migrate();
     }
 
 
-    protected function status()
+    public function rollback()
     {
-        $migrator = new Migrator(DIR_ROOT.DIRECTORY_SEPARATOR.'.migrations', $this->arguments);
-        $migrator->status();
+        $this->migrator->rollback();
     }
 
 
-    protected function help()
+    public function status()
     {
-        $help = new Help();
+        $this->migrator->status();
+    }
 
-        $help->addString('Commands:');
-        $help->addCommand('migration:create -d="some description"', 'Create new migration');
+
+    public function help()
+    {
+        $help = new Help($this->container);
+
+        $help->addCommand('migration:create', 'Create new migration', [
+            '--desc="some description"' => [],
+        ]);
         $help->addCommand('migration:migrate', 'Exec migrations');
         $help->addCommand('migration:rollback', 'Rollback last migration');
         $help->addCommand('migration:status', 'Show status migrations');
 
-        $help->addString('Options:');
         $help->addOption('-d, --desc', 'Description for migration');
 
-        $help->display();
+        $help->display($this->getDescription().PHP_EOL);
     }
 }

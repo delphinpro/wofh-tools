@@ -259,7 +259,7 @@ class Migration_20190203_025705 extends BaseMigration
 
         } catch (\Exception $e) {
 
-            $this->writeLn($e->getMessage(), \Dolphin\Cli::FONT_RED);
+            $this->console->write($e->getMessage(), \Dolphin\Console::RED);
             $this->db->rollBack();
             throw $e;
 

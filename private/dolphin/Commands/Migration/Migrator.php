@@ -3,11 +3,8 @@
 namespace Dolphin\Commands\Migration;
 
 
-use Dolphin\Cli;
+use Dolphin\Console;
 use WofhTools\Core\AppSettings;
-
-
-require_once DIR_ROOT.'/private/bootstrap/global_functions.php';
 
 
 /**
@@ -19,45 +16,42 @@ require_once DIR_ROOT.'/private/bootstrap/global_functions.php';
  * @license     Licensed under the MIT license
  * @package     Dolphin\Commands\Migration
  */
-class Migrator extends Cli
+class Migrator
 {
     /** @var string */
-    protected $migrationsDir;
+    private $migrationsDir;
 
     /** @var string */
-    protected $migrationTable;
+    private $migrationTable;
 
     /** @var \Illuminate\Database\Connection */
-    protected $db;
+    private $db;
 
-    protected $arguments;
+    /** @var array */
+    private $params;
+
+    /** @var Console */
+    private $console;
 
 
-    public function __construct($migrationsDir, $arguments = [])
-    {
-        $this->arguments = $arguments;
-        $config = AppSettings::loadConfig(DIR_CONFIG, DIR_ROOT);
-
-        $this->migrationsDir = rtrim($migrationsDir, DIRECTORY_SEPARATOR);
+    public function __construct(
+        string $migrationsDir,
+        array $params,
+        Console $console,
+        AppSettings $config,
+        \Illuminate\Database\Connection $db
+    ) {
+        $this->migrationsDir = rtrim($migrationsDir, '\\/');
         $this->migrationTable = 'migrations';
-
-        $capsule = bootEloquent($config->db);
-
-        $this->db = $capsule->getConnection();
-        $this->db->enableQueryLog();
+        $this->params = $params;
+        $this->console = $console;
+        $this->db = $db;
     }
 
 
-    /**
-     * @throws \Exception
-     */
     public function create()
     {
-        if (!is_array($this->arguments)) {
-            throw new \Exception('Invalid argument: array expected, '.gettype($this->arguments).' given');
-        }
-
-        $message = array_key_exists('desc', $this->arguments) ? $this->arguments['desc'] : '';
+        $description = array_key_exists('desc', $this->params) ? $this->params['desc'] : '';
 
         $savedTimeZone = date_default_timezone_get();
         date_default_timezone_set('UTC');
@@ -90,93 +84,103 @@ class $classNameOfMigration extends BaseMigration
 
     public function description()
     {
-        return '$message';
+        return '$description';
     }
 }
 
 CONTENT;
 
-        if (is_dir($this->migrationsDir)) {
-            if (!is_dir($this->migrationsDir.DIRECTORY_SEPARATOR.$subDir)) {
-                if (!mkdir($this->migrationsDir.DIRECTORY_SEPARATOR.$subDir, 0777)) {
-                    $this->writeLn('Migration create: FAIL', Cli::FONT_RED);
-
-                    return;
-                }
-            }
-
-            $fileName = $this->migrationsDir
-                .DIRECTORY_SEPARATOR.$subDir
-                .DIRECTORY_SEPARATOR.$classNameOfMigration.'.php';
-            file_put_contents($fileName, $unitContent);
-
-            $this->write('Migration created: ', Cli::FONT_GREEN);
-            $this->write($classNameOfMigration, [Cli::FONT_GREEN, Cli::FONT_BOLD]);
-            $this->writeLn(' "'.$message.'"', Cli::FONT_CYAN);
-        } else {
-            $this->writeLn('Migration directory not exists: '.$this->migrationsDir, Cli::FONT_RED);
+        if (!is_dir($this->migrationsDir)) {
+            $this->console->error('Migrations directory not exists: '.$this->migrationsDir);
+            $this->console->stop();
         }
+
+        if (!is_dir($this->migrationsDir.DIRECTORY_SEPARATOR.$subDir)) {
+            if (!mkdir($this->migrationsDir.DIRECTORY_SEPARATOR.$subDir, 0777)) {
+                $this->console->error('Migration create: FAIL');
+                $this->console->stop();
+            }
+        }
+
+        $fileName = $this->migrationsDir
+            .DIRECTORY_SEPARATOR.$subDir
+            .DIRECTORY_SEPARATOR.$classNameOfMigration.'.php';
+        file_put_contents($fileName, $unitContent);
+
+        $this->console->write('Migration created: ', Console::GREEN, false);
+        $this->console->write($classNameOfMigration, Console::GREEN, false);
+        $this->console->write(' "'.$description.'"', Console::CYAN);
     }
 
 
     public function migrate()
     {
+        $count = 0;
         $this->checkMigrationTable();
         $lastId = $this->getLastAppliedMigration();
-        $this->writeLn('Last applied migration: '.($lastId === false ? 'None' : $lastId),
-            Cli::FONT_YELLOW);
+        $message = 'Last applied migration: '.($lastId === false ? 'None' : $lastId);
+        $this->console->write($message, Console::YELLOW);
 
         $dirs = scandir($this->migrationsDir, SCANDIR_SORT_ASCENDING);
         if ($dirs === false) {
-            $this->halt("Error scandir({$this->migrationsDir})", Cli::FONT_RED);
+            $this->console->stop("Error scandir({$this->migrationsDir})", Console::RED);
         }
 
-        $dirs = array_filter($dirs,
-            function ($item) {
-                return ($item != '.') and ($item != '..');
-            });
+        $dirs = array_filter($dirs, function ($item) {
+            return ($item != '.') and ($item != '..');
+        });
 
-        $this->db->beginTransaction();
-        $count = 0;
         try {
-            foreach ($dirs as $dir) {
-                $fullNameDir = $this->migrationsDir.DIRECTORY_SEPARATOR.$dir;
-                $files = scandir($fullNameDir, SCANDIR_SORT_ASCENDING);
-                if ($files === false) {
-                    $this->db->rollBack();
-                    $this->halt("Error scandir({$fullNameDir})", Cli::FONT_RED);
-                }
-                $files = array_filter($files,
-                    function ($item) {
-                        return ($item != '.') and ($item != '..');
-                    });
 
-                foreach ($files as $file) {
-                    $className = '\\'.str_replace('.php', '', $file);
-                    $id = preg_replace('/\D/', '', $className);
+            $this->db->beginTransaction();
 
-                    if ($id <= $lastId) {
-                        continue;
+            try {
+                foreach ($dirs as $dir) {
+                    $fullNameDir = $this->migrationsDir.DIRECTORY_SEPARATOR.$dir;
+                    $files = scandir($fullNameDir, SCANDIR_SORT_ASCENDING);
+                    if ($files === false) {
+                        $this->db->rollBack();
+                        $this->console->stop("Error scandir({$fullNameDir})", Console::RED);
                     }
+                    $files = array_filter($files,
+                        function ($item) {
+                            return ($item != '.') and ($item != '..');
+                        });
 
-                    /** @noinspection PhpIncludeInspection */
-                    require_once $fullNameDir.DIRECTORY_SEPARATOR.$file;
+                    foreach ($files as $file) {
+                        $className = '\\'.str_replace('.php', '', $file);
+                        $id = preg_replace('/\D/', '', $className);
 
-                    /** @var \dolphin\Commands\Migration\BaseMigration $object */
-                    $object = new $className();
-                    $object->up();
+                        if ($id <= $lastId) {
+                            continue;
+                        }
 
-                    $this->db->table($this->migrationTable)->insert(['id' => $id]);
-                    $this->writeLn('Apply migration: '.$className.' OK!', Cli::FONT_GREEN);
-                    $count++;
-                    unset($object);
+                        /** @noinspection PhpIncludeInspection */
+                        require_once $fullNameDir.DIRECTORY_SEPARATOR.$file;
+
+                        /** @var \dolphin\Commands\Migration\BaseMigration $object */
+                        $object = new $className();
+                        $object->up();
+
+                        $this->db->table($this->migrationTable)->insert(['id' => $id]);
+                        $message = 'Apply migration: '.$className.' OK!';
+                        $this->console->write($message, Console::GREEN);
+                        $count++;
+                        unset($object);
+                    }
                 }
+
+                $this->db->commit();
+                $this->console->write('Applied migrations: '.$count);
+
+            } catch (\Exception $e) {
+                $this->console->error($e->getMessage());
+                $this->console->error($e->getTraceAsString());
+                $this->db->rollBack();
             }
-            $this->db->commit();
-            $this->writeLn('Applied migrations: '.$count);
         } catch (\Exception $e) {
-            $this->db->rollBack();
-            $this->writeLn($e->getMessage(), [Cli::FONT_BOLD, Cli::FONT_RED]);
+            $this->console->error($e->getMessage());
+            $this->console->error($e->getTraceAsString());
         }
     }
 
@@ -185,13 +189,11 @@ CONTENT;
     {
         $this->checkMigrationTable();
         $lastId = $this->getLastAppliedMigration();
-        $this->writeLn('Last applied migration: '.($lastId === false ? 'None' : $lastId),
-            Cli::FONT_YELLOW);
+        $message = 'Last applied migration: '.($lastId === false ? 'None' : $lastId);
+        $this->console->write($message, Console::YELLOW);
 
         if ($lastId === false) {
-            $this->writeLn('Migration rollback: 0');
-
-            return;
+            $this->console->stop('Migration rollback: 0');
         }
 
         $subDir = preg_replace('/^(\d{4})(\d{2})\d+$/', '\\1_\\2', $lastId);
@@ -201,7 +203,9 @@ CONTENT;
         $fileName = $fullNameDir.DIRECTORY_SEPARATOR.$file;
 
         if (!is_file($fileName) || !is_readable($fileName)) {
-            $this->halt('Migration file not found!', Cli::FONT_RED);
+            $this->console->error('Migration file not found!');
+            $this->console->error($fileName);
+            $this->console->stop();
         }
 
         $className = '\\'.str_replace('.php', '', $file);
@@ -214,7 +218,7 @@ CONTENT;
         $object->down();
 
         $this->db->table($this->migrationTable)->delete($lastId);
-        $this->writeLn('Rollback migration: '.$className.' OK!', Cli::FONT_GREEN);
+        $this->console->write('Rollback migration: '.$className.' OK!', Console::GREEN);
         unset($object);
     }
 
@@ -225,7 +229,7 @@ CONTENT;
         $lastId = $this->getLastAppliedMigration();
         $d = $this->getAllMigrationList();
 
-        $this->writeLn('Migrations:');
+        $this->console->write('Migrations:');
         foreach ($d as $item) {
             $subDir = preg_replace('/^(\d{4})(\d{2})\d+$/', '\\1_\\2', $item);
             $name = preg_replace('/^(\d{8})(\d{6})$/', '\\1_\\2', $item);
@@ -242,16 +246,21 @@ CONTENT;
             unset($object);
 
             if ($item == $lastId) {
-                $this->write('    '.$name.' '.'<--', [Cli::FONT_BOLD, Cli::FONT_GREEN]);
+                $this->console->write("    $name <--", Console::GREEN, false);
             } elseif ($item < $lastId) {
-                $this->write('    '.$name.' '.'[+]', Cli::FONT_GREEN);
+                $this->console->write("    $name [+]", Console::GREEN, false);
             } else {
-                $this->write('    '.$name.' '.'[?]', Cli::FONT_RED);
+                $this->console->write("    $name [?]", Console::RED, false);
             }
-            $this->writeLn('  "'.$desc.'"', Cli::FONT_CYAN);
+            $this->console->write("  \"$desc\"", Console::CYAN);
         }
-        $this->writeLn('Last applied migration: '.($lastId === false ? 'None' : $lastId));
+        $this->console->write('Last applied migration: '.($lastId === false ? 'None' : $lastId));
     }
+
+
+    //== ====================================================================================== ==//
+    //== Private methods
+    //== ====================================================================================== ==//
 
 
     private function getAllMigrationList()
@@ -260,7 +269,7 @@ CONTENT;
 
         $dirs = scandir($this->migrationsDir, SCANDIR_SORT_ASCENDING);
         if ($dirs === false) {
-            $this->halt("Error scandir({$this->migrationsDir})", Cli::FONT_RED);
+            $this->console->stop("Error scandir({$this->migrationsDir})", Console::RED);
         }
 
         $dirs = array_filter($dirs, function ($item) {
@@ -272,7 +281,7 @@ CONTENT;
             $files = scandir($fullNameDir, SCANDIR_SORT_ASCENDING);
 
             if ($files === false) {
-                $this->halt("Error scandir({$fullNameDir})", Cli::FONT_RED);
+                $this->console->stop("Error scandir({$fullNameDir})", Console::RED);
             }
 
             $files = array_filter($files,

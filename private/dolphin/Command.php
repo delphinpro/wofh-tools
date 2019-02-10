@@ -3,59 +3,43 @@
 namespace Dolphin;
 
 
+use Psr\Container\ContainerInterface;
+
+
 /**
- * Class BaseCommand
+ * Class Command
  *
  * @author      delphinpro <delphinpro@gmail.com>
  * @copyright   Copyright © 2016 delphinpro
  * @license     Licensed under the MIT license
  * @package     Dolphin
  */
-abstract class BaseCommand extends Cli
+abstract class Command extends DolphinContainer
 {
     protected $name;
 
     protected $action;
 
-    protected $arguments;
-
     protected $aliases = [];
 
 
-    final public function execute($arguments)
+    public function __construct(ContainerInterface $container)
     {
-        if (!is_array($arguments)) {
-            $this->halt('Invalid arguments', Cli::FONT_RED);
-        }
+        parent::__construct($container);
 
-        $tmp = array_shift($arguments);
-        $tmp = explode(':', $tmp);
-
-        $this->name = $tmp[0];
-        $this->action = isset($tmp[1]) ? $tmp[1] : '';
-
-        if (empty($this->action)) {
-            $this->action = 'help';
-        }
-
-        if (!method_exists($this, $this->action)) {
-            $this->halt(
-                "Invalid arguments: unknown method [{$this->action}] of {$this->name}",
-                Cli::FONT_RED
-            );
-        }
-
-        $this->arguments = $this->parseArguments($arguments);
-
-        call_user_func([$this, $this->action]);
+        $this->container['params'] = $this->parseParams($this->container['arguments']);
     }
 
 
-    abstract public function getDescription();
-
-
-    final protected function parseArguments($args)
+    final public function bootEloquent()
     {
+        $this->container->get('db');
+    }
+
+
+    final private function parseParams($args)
+    {
+        array_shift($args);
         $result = [];
         foreach ($args as $arg) {
             if (strpos($arg, '=') === false) {

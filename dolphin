@@ -2,6 +2,6 @@
 
 require_once './vendor/autoload.php';
 require_once './private/bootstrap/constants.php';
+require_once './private/bootstrap/global_functions.php';
 
-$dolphin = new \Dolphin\Dolphin();
-$dolphin->run();
+\Dolphin\Dolphin::getInstance(__DIR__)->run();

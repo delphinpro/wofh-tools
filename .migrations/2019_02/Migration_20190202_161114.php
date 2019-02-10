@@ -18,12 +18,12 @@ class Migration_20190202_161114 extends BaseMigration
             $table->tinyInteger('working')->nullable()->default(0);
             $table->tinyInteger('statistic')->nullable()->default(0);
             $table->tinyInteger('hidden')->nullable()->default(0);
-            $table->dateTime('started')->nullable();
-            $table->dateTime('closed')->nullable();
-            $table->dateTime('time_of_loaded_stat')->nullable();
-            $table->dateTime('time_of_updated_stat')->nullable();
-            $table->dateTime('time_of_updated_const')->nullable();
-            $table->dateTime('time_of_update_started')->nullable();
+            $table->timestamp('started')->nullable();
+            $table->timestamp('closed')->nullable();
+            $table->timestamp('time_of_loaded_stat')->nullable();
+            $table->timestamp('time_of_updated_stat')->nullable();
+            $table->timestamp('time_of_updated_const')->nullable();
+            $table->timestamp('time_of_update_started')->nullable();
             $table->char('version', 10)->nullable();
             $table->text('desc')->nullable();
             $table->json('meta_info')->nullable();

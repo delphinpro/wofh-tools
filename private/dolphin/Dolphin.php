@@ -3,6 +3,13 @@
 namespace Dolphin;
 
 
+use Psr\Container\ContainerInterface;
+use Slim\Container;
+use WofhTools\Core\AppSettings;
+use WofhTools\Helpers\FileSystem;
+use WofhTools\Tools\Wofh;
+
+
 /**
  * Dolphin command line interface
  *
@@ -11,57 +18,113 @@ namespace Dolphin;
  * @license     Licensed under the MIT license
  * @package     Dolphin
  */
-class Dolphin extends Cli
+class Dolphin extends DolphinContainer
 {
-    /** @var array $arguments */
-    private $arguments;
+    /** @var string */
+    private $commandsDirectory;
+
+    /** @var string */
+    private $commandName;
+
+    /** @var string */
+    private $commandAction;
 
 
-    public function __construct()
+    /**
+     * @param string $projectRoot
+     *
+     * @return Dolphin
+     */
+    public static function getInstance(string $projectRoot)
     {
-        $this->arguments = $_SERVER['argv'];
-        array_shift($this->arguments);
+        $container = new Container();
+
+        $container['console'] = function () {
+            return new Console();
+        };
+
+        $container['config'] = function () use ($projectRoot) {
+            return AppSettings::loadConfig(DIR_CONFIG, $projectRoot);
+        };
+
+        $container['http'] = function () {
+            return new \WofhTools\Helpers\Http();
+        };
+
+        $container['json'] = function () {
+            return new \WofhTools\Helpers\Json();
+        };
+
+        $container['db'] = function ($c) {
+            $capsule = bootEloquent($c['config']->db);
+            $db = $capsule->getConnection();
+            //$db->enableQueryLog();
+
+            return $db;
+        };
+
+        $container['wofh'] = function ($c) {
+            return new Wofh($c['http'], $c['json']);
+        };
+
+        $container['fs'] = function () {
+            return new FileSystem(DIR_ROOT);
+        };
+
+        return new Dolphin($container);
+    }
+
+
+    public function __construct(ContainerInterface $container)
+    {
+        parent::__construct($container);
+
+        $this->commandsDirectory = __DIR__.DIRECTORY_SEPARATOR.'Commands';
     }
 
 
     public function run()
     {
-        $this->write("Dolphin command line interface v1.0", Cli::FONT_BLUE);
-        $this->writeLn(" [php ".PHP_VERSION."]", Cli::FONT_GREEN);
-        $this->checkPhpVersion();
-        $this->checkSApi();
-        $this->checkArgs();
-        $this->execCommand($this->arguments[0]);
+        try {
+
+            $this->printWelcomeMessage();
+            $this->checkPhpVersion();
+            $this->checkSApi();
+            $this->processArguments();
+            $this->execCommand();
+
+        } catch (\Exception $e) {
+
+            $this->console->error($e->getMessage());
+            $this->console->error($e->getTraceAsString());
+
+        }
     }
 
 
-    private function execCommand($commandName)
-    {
-        list ($commandName) = explode(':', $commandName);
+    //== ====================================================================================== ==//
+    //== Private methods
+    //== ====================================================================================== ==//
 
-        $className = '\\Dolphin\\Commands\\'.ucfirst(strtolower($commandName));
-        if (class_exists($className)) {
-            $command = new $className();
-            if ($command instanceof BaseCommand) {
-                $command->execute($this->arguments);
-            } else {
-                $this->halt("$className not instance of CommandInterface", Cli::FONT_RED);
-            }
-        } else {
-            $this->write("Unknown command: ", Cli::FONT_RED);
-            $this->writeLn('<'.$commandName.'>', [Cli::FONT_BOLD, Cli::FONT_RED]);
-            $this->stop();
-        }
+
+    private function printWelcomeMessage()
+    {
+        $title = 'Dolphin command line interface v1.0';
+        $subtitle = ' [php '.PHP_VERSION.']';
+        $color = Console::BLUE;
+
+        $this->console->lineDouble(mb_strlen($title.$subtitle) + 1, $color);
+        $this->console->write($title, $color, false);
+        $this->console->write($subtitle, Console::GREEN);
+        $this->console->lineDouble(mb_strlen($title.$subtitle) + 1, $color);
     }
 
 
     private function checkPhpVersion()
     {
         if (version_compare(PHP_VERSION, '7.2') < 0) {
-            $this->halt(
-                sprintf('Need version PHP 7.2 or higher. Your version: %s', PHP_VERSION),
-                Cli::FONT_RED
-            );
+            $message = sprintf('Need version PHP 7.2 or higher. Your version: %s', PHP_VERSION);
+            $this->console->stop($message, Console::RED);
         }
     }
 
@@ -69,54 +132,96 @@ class Dolphin extends Cli
     private function checkSApi()
     {
         if (PHP_SAPI !== 'cli') {
-            $this->halt('Dolphin can run only cli.');
+            $this->console->stop('Dolphin can run only cli.');
         }
     }
 
 
-    private function checkArgs()
+    private function processArguments()
     {
-        if (count($this->arguments) < 1) {
-            $files = scandir(__DIR__.DIRECTORY_SEPARATOR.'Commands');
-            $commands = [];
-            $maxLength = 0;
-            foreach ($files as $filename) {
-                if ($filename == '.' or $filename == '..') {
-                    continue;
-                }
-                if (!is_file(
-                    __DIR__.DIRECTORY_SEPARATOR.'Commands'.DIRECTORY_SEPARATOR.$filename
-                )) {
-                    continue;
-                }
+        $arguments = $_SERVER['argv'];
+        array_shift($arguments);
 
-                $commandName = str_replace('.php', '', strtolower($filename));
-                $className = '\\Dolphin\\Commands\\'.ucfirst(strtolower($commandName));
-                if (class_exists($className)) {
-                    $command = new $className();
-                    if ($command instanceof BaseCommand) {
-                        if (strlen($commandName) > $maxLength) {
-                            $maxLength = strlen($commandName);
-                        }
-                        $commands[] = [
-                            'command'     => $commandName,
-                            'description' => $command->getDescription(),
-                        ];
-                    }
-                    unset($command);
-                }
-            }
-
-            $s = '  php dolphin ';
-            $maxLength += strlen($s) + 2;
-
-            $this->writeLn('Available commands:');
-            foreach ($commands as $cmd) {
-                $this->write(str_pad($s.$cmd['command'], $maxLength, ' '), Cli::FONT_CYAN);
-                $this->writeLn($cmd['description']);
-            }
-
-            $this->stop();
+        if (count($arguments) < 1) {
+            $this->printCommandList();
+            $this->console->stop();
         }
+
+        $this->container['arguments'] = function () use ($arguments) {
+            return $arguments;
+        };
+
+        $command = array_shift($arguments);
+        list($this->commandName, $this->commandAction) = explode(':', $command);
+
+        if (!$this->commandAction) {
+            $this->commandAction = 'help';
+        }
+    }
+
+
+    private function printCommandList()
+    {
+        $files = scandir($this->commandsDirectory);
+        $commands = [];
+        $maxLen = 0;
+
+        foreach ($files as $filename) {
+
+            if ($filename == '.' or $filename == '..') {
+                continue;
+            }
+
+            if (!is_file($this->commandsDirectory.DIRECTORY_SEPARATOR.$filename)) {
+                continue;
+            }
+
+            $commandName = str_replace('.php', '', strtolower($filename));
+            $className = '\\Dolphin\\Commands\\'.ucfirst(strtolower($commandName));
+            $methodName = 'getDescription';
+
+            if (method_exists($className, $methodName)) {
+                $maxLen = max(strlen($commandName), $maxLen);
+                $commands[] = [
+                    'command'     => $commandName,
+                    'description' => $className::$methodName(),
+                ];
+            }
+        }
+
+        $s = '  php dolphin ';
+        $maxLen += strlen($s) + 2;
+
+        $this->console->write('Available commands:');
+
+        foreach ($commands as $cmd) {
+            $this->console->write(str_pad($s.$cmd['command'], $maxLen, ' '), Console::CYAN, false);
+            $this->console->write($cmd['description']);
+        }
+    }
+
+
+    private function execCommand()
+    {
+        $cn = '\\Dolphin\\Commands\\'.ucfirst(strtolower($this->commandName));
+
+        if (!class_exists($cn)) {
+            $this->console->stop('Unknown command: '.'<'.$this->commandName.'>', Console::RED);
+        }
+
+        $command = new $cn($this->container);
+
+        if (!$command instanceof CommandInterface) {
+            $this->console->stop("$cn not instance of CommandInterface", Console::RED);
+        }
+
+        if (!method_exists($command, $this->commandAction)) {
+            $this->console->stop(
+                "Invalid arguments: unknown method [{$this->commandAction}] of {$this->commandName}",
+                Console::RED
+            );
+        }
+
+        call_user_func([$command, $this->commandAction]);
     }
 }
