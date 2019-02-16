@@ -181,6 +181,20 @@ class Wofh
 
 
     /**
+     * Возвращает ссылку на получение данных статистики
+     *
+     * @param int    $worldId Идентификатор мира
+     * @param string $lang    Язык получаемых данных
+     *
+     * @return string
+     */
+    public function getStatisticLink(int $worldId, $lang = 'ru')
+    {
+        return $this->idToDomain($worldId, true).self::$linkStatistic.'?lang='.$lang;
+    }
+
+
+    /**
      * Возвращает ссылку для получения статуса миров
      *
      * @param string $lang Язык сервера
