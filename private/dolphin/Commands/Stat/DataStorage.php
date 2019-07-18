@@ -31,7 +31,6 @@ class DataStorage extends DolphinContainer
     use DataUpdaterAccounts;
     use DataUpdaterCountries;
 
-
     const TOWN_KEY_TITLE      = 0;
     const TOWN_KEY_ACCOUNT_ID = 1;
     const TOWN_KEY_POP        = 2;
@@ -39,7 +38,6 @@ class DataStorage extends DolphinContainer
 
     const TOWN_KEY_WONDER_ID    = 4;
     const TOWN_KEY_WONDER_LEVEL = 5;
-
 
     const ACCOUNT_KEY_TITLE             = 0;
     const ACCOUNT_KEY_RACE              = 1;
@@ -53,7 +51,6 @@ class DataStorage extends DolphinContainer
 
     const ACCOUNT_KEY_POP   = 9;
     const ACCOUNT_KEY_TOWNS = 10;
-
 
     const COUNTRY_KEY_TITLE     = 0;
     const COUNTRY_KEY_FLAG      = 1;

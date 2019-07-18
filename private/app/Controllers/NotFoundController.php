@@ -38,7 +38,6 @@ final class NotFoundController extends BaseController
                 ->withStatus(404, 'Page not found')
                 ->withHeader('Content-Type', 'text/html')
                 ->write($body);
-
         }
 
         return $response;

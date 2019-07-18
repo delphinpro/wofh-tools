@@ -17,7 +17,6 @@ require '../vendor/autoload.php';
 require_once __DIR__.'/bootstrap/constants.php';
 require_once __DIR__.'/bootstrap/global_functions.php';
 
-
 /*==
  *== Session
  *== ======================================= ==*/
