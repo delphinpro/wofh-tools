@@ -1,18 +1,7 @@
-.DS_Store
-/node_modules
-/public_html
-/vendor
-
-# local env files
-.env.local
-.env.*.local
-
-# Log files
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
+#================================================
 # Editor directories and files
+#================================================
+
 .idea
 .vscode
 *.suo
@@ -21,12 +10,55 @@ yarn-error.log*
 *.sln
 *.sw*
 
+
+#================================================
+# Vendor
+#================================================
+
+/node_modules
+/vendor
+
+
+#================================================
+# Local env files
+#================================================
+
+.env.local
+.env.*.local
+
+
+#================================================
+# Log files
+#================================================
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+#================================================
 # Application directories
+#================================================
+
 /.cache
 /.logs
 /.tmp
 /config
 /data
 
+
+#================================================
 # Generated files
+#================================================
+
 /private/templates/layouts/base.twig
+/public_html
+
+
+#================================================
+# Binary and other
+#================================================
+
+/*.phar
+/*.bat
+.DS_Store
