@@ -8,9 +8,6 @@
  */
 
 
-use WofhTools\Core\AppSettings;
-
-
 if (version_compare(PHP_VERSION, '7.2') < 0) {
     header('Content-Type: text/html; charset=utf-8');
     die(sprintf('Need version PHP 7.2 or higher. Your version: %s', PHP_VERSION));
@@ -32,7 +29,7 @@ session_start();
  *== Load configuration
  *== ======================================= ==*/
 
-$config = AppSettings::loadConfig(DIR_CONFIG, DIR_ROOT);
+loadGlobalConfiguration(realpath('../config'));
 
 
 /*==
@@ -40,7 +37,15 @@ $config = AppSettings::loadConfig(DIR_CONFIG, DIR_ROOT);
  *== ======================================= ==*/
 
 $app = new \Slim\App([
-    'settings' => $config->getSlimSettings(),
+    'settings' => [
+        'httpVersion'                       => getenv('httpVersion') ?: '1.1',
+        'responseChunkSize'                 => getenv('responseChunkSize') ?: 4096,
+        'outputBuffering'                   => getenv('outputBuffering') ?: 'append',
+        'determineRouteBeforeAppMiddleware' => getenv('determineRouteBeforeAppMiddleware') ?: false,
+        'displayErrorDetails'               => getenv('displayErrorDetails') ?: false,
+        'addContentLengthHeader'            => getenv('addContentLengthHeader') ?: true,
+        'routerCacheFile'                   => getenv('routerCacheFile') ?: false,
+    ],
 ]);
 
 

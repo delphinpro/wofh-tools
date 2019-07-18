@@ -6,6 +6,9 @@ namespace WofhTools\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use WofhTools\Helpers\Http;
+use WofhTools\Helpers\Json;
+use WofhTools\Tools\Wofh;
 
 
 /**
@@ -56,7 +59,16 @@ class Worlds extends Model
         'time_of_update_started',
     ];
 
+    protected $age = null;
 
+    protected $fullTitle = null;
+
+    protected $realLastUpdate = null;
+
+
+    /**
+     * @return array[Worlds]|Collection
+     */
     public static function getAll()
     {
         /** @var \Illuminate\Database\Query\Builder $builder */
@@ -67,11 +79,12 @@ class Worlds extends Model
         return Worlds::sort($collection, true);
     }
 
+
     /**
      * @param Collection $collection
      * @param bool       $asArray
      *
-     * @return array|Collection
+     * @return array[Collection]|Collection
      */
     private static function sort(Collection $collection, bool $asArray = false)
     {
@@ -100,5 +113,61 @@ class Worlds extends Model
         }
 
         return $collection;
+    }
+
+
+    /**
+     * @return array[Worlds]|Collection
+     */
+    public static function getWorking($id = false)
+    {
+        /** @var \Illuminate\Database\Query\Builder $builder */
+        $builder = Worlds::where('working', 1);
+
+        if ($id) {
+            $builder->where('id', $id);
+        }
+
+        $collection = $builder->get();
+
+        return Worlds::sort($collection, true);
+    }
+
+
+    /**
+     * @param $sign
+     *
+     * @return bool|Collection|Model|Worlds
+     */
+    public static function getBySign($sign)
+    {
+        $wofh = new Wofh(new Http(), new Json());
+        $id = $wofh->signToId($sign);
+
+        if ($id === false) {
+            return false;
+        }
+
+        $world = Worlds::find($id);
+
+        return $world;
+    }
+
+
+    public function beginUpdate()
+    {
+        $this->time_of_update_started = Carbon::now();
+        $this->save();
+    }
+
+
+    public function endUpdate(Carbon $timeOfUpdatedStat = null)
+    {
+        if ($timeOfUpdatedStat instanceof Carbon) {
+            $this->time_of_updated_stat = $timeOfUpdatedStat;
+        }
+
+        $this->time_of_update_started = null;
+        $this->save();
     }
 }

@@ -12,8 +12,6 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use WofhTools\Controllers\NotFoundController;
 use WofhTools\Core\AppSettings;
-use WofhTools\Helpers\Http;
-use WofhTools\Helpers\Json;
 use WofhTools\Tools\Wofh;
 
 
@@ -46,6 +44,14 @@ $dic['logger'] = function () {
     $logger->pushHandler($fileHandler);
 
     return $logger;
+};
+
+$dic['json'] = function () {
+    return new \WofhTools\Helpers\Json();
+};
+
+$dic['http'] = function () {
+    return new \WofhTools\Helpers\Http();
 };
 
 
@@ -103,8 +109,8 @@ $dic['view'] = function (\Slim\Container $c) {
 
 $dic['wofh'] = function (\Slim\Container $c) {
     return new Wofh(
-        new Http(),
-        new Json()
+        $c->get('http'),
+        $c->get('json')
     );
 };
 
@@ -113,14 +119,8 @@ $dic['wofh'] = function (\Slim\Container $c) {
  *== ======================================= ==*/
 
 $dic['notFoundHandler'] = function (\Slim\Container $c) {
-    return function (ServerRequestInterface $request, ResponseInterface $response) use ($c) {
-        $body = (new NotFoundController($c))->dispatch($request, $response);
-
-        /** @noinspection PhpUndefinedMethodInspection */
-        return $response
-            ->withStatus(404, 'Page not found')
-            ->withHeader('Content-Type', 'text/html')
-            ->write($body);
+    return function (Request $request, Response $response) use ($c) {
+        return (new NotFoundController($c))->dispatch($request, $response);
     };
 };
 

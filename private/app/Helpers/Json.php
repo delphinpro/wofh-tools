@@ -38,13 +38,14 @@ class Json
     /**
      * Возвращает кодированную JSON-строку
      *
-     * @param mixed $value  Данные для кодирования
-     * @param bool  $pretty Форматировать вывод
+     * @param mixed $value       Данные для кодирования
+     * @param bool  $pretty      Форматировать вывод
+     * @param bool  $forceObject Кодировать массивы как объекты
      *
      * @return string
-     * @throws JsonCustomException
+     * @throws \WofhTools\Helpers\JsonCustomException
      */
-    public function encode($value, bool $pretty = false): string
+    public function encode($value, bool $pretty = false, $forceObject = false): string
     {
         $options = JSON_NUMERIC_CHECK
             | JSON_UNESCAPED_SLASHES
@@ -55,6 +56,10 @@ class Json
 
         if ($pretty) {
             $options = $options | JSON_PRETTY_PRINT;
+        }
+
+        if ($forceObject) {
+            $options = $options | JSON_FORCE_OBJECT;
         }
 
         $json = json_encode($value, $options);

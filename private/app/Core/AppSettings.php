@@ -18,6 +18,8 @@ namespace WofhTools\Core;
  * @property boolean twigCacheEnabled
  * @property string  twigCachePath
  * @property array   db
+ * @property string  statisticPath
+ * @property int     statLoadInterval
  */
 class AppSettings
 {
@@ -43,6 +45,9 @@ class AppSettings
 
             'twigCacheEnabled' => true,
             'twigCachePath'    => '.cache/twig',
+
+            'statisticPath'    => 'data/statistic',
+            'statLoadInterval' => 6,
 
             'db' => [],
         ];

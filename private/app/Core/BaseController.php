@@ -4,10 +4,9 @@ namespace WofhTools\Core;
 
 
 use Psr\Http\Message\UriInterface;
-use Psr\Log\LoggerInterface as Logger;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Slim\Views\Twig;
+use WofhTools\Helpers\JsonCustomException;
 
 
 /**
@@ -17,34 +16,51 @@ use Slim\Views\Twig;
  * @copyright   copyright © 2019 delphinpro
  * @license     licensed under the MIT license
  * @package     WofhTools\Core
+ *
+ * @property \Illuminate\Database\Capsule\Manager db
+ * @property \Slim\App                            app
+ * @property \Slim\Views\Twig                     view
+ * @property \WofhTools\Core\AppSettings          config
+ * @property \WofhTools\Helpers\Json              json
  */
 class BaseController
 {
-    /** @var \Slim\App */
-    protected $app;
-
-    /** @var Twig */
-    protected $view;
-
-    /** @var Logger */
-    protected $logger;
-
-    /** @var AppSettings */
-    protected $config;
+    /** @var \Slim\Container */
+    protected $DIContainer;
 
 
     /**
      * BaseController constructor.
      *
-     * @param \Slim\Container $dic
+     * @param \Slim\Container $DIContainer
      */
-    public function __construct(\Slim\Container $dic)
+    public function __construct(\Slim\Container $DIContainer)
     {
-        $this->app = $dic['app'];
-        $this->view = $dic['view'];
-        $this->logger = $dic['logger'];
-        $this->config = $dic['config'];
+        $this->DIContainer = $DIContainer;
     }
+
+
+    /**
+     * @param string $id
+     *
+     * @return mixed
+     * @throws \Exception
+     */
+    public function __get(string $id)
+    {
+        if ($this->DIContainer->has($id)) {
+            return $this->DIContainer[$id];
+        }
+
+        throw new \Exception('Invalid DI container key: '.$id);
+    }
+
+
+    protected function bootEloquent()
+    {
+        $this->app->getContainer()->get('db');
+    }
+
 
     /**
      * @param UriInterface $uri
@@ -55,17 +71,26 @@ class BaseController
     protected function fetchClientApp(UriInterface $uri, array $state): string
     {
         $ssrHtml = '';
+        $stateAsString = "{}; /* Default */";
 
         if ($this->config->ssrEnabled) {
+
+            try {
+                $stateAsString = $this->json->encode($state, false, true);
+            } catch (JsonCustomException $e) {
+                $stateAsString = "{}; /* {$e->getMessage()} */";
+            }
+
             $renderer = new VueRenderer(DIR_ROOT.DIRECTORY_SEPARATOR.'node_modules');
             $ssrHtml = $renderer->render($this->config->ssrBundle, [
                 'URL'   => $uri->getPath(),
-                'STATE' => $state,
+                'STATE' => $stateAsString,
             ]);
         }
 
         return $this->view->fetch('ssr.twig', [
             'SSR_HTML' => $ssrHtml,
+            'STATE'    => $stateAsString, // todo не нужно
         ]);
     }
 
@@ -74,13 +99,29 @@ class BaseController
      * @param Request  $request
      * @param Response $response
      * @param array    $state
+     * @param bool     $status
+     * @param string   $message
      *
      * @return Response
      */
-    protected function renderApp(Request $request, Response $response, array $state = [])
-    {
-        $body = $this->fetchClientApp($request->getUri(), $state);
-        $response->getBody()->write($body);
+    protected function renderApp(
+        Request $request,
+        Response $response,
+        array $state = [],
+        bool $status = true,
+        string $message = ''
+    ) {
+        if ($request->isXhr()) {
+            $response = $response->withJson([
+                'status'  => $status,
+                'message' => $message,
+                'payload' => $state,
+            ]);
+        } else {
+            $body = $this->fetchClientApp($request->getUri(), $state);
+            $response->write($body);
+        }
+
 
         return $response;
     }
