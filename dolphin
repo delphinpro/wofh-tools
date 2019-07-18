@@ -4,4 +4,24 @@ require_once './vendor/autoload.php';
 require_once './private/bootstrap/constants.php';
 require_once './private/bootstrap/global_functions.php';
 
+function pre(...$args)
+{
+    foreach ($args as $arg) {
+        echo "\033[".join(';', [34]).'m('.gettype($arg).")\033[0m ";
+        if (
+            (is_null($arg))
+            or (is_bool($arg))
+            or (is_string($arg) && trim($arg) == '')
+        ) {
+            var_dump($arg);
+            echo PHP_EOL;
+        } else {
+            echo print_r($arg, true).PHP_EOL;
+        }
+    }
+    debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+    echo str_pad('', 70, '-').PHP_EOL;
+}
+
+
 \Dolphin\Dolphin::getInstance(__DIR__)->run();
