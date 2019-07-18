@@ -10,25 +10,29 @@ import { AUTH_REQUEST } from '@/store/actions/auth';
 
 export default {
     name: 'login',
+
     data() {
         return {
-            username: 'delphinpro',
-            password: 'delphinpro',
+            username: '',
+            password: '',
         };
     },
+
     methods: {
-        login: function () {
+
+        login() {
             const { username, password } = this;
             this.$store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
                 this.$router.push('/');
             });
         },
+
     },
 };
 </script>
 
 <template>
-    <div>
+    <div class="container">
         <form class="login" @submit.prevent="login">
             <h1>Sign in</h1>
 
