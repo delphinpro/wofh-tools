@@ -41,6 +41,9 @@ export default {
             <AppLogo class="navbar__logo"/>
             <TopMenu class="navbar__mainmenu"/>
             <ul class="navbar__usermenu top-menu">
+                <li class="top-menu__item">
+                    <router-link to="/dashboard" class="top-menu__link">Dashboard</router-link>
+                </li>
                 <li v-if="isProfileLoaded" class="top-menu__item">
                     <router-link to="/account" class="top-menu__link">{{name}}</router-link>
                 </li>
@@ -65,7 +68,8 @@ export default {
             display: flex;
         }
 
-        &__logo {}
+        &__logo {
+        }
 
         &__mainmenu {
             margin-left: 1rem;

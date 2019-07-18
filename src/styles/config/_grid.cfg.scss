@@ -8,12 +8,12 @@
 // adapting to different screen sizes, for use in media queries.
 
 $grid-breakpoints: (
-    xs: 0,
-    mb: 384px,
-    sm: 576px,
-    md: 768px,
-    lg: 992px,
-    xl: 1200px,
+  xs: 0,
+  mb: 384px,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
 ) !default;
 
 // Grid containers
@@ -21,10 +21,10 @@ $grid-breakpoints: (
 // Define the maximum width of `.container` for different screen sizes.
 
 $container-max-widths: (
-    sm: 540px,
-    md: 720px,
-    lg: 960px,
-    xl: 1170px,
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1170px,
 ) !default;
 
 // Grid columns
@@ -34,12 +34,12 @@ $container-max-widths: (
 $grid-columns: 12 !default;
 $grid-gutter-width-base: 30px !default;
 $grid-gutter-widths: (
-    xs: 12px,
-    mb: 16px,
-    sm: 16px,
-    md: 20px,
-    lg: 26px,
-    xl: $grid-gutter-width-base,
+  xs: 12px,
+  mb: 16px,
+  sm: 16px,
+  md: 20px,
+  lg: 26px,
+  xl: $grid-gutter-width-base,
 ) !default;
 
 $grid-float-breakpoint: map_get($grid-breakpoints, sm) !default;

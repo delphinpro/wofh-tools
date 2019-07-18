@@ -8,8 +8,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from '@/store/index';
-import Home from '@/views/Home.vue';
-import PageNotFound from '@/views/PageNotFound.vue';
+import Home from '@/views/Home';
+import Statistic from '@/views/Statistic';
+import PageNotFound from '@/views/PageNotFound';
 
 
 Vue.use(Router);
@@ -42,10 +43,20 @@ export function createRouter() {
                 component: Home,
             },
             {
+                path: '/stat',
+                name: 'stat',
+                component: Statistic,
+            },
+            {
                 path: '/login',
                 name: 'login',
                 component: () => import('./views/Login.vue'),
                 beforeEnter: ifNotAuthenticated,
+            },
+            {
+                path: '/dashboard',
+                name: 'dashboard',
+                component: () => import('./views/Dashboard.vue'),
             },
             { path: '*', component: PageNotFound },
         ],

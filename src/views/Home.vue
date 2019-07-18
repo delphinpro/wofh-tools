@@ -11,17 +11,12 @@
             Login,
         },
         computed: {
-            ...mapGetters(['isAuthenticated', 'authStatus']),
-            loading: function () {
-                return this.authStatus === 'loading' && !this.isAuthenticated;
-            },
         },
     };
 </script>
 
 <template>
     <div class="container">
-        <Loading v-if="loading"/>
         <div v-if="isAuthenticated">
             <img alt="Vue logo" src="../assets/main/logo.png">
             <HelloWorld msg="Welcome to Your Vue.js App"/>

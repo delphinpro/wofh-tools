@@ -45,7 +45,10 @@ a {
 
 %default-element {
   @include rhythm-margins(0, 1);
-  &:last-child { margin-bottom: 0; }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 p {

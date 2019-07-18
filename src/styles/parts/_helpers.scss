@@ -4,10 +4,14 @@
 /// @license licensed under the MIT license
 ////
 
-.text-right { text-align: right; }
+.text-right {
+  text-align: right;
+}
 
 @each $bp in $grid-breakpoints {
   @include media-breakpoint-up($bp) {
-    .text-#{$bp}-right { text-align: right; }
+    .text-#{$bp}-right {
+      text-align: right;
+    }
   }
 }

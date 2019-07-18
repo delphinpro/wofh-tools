@@ -77,7 +77,9 @@ export default {
             padding: 0 3px;
         }
 
-        &, * { box-sizing: border-box; }
+        &, * {
+            box-sizing: border-box;
+        }
     }
 
     .dbg-checkbox {

@@ -12,6 +12,7 @@
 <body>
 {% include "common/noscript.twig" %}
 <div id="app">{% block app %}{% endblock %}</div>
+<script>window.__PRELOAD_STATE__ = {{ STATE|raw }};</script>
 <!-- built files will be auto injected -->
 </body>
 </html>

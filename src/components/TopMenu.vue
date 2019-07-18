@@ -13,7 +13,7 @@ export default {
 <template>
     <ul class="top-menu">
         <li class="top-menu__item">
-            <a class="top-menu__link" href="/stat">Статистика</a>
+            <router-link to="/stat" class="top-menu__link">Статистика</router-link>
         </li>
         <li class="top-menu__item">
             <a class="top-menu__link" href="/technology">Науки</a>
