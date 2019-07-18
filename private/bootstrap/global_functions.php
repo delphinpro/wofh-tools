@@ -7,6 +7,10 @@
  * @license     licensed under the MIT license
  */
 
+const CAST_TO_INT = 1;
+const CAST_TO_FLOAT = 2;
+const CAST_TO_BOOL = 3;
+
 /**
  * @param string $cachePath
  * @param string $rootPath
@@ -23,7 +27,27 @@ function prepareTwigCachePath(string $cachePath, string $rootPath)
 }
 
 
-function loadGlobalConfiguration($configDirectory)
+/**
+ * @param string $var
+ * @param int    $castTo
+ *
+ * @return mixed
+ */
+function castVar(string $var, int $castTo)
+{
+    $filters = [
+        CAST_TO_INT   => FILTER_VALIDATE_INT,
+        CAST_TO_FLOAT => FILTER_VALIDATE_FLOAT,
+        CAST_TO_BOOL  => FILTER_VALIDATE_BOOLEAN,
+    ];
+
+    $filter = array_key_exists($castTo, $filters) ? $filters[$castTo] : FILTER_DEFAULT;
+
+    return filter_var($var, $filter);
+}
+
+
+function loadGlobalConfiguration(string $configDirectory): void
 {
     if (!is_dir($configDirectory)) {
         echo 'Invalid config directory or not exists';
@@ -45,13 +69,16 @@ function loadGlobalConfiguration($configDirectory)
     $dotenv->required('addContentLengthHeader')->isBoolean();
     $dotenv->required('routerCacheFile')->isBoolean();
 
-    $_ENV['responseChunkSize'] = (int)$_ENV['responseChunkSize'];
-    $_ENV['outputBuffering'] = $_ENV['outputBuffering'] === 'false' ? false
-        : $_ENV['outputBuffering'];
-    $_ENV['determineRouteBeforeAppMiddleware'] = castStringToBoolean($_ENV['determineRouteBeforeAppMiddleware']);
-    $_ENV['displayErrorDetails'] = castStringToBoolean($_ENV['displayErrorDetails']);
-    $_ENV['addContentLengthHeader'] = castStringToBoolean($_ENV['addContentLengthHeader']);
-    $_ENV['routerCacheFile'] = castStringToBoolean($_ENV['routerCacheFile']);
+    $_ENV['responseChunkSize'] = castVar($_ENV['responseChunkSize'], CAST_TO_INT);
+    $_ENV['outputBuffering'] = $_ENV['outputBuffering'] === 'false' ? false : $_ENV['outputBuffering'];
+    $_ENV['determineRouteBeforeAppMiddleware'] = castVar($_ENV['determineRouteBeforeAppMiddleware'], CAST_TO_BOOL);
+    $_ENV['displayErrorDetails'] = castVar($_ENV['displayErrorDetails'], CAST_TO_BOOL);
+    $_ENV['addContentLengthHeader'] = castVar($_ENV['addContentLengthHeader'], CAST_TO_BOOL);
+    $_ENV['routerCacheFile'] = castVar($_ENV['routerCacheFile'], CAST_TO_BOOL);
+    $_ENV['DEBUG'] = castVar($_ENV['DEBUG'], CAST_TO_BOOL);
+    $_ENV['ssrEnabled'] = castVar($_ENV['ssrEnabled'], CAST_TO_BOOL);
+    $_ENV['twigCacheEnabled'] = castVar($_ENV['twigCacheEnabled'], CAST_TO_BOOL);
+    $_ENV['statLoadInterval'] = castVar($_ENV['statLoadInterval'], CAST_TO_INT);
 }
 
 

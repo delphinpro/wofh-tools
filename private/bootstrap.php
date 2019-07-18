@@ -37,13 +37,13 @@ loadGlobalConfiguration(realpath('../config'));
 
 $app = new \Slim\App([
     'settings' => [
-        'httpVersion'                       => getenv('httpVersion') ?: '1.1',
-        'responseChunkSize'                 => getenv('responseChunkSize') ?: 4096,
-        'outputBuffering'                   => getenv('outputBuffering') ?: 'append',
-        'determineRouteBeforeAppMiddleware' => getenv('determineRouteBeforeAppMiddleware') ?: false,
-        'displayErrorDetails'               => getenv('displayErrorDetails') ?: false,
-        'addContentLengthHeader'            => getenv('addContentLengthHeader') ?: true,
-        'routerCacheFile'                   => getenv('routerCacheFile') ?: false,
+        'httpVersion'                       => env('httpVersion') ?: '1.1',
+        'responseChunkSize'                 => env('responseChunkSize') ?: 4096,
+        'outputBuffering'                   => env('outputBuffering') ?: 'append',
+        'determineRouteBeforeAppMiddleware' => env('determineRouteBeforeAppMiddleware') ?: false,
+        'displayErrorDetails'               => env('displayErrorDetails') ?: false,
+        'addContentLengthHeader'            => env('addContentLengthHeader') ?: true,
+        'routerCacheFile'                   => env('routerCacheFile') ?: false,
     ],
 ]);
 
