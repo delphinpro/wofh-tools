@@ -29,8 +29,45 @@ $dic['app'] = function () use ($app) {
  *== Application config
  *== ======================================= ==*/
 
-$dic['config'] = function () use ($config) {
-    return $config;
+$dic['config'] = function () {
+    $ssrBundle = DIR_ROOT
+        .DIRECTORY_SEPARATOR.trim(env('publicHtmlDir'), '\\/')
+        .DIRECTORY_SEPARATOR.trim(env('ssrBundle'), '\\/');
+
+    return new AppSettings([
+        'httpVersion'                       => env('httpVersion'),
+        'responseChunkSize'                 => env('responseChunkSize'),
+        'outputBuffering'                   => env('outputBuffering'),
+        'determineRouteBeforeAppMiddleware' => env('determineRouteBeforeAppMiddleware'),
+        'displayErrorDetails'               => env('displayErrorDetails'),
+        'addContentLengthHeader'            => env('addContentLengthHeader'),
+        'routerCacheFile'                   => env('routerCacheFile'),
+
+        'debug' => env('debug'),
+
+        'ssrEnabled' => env('ssrEnabled'),
+        'ssrBundle'  => $ssrBundle,
+
+        'twigCacheEnabled' => env('twigCacheEnabled'),
+        'twigCachePath'    => env('twigCachePath'),
+
+        'statisticPath'    => env('statisticPath'),
+        'statLoadInterval' => env('statLoadInterval'),
+
+        'rootPath'      => DIR_ROOT,
+        'publicHtmlDir' => env('publicHtmlDir'),
+
+        'db' => [
+            'driver'    => env('DB_DRIVER'),
+            'host'      => env('DB_HOST'),
+            'database'  => env('DB_DATABASE'),
+            'username'  => env('DB_USERNAME'),
+            'password'  => env('DB_PASSWORD'),
+            'charset'   => env('DB_CHARSET'),
+            'collation' => env('DB_COLLATION'),
+            'prefix'    => env('DB_PREFIX'),
+        ],
+    ]);
 };
 
 /*==

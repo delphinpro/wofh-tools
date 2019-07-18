@@ -13,6 +13,7 @@ namespace WofhTools\Core;
  *
  * @property boolean debug
  * @property string  rootPath
+ * @property string  publicHtmlDir
  * @property boolean ssrEnabled
  * @property string  ssrBundle
  * @property boolean twigCacheEnabled
@@ -53,25 +54,6 @@ class AppSettings
         ];
 
         $this->data = array_merge($defaultSettings, $data);
-    }
-
-
-    /**
-     * @param string $configPath
-     * @param string $rootPath
-     *
-     * @return AppSettings
-     */
-    public static function loadConfig(string $configPath, string $rootPath): AppSettings
-    {
-        /** @noinspection PhpIncludeInspection */
-        $env = include $configPath.DIRECTORY_SEPARATOR.'env.php';
-        $configPath = $configPath.DIRECTORY_SEPARATOR.$env['env'];
-        /** @noinspection PhpIncludeInspection */
-        $config = include $configPath.DIRECTORY_SEPARATOR.'application.php';
-        $config['rootPath'] = $rootPath;
-
-        return new AppSettings($config);
     }
 
 
