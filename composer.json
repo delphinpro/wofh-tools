@@ -24,7 +24,8 @@
     "ext-curl": "*",
     "ext-v8js": "*",
     "ext-json": "*",
-    "ext-pdo": "*"
+    "ext-pdo": "*",
+    "vlucas/phpdotenv": "^3.4"
   },
   "require-dev": {
     "phpunit/phpunit": "7"
