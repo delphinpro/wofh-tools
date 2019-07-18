@@ -26,6 +26,16 @@ module.exports = {
     indexPath: NODE_ENV === 'production' ? '../private/templates/layouts/base.twig' : 'index.html',
     productionSourceMap: false,
 
+    devServer: {
+        proxy: {
+            '^/api': {
+                target: 'http://wofh-tools.project',
+                ws: true,
+                changeOrigin: true
+            },
+        }
+    },
+
     configureWebpack: () => ({
         entry: `./src/entry-${target}`,
         target: TARGET_NODE ? 'node' : 'web',
