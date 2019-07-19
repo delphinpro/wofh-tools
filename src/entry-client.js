@@ -16,13 +16,14 @@ import { AxiosWrapper } from '@/utils/AxiosWrapper';
 const toastConfigs = {
     position: 'top right',
     closeButton: true,
-    progressBar: true,
+    // progressBar: true,
+    useHtml: true,
     type: 'success',
     showMethod: 'lightSpeedIn',
     hideMethod: 'slideOutRight',
-    showDuration: 400,
-    hideDuration: 400,
-    timeOut: 100000,
+    showDuration: 300,
+    hideDuration: 200,
+    timeOut: 10000,
 };
 
 Vue.use(Toast, toastConfigs);
