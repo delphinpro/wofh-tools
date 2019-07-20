@@ -30,6 +30,11 @@ session_start();
 
 loadGlobalConfiguration(realpath('../config'));
 
+if (env('DEBUG')) {
+    require_once __DIR__.'/lib/PHP_Exceptionizer/Exceptionizer.php';
+    $exceptionizer = new PHP_Exceptionizer();
+}
+
 
 /*==
  *== Init application
