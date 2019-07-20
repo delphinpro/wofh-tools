@@ -25,6 +25,7 @@
     "ext-v8js": "*",
     "ext-json": "*",
     "ext-pdo": "*",
+    "webmozart/assert": "^1.4",
     "vlucas/phpdotenv": "^3.4"
   },
   "require-dev": {
