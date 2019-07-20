@@ -83,6 +83,56 @@ function loadGlobalConfiguration(string $configDirectory): void
 
 
 /**
+ * Возвращает массив настроек, полученных из $_ENV
+ *
+ * @return array
+ */
+function getConfigFromEnv(): array
+{
+    $ssrBundle = DIR_ROOT
+        .DIRECTORY_SEPARATOR.trim(env('publicHtmlDir'), '\\/')
+        .DIRECTORY_SEPARATOR.trim(env('ssrBundle'), '\\/');
+
+    return [
+        'httpVersion'                       => env('httpVersion'),
+        'responseChunkSize'                 => env('responseChunkSize'),
+        'outputBuffering'                   => env('outputBuffering'),
+        'determineRouteBeforeAppMiddleware' => env('determineRouteBeforeAppMiddleware'),
+        'displayErrorDetails'               => env('displayErrorDetails'),
+        'addContentLengthHeader'            => env('addContentLengthHeader'),
+        'routerCacheFile'                   => env('routerCacheFile'),
+
+        'JwtSecretKey' => env('JWT_SECRET_KEY'),
+
+        'debug' => env('debug'),
+
+        'ssrEnabled' => env('ssrEnabled'),
+        'ssrBundle'  => $ssrBundle,
+
+        'twigCacheEnabled' => env('twigCacheEnabled'),
+        'twigCachePath'    => env('twigCachePath'),
+
+        'statisticPath'    => env('statisticPath'),
+        'statLoadInterval' => env('statLoadInterval'),
+
+        'rootPath'      => DIR_ROOT,
+        'publicHtmlDir' => env('publicHtmlDir'),
+
+        'db' => [
+            'driver'    => env('DB_DRIVER'),
+            'host'      => env('DB_HOST'),
+            'database'  => env('DB_DATABASE'),
+            'username'  => env('DB_USERNAME'),
+            'password'  => env('DB_PASSWORD'),
+            'charset'   => env('DB_CHARSET'),
+            'collation' => env('DB_COLLATION'),
+            'prefix'    => env('DB_PREFIX'),
+        ],
+    ];
+}
+
+
+/**
  * @param array $settings
  *
  * @return \Illuminate\Database\Capsule\Manager

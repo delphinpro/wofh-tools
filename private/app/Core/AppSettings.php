@@ -39,6 +39,8 @@ class AppSettings
             'addContentLengthHeader'            => true,
             'routerCacheFile'                   => false,
 
+            'JwtSecretKey' => '',
+
             'debug' => false,
 
             'ssrEnabled' => true,

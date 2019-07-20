@@ -24,4 +24,4 @@ function pre(...$args)
 }
 
 
-\Dolphin\Dolphin::getInstance(__DIR__)->run();
+\Dolphin\Dolphin::getInstance(__DIR__.'/config')->run();

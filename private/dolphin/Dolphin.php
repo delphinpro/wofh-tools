@@ -31,11 +31,11 @@ class Dolphin extends DolphinContainer
 
 
     /**
-     * @param string $projectRoot
+     * @param string $configLocation
      *
      * @return Dolphin
      */
-    public static function getInstance(string $projectRoot)
+    public static function getInstance(string $configLocation)
     {
         $container = new Container();
 
@@ -43,8 +43,10 @@ class Dolphin extends DolphinContainer
             return new Console();
         };
 
-        $container['config'] = function () use ($projectRoot) {
-            return AppSettings::loadConfig(DIR_CONFIG, $projectRoot);
+        loadGlobalConfiguration($configLocation);
+
+        $container['config'] = function () use ($configLocation) {
+            return new AppSettings(getConfigFromEnv());
         };
 
         $container['http'] = function () {
