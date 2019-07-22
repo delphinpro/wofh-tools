@@ -16,7 +16,7 @@ export default {
 
 <template>
     <div class="footer">
-        <div class="footer__container container">
+        <div class="footer__container container-fluid">
             <div class="footer__section">
                 <p>
                     © {{projectName}}, v{{projectVer}},
@@ -44,8 +44,8 @@ export default {
     .footer {
         @include font(11px, 14px);
         width: 100%;
-        background: $background-dark-2;
-        box-shadow: $shadow-bar inset;
+        background: darken($sidebar-dark-bg, 3%);
+        box-shadow: 0 4px 4px rgba(0, 0, 0, .2) inset;
 
         &__container {
             @include media-breakpoint-up(md) {
