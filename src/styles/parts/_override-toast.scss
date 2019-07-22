@@ -18,38 +18,7 @@ body {
   .cxlt-toastr-container {
     overflow-x: hidden;
     overflow-y: auto;
-    $color: red;
-    $background: pink;
-    $size: 10px;
-
-    &::-webkit-scrollbar {
-      width: $size;
-      height: $size;
-    }
-
-    &::-webkit-scrollbar-button {
-      display: none;
-    }
-
-    &::-webkit-scrollbar-corner {
-      background: transparent;
-    }
-
-    &::-webkit-scrollbar-track {
-      background-color: $background;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: $color;
-
-      &:hover {
-        background-color: $color;
-      }
-    }
-
-    &::-webkit-resizer {
-      display: none;
-    }
+    @include webkit-scrollbar($accent-color, $size: 10px);
   }
 
   .cxlt-toastr-container > :hover {
@@ -74,8 +43,7 @@ body {
   .toast-title {
     font-family: $family-head;
     background: rgba(black, 0.2);
-    padding: rhythm(0.25) rhythm(0.5);
-    padding-right: rhythm(0.75 + 0.25 * 2);
+    padding: rhythm(0.25) rhythm(0.75 + 0.25 * 2) rhythm(0.25) rhythm(0.5);
   }
 
   .toast-message {
