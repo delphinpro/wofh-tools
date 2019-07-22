@@ -27,6 +27,7 @@
     "ext-pdo": "*",
     "webmozart/assert": "^1.4",
     "firebase/php-jwt": "^5.0",
+    "tuupola/slim-jwt-auth": "^3.4",
     "vlucas/phpdotenv": "^3.4"
   },
   "require-dev": {
