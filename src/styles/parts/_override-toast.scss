@@ -18,7 +18,7 @@ body {
   .cxlt-toastr-container {
     overflow-x: hidden;
     overflow-y: auto;
-    @include webkit-scrollbar($accent-color, $size: 10px);
+    @include webkit-scrollbar($wt-accent-color, $size: 10px);
   }
 
   .cxlt-toastr-container > :hover {
@@ -71,6 +71,6 @@ body {
   }
 
   .toast-info {
-    background-color: $second-color;
+    background-color: $wt-second-color;
   }
 }

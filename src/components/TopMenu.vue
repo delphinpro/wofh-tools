@@ -38,10 +38,10 @@ export default {
             @include font(13px);
             font-weight: bold;
             display: flex;
-            border-left: 1px solid $second-color-dark;
+            border-left: 1px solid $wt-second-color-dark;
 
             &:last-child {
-                border-right: 1px solid $second-color-dark;
+                border-right: 1px solid $wt-second-color-dark;
             }
         }
 
@@ -55,7 +55,7 @@ export default {
             cursor: pointer;
 
             &:hover {
-                background: $second-color-dark;
+                background: $wt-second-color-dark;
                 color: #fff;
             }
         }
