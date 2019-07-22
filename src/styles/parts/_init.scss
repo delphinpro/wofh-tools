@@ -9,11 +9,11 @@
 }
 
 body {
-  font-family: $family-base;
+  font-family: $wt-family-base;
   min-height: 100%;
-  background: $background-base;
-  color: $main-color;
-  @include webkit-scrollbar($main-color);
+  background: $wt-background-base;
+  color: $wt-main-color;
+  @include webkit-scrollbar($wt-main-color);
 }
 
 @include make-grid-system();

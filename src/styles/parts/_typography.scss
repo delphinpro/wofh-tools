@@ -9,8 +9,8 @@
 //== ======================================= ==//
 
 %heading-common {
-  font-family: $family-head;
-  color: lighten($main-color, 5%);
+  font-family: $wt-family-head;
+  color: lighten($wt-main-color, 5%);
 }
 
 @each $h, $params in $headings {

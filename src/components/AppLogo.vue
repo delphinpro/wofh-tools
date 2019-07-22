@@ -20,12 +20,12 @@ export default {
 
 <style lang="scss">
     .logo {
-        font-family: $family-head;
+        font-family: $wt-family-head;
         font-weight: 400;
         display: flex;
         align-items: center;
         text-decoration: none !important;
-        color: lighten($main-color, 30%) !important;
+        color: lighten($wt-main-color, 30%) !important;
 
         &__image {
             @include size(rhythm($navbar-height-rhythm - $navbar-padding-rhythm * 2));

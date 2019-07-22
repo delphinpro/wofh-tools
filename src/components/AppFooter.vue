@@ -67,7 +67,7 @@ export default {
             color: inherit;
 
             &:hover {
-                color: lighten($main-color, 10%);
+                color: lighten($wt-main-color, 10%);
             }
         }
 
