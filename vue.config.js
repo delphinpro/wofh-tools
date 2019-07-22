@@ -82,7 +82,7 @@ module.exports = {
     },
 
     css: {
-        sourceMap: false,
+        sourceMap: NODE_ENV !== 'production',
         extract: NODE_ENV === 'production' && !TARGET_NODE,
         loaderOptions: {
             sass: {
