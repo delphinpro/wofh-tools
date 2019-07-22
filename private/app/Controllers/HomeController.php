@@ -21,6 +21,6 @@ final class HomeController extends BaseController
 
     public function dispatch(Request $request, Response $response, $args)
     {
-        return $this->renderApp($request, $response);
+        return $this->sendRequest($request, $response);
     }
 }

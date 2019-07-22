@@ -104,13 +104,13 @@ class BaseController
      *
      * @return Response
      */
-    protected function renderApp(
+    protected function sendRequest(
         Request $request,
         Response $response,
         array $state = [],
         bool $status = true,
         string $message = ''
-    ) {
+    ): Response {
         if ($request->isXhr()) {
             $response = $response->withJson([
                 'status'  => $status,
