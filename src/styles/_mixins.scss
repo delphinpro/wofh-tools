@@ -16,3 +16,30 @@
   width: $width;
   height: $height;
 }
+
+@mixin webkit-scrollbar($color, $background: rgba($color, 0.2), $size: 16px) {
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+  &::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: $background;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $color;
+    border-radius: 100px;
+
+    &:hover {
+      background-color: $color;
+    }
+  }
+  &::-webkit-resizer {
+    display: none;
+  }
+}
