@@ -8,6 +8,7 @@
 import { AUTH_REQUEST, AUTH_ERROR, AUTH_SUCCESS, AUTH_LOGOUT } from '../actions/auth';
 import { USER_REQUEST } from '../actions/user';
 import apiCall from '@/utils/api';
+import { HTTP_HEADER_AUTHORIZATION, LS_KEY_TOKEN } from '@/utils/constants';
 
 
 const state = {
