@@ -26,7 +26,10 @@ export default {
 
         <h3 class="type-title">Text Emphasis</h3>
 
-        <p class="lead">Lead to emphasize importance</p>
+        <p class="lead">Lead to emphasize importance Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi
+            ducimus id laborum reprehenderit? Aspernatur deleniti dolore libero nemo nihil! Aut cum facere illo
+            molestias officiis omnis rerum similique voluptatem. Lorem ipsum dolor sit amet, consectetur adipisicing
+            elit. Blanditiis in, magnam odio perferendis sint veniam.</p>
         <p class="text-green">Text green to emphasize success</p>
         <p class="text-aqua">Text aqua to emphasize info</p>
         <p class="text-light-blue">Text light blue to emphasize info (2)</p>

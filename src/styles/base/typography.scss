@@ -41,18 +41,6 @@
   }
 }
 
-//==
-//== Links
-//== ======================================= ==//
-
-//a {
-//  color: $color-link;
-//  transition: 0.3s ease;
-//
-//  &:hover {
-//    color: $color-link-hover;
-//  }
-//}
 
 //==
 //== Content
@@ -68,4 +56,9 @@
 
 p {
   @extend %default-element;
+}
+
+.lead {
+  @include font($rhythm-base-font-size * 1.25, 1.25);
+  font-weight: 300;
 }
