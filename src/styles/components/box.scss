@@ -1,0 +1,52 @@
+//==
+//== Component: Box
+//== ======================================= ==//
+
+.box2 {
+  @include margin-trailer(1);
+  border-radius: $box2-border-radius;
+  background: $dashboard-sidebar-bg;
+  border-top: $box2-border-top-width solid transparent;
+  width: 100%;
+  box-shadow: $box2-shadow;
+
+  &__header {
+    @include apply-side-rhythm-border(bottom, 1px, 0.5, $border-style: solid $box2-divider-color);
+    @include font(18px, 1);
+    display: flex;
+    align-items: center;
+    margin: ($box2-border-top-width / -1) 0 0;
+    padding: rhythm(0.5);
+    font-weight: 600;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    margin-right: 0.5em;
+  }
+
+  &__title {
+  }
+
+  &__body {
+    padding: rhythm(0.5);
+    margin: 0;
+
+    &:first-child {
+      margin-top: ($box2-border-top-width / -1);
+    }
+  }
+
+  //==
+  //== Box color variation
+  //== @formatter:off
+  //== ======================================= ==//
+
+  @include box-variant($box2-theme-default);
+
+  &_style_primary { @include box-variant($box2-theme-primary); }
+  &_style_info    { @include box-variant($box2-theme-info);    }
+  &_style_danger  { @include box-variant($box2-theme-danger);  }
+  &_style_warning { @include box-variant($box2-theme-warning); }
+  &_style_success { @include box-variant($box2-theme-success); }
+}

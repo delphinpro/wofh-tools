@@ -98,6 +98,17 @@ $navbar-padding-rhythm: 0.25;
 //== Boxes
 //== ======================================= ==//
 
+$box2-border-radius: 4px;
+$box2-border-top-width: 3px;
+$box2-divider-color: rgba(#fff, 0.05);
+$box2-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+
+$box2-theme-default: $color-text-base;
+$box2-theme-primary: $color-primary;
+$box2-theme-info   : $color-info;
+$box2-theme-danger : $color-danger;
+$box2-theme-warning: $color-warning;
+$box2-theme-success: $color-success;
 
 
 //==

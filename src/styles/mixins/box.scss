@@ -1,0 +1,13 @@
+//==
+//==
+//== ======================================= ==//
+
+@mixin box-variant($btc) {
+  border-top-color: $btc;
+
+  .box2 {
+    &__icon {
+      color: $btc;
+    }
+  }
+}
