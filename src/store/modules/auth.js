@@ -1,8 +1,8 @@
-/**
+/*!
  * WofhTools
- * @author      delphinpro <delphinpro@gmail.com>
- * @copyright   copyright © 2019 delphinpro
- * @license     licensed under the MIT license
+ * File: store/modules/auth.js
+ * © 2019 delphinpro <delphinpro@gmail.com>
+ * licensed under the MIT license
  */
 
 import { AUTH_REQUEST, AUTH_ERROR, AUTH_SUCCESS, AUTH_LOGOUT } from '../actions/auth';

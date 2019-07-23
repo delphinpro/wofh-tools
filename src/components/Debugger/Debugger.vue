@@ -1,9 +1,8 @@
-<script>/**
+<script>/*!
  * WofhTools
- * Debugger.vue
- * @author      delphinpro <delphinpro@gmail.com>
- * @copyright   copyright © 2019 delphinpro
- * @license     licensed under the MIT license
+ * Component: Debugger.vue
+ * © 2019 delphinpro <delphinpro@gmail.com>
+ * licensed under the MIT license
  */
 
 import DbgPanel from './DbgPanel';

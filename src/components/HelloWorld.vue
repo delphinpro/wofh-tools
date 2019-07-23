@@ -1,10 +1,16 @@
-<script>
-    export default {
-        name: 'HelloWorld',
-        props: {
-            msg: String,
-        },
-    };
+<script>/*!
+ * WofhTools
+ * Component: HelloWorld.vue
+ * © 2019 delphinpro <delphinpro@gmail.com>
+ * licensed under the MIT license
+ */
+
+export default {
+    name: 'HelloWorld',
+    props: {
+        msg: String,
+    },
+};
 </script>
 
 <template>

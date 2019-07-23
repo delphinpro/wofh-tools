@@ -1,8 +1,8 @@
-/**
+/*!
  * WofhTools
- * @author      delphinpro <delphinpro@gmail.com>
- * @copyright   copyright © 2019 delphinpro
- * @license     licensed under the MIT license
+ * File: store/actions/auth.js
+ * © 2019 delphinpro <delphinpro@gmail.com>
+ * licensed under the MIT license
  */
 
 export const AUTH_REQUEST = 'AUTH_REQUEST';

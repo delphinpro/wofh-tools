@@ -1,8 +1,12 @@
-<script>
-    import { mapGetters } from 'vuex';
-    import HelloWorld from '@/components/HelloWorld';
-    import Login from '@/views/Login';
+<script>/*!
+ * WofhTools
+ * View: Home.vue
+ * © 2019 delphinpro <delphinpro@gmail.com>
+ * licensed under the MIT license
+ */
 
+import HelloWorld from '@/components/HelloWorld';
+import Login from '@/views/Login';
 
     export default {
         name: 'home',

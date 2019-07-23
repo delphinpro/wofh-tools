@@ -1,8 +1,7 @@
-/**
+/*!
  * WofhTools
- *
- * delphinpro <delphinpro@gmail.com>
- * copyright © 2019 delphinpro
+ * File: utils/AxiosWrapper.js
+ * © 2019 delphinpro <delphinpro@gmail.com>
  * licensed under the MIT license
  */
 
