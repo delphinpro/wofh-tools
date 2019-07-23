@@ -23,23 +23,27 @@ $wt-family-head: "Roboto Slab", serif;
 //== COLORS
 //== ======================================= ==//
 
-$light-blue: #3c8dbc; // Primary
-$red       : #dd4b39; // Danger
-$green     : #00a65a; // Success
-$aqua      : #00c0ef; // Info
-$yellow    : #f39c12; // Warning
+//== Color palette
 
-$blue    : #0073b7;
-$navy    : #001f3f;
-$teal    : #39cccc;
-$olive   : #3d9970;
-$lime    : #01ff70;
-$orange  : #ff851b;
-$fuchsia : #f012be;
-$purple  : #605ca8;
-$maroon  : #d81b60;
-$black   : #111;
+$palette-light-blue: #3c8dbc; // Primary
+$palette-red       : #dd4b39; // Danger
+$palette-green     : #00a65a; // Success
+$palette-aqua      : #00c0ef; // Info
+$palette-yellow    : #f39c12; // Warning
+
+$palette-blue    : #0073b7;
+$palette-navy    : #001f3f;
+$palette-teal    : #39cccc;
+$palette-olive   : #3d9970;
+$palette-lime    : #01ff70;
+$palette-orange  : #ff851b;
+$palette-fuchsia : #f012be;
+$palette-purple  : #605ca8;
+$palette-maroon  : #d81b60;
+$palette-black   : #111;
 $gray-lte: #d2d6de;
+
+//== Semantic colors
 
 $wt-background-base: #2b3034;
 $background-dark-1 : #252a2e;
@@ -51,7 +55,11 @@ $wt-accent-color: #d149d0;
 $wt-second-color     : #25628f;
 $wt-second-color-dark: #21577f;
 
-$danger-color: #ef5350;
+$color-primary: $palette-light-blue;
+$color-info   : $palette-aqua;
+$color-success: $palette-green;
+$color-warning: $palette-yellow;
+$color-danger : $palette-red;
 
 $link-color      : #42b983;
 $link-hover-color: #42a5f5;
