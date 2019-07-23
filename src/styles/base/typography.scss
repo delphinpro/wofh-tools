@@ -34,7 +34,6 @@
     }
     font-weight: if($font-size, $font-weight, null);
     font-style: if($font-style, $font-style, null);
-    background: rgba(black, 0.3);
 
     @at-root #{$h} {
       @extend .#{$h};
