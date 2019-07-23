@@ -60,9 +60,10 @@ export default {
 
 <style lang="scss">
     .main-header {
+        @include font(13px);
         position: fixed;
-        background: var(--main-header-bg);
-        color: var(--main-header-color);
+        background: $main-header-background;
+        color: $main-header-color;
         box-shadow: $shadow-bar;
         z-index: $z-navbar-fixed;
 
@@ -95,8 +96,8 @@ export default {
         padding: 0;
 
         &:hover {
-            color: var(--main-header-hover-color);
-            background-color: var(--main-header-hover-bg);
+            color: $main-header-color-hover;
+            background-color: $main-header-background-hover;
         }
 
         &:focus,

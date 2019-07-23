@@ -5,10 +5,6 @@
 ////
 
 :root {
-  --main-header-color: #{lighten($wt-text-color, 30%)};
-  --main-header-bg: #{$wt-second-color};
-  --main-header-hover-color: #fff;
-  --main-header-hover-bg: #{darken($palette-light-blue, 5%)};
 }
 
 @include establish-baseline() {
@@ -19,9 +15,9 @@
 body {
   font-family: $wt-family-base;
   min-height: 100%;
-  background: $wt-background-base;
-  color: $wt-text-color;
-  @include webkit-scrollbar($wt-text-color);
+  background: $background-base;
+  color: $color-text-base;
+  @include webkit-scrollbar($color-text-base);
 }
 
 @include make-grid-system();

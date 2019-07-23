@@ -24,7 +24,7 @@ $rhythm-base-line-height: 24px !default;
 $rhythm-unit: 'rem' !default;
 
 // Whether to output fallback values in px when using rem as the rhythm-unit.
-$rhythm-rem-with-px-fallback: true !default;
+$rhythm-rem-with-px-fallback: false !default;
 
 // Default values for rhythm borders properties.
 // Supports style alone eg. `solid` or list of style and color eg. `solid #aaa`;

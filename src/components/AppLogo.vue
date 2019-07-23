@@ -47,7 +47,7 @@ export default {
         }
 
         &:hover {
-            background-color: var(--main-header-hover-bg);
+            background-color: $main-header-background-hover;
         }
     }
 </style>

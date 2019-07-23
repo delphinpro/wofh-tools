@@ -135,7 +135,7 @@ export default {
         }
 
         tr.active {
-            color: $link-color;
+            color: $color-link;
         }
     }
 
