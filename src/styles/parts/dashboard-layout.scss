@@ -1,0 +1,16 @@
+//==
+//== Dashboard layout
+//== ======================================= ==//
+
+.dashboard-layout {
+  display: flex;
+
+  &__sidebar {
+    width: $sidebar-width;
+    flex-shrink: 0;
+  }
+
+  &__main {
+    @include make-container();
+  }
+}

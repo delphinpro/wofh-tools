@@ -1,0 +1,93 @@
+// AdminLTE 2 Variables.less
+// =========================
+
+// LAYOUT
+// --------------------------------------------------------
+
+// Side bar and logo width
+$sidebar-width: 230px;
+// Boxed layout maximum width
+$boxed-layout-max-width: 1024px;
+// When the logo should go to the top of the screen
+$screen-header-collapse: $screen-xs-max;
+
+// Link colors (Aka: <a> tags)
+$link-color: $palette-light-blue;
+$link-hover-color: lighten($link-color, 15%);
+
+// Body background (Affects main content background only)
+$body-bg: #ecf0f5; // DEPRECATED
+$content-bg: #ecf0f5;
+
+// SIDEBAR SKINS
+// --------------------------------------------------------
+
+// Light sidebar
+$sidebar-light-bg: #f9fafc;
+$sidebar-light-hover-bg: lighten(#f0f0f1, 1.5%);
+$sidebar-light-color: #444;
+$sidebar-light-hover-color: #000;
+$sidebar-light-submenu-bg: $sidebar-light-hover-bg;
+$sidebar-light-submenu-color: #777;
+$sidebar-light-submenu-hover-color: #000;
+
+// sidebar-expanded-on-hover
+$sidebar-expanded-shadow: 3px 0 8px rgba(0, 0, 0, .125);
+
+// CONTROL SIDEBAR
+// --------------------------------------------------------
+$control-sidebar-width: $sidebar-width;
+
+// BOXES
+// --------------------------------------------------------
+$box-border-color: #f4f4f4;
+$box-border-radius: 3px;
+$box-footer-bg: #fff;
+$box-boxshadow: 0 1px 1px rgba(0, 0, 0, .1);
+$box-padding: 10px;
+
+// Box variants
+$box-default-border-top-color: #d2d6de;
+
+// BUTTONS
+// --------------------------------------------------------
+$btn-boxshadow: none;
+
+// PROGRESS BARS
+// --------------------------------------------------------
+$progress-bar-border-radius: 1px;
+$progress-bar-sm-border-radius: 1px;
+$progress-bar-xs-border-radius: 1px;
+
+// FORMS
+// --------------------------------------------------------
+$input-radius: 0;
+
+// BUTTONS
+// --------------------------------------------------------
+
+// Border radius for non flat buttons
+$btn-border-radius: 3px;
+
+// HR
+// --------------------------------------------------------
+// Horizontal line color.
+$hr-border: $gray;
+
+// DIRECT CHAT
+// --------------------------------------------------------
+$direct-chat-height: 250px;
+$direct-chat-default-msg-bg: $gray-lte;
+$direct-chat-default-font-color: #444;
+$direct-chat-default-msg-border-color: $gray-lte;
+
+// CHAT WIDGET
+// --------------------------------------------------------
+$attachment-border-radius: 3px;
+
+// TRANSITIONS SETTINGS
+// --------------------------------------------------------
+
+// Transition global options
+$transition-speed: .25s;
+$transition-fn: ease-in-out;
