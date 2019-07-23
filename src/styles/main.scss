@@ -9,15 +9,20 @@
 //@import url("https://fonts.googleapis.com/css?family=Roboto+Slab:300,400,700&subset=cyrillic");
 //@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
 //
-@import "parts/normalize";
-@import "parts/init";
-@import "parts/font-awesome";
-@import "parts/typography";
+@import "base/normalize";
+@import "base/init";
+@import "base/typography";
+
 @import "bootstrap-sass/bootstrap";
 @import "adminLTE/AdminLTE";
+
+@import "parts/font-awesome";
 @import "parts/dashboard-layout";
 @import "parts/dashboard-sidebar";
 //
 @import "components/box";
-//@import "./parts/helpers.scss";
+@import "components/breadcrumbs";
+@import "components/page-header";
+
+@import "./parts/helpers.scss";
 @import "./parts/override-toast.scss";
