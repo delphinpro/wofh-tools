@@ -87,22 +87,6 @@
   min-height: 250px;
 }
 
-/* H1 - H6 font */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.h1,
-.h2,
-.h3,
-.h4,
-.h5,
-.h6 {
-  font-family: 'Source Sans Pro', sans-serif;
-}
-
 /* General Links */
 a {
   color: $color-link;
@@ -114,16 +98,4 @@ a:focus {
   outline: none;
   text-decoration: none;
   color: $color-link-hover;
-}
-
-/* Page Header */
-.page-header {
-  margin: 10px 0 20px 0;
-  font-size: 22px;
-
-  > small {
-    color: #666;
-    display: block;
-    margin-top: 5px;
-  }
 }

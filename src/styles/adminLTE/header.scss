@@ -88,64 +88,6 @@
   }
 }
 
-// Content Header
-.content-header {
-  position: relative;
-  padding: 0;
-  min-height: rhythm(2);
-
-  // Header Text
-  > h1 {
-    margin: 0;
-    font-size: 24px;
-    > small {
-      font-size: 15px;
-      display: inline-block;
-      padding-left: 4px;
-      font-weight: 300;
-    }
-  }
-
-  > .breadcrumb {
-    float: right;
-    background: transparent;
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size: 12px;
-    padding: 7px 5px;
-    position: absolute;
-    top: 15px;
-    right: 10px;
-    border-radius:(2px);
-    > li > a {
-      color: #444;
-      text-decoration: none;
-      display: inline-block;
-      > .fa, > .glyphicon, > .ion {
-        margin-right: 5px;
-      }
-    }
-    > li + li:before {
-      content: '>\00a0';
-    }
-  }
-
-  @media (max-width: $screen-sm-max) {
-    > .breadcrumb {
-      position: relative;
-      margin-top: 5px;
-      top: 0;
-      right: 0;
-      float: none;
-      background: $gray-lte;
-      padding-left: 10px;
-      li:before {
-        color: darken($gray-lte, 20%);
-      }
-    }
-  }
-}
-
 .navbar-toggle {
   color: #fff;
   border: 0;
