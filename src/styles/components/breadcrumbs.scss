@@ -1,0 +1,20 @@
+//==
+//== Component: Breadcrumbs
+//== ======================================= ==//
+
+.breadcrumb {
+  $nbsp: "\00a0";
+
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  @include font(12px, 1);
+
+  > li {
+    + li:before {
+      padding: 0 5px;
+      content: "#{$nbsp}»#{$nbsp}";
+    }
+  }
+}
