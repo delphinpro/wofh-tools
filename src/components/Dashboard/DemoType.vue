@@ -38,22 +38,41 @@ export default {
         <p class="text-muted">Text muted to emphasize general</p>
 
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
                 <h3 class="type-title">Block Quotes</h3>
 
-                <blockquote>
+                <blockquote class="blockquote">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+                    <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
                 </blockquote>
+            </div>
+            <div class="col-sm-6">
 
                 <h3 class="type-title">Block Quotes Pulled Right</h3>
 
-                <blockquote class="pull-right">
+                <blockquote class="blockquote-reverse">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+                    <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
                 </blockquote>
             </div>
         </div>
+
+        <h3 class="type-title">Block Quotes Nested</h3>
+
+        <blockquote>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+            <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
+
+            <blockquote>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
+
+                <blockquote>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                    <footer>Someone famous in <cite title="Source Title">Source Title</cite></footer>
+                </blockquote>
+            </blockquote>
+        </blockquote>
 
         <div class="row">
             <div class="col-lg-4">

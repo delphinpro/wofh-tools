@@ -122,6 +122,10 @@ $page-header-font-size: 26px;
 //== Misc.
 //== ======================================= ==//
 
+$blockquote-border-color: adjust_hue(desaturate(darken($color-text-base, 20%), 2%), 2);
+$blockquote-small-color : $gray-lte;
+$blockquote-font-size   : ($rhythm-base-font-size * 1.25);
+
 @import "headings";
 
 
