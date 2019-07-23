@@ -44,8 +44,7 @@ export default {
     .footer {
         @include font(11px, 14px);
         width: 100%;
-        background: darken($sidebar-dark-bg, 3%);
-        box-shadow: 0 4px 4px rgba(0, 0, 0, .2) inset;
+        background: darken($dashboard-sidebar-bg, 3%);
 
         &__container {
             @include media-breakpoint-up(md) {
