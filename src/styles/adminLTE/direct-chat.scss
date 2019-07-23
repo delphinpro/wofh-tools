@@ -127,7 +127,7 @@
 
 //Contacts list -- for displaying contacts in direct chat contacts pane
 .contacts-list {
-  @extend .list-unstyled !optional;
+  @include list-unstyled();
   > li {
     @include clearfix();
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);

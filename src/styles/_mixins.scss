@@ -67,6 +67,11 @@
   }
 }
 
+@mixin list-unstyled() {
+  padding-left: 0;
+  list-style: none;
+}
+
 @function map-get-safe($map, $key, $default: null) {
   @if map_has_key($map, $key) {
     @return map_get($map, $key);

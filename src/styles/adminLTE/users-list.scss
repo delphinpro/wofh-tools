@@ -3,7 +3,7 @@
  * ---------------------
  */
 .users-list {
-  @extend .list-unstyled !optional;
+  @include list-unstyled();
 
   > li {
     width: 25%;

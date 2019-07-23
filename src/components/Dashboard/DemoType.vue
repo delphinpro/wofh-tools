@@ -123,7 +123,7 @@ export default {
                     <li>Integer molestie lorem at massa</li>
                     <li>Facilisis in pretium nisl aliquet</li>
                     <li>Nulla volutpat aliquam velit
-                        <ul>
+                        <ul class="list-unstyled">
                             <li>Phasellus iaculis neque</li>
                             <li>Purus sodales ultricies</li>
                             <li>Vestibulum laoreet porttitor sem</li>

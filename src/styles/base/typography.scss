@@ -109,3 +109,25 @@ blockquote:not(.blockquote-reverse),
     content: "\00A0 \2014"; // nbsp, em dash
   }
 }
+
+//==
+//== Lists
+//== ======================================= ==//
+
+ul,
+ol {
+  @extend %default-element;
+
+  ul,
+  ol {
+    margin-bottom: 0;
+  }
+}
+
+.list-unstyled {
+  @include list-unstyled();
+
+  & > li > & {
+    padding-left: 2em;
+  }
+}

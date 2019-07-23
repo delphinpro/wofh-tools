@@ -67,30 +67,6 @@ mark,
 // Lists
 // -------------------------
 
-// Unordered and Ordered lists
-ul,
-ol {
-  margin-top: 0;
-  margin-bottom: ($line-height-computed / 2);
-  ul,
-  ol {
-    margin-bottom: 0;
-  }
-}
-
-// List options
-
-// [converter] extracted from `.list-unstyled` for libsass compatibility
-@mixin list-unstyled {
-  padding-left: 0;
-  list-style: none;
-}
-// [converter] extracted as `@mixin list-unstyled` for libsass compatibility
-.list-unstyled {
-  @include list-unstyled;
-}
-
-
 // Inline turns list items into inline-block
 .list-inline {
   @include list-unstyled;
