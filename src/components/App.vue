@@ -125,7 +125,6 @@ export default {
 
         &__main {
             @include padding-leader($navbar-height-rhythm);
-            @include padding-trailer(2);
             flex-grow: 1;
         }
 
