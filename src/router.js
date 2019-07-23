@@ -57,6 +57,13 @@ export function createRouter() {
                 path: '/dashboard',
                 name: 'dashboard',
                 component: () => import('./views/Dashboard.vue'),
+                children: [
+                    { path: 'worlds', component: () => import('@/components/Dashboard/Worlds') },
+                    { path: 'type', component: () => import('@/components/Dashboard/DemoType') },
+                    { path: 'palette', component: () => import('@/components/Dashboard/DemoPalette') },
+                    { path: 'boxes', component: () => import('@/components/Dashboard/DemoBoxes') },
+                    { path: '*', component: PageNotFound },
+                ],
             },
             { path: '*', component: PageNotFound },
         ],
