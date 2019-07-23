@@ -3,7 +3,7 @@
  * ----------
  */
 
-.skin-blue {
+html body {
   //Navbar
   .main-header {
     .navbar {
@@ -32,7 +32,3 @@
   //Create the sidebar skin
   @include skin-dark-sidebar($palette-light-blue);
 }
-
-//.skin-blue.layout-top-nav .main-header > .logo {
-//  .logo-variant($light-blue);
-//}

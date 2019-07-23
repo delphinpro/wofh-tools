@@ -8,13 +8,11 @@
 import { mapGetters, mapState } from 'vuex';
 import { AUTH_LOGOUT } from '@/store/actions/auth';
 import AppLogo from './AppLogo';
-import TopMenu from './TopMenu';
 
 
 export default {
     components: {
         AppLogo,
-        TopMenu,
     },
 
     data: () => ({}),
@@ -36,26 +34,7 @@ export default {
 </script>
 
 <template>
-    <div class="navbar">
-        <div class="navbar__container container">
-            <AppLogo class="navbar__logo"/>
-            <TopMenu class="navbar__mainmenu"/>
-            <ul class="navbar__usermenu top-menu">
-                <li class="top-menu__item">
-                    <router-link to="/dashboard" class="top-menu__link">Dashboard</router-link>
-                </li>
-                <li v-if="isProfileLoaded" class="top-menu__item">
-                    <router-link to="/account" class="top-menu__link">{{name}}</router-link>
-                </li>
-                <li v-if="isAuthenticated" @click="logout" class="top-menu__item">
-                    <span class="logout top-menu__link">Logout</span>
-                </li>
-                <li v-if="!isAuthenticated && !authLoading" class="top-menu__item">
-                    <router-link to="/login" class="top-menu__link">Login</router-link>
-                </li>
-            </ul>
         </div>
-    </div>
 </template>
 
 <style lang="scss">
