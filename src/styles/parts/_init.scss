@@ -4,16 +4,24 @@
 /// @license licensed under the MIT license
 ////
 
+:root {
+  --main-header-color: #{lighten($wt-text-color, 30%)};
+  --main-header-bg: #{$wt-second-color};
+  --main-header-hover-color: #fff;
+  --main-header-hover-bg: #{darken($light-blue, 5%)};
+}
+
 @include establish-baseline() {
   height: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 body {
   font-family: $wt-family-base;
   min-height: 100%;
   background: $wt-background-base;
-  color: $wt-main-color;
-  @include webkit-scrollbar($wt-main-color);
+  color: $wt-text-color;
+  @include webkit-scrollbar($wt-text-color);
 }
 
 @include make-grid-system();

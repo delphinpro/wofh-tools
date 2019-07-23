@@ -10,7 +10,7 @@
 
 %heading-common {
   font-family: $wt-family-head;
-  color: lighten($wt-main-color, 5%);
+  color: lighten($wt-text-color, 5%);
 }
 
 @each $h, $params in $headings {

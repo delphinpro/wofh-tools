@@ -5,7 +5,6 @@
  * @license     licensed under the MIT license
  */
 
-import { USER_REQUEST } from '@/store/actions/user';
 import AppNavbar from '@/components/AppNavbar';
 import AppFooter from '@/components/AppFooter';
 import Loading from '@/components/Loading';
@@ -27,8 +26,7 @@ export default {
         loading: true,
     }),
 
-    computed: {
-    },
+    computed: {},
 
     created: function () {
     },
@@ -126,6 +124,7 @@ export default {
         }
 
         &__main {
+            @include padding-leader($navbar-height-rhythm);
             @include padding-trailer(2);
             flex-grow: 1;
         }

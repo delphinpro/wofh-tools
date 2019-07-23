@@ -43,3 +43,10 @@
     display: none;
   }
 }
+
+@mixin wt-transition($properties...) {
+  transition: $transition-speed $transition-fn;
+  @if length($properties) > 0 {
+    transition-property: $properties;
+  }
+}

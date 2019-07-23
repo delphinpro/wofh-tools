@@ -59,9 +59,12 @@ export default {
 </template>
 
 <style lang="scss">
-    .navbar {
-        background-color: $second-color;
+    .main-header {
+        position: fixed;
+        background: var(--main-header-bg);
+        color: var(--main-header-color);
         box-shadow: $shadow-bar;
+        z-index: $z-navbar-fixed;
 
         &__container {
             height: rhythm($navbar-height-rhythm);
@@ -69,14 +72,36 @@ export default {
         }
 
         &__logo {
+            width: $sidebar-width;
+            flex-shrink: 0;
+            background: $wt-second-color-dark;
         }
 
         &__mainmenu {
-            margin-left: 1rem;
+            margin-right: 1em;
         }
 
         &__usermenu {
             margin-left: auto;
+        }
+    }
+
+    .sidebar-toggle {
+        @include size(rhythm($navbar-height-rhythm));
+        @include wt-transition(background-color);
+        border: none;
+        background: none;
+        color: currentColor;
+        padding: 0;
+
+        &:hover {
+            color: var(--main-header-hover-color);
+            background-color: var(--main-header-hover-bg);
+        }
+
+        &:focus,
+        &:active {
+            background: transparent;
         }
     }
 </style>

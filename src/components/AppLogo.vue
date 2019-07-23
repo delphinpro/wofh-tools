@@ -20,12 +20,14 @@ export default {
 
 <style lang="scss">
     .logo {
+        @include wt-transition(background-color);
         font-family: $wt-family-head;
         font-weight: 400;
         display: flex;
+        justify-content: center;
         align-items: center;
         text-decoration: none !important;
-        color: lighten($wt-main-color, 30%) !important;
+        color: currentColor !important;
 
         &__image {
             @include size(rhythm($navbar-height-rhythm - $navbar-padding-rhythm * 2));
@@ -42,6 +44,10 @@ export default {
             position: relative;
             top: -0.5em;
             margin-left: 0.5em;
+        }
+
+        &:hover {
+            background-color: var(--main-header-hover-bg);
         }
     }
 </style>
