@@ -7,12 +7,12 @@
 $DEV_MODE: $NODE_ENV == development;
 $MAX_INT32: 2147483647;
 
-@import "vrhythm.cfg";
-@import "grid.cfg";
+@import "cfg-vrhythm";
+@import "cfg-grid";
 @import "../../../node_modules/vrhythm/source/vrhythm";
 @import "../../../node_modules/bs-grid-system/source/scss/bs-grid";
 @import "../mixins";
-@import "z-index-master-list";
+@import "cfg-z-indexes";
 
 // @formatter:off
 
@@ -172,7 +172,7 @@ $blockquote-border-color: adjust_hue(desaturate(darken($color-text-base, 20%), 2
 $blockquote-small-color : $gray-lte;
 $blockquote-font-size   : ($rhythm-base-font-size * 1.25);
 
-@import "headings";
+@import "cfg-headings";
 
 
 $shadow-bar: 0 3px 7px rgba(0, 0, 0, 0.3);
