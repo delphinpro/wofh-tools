@@ -32,6 +32,7 @@ export default {
                     <ul class="treeview-menu">
                         <li class=""><router-link to="/dashboard/palette">Color palette</router-link></li>
                         <li class=""><router-link to="/dashboard/type">Typography</router-link></li>
+                        <li class=""><router-link to="/dashboard/icons">Icons</router-link></li>
                     </ul>
                 </li>
                 <li class="treeview" :class="{'active menu-open':demoWidgetsOpen}">

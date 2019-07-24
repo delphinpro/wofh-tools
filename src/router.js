@@ -63,6 +63,7 @@ export function createRouter() {
                     { path: 'palette', component: () => import('@/components/Dashboard/DemoPalette') },
                     { path: 'boxes', component: () => import('@/components/Dashboard/DemoBoxes') },
                     { path: 'alerts', component: () => import('@/components/Dashboard/DemoAlerts') },
+                    { path: 'icons', component: () => import('@/components/Dashboard/DemoIcons') },
                     { path: '*', component: PageNotFound },
                 ],
             },
