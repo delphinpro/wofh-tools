@@ -1,0 +1,63 @@
+/*==
+ *== Component: Alert.vue
+ *== ======================================= ==*/
+
+.alert {
+  $alert-padding: 0.5;
+  @include margin-trailer(0.75);
+  padding: rhythm($alert-padding);
+
+  &__header {
+    display: flex;
+    align-items: center;
+
+    &:last-child {
+      @include rhythm-padding(0.125);
+    }
+  }
+
+  &__icon {
+    @include font(20px, 1);
+    margin-right: 1rem;
+  }
+
+  &__title {
+    @include font(20px, 1);
+    font-weight: 400;
+  }
+
+  &__content {
+  }
+
+  &__header + &__content {
+    @include margin-leader(0.25);
+  }
+
+  //==
+  //== Alternate styles
+  //== ======================================= ==//
+
+  // @formatter:off
+
+  @include alert-variant($dashboard-sidebar-bg, $color-text-base);
+
+  &_info    { @include alert-variant($alert-info-bg, $alert-info-text); }
+  &_success { @include alert-variant($alert-success-bg, $alert-success-text); }
+  &_warning { @include alert-variant($alert-warning-bg, $alert-warning-text); }
+  &_danger  { @include alert-variant($alert-danger-bg, $alert-danger-text); }
+
+  &_callout {
+    border-left: 5px solid $color-text-base;
+    border-radius: $alert-border-radius;
+    padding-left: rhythm($alert-padding * 2);
+
+    .alert__title { font-weight: bold; }
+
+    &.alert {
+      &_info    { border-color: darken($palette-aqua, 10%); }
+      &_success { border-color: darken($palette-green, 10%); }
+      &_warning { border-color: darken($palette-yellow, 10%); }
+      &_danger  { border-color: darken($palette-red, 10%); }
+    }
+  }
+}

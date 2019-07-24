@@ -102,3 +102,22 @@
 
 //Disabled!
 [class^="bg-"].disabled { opacity:.65; }
+
+
+/////////////////////
+.type-title {
+  @include margin-leader(1);
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.4;
+    margin-top: -1px;
+  }
+}

@@ -22,6 +22,7 @@ export default {
                 <li class="active"><router-link to="/dashboard/type">Typography</router-link></li>
                 <li class="active"><router-link to="/dashboard/palette">Color palette</router-link></li>
                 <li class="active"><router-link to="/dashboard/boxes">Boxes</router-link></li>
+                <li class="active"><router-link to="/dashboard/alerts">Alerts</router-link></li>
             </ul>
         </section>
     </aside>
