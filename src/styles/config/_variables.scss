@@ -18,6 +18,7 @@ $MAX_INT32: 2147483647;
 
 $wt-family-base: "Open Sans", sans-serif;
 $wt-family-head: "Roboto Slab", serif;
+$font-family-monospace:  "Fira Code", Menlo, Monaco, Consolas, "Courier New", monospace;
 
 //==
 //== Color palette
@@ -67,6 +68,18 @@ $color-link-hover: #42a5f5;
 
 $background-base: #222d32;
 $color-text-base: #8896a1;
+
+
+//==
+//== Code
+//== ======================================= ==//
+
+$pre-bg:                      transparent;
+$pre-color:                   $color-text-base;
+$pre-border-color:            darken($pre-color, 25%);
+
+$code-color:                  darken($palette-lime, 8%);
+$code-bg:                     darken($background-base, 5%);
 
 //==
 //== Dashboard sidebar

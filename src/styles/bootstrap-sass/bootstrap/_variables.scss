@@ -46,7 +46,6 @@ $link-hover-decoration: underline !default;
 $font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
 //** Default monospace fonts for `<code>`, `<kbd>`, and `<pre>`.
-$font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
 $font-family-base:        $font-family-sans-serif !default;
 
 $font-size-base:          14px !default;
@@ -747,17 +746,8 @@ $close-text-shadow:           0 1px 0 #fff !default;
 //
 //##
 
-$code-color:                  #c7254e !default;
-$code-bg:                     #f9f2f4 !default;
-
 $kbd-color:                   #fff !default;
 $kbd-bg:                      #333 !default;
-
-$pre-bg:                      transparent !default;
-$pre-color:                   $color-text-base !default;
-$pre-border-color:            $color-text-base !default;
-$pre-scrollable-max-height:   340px !default;
-
 
 //== Type
 //
