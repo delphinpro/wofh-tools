@@ -6,11 +6,6 @@
  *   Repository: git://github.com/ColorlibHQ/AdminLTE.git
  *   License: MIT <http://opensource.org/licenses/MIT>
  */
-//// Bootstrap
-////--------------------------------------------------------
-//@import (reference) "../bootstrap-less/mixins";
-//@import (reference) "../bootstrap-less/variables";
-//
 //// MISC
 ////--------------------------------------------------------
 @import "AdminLTE-mixins";
@@ -30,7 +25,6 @@
 @import "buttons";
 @import "navs";
 @import "products";
-@import "table";
 @import "labels";
 @import "direct-chat";
 @import "users-list";
