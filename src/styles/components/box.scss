@@ -2,6 +2,16 @@
 //== Component: Box
 //== ======================================= ==//
 
+@mixin box-variant($btc) {
+  border-top-color: $btc;
+
+  .box2 {
+    &__icon {
+      color: $btc;
+    }
+  }
+}
+
 .box2 {
   @include margin-trailer(1);
   border-radius: $box2-border-radius;
@@ -53,4 +63,13 @@
   &_style_danger  { @include box-variant($box2-theme-danger);  }
   &_style_warning { @include box-variant($box2-theme-warning); }
   &_style_success { @include box-variant($box2-theme-success); }
+
+  &_style_transparent {
+    background:none;
+    overflow: hidden;
+
+    .box2__header {
+      background: $dashboard-sidebar-bg;
+    }
+  }
 }

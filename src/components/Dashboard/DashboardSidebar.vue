@@ -20,6 +20,16 @@ export default {
 
         <section class="sidebar">
 
+            <form class="sidebar-form" action="#" method="get">
+                <div class="input-group">
+                    <input class="form-control" name="q" type="text" placeholder="Search...">
+                    <span class="input-group-btn">
+              <button class="btn btn-flat" id="search-btn" name="search" type="submit"><i class="fa fa-search"></i>
+              </button>
+            </span>
+                </div>
+            </form>
+
             <ul class="sidebar-menu">
                 <li class="header">WOFH</li>
                 <li class=""><router-link to="/dashboard/worlds">Worlds</router-link></li>
@@ -33,6 +43,7 @@ export default {
                         <li class=""><router-link to="/dashboard/palette">Color palette</router-link></li>
                         <li class=""><router-link to="/dashboard/type">Typography</router-link></li>
                         <li class=""><router-link to="/dashboard/icons">Icons</router-link></li>
+                        <li class=""><router-link to="/dashboard/buttons">Buttons</router-link></li>
                     </ul>
                 </li>
                 <li class="treeview" :class="{'active menu-open':demoWidgetsOpen}">

@@ -2,6 +2,19 @@
  *== Component: Alert.vue
  *== ======================================= ==*/
 
+@mixin alert-variant($background, $text-color) {
+  color: $text-color;
+  background-color: $background;
+
+  hr {
+    border-top-color: darken($background, 5%);
+  }
+
+  .alert-link {
+    color: darken($text-color, 10%);
+  }
+}
+
 .alert {
   $alert-padding: 0.5;
   @include margin-trailer(0.75);
