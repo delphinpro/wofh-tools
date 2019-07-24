@@ -2,11 +2,17 @@
 //== Typography: Links
 //== ======================================= ==//
 
-//a {
-//  color: $color-link;
-//  transition: 0.3s ease;
-//
-//  &:hover {
-//    color: $color-link-hover;
-//  }
-//}
+a {
+  color: $color-link;
+  text-decoration: none;
+  transition: 0.3s ease;
+
+  &:hover,
+  &:focus {
+    color: $color-link-hover;
+  }
+
+  &:focus {
+    @include tab-focus();
+  }
+}

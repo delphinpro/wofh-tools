@@ -115,7 +115,6 @@ a.btn {
   &:hover,
   &:focus {
     color: $color-link-hover;
-    text-decoration: $link-hover-decoration;
     background-color: transparent;
   }
   &[disabled],

@@ -5,22 +5,6 @@
 
 // Links
 
-a {
-  color: $color-link;
-  text-decoration: none;
-
-  &:hover,
-  &:focus {
-    color: $color-link-hover;
-    text-decoration: $link-hover-decoration;
-  }
-
-  &:focus {
-    @include tab-focus;
-  }
-}
-
-
 // Figures
 //
 // We reset this here because previously Normalize had no `figure` margins. This
