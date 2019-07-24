@@ -52,6 +52,7 @@ $background-dark-2 : #212529;
 
 $wt-text-color  : #8896a1;
 $wt-accent-color: #d149d0;
+$text-muted     : lighten(#000, 46.7%);
 
 $wt-second-color     : #25628f;
 $wt-second-color-dark: #21577f;
@@ -81,6 +82,9 @@ $pre-border-color:            darken($pre-color, 25%);
 $code-color:                  darken($palette-lime, 8%);
 $code-bg:                     darken($background-base, 5%);
 
+$kbd-color:                   #fff !default;
+$kbd-bg:                      #333 !default;
+
 
 //==
 //== Tables
@@ -98,6 +102,8 @@ $table-border-color:            #ddd;
 //==
 //== Dashboard sidebar
 //== ======================================= ==//
+
+$sidebar-width: 230px;
 
 $dashboard-sidebar-bg         : darken($background-base, 3%);
 $dashboard-sidebar-bg-hover   : darken($dashboard-sidebar-bg, 2%);
@@ -176,6 +182,10 @@ $blockquote-font-size   : ($rhythm-base-font-size * 1.25);
 
 
 $shadow-bar: 0 3px 7px rgba(0, 0, 0, 0.3);
+
+// Transition global options
+$transition-speed: .25s;
+$transition-fn: ease-in-out;
 
 @import "../bootstrap-sass/bootstrap/variables";
 @import "adminLTE-vars";

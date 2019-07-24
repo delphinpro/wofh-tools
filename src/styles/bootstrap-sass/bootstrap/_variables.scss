@@ -721,21 +721,12 @@ $close-color:                 #000 !default;
 $close-text-shadow:           0 1px 0 #fff !default;
 
 
-//== Code
-//
-//##
-
-$kbd-color:                   #fff !default;
-$kbd-bg:                      #333 !default;
-
 //== Type
 //
 //##
 
 //** Horizontal offset for forms and lists.
 $component-offset-horizontal: 180px !default;
-//** Text muted color
-$text-muted:                  $gray-light !default;
 //** Abbreviations and acronyms border color
 $abbr-border-color:           $gray-light !default;
 //** Headings small color

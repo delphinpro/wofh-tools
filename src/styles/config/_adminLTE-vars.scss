@@ -5,7 +5,6 @@
 // --------------------------------------------------------
 
 // Side bar and logo width
-$sidebar-width: 230px;
 // Boxed layout maximum width
 $boxed-layout-max-width: 1024px;
 // When the logo should go to the top of the screen
@@ -84,10 +83,3 @@ $direct-chat-default-msg-border-color: $gray-lte;
 // CHAT WIDGET
 // --------------------------------------------------------
 $attachment-border-radius: 3px;
-
-// TRANSITIONS SETTINGS
-// --------------------------------------------------------
-
-// Transition global options
-$transition-speed: .25s;
-$transition-fn: ease-in-out;

@@ -63,7 +63,7 @@ export default {
 
 </template>
 
-<style lang="scss">
+<style lang="scss">/*
     .usermenu {
         display: block;
         position: absolute;
@@ -113,4 +113,5 @@ export default {
             padding: rhythm(0.25) rhythm(0.5);
         }
     }
+    */
 </style>
