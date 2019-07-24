@@ -131,3 +131,38 @@ ol {
     padding-left: 2em;
   }
 }
+
+//==
+//== Description list
+//== ======================================= ==//
+
+dl {
+  @extend %default-element;
+
+  &:not(.dl-horizontal) {
+    > dd + dt {
+      @include margin-leader(0.5);
+    }
+  }
+}
+
+dt {
+  font-weight: 700;
+}
+
+dd {
+  margin-left: 0; // Undo browser default
+}
+
+.dl-horizontal {
+  @include media-breakpoint-up(sm) {
+    display: grid;
+    grid-template-columns: minmax(min-content, max-content) 3fr;
+    grid-column-gap: rhythm(1);
+    grid-row-gap: rhythm(0.5);
+
+    dt {
+      text-align: right;
+    }
+  }
+}
