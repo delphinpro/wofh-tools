@@ -8,10 +8,13 @@
 import { AUTH_LOGOUT } from '@/store/actions/auth';
 
 
+const includeCssDemo = (process.env.NODE_ENV === 'development') && (process.env.WEBPACK_TARGET !== 'node');
+
 export default {
     name: 'UserMenu',
 
     data: () => ({
+        includeCssDemo,
         username: 'Сергей delphinpro',
         usermenuOpen: false,
     }),
@@ -38,6 +41,12 @@ export default {
                 <span>{{username}}</span>
             </span>
             <ul class="usermenu" v-if="usermenuOpen" @click="usermenuOpen=false">
+                <li class="usermenu__item" v-if="includeCssDemo">
+                    <router-link class="usermenu__link" to="/dashboard/css/type">
+                        <span class="usermenu__icon"></span>
+                        <span>CSS Elements</span>
+                    </router-link>
+                </li>
                 <li class="usermenu__item">
                     <router-link class="usermenu__link" to="/profile">
                         <span class="usermenu__icon"></span>

@@ -31,7 +31,23 @@ const ifAuthenticated = (to, from, next) => {
     next('/login');
 };
 
+const includeCssDemo = (process.env.NODE_ENV === 'development') && (process.env.WEBPACK_TARGET !== 'node');
+
 export function createRouter() {
+
+
+    const dashboardRoutes = [
+        { path: 'worlds', component: () => import('@/components/Dashboard/Worlds') },
+    ];
+
+    if (includeCssDemo) {
+        dashboardRoutes.push(
+            { path: 'css/:id', component: () => import('@/components/CssElements/CssElements') },
+        );
+    }
+
+    dashboardRoutes.push({ path: '*', component: PageNotFound });
+
 
     return new Router({
         mode: 'history',
@@ -57,10 +73,7 @@ export function createRouter() {
                 path: '/dashboard',
                 name: 'dashboard',
                 component: () => import('./views/Dashboard.vue'),
-                children: [
-                    { path: 'worlds', component: () => import('@/components/Dashboard/Worlds') },
-                    { path: '*', component: PageNotFound },
-                ],
+                children: dashboardRoutes,
             },
             { path: '*', component: PageNotFound },
         ],
