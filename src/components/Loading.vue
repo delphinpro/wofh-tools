@@ -40,7 +40,7 @@ export default {};
             @include size(50px);
 
             path {
-                fill: $accent-color;
+                fill: $wt-accent-color;
             }
         }
     }
