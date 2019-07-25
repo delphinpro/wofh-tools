@@ -21,70 +21,64 @@ export default {
     <section class="">
 
         <Box type="primary" title="Buttons" icon="edit">
-            <table class="table table-invisible text-center">
-                <tbody>
-                <tr>
-                    <td>
-                        <button class="btn btn-default" type="button">Default</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-primary" type="button">Primary</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-info" type="button">Info</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-success" type="button">Success</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-warning" type="button">Warning</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger" type="button">Danger</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button class="btn btn-default" type="button" disabled>Default</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-primary" type="button" disabled>Primary</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-info" type="button" disabled>Info</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-success" type="button" disabled>Success</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-warning" type="button" disabled>Warning</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger" type="button" disabled>Danger</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <button class="btn btn-default" type="button">Normal</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-primary btn-lg" type="button">Large</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-info btn-sm" type="button">Small</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-success btn-xs" type="button">XSmall</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-warning btn-block" type="button">Block</button>
-                    </td>
-                    <td>
-                        <!--<button class="btn btn-danger" type="button">Danger</button>-->
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="demo-buttons">
+                <div>
+                    <button class="btn btn_default" type="button">Default</button>
+                </div>
+                <div>
+                    <button class="btn btn_primary" type="button">Primary</button>
+                </div>
+                <div>
+                    <button class="btn btn_info" type="button">Info</button>
+                </div>
+                <div>
+                    <button class="btn btn_success" type="button">Success</button>
+                </div>
+                <div>
+                    <button class="btn btn_warning" type="button">Warning</button>
+                </div>
+                <div>
+                    <button class="btn btn_danger" type="button">Danger</button>
+                </div>
+
+                <div>
+                    <button class="btn btn_default" type="button" disabled>Default</button>
+                </div>
+                <div>
+                    <button class="btn btn_primary" type="button" disabled>Primary</button>
+                </div>
+                <div>
+                    <button class="btn btn_info" type="button" disabled>Info</button>
+                </div>
+                <div>
+                    <button class="btn btn_success" type="button" disabled>Success</button>
+                </div>
+                <div>
+                    <button class="btn btn_warning" type="button" disabled>Warning</button>
+                </div>
+                <div>
+                    <button class="btn btn_danger" type="button" disabled>Danger</button>
+                </div>
+
+                <div>
+                    <button class="btn btn_default" type="button">Normal</button>
+                </div>
+                <div>
+                    <button class="btn btn_primary btn_lg" type="button">Large</button>
+                </div>
+                <div>
+                    <button class="btn btn_info" type="button">Normal</button>
+                </div>
+                <div>
+                    <button class="btn btn_success btn_sm" type="button">Small</button>
+                </div>
+                <div>
+                    <button class="btn btn_warning btn_block" type="button">Block</button>
+                </div>
+                <div>
+                    <button class="btn btn_danger btn_block" type="button">Block</button>
+                </div>
+            </div>
         </Box>
 
         <div class="row">
@@ -92,7 +86,7 @@ export default {
                 <Box type="primary" title="Horizontal Button Group" icon="">
                     <p>
                         Horizontal button groups are easy to create with bootstrap. Just add your buttons
-                        inside <code>&lt;div class="btn-group"&gt;&lt;/div&gt;</code>
+                        inside <code>&lt;div class="btn_group"&gt;&lt;/div&gt;</code>
                     </p>
                     <table class="table">
                         <tbody>
@@ -103,29 +97,29 @@ export default {
                         </tr>
                         <tr>
                             <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-default" type="button">Left</button>
-                                    <button class="btn btn-default" type="button">Middle</button>
-                                    <button class="btn btn-default" type="button">Right</button>
+                                <div class="btn_group">
+                                    <button class="btn btn_default" type="button">Left</button>
+                                    <button class="btn btn_default" type="button">Middle</button>
+                                    <button class="btn btn_default" type="button">Right</button>
                                 </div>
                             </td>
                             <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-default" type="button"><i class="fa fa-align-left"></i>
+                                <div class="btn_group">
+                                    <button class="btn btn_default" type="button"><i class="fa fa-align-left"></i>
                                     </button>
-                                    <button class="btn btn-default" type="button"><i class="fa fa-align-center"></i>
+                                    <button class="btn btn_default" type="button"><i class="fa fa-align-center"></i>
                                     </button>
-                                    <button class="btn btn-default" type="button"><i class="fa fa-align-right"></i>
+                                    <button class="btn btn_default" type="button"><i class="fa fa-align-right"></i>
                                     </button>
                                 </div>
                             </td>
                             <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-default" type="button">1</button>
-                                    <button class="btn btn-default" type="button">2</button>
+                                <div class="btn_group">
+                                    <button class="btn btn_default" type="button">1</button>
+                                    <button class="btn btn_default" type="button">2</button>
 
-                                    <div class="btn-group">
-                                        <button class="btn btn-default dropdown-toggle"
+                                    <div class="btn_group">
+                                        <button class="btn btn_default dropdown-toggle"
                                             type="button"
                                             data-toggle="dropdown">
                                             <span class="caret"></span>
@@ -140,29 +134,29 @@ export default {
                         </tr>
                         <tr>
                             <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-info" type="button">Left</button>
-                                    <button class="btn btn-info" type="button">Middle</button>
-                                    <button class="btn btn-info" type="button">Right</button>
+                                <div class="btn_group">
+                                    <button class="btn btn_info" type="button">Left</button>
+                                    <button class="btn btn_info" type="button">Middle</button>
+                                    <button class="btn btn_info" type="button">Right</button>
                                 </div>
                             </td>
                             <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-info" type="button"><i class="fa fa-align-left"></i>
+                                <div class="btn_group">
+                                    <button class="btn btn_info" type="button"><i class="fa fa-align-left"></i>
                                     </button>
-                                    <button class="btn btn-info" type="button"><i class="fa fa-align-center"></i>
+                                    <button class="btn btn_info" type="button"><i class="fa fa-align-center"></i>
                                     </button>
-                                    <button class="btn btn-info" type="button"><i class="fa fa-align-right"></i>
+                                    <button class="btn btn_info" type="button"><i class="fa fa-align-right"></i>
                                     </button>
                                 </div>
                             </td>
                             <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-info" type="button">1</button>
-                                    <button class="btn btn-info" type="button">2</button>
+                                <div class="btn_group">
+                                    <button class="btn btn_info" type="button">1</button>
+                                    <button class="btn btn_info" type="button">2</button>
 
-                                    <div class="btn-group">
-                                        <button class="btn btn-info dropdown-toggle"
+                                    <div class="btn_group">
+                                        <button class="btn btn_info dropdown-toggle"
                                             type="button"
                                             data-toggle="dropdown">
                                             <span class="caret"></span>
@@ -177,29 +171,29 @@ export default {
                         </tr>
                         <tr>
                             <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-danger" type="button">Left</button>
-                                    <button class="btn btn-danger" type="button">Middle</button>
-                                    <button class="btn btn-danger" type="button">Right</button>
+                                <div class="btn_group">
+                                    <button class="btn btn_danger" type="button">Left</button>
+                                    <button class="btn btn_danger" type="button">Middle</button>
+                                    <button class="btn btn_danger" type="button">Right</button>
                                 </div>
                             </td>
                             <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-danger" type="button"><i class="fa fa-align-left"></i>
+                                <div class="btn_group">
+                                    <button class="btn btn_danger" type="button"><i class="fa fa-align-left"></i>
                                     </button>
-                                    <button class="btn btn-danger" type="button"><i class="fa fa-align-center"></i>
+                                    <button class="btn btn_danger" type="button"><i class="fa fa-align-center"></i>
                                     </button>
-                                    <button class="btn btn-danger" type="button"><i class="fa fa-align-right"></i>
+                                    <button class="btn btn_danger" type="button"><i class="fa fa-align-right"></i>
                                     </button>
                                 </div>
                             </td>
                             <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-danger" type="button">1</button>
-                                    <button class="btn btn-danger" type="button">2</button>
+                                <div class="btn_group">
+                                    <button class="btn btn_danger" type="button">1</button>
+                                    <button class="btn btn_danger" type="button">2</button>
 
-                                    <div class="btn-group">
-                                        <button class="btn btn-danger dropdown-toggle"
+                                    <div class="btn_group">
+                                        <button class="btn btn_danger dropdown-toggle"
                                             type="button"
                                             data-toggle="dropdown">
                                             <span class="caret"></span>
@@ -214,29 +208,29 @@ export default {
                         </tr>
                         <tr>
                             <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-warning" type="button">Left</button>
-                                    <button class="btn btn-warning" type="button">Middle</button>
-                                    <button class="btn btn-warning" type="button">Right</button>
+                                <div class="btn_group">
+                                    <button class="btn btn_warning" type="button">Left</button>
+                                    <button class="btn btn_warning" type="button">Middle</button>
+                                    <button class="btn btn_warning" type="button">Right</button>
                                 </div>
                             </td>
                             <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-warning" type="button"><i class="fa fa-align-left"></i>
+                                <div class="btn_group">
+                                    <button class="btn btn_warning" type="button"><i class="fa fa-align-left"></i>
                                     </button>
-                                    <button class="btn btn-warning" type="button"><i class="fa fa-align-center"></i>
+                                    <button class="btn btn_warning" type="button"><i class="fa fa-align-center"></i>
                                     </button>
-                                    <button class="btn btn-warning" type="button"><i class="fa fa-align-right"></i>
+                                    <button class="btn btn_warning" type="button"><i class="fa fa-align-right"></i>
                                     </button>
                                 </div>
                             </td>
                             <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-warning" type="button">1</button>
-                                    <button class="btn btn-warning" type="button">2</button>
+                                <div class="btn_group">
+                                    <button class="btn btn_warning" type="button">1</button>
+                                    <button class="btn btn_warning" type="button">2</button>
 
-                                    <div class="btn-group">
-                                        <button class="btn btn-warning dropdown-toggle"
+                                    <div class="btn_group">
+                                        <button class="btn btn_warning dropdown-toggle"
                                             type="button"
                                             data-toggle="dropdown">
                                             <span class="caret"></span>
@@ -251,29 +245,29 @@ export default {
                         </tr>
                         <tr>
                             <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-success" type="button">Left</button>
-                                    <button class="btn btn-success" type="button">Middle</button>
-                                    <button class="btn btn-success" type="button">Right</button>
+                                <div class="btn_group">
+                                    <button class="btn btn_success" type="button">Left</button>
+                                    <button class="btn btn_success" type="button">Middle</button>
+                                    <button class="btn btn_success" type="button">Right</button>
                                 </div>
                             </td>
                             <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-success" type="button"><i class="fa fa-align-left"></i>
+                                <div class="btn_group">
+                                    <button class="btn btn_success" type="button"><i class="fa fa-align-left"></i>
                                     </button>
-                                    <button class="btn btn-success" type="button"><i class="fa fa-align-center"></i>
+                                    <button class="btn btn_success" type="button"><i class="fa fa-align-center"></i>
                                     </button>
-                                    <button class="btn btn-success" type="button"><i class="fa fa-align-right"></i>
+                                    <button class="btn btn_success" type="button"><i class="fa fa-align-right"></i>
                                     </button>
                                 </div>
                             </td>
                             <td>
-                                <div class="btn-group">
-                                    <button class="btn btn-success" type="button">1</button>
-                                    <button class="btn btn-success" type="button">2</button>
+                                <div class="btn_group">
+                                    <button class="btn btn_success" type="button">1</button>
+                                    <button class="btn btn_success" type="button">2</button>
 
-                                    <div class="btn-group">
-                                        <button class="btn btn-success dropdown-toggle"
+                                    <div class="btn_group">
+                                        <button class="btn btn_success dropdown-toggle"
                                             type="button"
                                             data-toggle="dropdown">
                                             <span class="caret"></span>
@@ -294,97 +288,97 @@ export default {
                 <Box type="primary" title="Vertical Button Group" icon="">
                     <p>
                         Vertical button groups are easy to create with bootstrap. Just add your buttons
-                        inside <code>&lt;div class="btn-group-vertical"&gt;&lt;/div&gt;</code>
+                        inside <code>&lt;div class="btn_group-vertical"&gt;&lt;/div&gt;</code>
                     </p>
                     <table class="table table-bordered">
                         <tbody>
                         <tr>
                             <th>Button</th>
                             <td>
-                                <div class="btn-group-vertical">
-                                    <button class="btn btn-default" type="button">Top</button>
-                                    <button class="btn btn-default" type="button">Middle</button>
-                                    <button class="btn btn-default" type="button">Bottom</button>
+                                <div class="btn_group-vertical">
+                                    <button class="btn btn_default" type="button">Top</button>
+                                    <button class="btn btn_default" type="button">Middle</button>
+                                    <button class="btn btn_default" type="button">Bottom</button>
                                 </div>
                             </td>
                             <td>
-                                <div class="btn-group-vertical">
-                                    <button class="btn btn-info" type="button">Top</button>
-                                    <button class="btn btn-info" type="button">Middle</button>
-                                    <button class="btn btn-info" type="button">Bottom</button>
+                                <div class="btn_group-vertical">
+                                    <button class="btn btn_info" type="button">Top</button>
+                                    <button class="btn btn_info" type="button">Middle</button>
+                                    <button class="btn btn_info" type="button">Bottom</button>
                                 </div>
                             </td>
                             <td>
-                                <div class="btn-group-vertical">
-                                    <button class="btn btn-danger" type="button">Top</button>
-                                    <button class="btn btn-danger" type="button">Middle</button>
-                                    <button class="btn btn-danger" type="button">Bottom</button>
+                                <div class="btn_group-vertical">
+                                    <button class="btn btn_danger" type="button">Top</button>
+                                    <button class="btn btn_danger" type="button">Middle</button>
+                                    <button class="btn btn_danger" type="button">Bottom</button>
                                 </div>
                             </td>
                             <td>
-                                <div class="btn-group-vertical">
-                                    <button class="btn btn-warning" type="button">Top</button>
-                                    <button class="btn btn-warning" type="button">Middle</button>
-                                    <button class="btn btn-warning" type="button">Bottom</button>
+                                <div class="btn_group-vertical">
+                                    <button class="btn btn_warning" type="button">Top</button>
+                                    <button class="btn btn_warning" type="button">Middle</button>
+                                    <button class="btn btn_warning" type="button">Bottom</button>
                                 </div>
                             </td>
                             <td>
-                                <div class="btn-group-vertical">
-                                    <button class="btn btn-success" type="button">Top</button>
-                                    <button class="btn btn-success" type="button">Middle</button>
-                                    <button class="btn btn-success" type="button">Bottom</button>
+                                <div class="btn_group-vertical">
+                                    <button class="btn btn_success" type="button">Top</button>
+                                    <button class="btn btn_success" type="button">Middle</button>
+                                    <button class="btn btn_success" type="button">Bottom</button>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <th>Icons</th>
                             <td>
-                                <div class="btn-group-vertical">
-                                    <button class="btn btn-default" type="button"><i class="fa fa-align-left"></i>
+                                <div class="btn_group-vertical">
+                                    <button class="btn btn_default" type="button"><i class="fa fa-align-left"></i>
                                     </button>
-                                    <button class="btn btn-default" type="button"><i class="fa fa-align-center"></i>
+                                    <button class="btn btn_default" type="button"><i class="fa fa-align-center"></i>
                                     </button>
-                                    <button class="btn btn-default" type="button"><i class="fa fa-align-right"></i>
-                                    </button>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="btn-group-vertical">
-                                    <button class="btn btn-info" type="button"><i class="fa fa-align-left"></i>
-                                    </button>
-                                    <button class="btn btn-info" type="button"><i class="fa fa-align-center"></i>
-                                    </button>
-                                    <button class="btn btn-info" type="button"><i class="fa fa-align-right"></i>
+                                    <button class="btn btn_default" type="button"><i class="fa fa-align-right"></i>
                                     </button>
                                 </div>
                             </td>
                             <td>
-                                <div class="btn-group-vertical">
-                                    <button class="btn btn-danger" type="button"><i class="fa fa-align-left"></i>
+                                <div class="btn_group-vertical">
+                                    <button class="btn btn_info" type="button"><i class="fa fa-align-left"></i>
                                     </button>
-                                    <button class="btn btn-danger" type="button"><i class="fa fa-align-center"></i>
+                                    <button class="btn btn_info" type="button"><i class="fa fa-align-center"></i>
                                     </button>
-                                    <button class="btn btn-danger" type="button"><i class="fa fa-align-right"></i>
-                                    </button>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="btn-group-vertical">
-                                    <button class="btn btn-warning" type="button"><i class="fa fa-align-left"></i>
-                                    </button>
-                                    <button class="btn btn-warning" type="button"><i class="fa fa-align-center"></i>
-                                    </button>
-                                    <button class="btn btn-warning" type="button"><i class="fa fa-align-right"></i>
+                                    <button class="btn btn_info" type="button"><i class="fa fa-align-right"></i>
                                     </button>
                                 </div>
                             </td>
                             <td>
-                                <div class="btn-group-vertical">
-                                    <button class="btn btn-success" type="button"><i class="fa fa-align-left"></i>
+                                <div class="btn_group-vertical">
+                                    <button class="btn btn_danger" type="button"><i class="fa fa-align-left"></i>
                                     </button>
-                                    <button class="btn btn-success" type="button"><i class="fa fa-align-center"></i>
+                                    <button class="btn btn_danger" type="button"><i class="fa fa-align-center"></i>
                                     </button>
-                                    <button class="btn btn-success" type="button"><i class="fa fa-align-right"></i>
+                                    <button class="btn btn_danger" type="button"><i class="fa fa-align-right"></i>
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="btn_group-vertical">
+                                    <button class="btn btn_warning" type="button"><i class="fa fa-align-left"></i>
+                                    </button>
+                                    <button class="btn btn_warning" type="button"><i class="fa fa-align-center"></i>
+                                    </button>
+                                    <button class="btn btn_warning" type="button"><i class="fa fa-align-right"></i>
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="btn_group-vertical">
+                                    <button class="btn btn_success" type="button"><i class="fa fa-align-left"></i>
+                                    </button>
+                                    <button class="btn btn_success" type="button"><i class="fa fa-align-center"></i>
+                                    </button>
+                                    <button class="btn btn_success" type="button"><i class="fa fa-align-right"></i>
                                     </button>
                                 </div>
                             </td>
@@ -400,7 +394,7 @@ export default {
                 <Box type="transparent" title="Button Addon" icon="">
                     <div class="input-group margin">
                         <div class="input-group-btn">
-                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                            <button class="btn btn_default dropdown-toggle" type="button" data-toggle="dropdown">
                                 Action
                                 <span class="fa fa-caret-down"></span></button>
                             <ul class="dropdown-menu">
@@ -415,14 +409,14 @@ export default {
                     </div>
                     <div class="input-group margin">
                         <div class="input-group-btn">
-                            <button class="btn btn-danger" type="button">Action</button>
+                            <button class="btn btn_danger" type="button">Action</button>
                         </div>
                         <input class="form-control" type="text">
                     </div>
                     <div class="input-group margin">
                         <input class="form-control" type="text">
                         <span class="input-group-btn">
-                      <button class="btn btn-info btn-flat" type="button">Go!</button>
+                      <button class="btn btn_info btn_flat" type="button">Go!</button>
                     </span>
                     </div>
                 </Box>
@@ -430,9 +424,9 @@ export default {
             <div class="col-md-6">
                 <Box type="transparent" title="Split buttons" icon="">
                     <div class="margin">
-                        <div class="btn-group">
-                            <button class="btn btn-default" type="button">Action</button>
-                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        <div class="btn_group">
+                            <button class="btn btn_default" type="button">Action</button>
+                            <button class="btn btn_default dropdown-toggle" type="button" data-toggle="dropdown">
                                 <span class="caret"></span>
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
@@ -444,9 +438,9 @@ export default {
                                 <li><a href="#">Separated link</a></li>
                             </ul>
                         </div>
-                        <div class="btn-group">
-                            <button class="btn btn-info" type="button">Action</button>
-                            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">
+                        <div class="btn_group">
+                            <button class="btn btn_info" type="button">Action</button>
+                            <button class="btn btn_info dropdown-toggle" type="button" data-toggle="dropdown">
                                 <span class="caret"></span>
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
@@ -458,9 +452,9 @@ export default {
                                 <li><a href="#">Separated link</a></li>
                             </ul>
                         </div>
-                        <div class="btn-group">
-                            <button class="btn btn-danger" type="button">Action</button>
-                            <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">
+                        <div class="btn_group">
+                            <button class="btn btn_danger" type="button">Action</button>
+                            <button class="btn btn_danger dropdown-toggle" type="button" data-toggle="dropdown">
                                 <span class="caret"></span>
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
@@ -472,9 +466,9 @@ export default {
                                 <li><a href="#">Separated link</a></li>
                             </ul>
                         </div>
-                        <div class="btn-group">
-                            <button class="btn btn-success" type="button">Action</button>
-                            <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
+                        <div class="btn_group">
+                            <button class="btn btn_success" type="button">Action</button>
+                            <button class="btn btn_success dropdown-toggle" type="button" data-toggle="dropdown">
                                 <span class="caret"></span>
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
@@ -486,9 +480,9 @@ export default {
                                 <li><a href="#">Separated link</a></li>
                             </ul>
                         </div>
-                        <div class="btn-group">
-                            <button class="btn btn-warning" type="button">Action</button>
-                            <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown">
+                        <div class="btn_group">
+                            <button class="btn btn_warning" type="button">Action</button>
+                            <button class="btn btn_warning dropdown-toggle" type="button" data-toggle="dropdown">
                                 <span class="caret"></span>
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
@@ -506,34 +500,34 @@ export default {
         </div>
 
         <Box type="primary" title="Application Buttons" icon="">
-            <p>Add the classes <code>.btn.btn-app</code> to an <code>&lt;a&gt;</code> tag to achieve the
+            <p>Add the classes <code>.btn.btn_app</code> to an <code>&lt;a&gt;</code> tag to achieve the
                 following:</p>
-            <a class="btn btn-app"><i class="fa fa-edit"></i> Edit</a>
-            <a class="btn btn-app"><i class="fa fa-play"></i> Play</a>
-            <a class="btn btn-app"><i class="fa fa-repeat"></i> Repeat</a>
-            <a class="btn btn-app"><i class="fa fa-pause"></i> Pause</a>
-            <a class="btn btn-app"><i class="fa fa-save"></i> Save</a>
-            <a class="btn btn-app">
+            <a class="btn btn_app"><i class="fa fa-edit"></i> Edit</a>
+            <a class="btn btn_app"><i class="fa fa-play"></i> Play</a>
+            <a class="btn btn_app"><i class="fa fa-repeat"></i> Repeat</a>
+            <a class="btn btn_app"><i class="fa fa-pause"></i> Pause</a>
+            <a class="btn btn_app"><i class="fa fa-save"></i> Save</a>
+            <a class="btn btn_app">
                 <span class="badge bg-yellow">3</span>
                 <i class="fa fa-bullhorn"></i> Notifications
             </a>
-            <a class="btn btn-app">
+            <a class="btn btn_app">
                 <span class="badge bg-green">300</span>
                 <i class="fa fa-barcode"></i> Products
             </a>
-            <a class="btn btn-app">
+            <a class="btn btn_app">
                 <span class="badge bg-purple">891</span>
                 <i class="fa fa-users"></i> Users
             </a>
-            <a class="btn btn-app">
+            <a class="btn btn_app">
                 <span class="badge bg-teal">67</span>
                 <i class="fa fa-inbox"></i> Orders
             </a>
-            <a class="btn btn-app">
+            <a class="btn btn_app">
                 <span class="badge bg-aqua">12</span>
                 <i class="fa fa-envelope"></i> Inbox
             </a>
-            <a class="btn btn-app">
+            <a class="btn btn_app">
                 <span class="badge bg-red">531</span>
                 <i class="fa fa-heart-o"></i> Likes
             </a>
@@ -541,6 +535,18 @@ export default {
     </section>
 </template>
 
-<style>
+<style lang="scss">
+    .demo-buttons {
+        @include rhythm-padding(0.5);
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        background: $background-base;
+        grid-gap: rhythm(1);
 
+        > div {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+    }
 </style>

@@ -1,0 +1,66 @@
+//==
+//== Buttons
+//== ======================================= ==//
+
+$btn-border-radius-base: 3px;
+$btn-border-radius-large: 5px;
+$btn-border-radius-small: 2px;
+
+$btn-font-weight: 400;
+
+$btn-default-color: #333;
+$btn-default-bg: #fff;
+$btn-default-border: #ccc;
+
+$button-themes: (
+  primary: (
+    color: #fff,
+    bg: $color-primary,
+    border: darken($color-primary, 15%),
+  ),
+  success: (
+    color: #fff,
+    bg: $color-success,
+    border: darken($color-success, 15%),
+  ),
+  info: (
+    color: #fff,
+    bg: $color-info,
+    border: darken($color-info, 15%),
+  ),
+  warning: (
+    color: #fff,
+    bg: $color-warning,
+    border: darken($color-warning, 15%),
+  ),
+  danger: (
+    color: #fff,
+    bg: $color-danger,
+    border: darken($color-danger, 15%),
+  ),
+);
+
+//$font-size-base:          14px !default;
+//$font-size-large:         ceil(($font-size-base * 1.25)) !default; // ~18px
+//$font-size-small:          !default; // ~12px
+
+$button-sizes: (
+  normal: (
+    font-size: $rhythm-base-font-size,
+    line-height: 1,
+    height: 1.5,
+    radius: $btn-border-radius-base,
+  ),
+  lg: (
+    font-size: ceil(($rhythm-base-font-size * 1.25)),
+    line-height: 1.25,
+    height: 2,
+    radius: $btn-border-radius-large,
+  ),
+  sm: (
+    font-size: ceil(($rhythm-base-font-size * 0.85)),
+    line-height: 1,
+    height: 1,
+    radius: $btn-border-radius-small,
+  ),
+);

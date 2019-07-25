@@ -63,51 +63,6 @@
   }
 }
 
-.btn-primary {
-  background-color: $palette-light-blue;
-  border-color: darken($palette-light-blue, 5%);
-
-  &:hover, &:active, &.hover {
-    background-color: darken($palette-light-blue, 5%);
-  }
-}
-
-.btn-success {
-  background-color: $palette-green;
-  border-color: darken($palette-green, 5%);
-
-  &:hover, &:active, &.hover {
-    background-color: darken($palette-green, 5%);
-  }
-}
-
-.btn-info {
-  background-color: $palette-aqua;
-  border-color: darken($palette-aqua, 5%);
-
-  &:hover, &:active, &.hover {
-    background-color: darken($palette-aqua, 5%);
-  }
-}
-
-.btn-danger {
-  background-color: $palette-red;
-  border-color: darken($palette-red, 5%);
-
-  &:hover, &:active, &.hover {
-    background-color: darken($palette-red, 5%);
-  }
-}
-
-.btn-warning {
-  background-color: $palette-yellow;
-  border-color: darken($palette-yellow, 5%);
-
-  &:hover, &:active, &.hover {
-    background-color: darken($palette-yellow, 5%);
-  }
-}
-
 .btn-outline {
   border: 1px solid #fff;
   background: transparent;
