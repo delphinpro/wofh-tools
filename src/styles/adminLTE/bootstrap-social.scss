@@ -89,7 +89,7 @@ $bs-height-xs: (floor($font-size-small * 1.2) + $padding-small-vertical + 1);
 
 @mixin btn-social($color-bg, $color: #fff) {
   background-color: $color-bg;
-  @include button-variant($color, $color-bg, rgba(0, 0, 0, .2));
+  //@include button-variant($color, $color-bg, rgba(0, 0, 0, .2));
 }
 
 .btn-adn {

@@ -12,31 +12,32 @@ $btn-default-color: $color-text-base;
 $btn-default-bg: lighten($background-base, 5%);
 $btn-default-border: darken($btn-default-bg, 12%);
 
+$_darkness: 50%;
 $button-themes: (
   primary: (
     color: #fff,
     bg: $color-primary,
-    border: darken($color-primary, 25%),
-  ),
-  success: (
-    color: #fff,
-    bg: $color-success,
-    border: darken($color-success, 15%),
+    border: darken($color-primary, $_darkness),
   ),
   info: (
     color: #fff,
     bg: $color-info,
-    border: darken($color-info, 15%),
+    border: darken($color-info, $_darkness),
+  ),
+  success: (
+    color: #fff,
+    bg: $color-success,
+    border: darken($color-success, $_darkness),
   ),
   warning: (
     color: #fff,
     bg: $color-warning,
-    border: darken($color-warning, 15%),
+    border: darken($color-warning, $_darkness),
   ),
   danger: (
     color: #fff,
     bg: $color-danger,
-    border: darken($color-danger, 15%),
+    border: darken($color-danger, $_darkness),
   ),
 );
 

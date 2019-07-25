@@ -169,7 +169,7 @@ $btn-enable-focus-state: false;
   $font-size-base: 14px;
   $line-height-base: 1.428571429; // 20/14
 
-  @include button-size();
+  @include button-size(());
 
   //==
   //== Alternate colors
@@ -201,5 +201,14 @@ $btn-enable-focus-state: false;
     display: flex;
     justify-content: center;
     width: 100%;
+  }
+
+  //==
+  //== Icon only
+  //== ======================================= ==//
+
+  &_iconic {
+    padding-left: 1em;
+    padding-right: 1em;
   }
 }
