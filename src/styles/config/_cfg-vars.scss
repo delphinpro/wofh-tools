@@ -109,10 +109,11 @@ $dashboard-sidebar-bg         : darken($background-base, 3%);
 $dashboard-sidebar-bg-hover   : darken($dashboard-sidebar-bg, 2%);
 $dashboard-sidebar-color      : lighten($dashboard-sidebar-bg, 60%);
 $dashboard-sidebar-color-hover: #fff;
+$dashboard-sidebar-active-color: $palette-aqua;
 
-$sidebar-dark-submenu-bg         : lighten($dashboard-sidebar-bg, 5%);
-$sidebar-dark-submenu-color      : lighten($sidebar-dark-submenu-bg, 40%);
-$sidebar-dark-submenu-hover-color: #fff;
+$dashboard-sidebar-submenu-bg         : lighten($dashboard-sidebar-bg, 5%);
+$dashboard-sidebar-submenu-color      : lighten($dashboard-sidebar-submenu-bg, 40%);
+$dashboard-sidebar-submenu-hover-color: #fff;
 
 //==
 //== Navbar

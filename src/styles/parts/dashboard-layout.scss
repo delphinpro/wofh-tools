@@ -8,6 +8,7 @@
   &__sidebar {
     width: $sidebar-width;
     flex-shrink: 0;
+    background: $dashboard-sidebar-bg;
   }
 
   &__main {

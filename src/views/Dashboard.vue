@@ -19,7 +19,9 @@ export default {
 
 <template>
     <div class="dashboard-layout">
-        <DashboardSidebar class="dashboard-layout__sidebar"/>
+        <div class="dashboard-layout__sidebar">
+            <DashboardSidebar/>
+        </div>
         <div class="dashboard-layout__main">
             <ol class="breadcrumb">
                 <li><a href="/"><i class="fa fa-home"></i> Главная</a></li>
