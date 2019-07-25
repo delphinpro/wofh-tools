@@ -23,7 +23,7 @@ export default {
     <section class="">
         <div class="row">
             <div class="col-md-6">
-                <Box type="primary" title="Quick Example">
+                <Box type="info" title="Quick Example">
                     <form class="demo">
                         <Inputbox
                             class="form-group"
@@ -59,107 +59,46 @@ export default {
                     </form>
                 </Box>
 
-                <div class="box box-info">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Input Addon</h3>
+                <Box type="info" title="Input Addon">
+                    <div class="demo">
+                        <Inputbox
+                            class="form-group"
+                            placeholder="Username"
+                            addon="@"
+                        />
+                        <Inputbox
+                            class="form-group"
+                            placeholder="Price"
+                            addon=".00"
+                            addon-position="end"
+                        />
+
+                        <h4 class="type-title">With icons</h4>
+
+                        <Inputbox
+                            class="form-group"
+                            placeholder="Email"
+                            addon-icon="envelope"
+                            addon-position="start"
+                        />
+
+                        <Inputbox
+                            class="form-group"
+                            placeholder="Email"
+                            addon-icon="check"
+                            addon-position="end"
+                            status="success"
+                        />
+
+                        <Inputbox
+                            class="form-group"
+                            placeholder="Password"
+                            addon-icon="exclamation-triangle"
+                            addon-position="end"
+                            status="danger"
+                        />
                     </div>
-                    <div class="box-body">
-                        <div class="input-group">
-                            <span class="input-group-addon">@</span>
-                            <input class="form-control" type="text" placeholder="Username">
-                        </div>
-                        <br>
-
-                        <div class="input-group">
-                            <input class="form-control" type="text">
-                            <span class="input-group-addon">.00</span>
-                        </div>
-                        <br>
-
-                        <div class="input-group">
-                            <span class="input-group-addon">$</span>
-                            <input class="form-control" type="text">
-                            <span class="input-group-addon">.00</span>
-                        </div>
-
-                        <h4>With icons</h4>
-
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                            <input class="form-control" type="email" placeholder="Email">
-                        </div>
-                        <br>
-
-                        <div class="input-group">
-                            <input class="form-control" type="text">
-                            <span class="input-group-addon"><i class="fa fa-check"></i></span>
-                        </div>
-                        <br>
-
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-dollar"></i></span>
-                            <input class="form-control" type="text">
-                            <span class="input-group-addon"><i class="fa fa-ambulance"></i></span>
-                        </div>
-
-                        <h4>With checkbox and radio inputs</h4>
-
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="input-group">
-                        <span class="input-group-addon">
-                          <input type="checkbox">
-                        </span>
-                                    <input class="form-control" type="text">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="input-group">
-                        <span class="input-group-addon">
-                          <input type="radio">
-                        </span>
-                                    <input class="form-control" type="text">
-                                </div>
-                            </div>
-                        </div>
-
-                        <h4>With buttons</h4>
-
-                        <p class="margin">Large: <code>.input-group.input-group-lg</code></p>
-
-                        <div class="input-group input-group-lg">
-                            <div class="input-group-btn">
-                                <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown">
-                                    Action
-                                    <span class="fa fa-caret-down"></span></button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                </ul>
-                            </div>
-                            <input class="form-control" type="text">
-                        </div>
-                        <p class="margin">Normal</p>
-
-                        <div class="input-group">
-                            <div class="input-group-btn">
-                                <button class="btn btn-danger" type="button">Action</button>
-                            </div>
-                            <input class="form-control" type="text">
-                        </div>
-                        <p class="margin">Small <code>.input-group.input-group-sm</code></p>
-
-                        <div class="input-group input-group-sm">
-                            <input class="form-control" type="text">
-                            <span class="input-group-btn">
-                      <button class="btn btn-info btn-flat" type="button">Go!</button>
-                    </span>
-                        </div>
-                    </div>
-                </div>
+                </Box>
             </div>
 
 

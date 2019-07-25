@@ -3,6 +3,8 @@
 //== ======================================= ==//
 
 $inputbox-font-size: $rhythm-base-font-size;
+$inputbox-h-padding: rhythm(0.5);
+$inputbox-border-bottom: 2px;
 $inputbox-background: lighten($dashboard-sidebar-bg, 10%);
 $inputbox-color: #eee;
 $inputbox-text-color: $color-text-base;
@@ -18,6 +20,8 @@ $inputbox-border-color-danger: $color-danger;
 }
 
 .inputbox {
+  $this: &;
+  position: relative;
   width: 100%;
 
   &__label {
@@ -32,15 +36,21 @@ $inputbox-border-color-danger: $color-danger;
     color: var(--inputbox-text-color);
   }
 
+  &__container {
+    position: relative;
+    display: flex;
+  }
+
   &__control {
     @include font($inputbox-font-size, 1);
     display: block;
+    flex-grow: 1;
     width: 100%;
-    padding-right: rhythm(0.5);
-    padding-left: rhythm(0.5);
+    padding-right: $inputbox-h-padding;
+    padding-left: $inputbox-h-padding;
     color: $inputbox-color;
     border: 1px solid $inputbox-background;
-    border-bottom: 2px solid var(--inputbox-border-color);
+    border-bottom: $inputbox-border-bottom solid var(--inputbox-border-color);
     background-color: $inputbox-background;
     box-shadow: none;
 
@@ -93,6 +103,20 @@ $inputbox-border-color-danger: $color-danger;
     }
   }
 
+  &__addon {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    color: var(--inputbox-text-color);
+    border-top: 1px solid $inputbox-background;
+    border-bottom: $inputbox-border-bottom solid var(--inputbox-border-color);
+    background-color: $inputbox-background;
+  }
+
+  &__control:focus + &__addon {
+    border-color: var(--inputbox-border-color);
+  }
+
   &__help {
     @include font($inputbox-font-size - 3, 1);
     color: var(--inputbox-text-color);
@@ -112,5 +136,35 @@ $inputbox-border-color-danger: $color-danger;
   &_status_danger {
     --inputbox-border-color: #{$inputbox-border-color-danger};
     --inputbox-text-color: #{$inputbox-border-color-danger};
+  }
+
+  &_addon_start {
+    #{$this}__container {
+      flex-direction: row-reverse;
+    }
+
+    #{$this}__addon {
+      padding-left: $inputbox-h-padding;
+      border-left: 1px solid $inputbox-background;
+      //padding-right: $inputbox-h-padding;
+    }
+
+    #{$this}__control {
+      border-left: none;
+    }
+  }
+
+  &_addon_end {
+    #{$this}__container {
+    }
+
+    #{$this}__addon {
+      padding-right: $inputbox-h-padding;
+      border-right: 1px solid $inputbox-background;
+    }
+
+    #{$this}__control {
+      border-right: none;
+    }
   }
 }
