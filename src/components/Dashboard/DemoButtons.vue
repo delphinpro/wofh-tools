@@ -6,6 +6,7 @@
  */
 
 import Box from '@/components/Box';
+import Inputbox from '@/components/Inputbox';
 
 
 export default {
@@ -13,6 +14,7 @@ export default {
 
     components: {
         Box,
+        Inputbox,
     },
 
     data: () => ({
@@ -149,16 +151,16 @@ export default {
                                 <li><a href="#">Separated link</a></li>
                             </ul>
                         </div>
-                        <input class="form-control" type="text">
+                        <Inputbox/>
                     </div>
                     <div class="input-group margin">
                         <div class="input-group-btn">
                             <button class="btn btn_danger" type="button">Action</button>
                         </div>
-                        <input class="form-control" type="text">
+                        <Inputbox/>
                     </div>
                     <div class="input-group margin">
-                        <input class="form-control" type="text">
+                        <Inputbox/>
                         <span class="input-group-btn">
                       <button class="btn btn_info btn_flat" type="button">Go!</button>
                     </span>

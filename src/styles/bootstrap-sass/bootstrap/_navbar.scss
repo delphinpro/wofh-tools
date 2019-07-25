@@ -293,16 +293,6 @@
   // Mixin behavior for optimum display
   @include form-inline;
 
-  .form-group {
-    @media (max-width: $grid-float-breakpoint-max) {
-      margin-bottom: 5px;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
-
   // Vertically center in expanded, horizontal navbar
   @include navbar-vertical-align($input-height-base);
 

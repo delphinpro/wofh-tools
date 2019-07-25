@@ -65,6 +65,7 @@ export function createRouter() {
                     { path: 'alerts', component: () => import('@/components/Dashboard/DemoAlerts') },
                     { path: 'icons', component: () => import('@/components/Dashboard/DemoIcons') },
                     { path: 'buttons', component: () => import('@/components/Dashboard/DemoButtons') },
+                    { path: 'inputs', component: () => import('@/components/Dashboard/DemoInputs') },
                     { path: '*', component: PageNotFound },
                 ],
             },
