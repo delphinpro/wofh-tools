@@ -6,77 +6,47 @@
  */
 
 import { mapGetters, mapState } from 'vuex';
-import { AUTH_LOGOUT } from '@/store/actions/auth';
 import AppLogo from './AppLogo';
-import TopMenu from './TopMenu';
+import NavMenu from './NavMenu';
+import UserMenu from './UserMenu';
 
 
 export default {
     components: {
         AppLogo,
-        TopMenu,
+        NavMenu,
+        UserMenu,
     },
 
-    data: () => ({}),
+    data: () => ({
+        mainmenu: [
+            { id: 1, title: 'Статистика', icon: null, path: '/stat' },
+            { id: 2, title: 'Науки', icon: null, path: '/technology' },
+            { id: 3, title: 'Квесты', icon: null, path: '/quests' },
+            { id: 4, title: 'Таблицы', icon: null, path: 'tables' },
+        ],
+    }),
 
     computed: {
         ...mapGetters(['getProfile', 'isAuthenticated', 'isProfileLoaded']),
         ...mapState({
-            authLoading: state => state.auth.status === 'loading',
             name: state => `${state.user.profile.title} ${state.user.profile.name}`,
         }),
     },
 
-    methods: {
-        logout: function () {
-            this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'));
-        },
-    },
 };
 </script>
 
 <template>
-    <div class="navbar">
-        <div class="navbar__container container">
-            <AppLogo class="navbar__logo"/>
-            <TopMenu class="navbar__mainmenu"/>
-            <ul class="navbar__usermenu top-menu">
-                <li class="top-menu__item">
-                    <router-link to="/dashboard" class="top-menu__link">Dashboard</router-link>
-                </li>
-                <li v-if="isProfileLoaded" class="top-menu__item">
-                    <router-link to="/account" class="top-menu__link">{{name}}</router-link>
-                </li>
-                <li v-if="isAuthenticated" @click="logout" class="top-menu__item">
-                    <span class="logout top-menu__link">Logout</span>
-                </li>
-                <li v-if="!isAuthenticated && !authLoading" class="top-menu__item">
-                    <router-link to="/login" class="top-menu__link">Login</router-link>
-                </li>
-            </ul>
+    <header class="app-navbar">
+        <div class="app-navbar__container">
+            <AppLogo class="app-navbar__logo"/>
+            <!--<button class="app-navbar__sidebar-toggle sidebar-toggle" type="button">
+                <span class="fa fa-bars"></span>
+                <span class="sr-only">Toggle navigation</span>
+            </button>-->
+            <NavMenu class="app-navbar__mainmenu" :items="mainmenu"/>
+            <UserMenu class="app-navbar__usermenu"/>
         </div>
-    </div>
+    </header>
 </template>
-
-<style lang="scss">
-    .navbar {
-        background-color: $second-color;
-        box-shadow: $shadow-bar;
-
-        &__container {
-            height: rhythm($navbar-height-rhythm);
-            display: flex;
-        }
-
-        &__logo {
-        }
-
-        &__mainmenu {
-            margin-left: 1rem;
-        }
-
-        &__usermenu {
-            margin-left: auto;
-        }
-    }
-</style>

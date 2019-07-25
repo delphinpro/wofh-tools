@@ -1,0 +1,18 @@
+//==
+//== Typography: Links
+//== ======================================= ==//
+
+a {
+  color: $color-link;
+  text-decoration: none;
+  transition: 0.3s ease;
+
+  &:hover,
+  &:focus {
+    color: $color-link-hover;
+  }
+
+  &:focus {
+    @include tab-focus();
+  }
+}

@@ -9,10 +9,32 @@
 //@import url("https://fonts.googleapis.com/css?family=Roboto+Slab:300,400,700&subset=cyrillic");
 //@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
 //
-@import "./parts/normalize.scss";
-@import "./parts/init.scss";
-@import "./parts/font-awesome.scss";
-@import "./parts/typography.scss";
+@import "base/normalize";
+@import "base/init";
+@import "base/typography";
+@import "base/code";
+@import "base/links";
+@import "base/tables";
+@import "base/buttons";
+@import "base/inputbox";
+@import "base/control-group";
+@import "base/general-form";
+
+@import "parts/font-awesome";
+@import "parts/dashboard-layout";
+@import "parts/dashboard-sidebar";
+@import "parts/dashboard-menu";
 //
+@import "components/alert";
+@import "components/app";
+@import "components/app-footer";
+@import "components/app-navbar";
+@import "components/box";
+@import "components/breadcrumbs";
+@import "components/logo";
+@import "components/nav-menu";
+@import "components/page-header";
+@import "components/usermenu";
+
 @import "./parts/helpers.scss";
 @import "./parts/override-toast.scss";

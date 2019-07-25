@@ -16,7 +16,7 @@ export default {
 
 <template>
     <div class="footer">
-        <div class="footer__container container">
+        <div class="footer__container container-fluid">
             <div class="footer__section">
                 <p>
                     © {{projectName}}, v{{projectVer}},
@@ -39,43 +39,3 @@ export default {
         </div>
     </div>
 </template>
-
-<style lang="scss">
-    .footer {
-        @include font(11px, 14px);
-        width: 100%;
-        background: $background-dark-2;
-        box-shadow: $shadow-bar inset;
-
-        &__container {
-            @include media-breakpoint-up(md) {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-            }
-        }
-
-        &__section {
-            padding: 1em 0;
-        }
-
-        p {
-            margin: 0;
-        }
-
-        a {
-            color: inherit;
-
-            &:hover {
-                color: lighten($main-color, 10%);
-            }
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: inline-flex;
-        }
-    }
-</style>

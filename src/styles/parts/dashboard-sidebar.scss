@@ -1,0 +1,14 @@
+//==
+//== Dashboard sidebar
+//== ======================================= ==//
+
+.dashboard-sidebar {
+  position: fixed;
+  top: rhythm($navbar-height-rhythm);
+  bottom: 0;
+  left: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: $sidebar-width;
+  background: $dashboard-sidebar-bg;
+}

@@ -1,0 +1,25 @@
+//==
+//== zIndex master list
+//== ======================================= ==//
+
+// @formatter:off
+
+$z-navbar:            1000;
+$z-dropdown:          1000;
+$z-popover:           1060;
+$z-tooltip:           1070;
+$z-navbar-fixed:      1030;
+$z-modal-background:  1040;
+$z-modal:             1050;
+
+//==
+//== Bootstrap fallback
+//== ======================================= ==//
+
+$zindex-navbar:           $z-navbar;
+$zindex-dropdown:         $z-dropdown;
+$zindex-popover:          $z-popover;
+$zindex-tooltip:          $z-tooltip;
+$zindex-navbar-fixed:     $z-navbar-fixed;
+$zindex-modal-background: $z-modal-background;
+$zindex-modal:            $z-modal;

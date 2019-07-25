@@ -1,0 +1,18 @@
+//==
+//== Grouping controls
+//== ======================================= ==//
+
+.control-group {
+  display: flex;
+
+  > .btn {
+    margin-left: -1px;
+    padding-left: 1em;
+    padding-right: 1em;
+
+    &.active,
+    &:active {
+      z-index: 1;
+    }
+  }
+}

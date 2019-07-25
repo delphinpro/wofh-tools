@@ -1,0 +1,19 @@
+//==
+//== Dashboard layout
+//== ======================================= ==//
+
+.dashboard-layout {
+  display: flex;
+
+  &__sidebar {
+    width: $sidebar-width;
+    flex-shrink: 0;
+    background: $dashboard-sidebar-bg;
+  }
+
+  &__main {
+    @include make-gutters();
+    flex-grow: 1;
+    max-width: calc(100% - #{$sidebar-width});
+  }
+}

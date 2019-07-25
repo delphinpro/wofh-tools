@@ -57,6 +57,10 @@ export function createRouter() {
                 path: '/dashboard',
                 name: 'dashboard',
                 component: () => import('./views/Dashboard.vue'),
+                children: [
+                    { path: 'worlds', component: () => import('@/components/Dashboard/Worlds') },
+                    { path: '*', component: PageNotFound },
+                ],
             },
             { path: '*', component: PageNotFound },
         ],
