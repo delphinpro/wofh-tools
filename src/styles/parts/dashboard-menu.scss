@@ -1,0 +1,126 @@
+//==
+//== Dashboard menu
+//== ======================================= ==//
+
+.dashboard-menu {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  &:not(:first-child) {
+    margin-top: rhythm(0.5);
+  }
+
+  &:not(:last-child) {
+    margin-bottom: rhythm(0.5);
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  a {
+    @include font(15px, 1);
+    @include rhythm-padding(0.5);
+    display: block;
+    padding-right: rhythm(0.25);
+    padding-left: rhythm(0.5);
+    color: $dashboard-sidebar-color;
+    border-left: 3px solid transparent;
+
+    > .fa:first-child {
+      width: 30px;
+    }
+  }
+
+  > li {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 0;
+
+    > a {
+    }
+
+    &:hover > a {
+      background: $dashboard-sidebar-bg-hover;
+    }
+
+    > ul {
+      display: none;
+      background: $dashboard-sidebar-submenu-bg;
+    }
+
+    &.dashboard-menu-header {
+      @include font(12px, 1);
+      @include rhythm-padding(0.25);
+      padding-right: 5px;
+      padding-left: 5px;
+      color: lighten($dashboard-sidebar-bg, 20%);
+      background: darken($dashboard-sidebar-bg, 4%);
+    }
+
+    &.active {
+      > a {
+        border-left-color: $dashboard-sidebar-active-color;
+      }
+
+      > ul {
+        display: block;
+      }
+    }
+
+    //==
+    //== Nested
+    //== ======================================= ==//
+
+    > ul {
+      > li {
+        > a {
+        }
+
+        &:hover > a {
+          color: $dashboard-sidebar-color-hover;
+        }
+
+        &.active {
+          > a {
+            border-left-color: $dashboard-sidebar-active-color;
+          }
+
+          > ul {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}
+
+.dashboard-menu-parent {
+  > a {
+    display: flex;
+    align-items: center;
+
+    > .fa {
+      flex-shrink: 0;
+
+      &:last-child {
+        width: 30px;
+        margin-left: auto;
+        transition: 0.3s ease;
+        text-align: center;
+      }
+    }
+  }
+
+  &.open {
+    > a {
+      > .fa:last-child {
+        transform: rotate(-90deg);
+      }
+    }
+  }
+}
