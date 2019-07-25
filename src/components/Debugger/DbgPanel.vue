@@ -1,9 +1,8 @@
-<script>/**
+<script>/*!
  * WofhTools
- * DbgPanel.vue
- * @author      delphinpro <delphinpro@gmail.com>
- * @copyright   copyright © 2019 delphinpro
- * @license     licensed under the MIT license
+ * Component: DbgPanel.vue
+ * © 2019 delphinpro <delphinpro@gmail.com>
+ * licensed under the MIT license
  */
 
 export default {

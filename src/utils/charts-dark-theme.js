@@ -1,8 +1,7 @@
-/**
+/*!
  * WofhTools
- *
- * delphinpro <delphinpro@gmail.com>
- * copyright © 2014—2019 delphinpro
+ * File: utils/chart-dark-theme.js
+ * © 2014—2019 delphinpro <delphinpro@gmail.com>
  * licensed under the MIT license
  */
 

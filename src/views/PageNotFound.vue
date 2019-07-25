@@ -1,3 +1,13 @@
+<script>/*!
+ * WofhTools
+ * View: PageNotFound.vue
+ * © 2019 delphinpro <delphinpro@gmail.com>
+ * licensed under the MIT license
+ */
+
+export default {};
+</script>
+
 <template>
     <div class="container page-404">
         <h1>Ошибка 404: страница не найдена</h1>

@@ -1,5 +1,7 @@
-/*
- from https://stackoverflow.com/questions/27936772/how-to-deep-merge-instead-of-shallow-merge
+/*!
+ * WofhTools
+ * File: utils/deepMergeObject.js
+ * from https://stackoverflow.com/questions/27936772/how-to-deep-merge-instead-of-shallow-merge
  */
 
 /**
