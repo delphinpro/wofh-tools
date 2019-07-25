@@ -114,10 +114,10 @@ $dashboard-sidebar-submenu-hover-color: #fff;
 //== Navbar
 //== ======================================= ==//
 
-$main-header-background      : $palette-light-blue;
-$main-header-background-hover: darken($main-header-background, 5%);
-$main-header-color           : #fff;
-$main-header-color-hover     : lighten($main-header-color, 0);
+$app-navbar-background      : $palette-light-blue;
+$app-navbar-background-hover: darken($app-navbar-background, 5%);
+$app-navbar-color           : #fff;
+$app-navbar-color-hover     : lighten($app-navbar-color, 0);
 
 $navbar-height-rhythm : 2;
 $navbar-padding-rhythm: 0.25;

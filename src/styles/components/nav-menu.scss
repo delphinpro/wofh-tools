@@ -7,7 +7,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  color: $main-header-color;
+  color: $app-navbar-color;
 
   &__item {
     position: relative;
@@ -22,12 +22,12 @@
     cursor: pointer;
     user-select: none;
     text-decoration: none;
-    color: $main-header-color;
+    color: $app-navbar-color;
   }
 
   &__item:hover &__link {
-    color: $main-header-color-hover;
-    background-color: $main-header-background-hover;
+    color: $app-navbar-color-hover;
+    background-color: $app-navbar-background-hover;
   }
 
   &__icon {
