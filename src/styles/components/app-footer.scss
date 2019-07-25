@@ -1,0 +1,41 @@
+//==
+//== Main footer
+//== ======================================= ==//
+
+.footer {
+  @include font(11px, 14px);
+  width: 100%;
+  background: darken($dashboard-sidebar-bg, 3%);
+  padding-left: $sidebar-width;
+
+  &__container {
+    @include media-breakpoint-up(md) {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  &__section {
+    padding: 1em 0;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+
+    &:hover {
+      color: lighten($wt-text-color, 10%);
+    }
+  }
+
+  ul {
+    display: inline-flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}

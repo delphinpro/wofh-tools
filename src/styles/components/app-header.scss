@@ -1,0 +1,50 @@
+//==
+//== Main header
+//== ======================================= ==//
+
+.main-header {
+  @include font(13px);
+  position: fixed;
+  z-index: $z-navbar-fixed;
+  color: $main-header-color;
+  background: $main-header-background;
+  box-shadow: $shadow-bar;
+
+  &__container {
+    display: flex;
+    height: rhythm($navbar-height-rhythm);
+  }
+
+  &__logo {
+    flex-shrink: 0;
+    width: $sidebar-width;
+    background: $wt-second-color-dark;
+  }
+
+  &__mainmenu {
+    margin-right: 1em;
+  }
+
+  &__usermenu {
+    margin-left: auto;
+  }
+}
+
+.sidebar-toggle {
+  @include size(rhythm($navbar-height-rhythm));
+  @include wt-transition(background-color);
+  padding: 0;
+  color: currentColor;
+  border: none;
+  background: none;
+
+  &:hover {
+    color: $main-header-color-hover;
+    background-color: $main-header-background-hover;
+  }
+
+  &:focus,
+  &:active {
+    background: transparent;
+  }
+}

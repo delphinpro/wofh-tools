@@ -108,39 +108,3 @@ export default {
         </div>
     </div>
 </template>
-
-<style lang="scss">
-    .app {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-
-        &__navbar,
-        &__footer {
-            width: 100%;
-        }
-
-        &__navbar {
-        }
-
-        &__main {
-            @include padding-leader($navbar-height-rhythm);
-            flex-grow: 1;
-        }
-
-        &__footer {
-        }
-
-        &__loader {
-            position: fixed;
-            left: 0;
-            top: 0;
-            z-index: 99998;
-            background: rgba(#000, 0.1);
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-        }
-    }
-</style>

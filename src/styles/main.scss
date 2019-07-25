@@ -28,8 +28,12 @@
 @import "parts/dashboard-sidebar";
 //
 @import "components/alert";
+@import "components/app";
+@import "components/app-footer";
+@import "components/app-header";
 @import "components/box";
 @import "components/breadcrumbs";
+@import "components/logo";
 @import "components/page-header";
 
 @import "./parts/helpers.scss";
