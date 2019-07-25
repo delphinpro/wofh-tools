@@ -4,16 +4,20 @@
 /// @license licensed under the MIT license
 ////
 
+:root {
+}
+
 @include establish-baseline() {
   height: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 body {
-  font-family: $family-base;
+  font-family: $wt-family-base;
   min-height: 100%;
   background: $background-base;
-  color: $main-color;
-  @include webkit-scrollbar($main-color);
+  color: $color-text-base;
+  @include webkit-scrollbar($color-text-base);
 }
 
 @include make-grid-system();
