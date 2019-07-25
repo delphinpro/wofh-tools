@@ -16,7 +16,7 @@ export default {
 
 <template>
     <div class="footer">
-        <div class="footer__container container">
+        <div class="footer__container container-fluid">
             <div class="footer__section">
                 <p>
                     © {{projectName}}, v{{projectVer}},
