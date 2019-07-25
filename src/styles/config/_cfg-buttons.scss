@@ -8,15 +8,15 @@ $btn-border-radius-small: 2px;
 
 $btn-font-weight: 400;
 
-$btn-default-color: #333;
-$btn-default-bg: #fff;
-$btn-default-border: #ccc;
+$btn-default-color: $color-text-base;
+$btn-default-bg: lighten($background-base, 5%);
+$btn-default-border: darken($btn-default-bg, 12%);
 
 $button-themes: (
   primary: (
     color: #fff,
     bg: $color-primary,
-    border: darken($color-primary, 15%),
+    border: darken($color-primary, 25%),
   ),
   success: (
     color: #fff,

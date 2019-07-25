@@ -2,6 +2,8 @@
 //== Buttons
 //== ======================================= ==//
 
+$btn-enable-focus-state: false;
+
 @mixin button-variant(
   $button,
   $default-color: $btn-default-color,
@@ -12,52 +14,62 @@
   $background: map-get-safe($button, bg, $default-bg);
   $border: map-get-safe($button, border, $default-border);
 
-  color: $color;
-  background-color: $background;
-  border-color: $border;
+  --btn-color: #{$color};
+  --btn-background-color: #{$background};
+  --btn-border-color: #{$border};
+  --btn-focus-shadow-color: #{rgba($background, 0.3)};
 
-  &:focus,
-  &.focus {
-    color: $color;
-    background-color: darken($background, 10%);
-    border-color: darken($border, 25%);
+  //color: $color;
+  //background-color: $background;
+  //border-color: $border;
+
+  @if $btn-enable-focus-state {
+    &.focus,
+    &:focus {
+      outline: 1px dotted rgba(#fff, 0.7);
+      outline-offset: -5px;
+    }
   }
+
+  //&:focus {
+  //  color: $color;
+  //  background-color: darken($background, 10%);
+  //  border-color: darken($border, 25%);
+  //}
   &:hover {
-    color: $color;
-    background-color: darken($background, 10%);
-    border-color: darken($border, 12%);
+    --btn-color: #{$color};
+    --btn-background-color: #{darken($background, 10%)};
+    --btn-border-color: #{darken($border, 7%)};
   }
-  &:active,
-  &.active,
-  .open > &.dropdown-toggle {
-    color: $color;
-    background-color: darken($background, 10%);
-    background-image: none;
-    border-color: darken($border, 12%);
-
-    &:hover,
-    &:focus,
-    &.focus {
-      color: $color;
-      background-color: darken($background, 17%);
-      border-color: darken($border, 25%);
-    }
-  }
-  &.disabled,
-  &[disabled],
-  fieldset[disabled] & {
-    &:hover,
-    &:focus,
-    &.focus {
-      background-color: $background;
-      border-color: $border;
-    }
-  }
-
-  .badge {
-    color: $background;
-    background-color: $color;
-  }
+  //&:active,
+  //&.active,
+  //.open > &.dropdown-toggle {
+  //  color: $color;
+  //  background-color: darken($background, 10%);
+  //  background-image: none;
+  //  border-color: darken($border, 12%);
+  //
+  //  &:hover,
+  //  &:focus {
+  //    color: $color;
+  //    background-color: darken($background, 17%);
+  //    border-color: darken($border, 25%);
+  //  }
+  //}
+  //fieldset[disabled] &,
+  //&.disabled,
+  //&:disabled {
+  //  &:hover,
+  //  &:focus {
+  //    background-color: $background;
+  //    border-color: $border;
+  //  }
+  //}
+  //
+  //.badge {
+  //  color: $background;
+  //  background-color: $color;
+  //}
 }
 
 @mixin button-size($button: map_get($button-sizes, normal)) {
@@ -69,43 +81,68 @@
   @include font($font-size, $line-height);
   height: rhythm($height);
   padding: 0 1.5em;
-  border-radius: $radius;
+  border-radius: 0; //$radius;
+}
+
+:root {
+  --btn-color: #{$btn-default-color};
+  --btn-background-color: #{$btn-default-bg};
+  --btn-border-color: #{$btn-default-border};
+  --btn-focus-shadow-color: #{rgba($btn-default-bg, 0.5)};
 }
 
 .btn {
-  background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
-  border: 1px solid transparent;
-  //border-width: 0 0 3px;
-  border-bottom-width: 3px;
-  cursor: pointer;
+  position: relative;
   display: inline-flex;
   align-items: center;
-  font-weight: $btn-font-weight;
   margin: 0;
-  text-align: center;
-  touch-action: manipulation;
+  cursor: pointer;
   user-select: none;
+  transition: 0.15s ease-in-out;
+  transition-property: color, background-color, border-color, box-shadow;
+  text-align: center;
   vertical-align: middle;
   white-space: nowrap;
-
-  &.active,
-  &:active,
-  &:focus {
-    @include tab-focus();
-  }
-
+  //border-bottom-width: 3px;
+  color: var(--btn-color);
+  border: 1px solid var(--btn-border-color);
+  outline: none;
+  background-color: var(--btn-background-color);
+  background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
+  box-shadow: 0 2px 0 0 var(--btn-border-color);
+  font-weight: $btn-font-weight;
+  touch-action: manipulation;
 
   &:hover,
   &:focus {
-    color: $btn-default-color;
     text-decoration: none;
+    color: var(--btn-color);
+    //color: $btn-default-color;
+  }
+
+  @if $btn-enable-focus-state {
+    &.focus,
+    &:focus {
+      //box-shadow: (
+      //  0 2px 0 0 var(--btn-border-color),
+      //  0 1px 0 4px var(--btn-focus-shadow-color),
+      //);
+      outline: 1px dotted rgba(#fff, 0.2);
+      outline-offset: -5px;
+    }
+  }
+
+  &:hover {
+    --btn-background-color: #{darken($btn-default-bg, 3%)};
+    --btn-border-color: #{darken($btn-default-border, 7%)};
   }
 
   &.active,
   &:active {
-    background-image: none;
-    outline: 0;
-    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    top: 1px;
+    outline: 0 !important;
+    background-image: none !important;
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125) !important;
   }
 
   fieldset[disabled] &,
@@ -114,6 +151,7 @@
     cursor: $cursor-disabled;
     opacity: 0.65;
     box-shadow: none;
+    //background-color: rgba();
   }
 
   @at-root {
@@ -131,7 +169,6 @@
   $font-size-base: 14px;
   $line-height-base: 1.428571429; // 20/14
 
-  @include button-variant(());
   @include button-size();
 
   //==
@@ -162,7 +199,7 @@
 
   &_block {
     display: flex;
-    width: 100%;
     justify-content: center;
+    width: 100%;
   }
 }

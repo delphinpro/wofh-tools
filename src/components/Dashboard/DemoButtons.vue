@@ -14,6 +14,46 @@ export default {
     components: {
         Box,
     },
+
+    data: () => ({
+        buttons: [
+            { cls: 'btn_default', txt: 'Default', disabled: false },
+            { cls: 'btn_primary', txt: 'Primary', disabled: false },
+            { cls: 'btn_info', txt: 'Info', disabled: false },
+            { cls: 'btn_success', txt: 'Success', disabled: false },
+            { cls: 'btn_warning', txt: 'Warning', disabled: false },
+            { cls: 'btn_danger', txt: 'Danger', disabled: false },
+
+            { cls: 'btn_default active', txt: 'Active:', disabled: false },
+            { cls: 'btn_primary active', txt: 'Primary', disabled: false },
+            { cls: 'btn_info active', txt: 'Info', disabled: false },
+            { cls: 'btn_success active', txt: 'Success', disabled: false },
+            { cls: 'btn_warning active', txt: 'Warning', disabled: false },
+            { cls: 'btn_danger active', txt: 'Danger', disabled: false },
+
+            { cls: 'btn_default focus', txt: 'Focus:', disabled: false },
+            { cls: 'btn_primary focus', txt: 'Primary', disabled: false },
+            { cls: 'btn_info focus', txt: 'Info', disabled: false },
+            { cls: 'btn_success focus', txt: 'Success', disabled: false },
+            { cls: 'btn_warning focus', txt: 'Warning', disabled: false },
+            { cls: 'btn_danger focus', txt: 'Danger', disabled: false },
+
+            { cls: 'btn_default', txt: 'Disabled:', disabled: true },
+            { cls: 'btn_primary', txt: 'Primary', disabled: true },
+            { cls: 'btn_info', txt: 'Info', disabled: true },
+            { cls: 'btn_success', txt: 'Success', disabled: true },
+            { cls: 'btn_warning', txt: 'Warning', disabled: true },
+            { cls: 'btn_danger', txt: 'Danger', disabled: true },
+
+            { cls: 'btn_default', txt: 'Sizes:', disabled: false },
+            { cls: 'btn_primary btn_lg', txt: 'Large', disabled: false },
+            { cls: 'btn_info', txt: 'Normal', disabled: false },
+            { cls: 'btn_success btn_sm', txt: 'Small', disabled: false },
+            { cls: 'btn_warning btn_block', txt: 'Block', disabled: false },
+            { cls: 'btn_danger btn_block', txt: 'Block', disabled: false },
+        ],
+    }),
+
 };
 </script>
 
@@ -21,73 +61,76 @@ export default {
     <section class="">
 
         <Box type="primary" title="Buttons" icon="edit">
+            <h3 class="type-title">Button tag &lt;button&gt;</h3>
             <div class="demo-buttons">
-                <div>
-                    <button class="btn btn_default" type="button">Default</button>
+                <div v-for="btn in buttons">
+                    <button
+                        class="btn"
+                        :class="btn.cls"
+                        :disabled="btn.disabled"
+                        type="button"
+                    >{{btn.txt}}</button>
                 </div>
-                <div>
-                    <button class="btn btn_primary" type="button">Primary</button>
-                </div>
-                <div>
-                    <button class="btn btn_info" type="button">Info</button>
-                </div>
-                <div>
-                    <button class="btn btn_success" type="button">Success</button>
-                </div>
-                <div>
-                    <button class="btn btn_warning" type="button">Warning</button>
-                </div>
-                <div>
-                    <button class="btn btn_danger" type="button">Danger</button>
-                </div>
+            </div>
 
-                <div>
-                    <button class="btn btn_default" type="button" disabled>Default</button>
-                </div>
-                <div>
-                    <button class="btn btn_primary" type="button" disabled>Primary</button>
-                </div>
-                <div>
-                    <button class="btn btn_info" type="button" disabled>Info</button>
-                </div>
-                <div>
-                    <button class="btn btn_success" type="button" disabled>Success</button>
-                </div>
-                <div>
-                    <button class="btn btn_warning" type="button" disabled>Warning</button>
-                </div>
-                <div>
-                    <button class="btn btn_danger" type="button" disabled>Danger</button>
-                </div>
-
-                <div>
-                    <button class="btn btn_default" type="button">Normal</button>
-                </div>
-                <div>
-                    <button class="btn btn_primary btn_lg" type="button">Large</button>
-                </div>
-                <div>
-                    <button class="btn btn_info" type="button">Normal</button>
-                </div>
-                <div>
-                    <button class="btn btn_success btn_sm" type="button">Small</button>
-                </div>
-                <div>
-                    <button class="btn btn_warning btn_block" type="button">Block</button>
-                </div>
-                <div>
-                    <button class="btn btn_danger btn_block" type="button">Block</button>
+            <h3 class="type-title">Anchor tag &lt;a&gt;</h3>
+            <div class="demo-buttons">
+                <div v-for="(btn, index) in buttons">
+                    <a class="btn"
+                        href="#"
+                        :class="btn.cls"
+                        :disabled="btn.disabled"
+                        role="button"
+                    >{{btn.txt}}</a>
                 </div>
             </div>
         </Box>
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <Box type="primary" title="Horizontal Button Group" icon="">
                     <p>
-                        Horizontal button groups are easy to create with bootstrap. Just add your buttons
-                        inside <code>&lt;div class="btn_group"&gt;&lt;/div&gt;</code>
+                        Horizontal button groups are easy to create with bootstrap.
+                        Just add your buttons inside <code>&lt;div class="btn_group"&gt;&lt;/div&gt;</code>
                     </p>
+                    <div class="demo-buttons">
+                        <div>
+                            <div class="control-group">
+                                <button class="btn btn_default" type="button">Left</button>
+                                <button class="btn btn_default" type="button">Middle</button>
+                                <button class="btn btn_default" type="button">Right</button>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="control-group">
+                                <button class="btn btn_default" type="button"><i class="fa fa-align-left"></i>
+                                </button>
+                                <button class="btn btn_default" type="button"><i class="fa fa-align-center"></i>
+                                </button>
+                                <button class="btn btn_default" type="button"><i class="fa fa-align-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="control-group">
+                                <button class="btn btn_default" type="button">1</button>
+                                <button class="btn btn_default" type="button">2</button>
+
+                                <div class="btn-group">
+                                    <button class="btn btn_default dropdown-toggle"
+                                        type="button"
+                                        data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Dropdown link</a></li>
+                                        <li><a href="#">Dropdown link</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
                     <table class="table">
                         <tbody>
                         <tr>
@@ -97,14 +140,14 @@ export default {
                         </tr>
                         <tr>
                             <td>
-                                <div class="btn_group">
+                                <div class="btn-group">
                                     <button class="btn btn_default" type="button">Left</button>
                                     <button class="btn btn_default" type="button">Middle</button>
                                     <button class="btn btn_default" type="button">Right</button>
                                 </div>
                             </td>
                             <td>
-                                <div class="btn_group">
+                                <div class="btn-group">
                                     <button class="btn btn_default" type="button"><i class="fa fa-align-left"></i>
                                     </button>
                                     <button class="btn btn_default" type="button"><i class="fa fa-align-center"></i>
@@ -114,11 +157,11 @@ export default {
                                 </div>
                             </td>
                             <td>
-                                <div class="btn_group">
+                                <div class="btn-group">
                                     <button class="btn btn_default" type="button">1</button>
                                     <button class="btn btn_default" type="button">2</button>
 
-                                    <div class="btn_group">
+                                    <div class="btn-group">
                                         <button class="btn btn_default dropdown-toggle"
                                             type="button"
                                             data-toggle="dropdown">
@@ -537,16 +580,20 @@ export default {
 
 <style lang="scss">
     .demo-buttons {
-        @include rhythm-padding(0.5);
         display: grid;
         grid-template-columns: repeat(6, 1fr);
         background: $background-base;
         grid-gap: rhythm(1);
+        padding: rhythm(0.5, 1);
 
         > div {
             display: flex;
             justify-content: center;
             align-items: flex-start;
+        }
+
+        &.col3 {
+            grid-template-columns: repeat(3, 1fr);
         }
     }
 </style>
