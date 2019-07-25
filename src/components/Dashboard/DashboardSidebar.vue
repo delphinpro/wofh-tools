@@ -44,6 +44,7 @@ export default {
                         <li class=""><router-link to="/dashboard/type">Typography</router-link></li>
                         <li class=""><router-link to="/dashboard/icons">Icons</router-link></li>
                         <li class=""><router-link to="/dashboard/buttons">Buttons</router-link></li>
+                        <li class=""><router-link to="/dashboard/inputs">Inputs</router-link></li>
                     </ul>
                 </li>
                 <li class="treeview" :class="{'active menu-open':demoWidgetsOpen}">
