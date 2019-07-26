@@ -11,6 +11,7 @@ import Vue from 'vue';
 import Toast from 'cxlt-vue2-toastr';
 import { createApp } from '@/main';
 import { AxiosWrapper } from '@/utils/AxiosWrapper';
+import PageHeader from '@/components/PageHeader';
 
 
 const toastConfigs = {
@@ -28,6 +29,16 @@ const toastConfigs = {
 
 Vue.use(Toast, toastConfigs);
 Vue.use(AxiosWrapper);
+
+//==
+//== Global Components
+//== ======================================= ==//
+
+Vue.component('PageHeader', PageHeader);
+
+//==
+//== Main app
+//== ======================================= ==//
 
 const { app } = createApp();
 
