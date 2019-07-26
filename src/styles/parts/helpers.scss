@@ -105,6 +105,20 @@
 [class^="bg-"].disabled { opacity:.65; }
 
 
+.no-gutter {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+// Alignment
+
+.page-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 /////////////////////
 .type-title {
   @include margin-leader(1);
