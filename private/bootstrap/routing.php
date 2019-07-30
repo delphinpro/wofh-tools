@@ -9,9 +9,9 @@
 
 
 use WofhTools\Controllers\HomeController;
-use WofhTools\Controllers\Statistic\AccountsController;
 use WofhTools\Controllers\UserController;
-use WofhTools\Controllers\WofhController;
+use WofhTools\Controllers\DashboardController;
+use WofhTools\Controllers\Statistic\AccountsController;
 
 
 $app->get('/', HomeController::class.':dispatch')->setName('pageHome');
@@ -26,10 +26,12 @@ $app->group('/stat', function () use ($app) {
 
 $app->group('/api', function () use ($app) {
 
-    $app->group('/wofh', function () use ($app) {
+    $app->post('/login', UserController::class.':doLogin');
 
-        $app->get('/worlds', WofhController::class.':listWorlds');
-        $app->post('/check', WofhController::class.':checkWorlds');
+    $app->group('/dashboard', function () use ($app) {
+
+        $app->get('/worlds', DashboardController::class.':listWorlds');
+        $app->post('/check', DashboardController::class.':checkWorlds');
 
     });
 
