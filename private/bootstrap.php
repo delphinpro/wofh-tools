@@ -21,7 +21,7 @@ require_once __DIR__.'/bootstrap/global_functions.php';
  *== Session
  *== ======================================= ==*/
 
-session_start();
+//session_start();
 
 
 /*==
