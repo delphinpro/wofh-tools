@@ -10,6 +10,7 @@ import Vuex from 'vuex';
 import auth from './modules/auth';
 import user from './modules/user';
 import stat from './modules/stat';
+import { LOADING_DOWN, LOADING_UP } from '@/store/actions';
 
 
 Vue.use(Vuex);
@@ -26,9 +27,19 @@ export default new Vuex.Store({
     state: {
         projectName: 'Wofh Tools',
         projectVer: '4.0',
+        loading: 1,
     },
     getters: {
         projectName: state => state.projectName,
         projectVer: state => state.projectVer,
+        loading: state => state.loading > 0,
+    },
+    mutations: {
+        [LOADING_UP](state) {
+            state.loading = state.loading + 1;
+        },
+        [LOADING_DOWN](state) {
+            state.loading = Math.max(state.loading - 1, 0);
+        },
     },
 });

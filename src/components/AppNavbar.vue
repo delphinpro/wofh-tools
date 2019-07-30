@@ -6,6 +6,7 @@
  */
 
 import { mapGetters, mapState } from 'vuex';
+import { AUTH_LOGOUT } from '@/store/actions/auth';
 import AppLogo from './AppLogo';
 import NavMenu from './NavMenu';
 import UserMenu from './UserMenu';
@@ -28,12 +29,21 @@ export default {
     }),
 
     computed: {
-        ...mapGetters(['getProfile', 'isAuthenticated', 'isProfileLoaded']),
+        ...mapGetters([
+            'getProfile',
+            'isAuth',
+            'isProfileLoaded'
+        ]),
         ...mapState({
             name: state => `${state.user.profile.title} ${state.user.profile.name}`,
         }),
     },
 
+    methods: {
+        logout: function () {
+            this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'));
+        },
+    },
 };
 </script>
 

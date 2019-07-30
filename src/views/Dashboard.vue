@@ -7,7 +7,6 @@
 
 import DashboardSidebar from '@/components/Dashboard/DashboardSidebar';
 
-
 export default {
     name: 'Dashboard',
 

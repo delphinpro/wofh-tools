@@ -5,16 +5,13 @@
  * licensed under the MIT license
  */
 
-import { USER_REQUEST } from '@/store/actions/user';
 import AppNavbar from '@/components/AppNavbar';
 import AppFooter from '@/components/AppFooter';
 import Loading from '@/components/Loading';
+import { mapGetters } from 'vuex';
+import { LOADING_DOWN, LOADING_UP } from '@/store/actions';
+import { AUTH_LOGOUT } from '@/store/actions/auth';
 
-
-function trimRootPath(path) {
-    const root = 'D:/dev/projects/wofh-tools/wofh-tools.project';
-    return path.replace(/\\/g, '/').replace(root, '');
-}
 
 export default {
     components: {
@@ -23,79 +20,42 @@ export default {
         Loading,
     },
 
-    data: () => ({
-        loading: true,
-    }),
+    data: () => ({}),
 
     computed: {
-    },
-
-    created: function () {
+        ...mapGetters([
+            'loading',
+        ]),
     },
 
     mounted() {
-        this.loading = false;
+        this.$store.commit(LOADING_DOWN);
 
-        /*
-         *  REQUEST
-         */
+        /* Axios: REQUEST */
         this.axios.interceptors.request.use((config) => {
-            this.loading = true;
-            console.log('Interceptor Request', config);
+            this.$store.commit(LOADING_UP);
             return config;
-        }, (error) => {
-            console.log('Interceptor Request: error', error);
-            // Do something with request error
-            return Promise.reject(error);
         });
 
-        /*
-         *  RESPONSE
-         */
-        this.axios.interceptors.response.use((response) => {
-            this.loading = false;
-            if (response.data.status === false) {
-                this.$toast.warn({
-                    title: response.data.message,
-                    message: `Request [${response.config.method.toUpperCase()}] ${response.config.url}.`,
-                });
-            } else {
-                if (response.data.message) {
-                    this.$toast.success({
-                        title: 'Success',
-                        message: response.data.message,
-                    });
-                }
+        /* Axios: RESPONSE */
+        this.axios.interceptors.response.use(this.interceptorResponseSuccess, this.interceptorResponseFailed);
+    },
+
+    methods: {
+
+        interceptorResponseSuccess(response) {
+            this.$store.commit(LOADING_DOWN);
+            if (response.status === 401) {
+                this.$store.dispatch(AUTH_LOGOUT);
             }
-            // Do something with response data
-            console.log('Interceptor Response', response.data);
             return response;
-        }, (error) => {
-            console.log('Interceptor Response error', error);
-            this.loading = false;
-            this.$toast.error({
-                title: 'Interceptor Response error',
-                message: error.response.data.message,
-            });
+        },
 
-            let err = error.response.data.error[0];
-
-            err.file = trimRootPath(err.file);
-            err.trace = err.trace.map(trimRootPath);
-
-            let message = `Request [${error.config.method.toUpperCase()}] ${error.config.url}.`;
-            message += ` ${error.response.data.message}.`;
-            message += ` ${err.message}.`;
-            message += ` ${err.file}:${err.line}.`;
-
-            this.$toast.error({
-                title: error.message,
-                message,
-            });
-
-            console.log(err.message, err);
+        interceptorResponseFailed(error) {
+            this.$store.commit(LOADING_DOWN);
             return Promise.reject(error);
-        });
+        },
+
     },
 };
 </script>

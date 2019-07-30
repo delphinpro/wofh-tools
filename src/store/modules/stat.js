@@ -23,22 +23,22 @@ const getters = {
     accountsChart: state => state.charts.accounts,
 };
 
-const actions = {
-    setDemo: ({ commit }, data) => {
-        commit('setDemo', data);
+const mutations = {
+    setDemo(state, data) {
+        Vue.set(state, 'dd', data);
     },
-
-    setChart: ({ commit }, data) => {
-        commit('setChart', data);
+    setChart(state, data) {
+        Vue.set(state.charts, 'accounts', data);
     },
 };
 
-const mutations = {
-    setDemo: (state, data) => {
-        Vue.set(state, 'dd', data);
+const actions = {
+    setDemo(ctx, data) {
+        ctx.commit('setDemo', data);
     },
-    setChart: (state, data) => {
-        Vue.set(state.charts, 'accounts', data);
+
+    setChart(ctx, data) {
+        ctx.commit('setChart', data);
     },
 };
 

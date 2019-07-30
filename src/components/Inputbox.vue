@@ -72,7 +72,7 @@ export default {
                 :placeholder="placeholder"
                 :disabled="disabled"
                 :readonly="readonly"
-                @input="$emit('input', $event)"
+                @input="$emit('input', $event.target.value)"
                 v-if="!isTextarea"
             >
             <textarea
@@ -85,7 +85,7 @@ export default {
                 :readonly="readonly"
                 :cols="cols"
                 :rows="rows"
-                @input="$emit('input', $event)"
+                @input="$emit('input', $event.target.value)"
                 v-if="isTextarea"
             ></textarea>
             <div class="inputbox__addon" v-if="hasAddon && !isTextarea">

@@ -45,7 +45,7 @@ export default {
     methods: {
         listWorlds() {
             this.axios
-                .get('/wofh/worlds')
+                .get('/dashboard/worlds')
                 .then(response => {
                     this.worlds = [...response.data.payload.worlds];
                 }).catch(error => {

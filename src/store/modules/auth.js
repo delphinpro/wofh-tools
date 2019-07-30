@@ -5,72 +5,65 @@
  * licensed under the MIT license
  */
 
-import { AUTH_REQUEST, AUTH_ERROR, AUTH_SUCCESS, AUTH_LOGOUT } from '../actions/auth';
-import { USER_REQUEST } from '../actions/user';
-import apiCall from '@/utils/api';
+import Vue from 'vue';
+import { AUTH_ERROR, AUTH_LOGOUT, AUTH_REQUEST, AUTH_SUCCESS } from '../actions/auth';
 import { HTTP_HEADER_AUTHORIZATION, LS_KEY_TOKEN } from '@/utils/constants';
 
 
 const state = {
-    token: '',//localStorage.getItem('user-token') || '',
-    status: '',
-    hasLoadedOnce: false,
+    token: null,
 };
+
+try {
+
+    state.token = localStorage.getItem(LS_KEY_TOKEN);
+
+} catch ( e ) {}
 
 const getters = {
-    isAuthenticated: state => !!state.token,
-    authStatus: state => state.status,
-};
-
-const actions = {
-    [AUTH_REQUEST]: ({ commit, dispatch }, user) => {
-        return new Promise((resolve, reject) => {
-            commit(AUTH_REQUEST);
-            apiCall({ url: 'auth', data: user, method: 'POST' })
-                .then(resp => {
-                    localStorage.setItem('user-token', resp.token);
-                    // Here set the header of your ajax library to the token value.
-                    // example with axios
-                    // axios.defaults.headers.common['Authorization'] = resp.token
-                    commit(AUTH_SUCCESS, resp);
-                    dispatch(USER_REQUEST);
-                    resolve(resp);
-                })
-                .catch(err => {
-                    commit(AUTH_ERROR, err);
-                    localStorage.removeItem('user-token');
-                    reject(err);
-                });
-        });
-    },
-
-    [AUTH_LOGOUT]: ({ commit, dispatch }) => {
-        return new Promise((resolve, reject) => {
-            commit(AUTH_LOGOUT);
-            localStorage.removeItem('user-token');
-            resolve();
-        });
-    },
+    isAuth: state => !!state.token,
 };
 
 const mutations = {
-    [AUTH_REQUEST]: state => {
-        state.status = 'loading';
-    },
 
-    [AUTH_SUCCESS]: (state, resp) => {
-        state.status = 'success';
+    [AUTH_SUCCESS](state, resp) {
         state.token = resp.token;
-        state.hasLoadedOnce = true;
+        Vue.axios.defaults.headers.common[HTTP_HEADER_AUTHORIZATION] = `Bearer ${resp.token}`;
+        localStorage.setItem(LS_KEY_TOKEN, resp.token);
     },
 
-    [AUTH_ERROR]: state => {
-        state.status = 'error';
-        state.hasLoadedOnce = true;
+    [AUTH_ERROR](state) {
+        state.token = null;
+        delete Vue.axios.defaults.headers.common[HTTP_HEADER_AUTHORIZATION];
+        localStorage.removeItem(LS_KEY_TOKEN);
     },
 
-    [AUTH_LOGOUT]: state => {
-        state.token = '';
+    [AUTH_LOGOUT](state) {
+        state.token = null;
+        delete Vue.axios.defaults.headers.common[HTTP_HEADER_AUTHORIZATION];
+        localStorage.removeItem(LS_KEY_TOKEN);
+    },
+
+};
+
+const actions = {
+    [AUTH_REQUEST](ctx, user) {
+        return Vue.axios
+            .post('/login', user)
+            .then(res => {
+                if (res.data.payload && res.data.payload.token) {
+                    ctx.commit(AUTH_SUCCESS, { token: res.data.payload.token });
+                }
+                return res.data;
+            })
+            .catch(err => console.log(err));
+    },
+
+    [AUTH_LOGOUT](ctx) {
+        return new Promise((resolve, reject) => {
+            ctx.commit(AUTH_LOGOUT);
+            resolve();
+        });
     },
 };
 

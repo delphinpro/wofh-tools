@@ -10,24 +10,26 @@ import Router from 'vue-router';
 import store from '@/store/index';
 import Home from '@/views/Home';
 import Statistic from '@/views/Statistic';
-import PageNotFound from '@/views/PageNotFound';
+import Error404 from '@/views/Error404';
 
 
 Vue.use(Router);
 
-const ifNotAuthenticated = (to, from, next) => {
-    if (!store.getters.isAuthenticated) {
+const onlyGuest = (to, from, next) => {
+    if (!store.getters.isAuth) {
         next();
         return;
     }
-    next('/');
+    Vue.$toast.warn({ title: 'You are authenticated!', message: '' });
+    next(false);
 };
 
-const ifAuthenticated = (to, from, next) => {
-    if (store.getters.isAuthenticated) {
+const requireAuthenticated = (to, from, next) => {
+    if (store.getters.isAuth) {
         next();
         return;
     }
+    Vue.$toast.error({ title: 'Required authorization.', message: 'Please, sign in.' });
     next('/login');
 };
 
@@ -46,12 +48,14 @@ export function createRouter() {
         );
     }
 
-    dashboardRoutes.push({ path: '*', component: PageNotFound });
+    dashboardRoutes.push({ path: '*', component: Error404 });
 
 
-    return new Router({
+    let router = new Router({
         mode: 'history',
+
         base: process.env.BASE_URL,
+
         routes: [
             {
                 path: '/',
@@ -67,16 +71,24 @@ export function createRouter() {
                 path: '/login',
                 name: 'login',
                 component: () => import('./views/Login.vue'),
-                beforeEnter: ifNotAuthenticated,
+                beforeEnter: onlyGuest,
             },
             {
                 path: '/dashboard',
                 name: 'dashboard',
                 component: () => import('./views/Dashboard.vue'),
+                beforeEnter: requireAuthenticated,
                 children: dashboardRoutes,
             },
-            { path: '*', component: PageNotFound },
+
+            { path: '*', component: Error404 },
         ],
     });
 
+    router.beforeEach((to, from, next) => {
+        Vue.$toast.removeAll();
+        next();
+    });
+
+    return router;
 }

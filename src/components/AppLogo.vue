@@ -12,7 +12,7 @@ export default {
 
 <template>
     <router-link class="logo" to="/">
-        <img class="logo__image" src="../assets/main/logo-48.png" alt=""/>
+        <img class="logo__image" src="../assets/main/logo-48.png" alt="" width="48" height="48">
         <span class="logo__name">{{$store.getters.projectName}}</span>
         <span class="logo__beta">beta</span>
     </router-link>

@@ -23,8 +23,15 @@
     user-select: none;
     text-decoration: none;
     color: $app-navbar-color;
+
+    &:focus {
+      outline: 1px dotted rgba(#fff, 0.3);
+      outline-offset: -2px;
+    }
   }
 
+  &__link:focus,
+  &__link:hover,
   &__item:hover &__link {
     color: $app-navbar-color-hover;
     background-color: $app-navbar-background-hover;

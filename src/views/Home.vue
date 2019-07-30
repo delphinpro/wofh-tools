@@ -9,9 +9,9 @@ import HelloWorld from '@/components/HelloWorld';
 import DashboardSidebar from '@/components/Dashboard/DashboardSidebar';
 import Login from '@/views/Login';
 
-
 export default {
-    name: 'home',
+    name: 'Home',
+
     components: {
         HelloWorld,
         DashboardSidebar,
@@ -22,7 +22,13 @@ export default {
 </script>
 
 <template>
-    <h1>Homepage</h1>
+    <div class="container">
+        <PageHeader
+            title="WofhTools"
+            desc=""
+            :crumbs="false"
+        />
+    </div>
 </template>
 
 <style>
