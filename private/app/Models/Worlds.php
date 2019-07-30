@@ -4,11 +4,10 @@ namespace WofhTools\Models;
 
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
-use WofhTools\Helpers\Http;
-use WofhTools\Helpers\Json;
 use WofhTools\Tools\Wofh;
+use WofhTools\Helpers\Json;
+use WofhTools\Helpers\Http;
+use Illuminate\Support\Collection;
 
 
 /**
@@ -37,7 +36,7 @@ use WofhTools\Tools\Wofh;
  * @property string $metainfo
  * @property string $version
  */
-class Worlds extends Model
+class Worlds extends \Illuminate\Database\Eloquent\Model
 {
     public $timestamps = false;
 
@@ -137,7 +136,7 @@ class Worlds extends Model
     /**
      * @param $sign
      *
-     * @return bool|Collection|Model|Worlds
+     * @return bool|Collection|Eloquent|Worlds
      */
     public static function getBySign($sign)
     {

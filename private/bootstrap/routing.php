@@ -41,7 +41,7 @@ $app->group('/api', function () use ($app) {
 
     });
 
-    $app->get('/test', WofhController::class.':test');
+    $app->get('/test', DashboardController::class.':test');
 
 });
 
