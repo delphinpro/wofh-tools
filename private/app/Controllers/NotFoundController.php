@@ -27,15 +27,17 @@ final class NotFoundController extends BaseController
     public function dispatch(Request $request, Response $response)
     {
         if ($request->isXhr()) {
-            $response = $response->withJson([
-                'status'  => false,
-                'message' => '404 Not found',
-                'payload' => [],
-            ]);
+            $response = $response
+                ->withStatus(404, 'Not found')
+                ->withJson([
+                    'status'  => false,
+                    'message' => '404 Not found',
+                    'payload' => [],
+                ]);
         } else {
             $body = $this->fetchClientApp($request->getUri(), []);
             $response = $response
-                ->withStatus(404, 'Page not found')
+                ->withStatus(404, 'Not found')
                 ->withHeader('Content-Type', 'text/html')
                 ->write($body);
         }
