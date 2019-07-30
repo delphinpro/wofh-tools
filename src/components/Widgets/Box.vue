@@ -31,3 +31,5 @@ export default {
         </div>
     </div>
 </template>
+
+<style lang="scss" src="../@css/Box.scss"></style>

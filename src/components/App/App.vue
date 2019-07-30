@@ -5,9 +5,9 @@
  * licensed under the MIT license
  */
 
-import AppNavbar from '@/components/AppNavbar';
-import AppFooter from '@/components/AppFooter';
-import Loading from '@/components/Loading';
+import AppNavbar from '@/components/App/AppNavbar';
+import AppFooter from '@/components/App/AppFooter';
+import Loading from '@/components/Widgets/Loading';
 import { mapGetters } from 'vuex';
 import { LOADING_DOWN, LOADING_UP } from '@/store/actions';
 import { AUTH_LOGOUT } from '@/store/actions/auth';
@@ -70,3 +70,5 @@ export default {
         </div>
     </div>
 </template>
+
+<style lang="scss" src="../@css/App.scss"></style>

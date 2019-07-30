@@ -44,3 +44,5 @@ export default {
         </div>
     </div>
 </template>
+
+<style lang="scss" src="../@css/ErrorBox.scss"></style>

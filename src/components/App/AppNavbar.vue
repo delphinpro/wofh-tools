@@ -60,3 +60,5 @@ export default {
         </div>
     </header>
 </template>
+
+<style lang="scss" src="../@css/AppNavbar.scss"></style>

@@ -5,19 +5,12 @@
  * licensed under the MIT license
  */
 
-import HelloWorld from '@/components/HelloWorld';
-import DashboardSidebar from '@/components/Dashboard/DashboardSidebar';
-import Login from '@/views/Login';
-
 
 export default {
     name: 'Home',
 
-    components: {
-        HelloWorld,
-        DashboardSidebar,
-        Login,
-    },
+    components: {},
+
     computed: {},
 };
 </script>
@@ -31,6 +24,3 @@ export default {
         />
     </div>
 </template>
-
-<style>
-</style>

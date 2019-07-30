@@ -28,20 +28,4 @@ export default {};
     </div>
 </template>
 
-<style lang="scss">
-    .loader {
-        height: 50px;
-        width: 100%;
-        text-align: center;
-        display: inline-block;
-        vertical-align: top;
-
-        svg {
-            @include size(50px);
-
-            path {
-                fill: $wt-accent-color;
-            }
-        }
-    }
-</style>
+<style lang="scss" src="../@css/Loading.scss"></style>

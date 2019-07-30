@@ -96,3 +96,5 @@ export default {
         <div class="inputbox__help" v-if="help" v-html="help"></div>
     </div>
 </template>
+
+<style lang="scss" src="../@css/Inputbox.scss"></style>

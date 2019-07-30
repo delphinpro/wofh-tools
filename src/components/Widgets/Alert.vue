@@ -49,3 +49,5 @@ export default {
         </div>
     </div>
 </template>
+
+<style lang="scss" src="../@css/Alert.scss"></style>

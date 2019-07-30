@@ -5,7 +5,7 @@
  * licensed under the MIT license
  */
 
-import Alert from '@/components/Alert';
+import Alert from '@/components/Widgets/Alert';
 
 
 const content = 'A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.';

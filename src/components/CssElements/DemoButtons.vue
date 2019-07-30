@@ -5,8 +5,8 @@
  * licensed under the MIT license
  */
 
-import Box from '@/components/Box';
-import Inputbox from '@/components/Inputbox';
+import Box from '@/components/Widgets/Box';
+import Inputbox from '@/components/Forms/Inputbox';
 
 
 export default {

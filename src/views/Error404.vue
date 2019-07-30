@@ -5,7 +5,7 @@
  * licensed under the MIT license
  */
 
-import ErrorBox from '@/components/ErrorBox';
+import ErrorBox from '@/components/Widgets/ErrorBox';
 
 
 export default {

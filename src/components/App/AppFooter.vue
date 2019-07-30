@@ -15,9 +15,9 @@ export default {
 </script>
 
 <template>
-    <div class="footer">
-        <div class="footer__container container-fluid">
-            <div class="footer__section">
+    <div class="app-footer">
+        <div class="app-footer__container container-fluid">
+            <div class="app-footer__section">
                 <p>
                     © {{projectName}}, v{{projectVer}},
                     <a href="http://delphinpro.ru" target="_blank" rel="noreferrer">delphinpro</a>,
@@ -27,10 +27,10 @@ export default {
                     <a href="#">Last update: xx.xx.xxxx, xx:xx</a>
                 </p>
             </div>
-            <div class="footer__section">
-                <img src="../assets/main/counter.png" alt="">
+            <div class="app-footer__section">
+                <img src="../../assets/main/counter.png" alt="">
             </div>
-            <div class="footer__section text-md-right">
+            <div class="app-footer__section text-md-right">
                 <ul>
                     <li><a href="#">Обратная связь</a></li>
                     <li><a href="#">Карта сайта</a></li>
@@ -39,3 +39,5 @@ export default {
         </div>
     </div>
 </template>
+
+<style lang="scss" src="../@css/AppFooter.scss"></style>

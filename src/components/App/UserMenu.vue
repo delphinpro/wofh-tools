@@ -91,3 +91,5 @@ export default {
         </template>
     </ul>
 </template>
+
+<style lang="scss" src="../@css/UserMenu.scss"></style>

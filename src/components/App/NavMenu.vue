@@ -24,3 +24,5 @@ export default {
         </li>
     </ul>
 </template>
+
+<style lang="scss" src="../@css/NavMenu.scss"></style>

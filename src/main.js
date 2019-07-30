@@ -8,7 +8,7 @@
 import Vue from 'vue';
 import { createRouter } from '@/router';
 import store from '@/store';
-import App from '@/components/App.vue';
+import App from '@/components/App/App.vue';
 
 
 Vue.config.productionTip = false;

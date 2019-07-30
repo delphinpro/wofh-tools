@@ -5,7 +5,7 @@
  * licensed under the MIT license
  */
 
-import Alert from '@/components/Alert';
+import Alert from '@/components/Widgets/Alert';
 
 
 export default {

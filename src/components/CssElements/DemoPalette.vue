@@ -5,7 +5,7 @@
  * licensed under the MIT license
  */
 
-import Box from '@/components/Box';
+import Box from '@/components/Widgets/Box';
 
 
 export default {

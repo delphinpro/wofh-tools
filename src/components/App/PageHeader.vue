@@ -5,8 +5,15 @@
  * licensed under the MIT license
  */
 
+import AppBreadcrumbs from '@/components/App/AppBreadcrumbs';
+
+
 export default {
     name: 'PageHeader',
+
+    components: {
+        AppBreadcrumbs,
+    },
 
     props: {
         title: String,
@@ -18,12 +25,11 @@ export default {
 
 <template>
     <div>
-        <ol class="breadcrumb" v-if="crumbs">
-            <li><a href="/"><i class="fa fa-home"></i> Главная</a></li>
-            <li class="active">Here</li>
-        </ol>
+        <AppBreadcrumbs v-if="crumbs"/>
         <div class="page-header" v-if="title">
             <h1><span v-html="title"></span><small v-text="desc" v-if="desc"></small></h1>
         </div>
     </div>
 </template>
+
+<style lang="scss" src="../@css/PageHeader.scss"></style>
