@@ -8,8 +8,6 @@ const NODE_ENV = process.env.NODE_ENV === 'development'
     ? 'development'
     : 'production';
 
-const IS_DEV = NODE_ENV !== 'production';
-
 const TARGET_NODE = process.env.WEBPACK_TARGET === 'node';
 
 const target = process.env.WEBPACK_TARGET === 'node' ? 'server' : 'client';
@@ -20,6 +18,13 @@ let indexTemplate = NODE_ENV === 'production'
     ? path.join(__dirname, 'private/templates/layouts/index.twig')
     : path.join(__dirname, 'private/templates/layouts/index.html');
 
+let devServerProxySettings = {
+    target: 'http://wofh-tools.project',
+    ws: true,
+    changeOrigin: true,
+};
+
+// noinspection JSUnusedGlobalSymbols
 module.exports = {
     outputDir: 'public_html',
     assetsDir,
@@ -28,12 +33,8 @@ module.exports = {
 
     devServer: {
         proxy: {
-            '^/api': {
-                target: 'http://wofh-tools.project',
-                ws: true,
-                changeOrigin: true
-            },
-        }
+            '^/api': devServerProxySettings,
+        },
     },
 
     configureWebpack: () => ({
@@ -54,23 +55,23 @@ module.exports = {
 
     chainWebpack: config => {
         config.module
-              .rule('vue')
-              .use('vue-loader')
-              .tap(options => {
-                      return {
-                          ...options,
-                          optimizeSSR: false,
-                      };
-                  },
-              )
+            .rule('vue')
+            .use('vue-loader')
+            .tap(options => {
+                    return {
+                        ...options,
+                        optimizeSSR: false,
+                    };
+                },
+            )
         ;
         config.module
-              .rule('images')
-              .use('url-loader')
-              .tap(options => ({
-                  ...options,
-                  limit: 1024,
-              }))
+            .rule('images')
+            .use('url-loader')
+            .tap(options => ({
+                ...options,
+                limit: 1024,
+            }))
         ;
         config
             .plugin('html')

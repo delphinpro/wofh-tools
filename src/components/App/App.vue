@@ -47,6 +47,7 @@ export default {
             this.$store.commit(LOADING_DOWN);
             if (response.status === 401) {
                 this.$store.dispatch(AUTH_LOGOUT);
+                this.$router.push('login')
             }
             return response;
         },

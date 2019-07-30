@@ -71,16 +71,6 @@ Vue.component('PageHeader', PageHeader);
 //== Main app
 //== ======================================= ==//
 
-//==
-//== Global Components
-//== ======================================= ==//
-
-Vue.component('PageHeader', PageHeader);
-
-//==
-//== Main app
-//== ======================================= ==//
-
 const { app } = createApp();
 
 app.$mount('#app');

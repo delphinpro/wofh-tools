@@ -8,14 +8,14 @@
 import { onlyGuest } from '@/router/helpers/authentication';
 
 
-const Login = () => import(/* webpackChunkName: "user" */ '@/views/Login.vue');
+const LoginView = () => import(/* webpackChunkName: "user" */ '@/views/User/LoginView');
 
 /** @var Array<RouteConfig> */
 export const userRoutes = [
     {
         path: '/login',
         name: 'login',
-        component: Login,
+        component: LoginView,
         beforeEnter: onlyGuest,
     },
 ];

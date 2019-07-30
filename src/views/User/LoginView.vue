@@ -1,6 +1,6 @@
 <script>/*!
  * WofhTools
- * View: Login.vue
+ * View: LoginView.vue
  * © 2019 delphinpro <delphinpro@gmail.com>
  * licensed under the MIT license
  */
