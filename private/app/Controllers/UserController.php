@@ -101,7 +101,7 @@ final class UserController extends BaseController
             'userId' => $user->id,
             'uuid'   => GUID(),
             'iat'    => $createdTime,
-            'exp'    => $createdTime + 60 * 1,
+            'exp'    => $createdTime + 60 * env('JWT_LIFETIME', 15),
         ];
 
         return JWT::encode($token, $SECRET_KEY);

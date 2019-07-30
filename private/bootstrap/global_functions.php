@@ -79,6 +79,7 @@ function loadGlobalConfiguration(string $configDirectory): void
     $_ENV['ssrEnabled'] = castVar($_ENV['ssrEnabled'], CAST_TO_BOOL);
     $_ENV['twigCacheEnabled'] = castVar($_ENV['twigCacheEnabled'], CAST_TO_BOOL);
     $_ENV['statLoadInterval'] = castVar($_ENV['statLoadInterval'], CAST_TO_INT);
+    $_ENV['JWT_LIFETIME'] = castVar($_ENV['JWT_LIFETIME'], CAST_TO_INT);
 }
 
 
@@ -101,8 +102,6 @@ function getConfigFromEnv(): array
         'displayErrorDetails'               => env('displayErrorDetails'),
         'addContentLengthHeader'            => env('addContentLengthHeader'),
         'routerCacheFile'                   => env('routerCacheFile'),
-
-        'JwtSecretKey' => env('JWT_SECRET_KEY'),
 
         'debug' => env('debug'),
 
