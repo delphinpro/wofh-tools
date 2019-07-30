@@ -6,24 +6,37 @@
  */
 
 import { AUTH_REQUEST } from '@/store/actions/auth';
+import Inputbox from '@/components/Inputbox';
+import Box from '@/components/Box';
 
 
 export default {
     name: 'login',
 
-    data() {
-        return {
-            username: '',
-            password: '',
-        };
+    components: {
+        Box,
+        Inputbox,
     },
+
+    data: () => ({
+        username: '',
+        password: '',
+
+        token: null,
+        form: null,
+        post: null,
+        user: null,
+    }),
 
     methods: {
 
         login() {
-            const { username, password } = this;
-            this.$store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
-                this.$router.push('/');
+            let { username, password } = this;
+            this.$toast.removeAll();
+            this.$store.dispatch(AUTH_REQUEST, { username, password }).then(res => {
+                if (res.status) {
+                    this.$router.push({ path: '/profile' });
+                }
             });
         },
 
@@ -32,19 +45,37 @@ export default {
 </script>
 
 <template>
-    <div class="container">
-        <form class="login" @submit.prevent="login">
-            <h1>Sign in</h1>
+    <div class="container page-center">
+        <div class="col-lg-5 no-gutter">
 
-            <label>User name</label>
-            <input v-model="username" required type="text" placeholder="Login"/>
-            <br>
-
-            <label>Password</label>
-            <input v-model="password" required type="password" placeholder="Password"/>
-
-            <hr/>
-            <button type="submit">Login</button>
-        </form>
+            <Box type="info" title="Вход в личный профиль" icon="lock">
+                <form class="login" @submit.prevent="login">
+                    <Inputbox
+                        class="form-group"
+                        label="E-mail"
+                        type="email"
+                        placeholder="E-mail"
+                        addon-icon="envelope"
+                        addon-position="end"
+                        v-model="username"
+                    />
+                    <Inputbox
+                        class="form-group"
+                        label="Password"
+                        type="password"
+                        placeholder="Password"
+                        addon-icon="key"
+                        addon-position="end"
+                        v-model="password"
+                    />
+                    <div class="form-group">
+                        <button class="btn btn_primary" type="submit">
+                            <i class="fa fa-sign-in-alt"></i>
+                            Login
+                        </button>
+                    </div>
+                </form>
+            </Box>
+        </div>
     </div>
 </template>
