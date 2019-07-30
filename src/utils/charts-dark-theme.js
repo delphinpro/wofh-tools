@@ -24,13 +24,13 @@ export const darkTheme = {
         '#7798bf',
         '#55bf3b',
         '#df5353',
-        '#aaeeee',
-        '#ff0066',
-        '#eeaaee',
+        '#aee',
+        '#f06',
+        '#eae',
         '#55bf3b',
         '#df5353',
         '#7798bf',
-        '#aaeeee',
+        '#aee',
         '#2f3337',
     ],
     chart: {
@@ -92,7 +92,7 @@ export const darkTheme = {
         },
         title: {
             style: {
-                color: '#AAA',
+                color: '#aaa',
                 font: 'bold 12px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif',
             },
         },
@@ -140,8 +140,8 @@ export const darkTheme = {
 
     navigation: {
         buttonOptions: {
-            symbolStroke: '#DDDDDD',
-            hoverSymbolStroke: '#FFFFFF',
+            symbolStroke: '#ddd',
+            hoverSymbolStroke: '#fff',
             theme: {
                 fill: {
                     linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
@@ -150,7 +150,7 @@ export const darkTheme = {
                         [0.6, '#333333'],
                     ],
                 },
-                stroke: '#000000',
+                stroke: '#000',
             },
         },
     },

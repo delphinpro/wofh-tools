@@ -13,10 +13,10 @@
 }
 
 body {
-  font-family: $wt-family-base;
   min-height: 100%;
-  background: $background-base;
   color: $color-text-base;
+  background: $background-base;
+  font-family: $wt-family-base;
   @include webkit-scrollbar($color-text-base);
 }
 

@@ -3,9 +3,9 @@
 //== ======================================= ==//
 
 a {
-  color: $color-link;
-  text-decoration: none;
   transition: 0.3s ease;
+  text-decoration: none;
+  color: $color-link;
 
   &:hover,
   &:focus {

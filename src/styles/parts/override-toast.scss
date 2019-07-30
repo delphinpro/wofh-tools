@@ -22,17 +22,17 @@ body {
   }
 
   .cxlt-toastr-container > :hover {
-    box-shadow: none;
     cursor: default;
+    box-shadow: none;
   }
 
   .cxlt-toastr-container > div {
     @include margin-trailer(0.25);
-    padding: 0;
-    box-shadow: none;
-    border-radius: 0;
     width: 350px;
+    padding: 0;
     opacity: 1;
+    border-radius: 0;
+    box-shadow: none;
   }
 
   .toast-title,
@@ -42,15 +42,15 @@ body {
   }
 
   .toast-title {
-    font-family: $wt-family-head;
-    background: rgba(black, 0.2);
     padding: rhythm(0.25) rhythm(0.75 + 0.25 * 2) rhythm(0.25) rhythm(0.5);
+    background: rgba(black, 0.2);
+    font-family: $wt-family-head;
   }
 
   .toast-message {
     @include font(13px, 0.75);
-    font-weight: 400;
     padding: rhythm(0.25) rhythm(0.5) rhythm(0.5);
+    font-weight: 400;
 
     &:empty {
       display: none;
@@ -65,8 +65,8 @@ body {
   }
 
   .toast-close-button {
-    right: 0;
     top: 0;
+    right: 0;
     width: rhythm(0.75 + 0.25 * 2);
     height: rhythm(0.75 + 0.25 * 2);
   }

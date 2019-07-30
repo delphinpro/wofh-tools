@@ -115,7 +115,8 @@ $inputbox-border-color-danger: $color-danger;
   &__control:focus + &__addon {
     border-color: var(--inputbox-border-color);
   }
-  &__control:-webkit-autofill+&__addon {
+
+  &__control:-webkit-autofill + &__addon {
     border-color: $palette-aqua;
   }
 

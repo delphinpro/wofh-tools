@@ -60,9 +60,9 @@
   &_danger  { @include alert-variant($alert-danger-bg, $alert-danger-text); }
 
   &_callout {
+    padding-left: rhythm($alert-padding * 2);
     border-left: 5px solid $color-text-base;
     border-radius: $alert-border-radius;
-    padding-left: rhythm($alert-padding * 2);
 
     .alert__title { font-weight: bold; }
 

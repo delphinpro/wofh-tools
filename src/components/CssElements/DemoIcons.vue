@@ -1415,9 +1415,11 @@ export default {
             margin: 0.75rem 0;
             text-align: center;
         }
+
         &__icon {
             font-size: 2.5em;
         }
+
         &__title {
             font-family: monospace;
             line-height: 1.2;

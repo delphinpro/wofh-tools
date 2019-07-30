@@ -5,8 +5,8 @@
 .footer {
   @include font(11px, 14px);
   width: 100%;
-  background: darken($dashboard-sidebar-bg, 3%);
   padding-left: $sidebar-width;
+  background: darken($dashboard-sidebar-bg, 3%);
 
   &__container {
     @include media-breakpoint-up(md) {

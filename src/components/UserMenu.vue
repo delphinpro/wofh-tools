@@ -24,7 +24,7 @@ export default {
         ...mapGetters([
             'getProfile',
             'isAuth',
-            'isProfileLoaded'
+            'isProfileLoaded',
         ]),
         ...mapState({
             name: state => `${state.user.profile.title} ${state.user.profile.name}`,
@@ -76,18 +76,18 @@ export default {
             </li>
         </template>
         <template v-if="!isAuth">
-        <li class="nav-menu__item">
-            <router-link class="nav-menu__link" to="/registration">
-                <span class="nav-menu__icon fa fa-user-plus"></span>
-                <span>Sign up</span>
-            </router-link>
-        </li>
-        <li class="nav-menu__item">
-            <router-link class="nav-menu__link" to="/login">
-                <span class="nav-menu__icon fa fa-sign-in-alt"></span>
-                <span>Sign in</span>
-            </router-link>
-        </li>
+            <li class="nav-menu__item">
+                <router-link class="nav-menu__link" to="/registration">
+                    <span class="nav-menu__icon fa fa-user-plus"></span>
+                    <span>Sign up</span>
+                </router-link>
+            </li>
+            <li class="nav-menu__item">
+                <router-link class="nav-menu__link" to="/login">
+                    <span class="nav-menu__icon fa fa-sign-in-alt"></span>
+                    <span>Sign in</span>
+                </router-link>
+            </li>
         </template>
     </ul>
 </template>

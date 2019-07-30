@@ -14,19 +14,19 @@
 
 .box2 {
   @include margin-trailer(1);
+  width: 100%;
+  border-top: $box2-border-top-width solid transparent;
   border-radius: $box2-border-radius;
   background: $dashboard-sidebar-bg;
-  border-top: $box2-border-top-width solid transparent;
-  width: 100%;
   box-shadow: $box2-shadow;
 
   &__header {
     @include font(18px, 1);
     display: flex;
     align-items: center;
-    border-bottom: 1px solid $box2-divider-color;
     margin: ($box2-border-top-width / -1) 0 0;
     padding: rhythm(0.5);
+    border-bottom: 1px solid $box2-divider-color;
     font-weight: 600;
 
     &:not(:last-child) {
@@ -43,8 +43,8 @@
   }
 
   &__body {
-    padding: rhythm(0.5);
     margin: 0;
+    padding: rhythm(0.5);
 
     &:first-child {
       margin-top: ($box2-border-top-width / -1);
@@ -65,8 +65,8 @@
   &_style_success { @include box-variant($box2-theme-success); }
 
   &_style_transparent {
-    background:none;
     overflow: hidden;
+    background:none;
 
     .box2__header {
       background: $dashboard-sidebar-bg;

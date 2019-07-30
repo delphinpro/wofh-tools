@@ -9,8 +9,8 @@
 //== ======================================= ==//
 
 %heading-common {
-  font-family: $wt-family-head;
   color: lighten($color-text-base, 5%);
+  font-family: $wt-family-head;
 }
 
 @each $h, $params in $headings {
@@ -70,19 +70,19 @@ p {
 %blockquote-base {
   @include rhythm-padding(0);
   @include font($blockquote-font-size);
-  margin-left: 0;
   margin-right: 0;
+  margin-left: 0;
 
   > :last-child {
     margin-bottom: 0;
   }
 
   footer {
-    display: block;
-    font-size: 80%;
-    color: $blockquote-small-color;
     position: relative;
     top: rhythm(-0.5);
+    display: block;
+    color: $blockquote-small-color;
+    font-size: 80%;
   }
 }
 
@@ -90,8 +90,8 @@ blockquote:not(.blockquote-reverse),
 .blockquote {
   @extend %default-element;
   @extend %blockquote-base;
-  border-left: 5px solid $blockquote-border-color;
   padding-left: rhythm(1);
+  border-left: 5px solid $blockquote-border-color;
 
   footer::before {
     content: "\2014 \00A0"; // em dash, nbsp
@@ -101,9 +101,9 @@ blockquote:not(.blockquote-reverse),
 .blockquote-reverse {
   @extend %default-element;
   @extend %blockquote-base;
-  border-right: 5px solid $blockquote-border-color;
   padding-right: rhythm(1);
   text-align: right;
+  border-right: 5px solid $blockquote-border-color;
 
   footer::after {
     content: "\00A0 \2014"; // nbsp, em dash

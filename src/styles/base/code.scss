@@ -9,25 +9,25 @@
 code {
   @extend %monospace;
   padding: 2px 4px;
-  font-size: 90%;
   color: $code-color;
   background-color: $code-bg;
+  font-size: 90%;
   font-weight: 300;
 }
 
 kbd {
   @extend %monospace;
   padding: 2px 4px;
-  font-size: 90%;
   color: $kbd-color;
   background-color: $kbd-bg;
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .25);
+  font-size: 90%;
 
   kbd {
     padding: 0;
+    box-shadow: none;
     font-size: 100%;
     font-weight: 700;
-    box-shadow: none;
   }
 }
 
@@ -38,21 +38,21 @@ pre {
   @include apply-side-rhythm-border(top, 1px, 0.5);
   @include apply-side-rhythm-border(bottom, 1px, 0.5);
   display: block;
-  padding-left: rhythm(1);
   padding-right: rhythm(1);
-  color: $pre-color;
-  word-break: break-all;
+  padding-left: rhythm(1);
   word-wrap: break-word;
-  background-color: $pre-bg;
+  word-break: break-all;
+  color: $pre-color;
   border: 1px solid $pre-border-color;
+  background-color: $pre-bg;
 
   code {
     padding: 0;
-    font-size: inherit;
-    color: inherit;
     white-space: pre-wrap;
-    background-color: transparent;
+    color: inherit;
     border-radius: 0;
+    background-color: transparent;
+    font-size: inherit;
   }
 }
 
