@@ -5,8 +5,10 @@
  * licensed under the MIT license
  */
 
-import Inputbox from '@/components/Forms/Inputbox';
 import Box from '@/components/Widgets/Box';
+import Inputbox from '@/components/Forms/Inputbox';
+import Checkbox from '@/components/Forms/Checkbox';
+import RadioButton from '@/components/Forms/RadioButton';
 
 
 export default {
@@ -15,7 +17,24 @@ export default {
     components: {
         Box,
         Inputbox,
+        Checkbox,
+        RadioButton,
     },
+
+    data: () => ({
+        cb1: false,
+        cb2: true,
+        cb3: false,
+        cb4: true,
+
+        cbList: [],
+        cbList2: [1, 2],
+
+        rb1: 1,
+        rb2: 2,
+        rb3: 2,
+    }),
+
 };
 </script>
 
@@ -169,61 +188,174 @@ export default {
                         />
                     </form>
                 </Box>
+            </div>
+        </div>
 
-                <Box type="primary" title="Other elements">
+        <div class="row">
+            <div class="col-md-6">
+                <Box type="primary" title="Checkbox & Radio button">
                     <form class="demo">
                         <div class="form-group">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox">
-                                    Checkbox 1
-                                </label>
-                            </div>
-
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox">
-                                    Checkbox 2
-                                </label>
-                            </div>
-
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" disabled="">
-                                    Checkbox disabled
-                                </label>
-                            </div>
+                            <Checkbox v-model="cb1">Checkbox 1 <code>{{cb1}}</code></Checkbox>
+                        </div>
+                        <div class="form-group">
+                            <Checkbox v-model="cb2" :checked="true">Checkbox 2 <code>{{cb2}}</code></Checkbox>
+                        </div>
+                        <div class="form-group">
+                            <Checkbox v-model="cb3" :disabled="true">Checkbox disabled</Checkbox>
+                        </div>
+                        <div class="form-group">
+                            <Checkbox v-model="cb4" :disabled="true" :checked="true">Checkbox checked disabled
+                            </Checkbox>
+                        </div>
+                        <div class="form-group">
+                            <Checkbox v-model="cb2" :checked="true">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus dignissimos ex
+                                maxime nemo provident.
+                            </Checkbox>
                         </div>
 
                         <div class="form-group">
-                            <div class="radio">
-                                <label>
-                                    <input id="optionsRadios1"
-                                        name="optionsRadios"
-                                        value="option1"
-                                        type="radio"
-                                        checked="">
-                                    Option one is this and that—be sure to include why it's great
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input id="optionsRadios2" name="optionsRadios" value="option2" type="radio">
-                                    Option two can be something else and selecting it will deselect option one
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input id="optionsRadios3"
-                                        name="optionsRadios"
-                                        value="option3"
-                                        type="radio"
-                                        disabled="">
-                                    Option three is disabled
-                                </label>
+                            <RadioButton :checked="true" v-model="rb1" :value="1">
+                                Option one is this and that—be sure to include why it's great
+                            </RadioButton>
+                            <RadioButton :value="2" v-model="rb1">
+                                Option two can be something else and selecting it will deselect option one
+                            </RadioButton>
+                            <RadioButton :disabled="true" v-model="rb1" :value="3">
+                                Option three is disabled
+                            </RadioButton>
+                        </div>
+                    </form>
+                </Box>
+            </div>
+            <div class="col-md-6">
+                <Box type="primary" title="Checkbox & Radio button variations">
+                    <form class="demo">
+                        <div class="form-group">
+                            <div>Один чекбокс, привязанный к булю через v-model:</div>
+                            <div class="demo-checkboxes">
+                                <Checkbox v-model="cb1">1 <code>{{cb1}}</code></Checkbox>
+                                <Checkbox v-model="cb2">2 <code>{{cb2}}</code></Checkbox>
                             </div>
                         </div>
-
+                        <div class="form-group">
+                            <div>Список чекбоксов, привязанных к одному массиву:</div>
+                            <div class="demo-checkboxes">
+                                <Checkbox value="1" v-model="cbList" :checked="true">1</Checkbox>
+                                <Checkbox value="2" v-model="cbList">2</Checkbox>
+                                <Checkbox value="3" v-model="cbList" :checked="true">3</Checkbox>
+                                <code>{{cbList}}</code>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>Список чекбоксов, инициализация по массиву:</div>
+                            <div class="demo-checkboxes">
+                                <Checkbox :value="1" v-model="cbList2">1</Checkbox>
+                                <Checkbox :value="2" v-model="cbList2">2</Checkbox>
+                                <Checkbox :value="3" v-model="cbList2">3</Checkbox>
+                                <code>{{cbList2}}</code>
+                            </div>
+                        </div>
+                    </form>
+                </Box>
+            </div>
+            <div class="col-md-12">
+                <Box type="primary" title="Checkbox & Radio button Color Variations">
+                    <form class="demo">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="demo-checkboxes">
+                                        <Checkbox>Default</Checkbox>
+                                        <Checkbox :checked="true">Checked</Checkbox>
+                                        <Checkbox :disabled="true">Disabled</Checkbox>
+                                        <Checkbox :disabled="true" :checked="true">✓ Disabled</Checkbox>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="demo-checkboxes">
+                                        <Checkbox theme="info">Info</Checkbox>
+                                        <Checkbox theme="info" :checked="true">Checked</Checkbox>
+                                        <Checkbox theme="info" :disabled="true">Disabled</Checkbox>
+                                        <Checkbox theme="info" :disabled="true" :checked="true">✓ Disabled</Checkbox>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="demo-checkboxes">
+                                        <Checkbox theme="success">Success</Checkbox>
+                                        <Checkbox theme="success" :checked="true">Checked</Checkbox>
+                                        <Checkbox theme="success" :disabled="true">Disabled</Checkbox>
+                                        <Checkbox theme="success" :disabled="true" :checked="true">✓ Disabled</Checkbox>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="demo-checkboxes">
+                                        <Checkbox theme="warning">Warning</Checkbox>
+                                        <Checkbox theme="warning" :checked="true">Checked</Checkbox>
+                                        <Checkbox theme="warning" :disabled="true">Disabled</Checkbox>
+                                        <Checkbox theme="warning" :disabled="true" :checked="true">✓ Disabled</Checkbox>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="demo-checkboxes">
+                                        <Checkbox theme="danger">Danger</Checkbox>
+                                        <Checkbox theme="danger" :checked="true">Checked</Checkbox>
+                                        <Checkbox theme="danger" :disabled="true">Disabled</Checkbox>
+                                        <Checkbox theme="danger" :disabled="true" :checked="true">✓ Disabled</Checkbox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="demo-checkboxes">
+                                        <RadioButton v-model="rb2" :value="1">Default</RadioButton>
+                                        <RadioButton v-model="rb2" :value="2" :checked="true">Checked</RadioButton>
+                                        <RadioButton v-model="rb3" :value="1" :disabled="true">Disabled</RadioButton>
+                                        <RadioButton v-model="rb3" :value="2" :disabled="true" :checked="true">✓ Disabled</RadioButton>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="demo-checkboxes">
+                                        <RadioButton v-model="rb2" :value="1" theme="info">Info</RadioButton>
+                                        <RadioButton v-model="rb2" :value="2" theme="info" :checked="true">Checked</RadioButton>
+                                        <RadioButton v-model="rb3" :value="1" theme="info" :disabled="true">Disabled</RadioButton>
+                                        <RadioButton v-model="rb3" :value="2" theme="info" :disabled="true" :checked="true">✓ Disabled</RadioButton>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="demo-checkboxes">
+                                        <RadioButton v-model="rb2" :value="1" theme="success">Success</RadioButton>
+                                        <RadioButton v-model="rb2" :value="2" theme="success" :checked="true">Checked</RadioButton>
+                                        <RadioButton v-model="rb3" :value="1" theme="success" :disabled="true">Disabled</RadioButton>
+                                        <RadioButton v-model="rb3" :value="2" theme="success" :disabled="true" :checked="true">✓ Disabled</RadioButton>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="demo-checkboxes">
+                                        <RadioButton v-model="rb2" :value="1" theme="warning">Warning</RadioButton>
+                                        <RadioButton v-model="rb2" :value="2" theme="warning" :checked="true">Checked</RadioButton>
+                                        <RadioButton v-model="rb3" :value="1" theme="warning" :disabled="true">Disabled</RadioButton>
+                                        <RadioButton v-model="rb3" :value="2" theme="warning" :disabled="true" :checked="true">✓ Disabled</RadioButton>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="demo-checkboxes">
+                                        <RadioButton v-model="rb2" :value="1" theme="danger">Danger</RadioButton>
+                                        <RadioButton v-model="rb2" :value="2" theme="danger" :checked="true">Checked</RadioButton>
+                                        <RadioButton v-model="rb3" :value="1" theme="danger" :disabled="true">Disabled</RadioButton>
+                                        <RadioButton v-model="rb3" :value="2" theme="danger" :disabled="true" :checked="true">✓ Disabled</RadioButton>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </Box>
+            </div>
+            <!--
+            <div class="col-md-6">
+                <Box type="info" title="Other Elements">
+                    <div class="demo">
                         <div class="form-group">
                             <label>Select</label>
                             <select class="form-control">
@@ -244,7 +376,6 @@ export default {
                                 <option>option 5</option>
                             </select>
                         </div>
-
                         <div class="form-group">
                             <label>Select Multiple</label>
                             <select class="form-control" multiple="">
@@ -265,10 +396,10 @@ export default {
                                 <option>option 5</option>
                             </select>
                         </div>
-
-                    </form>
+                    </div>
                 </Box>
             </div>
+            -->
         </div>
     </section>
 </template>
@@ -279,5 +410,14 @@ export default {
         padding: rhythm(0.5);
         margin-left: rhythm(-0.45);
         margin-right: rhythm(-0.45);
+    }
+
+    .demo-checkboxes {
+        display: flex;
+        align-items: flex-start;
+
+        > * + * {
+            margin-left: 1rem;
+        }
     }
 </style>
