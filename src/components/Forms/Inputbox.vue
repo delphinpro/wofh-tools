@@ -9,6 +9,7 @@ const addonPositionValues = value => ['start', 'end'].indexOf(value) !== -1;
 
 export default {
     name: 'Inputbox',
+    inheritAttrs: false,
 
     props: {
         type: { type: String, default: 'text' },
@@ -65,6 +66,7 @@ export default {
         <div class="inputbox__container">
             <input
                 class="inputbox__control inputbox__input"
+                v-bind="$attrs"
                 :id="cid"
                 :name="name"
                 :value="value"
@@ -77,6 +79,7 @@ export default {
             >
             <textarea
                 class="inputbox__control inputbox__textarea"
+                v-bind="$attrs"
                 :id="cid"
                 :name="name"
                 :value="value"
