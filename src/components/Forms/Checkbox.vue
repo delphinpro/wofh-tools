@@ -81,7 +81,7 @@ export default {
 </script>
 
 <template>
-    <span class="checkbox" :class="classes">
+    <div class="checkbox" :class="classes">
         <label class="checkbox__label">
             <input
                 class="checkbox__element"
@@ -102,7 +102,7 @@ export default {
             </span>
             <span class="checkbox__text" v-if="$slots.default"><slot></slot></span>
         </label>
-    </span>
+    </div>
 </template>
 
 <style src="../@css/Checkbox.scss" lang="scss"></style>
