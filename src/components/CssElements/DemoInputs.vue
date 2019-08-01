@@ -6,9 +6,6 @@
  */
 
 import Box from '@/components/Widgets/Box';
-import Inputbox from '@/components/Forms/Inputbox';
-import Checkbox from '@/components/Forms/Checkbox';
-import RadioButton from '@/components/Forms/RadioButton';
 
 
 export default {
@@ -16,9 +13,6 @@ export default {
 
     components: {
         Box,
-        Inputbox,
-        Checkbox,
-        RadioButton,
     },
 
     data: () => ({

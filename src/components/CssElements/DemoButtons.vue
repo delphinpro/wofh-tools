@@ -6,7 +6,6 @@
  */
 
 import Box from '@/components/Widgets/Box';
-import Inputbox from '@/components/Forms/Inputbox';
 
 
 export default {
@@ -14,7 +13,6 @@ export default {
 
     components: {
         Box,
-        Inputbox,
     },
 
     data: () => ({

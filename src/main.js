@@ -11,6 +11,10 @@ import store from '@/store';
 import App from '@/components/App/App.vue';
 import SvgIcon from '@/components/App/SvgIcon';
 import PageHeader from '@/components/App/PageHeader';
+import Alert from '@/components/Widgets/Alert';
+import Inputbox from '@/components/Forms/Inputbox';
+import Checkbox from '@/components/Forms/Checkbox';
+import RadioButton from '@/components/Forms/RadioButton';
 
 
 Vue.config.productionTip = false;
@@ -23,6 +27,10 @@ export function createApp(context = null) {
 
     Vue.component('PageHeader', PageHeader);
     Vue.component('SvgIcon', SvgIcon);
+    Vue.component('Alert', Alert);
+    Vue.component('Inputbox', Inputbox);
+    Vue.component('Checkbox', Checkbox);
+    Vue.component('RadioButton', RadioButton);
 
 
     const router = createRouter();

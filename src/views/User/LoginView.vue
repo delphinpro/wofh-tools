@@ -6,7 +6,6 @@
  */
 
 import { AUTH_REQUEST } from '@/store/actions/auth';
-import Inputbox from '@/components/Forms/Inputbox';
 import Box from '@/components/Widgets/Box';
 
 
@@ -15,7 +14,6 @@ export default {
 
     components: {
         Box,
-        Inputbox,
     },
 
     data: () => ({
@@ -35,7 +33,7 @@ export default {
             this.$toast.removeAll();
             this.$store.dispatch(AUTH_REQUEST, { username, password }).then(res => {
                 if (res.status) {
-                    this.$router.push({ path: '/profile' });
+                    this.$router.push({ name: 'profile' });
                 }
             });
         },

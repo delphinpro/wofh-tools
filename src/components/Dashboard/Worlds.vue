@@ -5,15 +5,9 @@
  * licensed under the MIT license
  */
 
-import Alert from '@/components/Widgets/Alert';
-
 
 export default {
     name: 'Worlds',
-
-    components: {
-        Alert,
-    },
 
     data: () => ({
         worlds: [],
@@ -126,40 +120,4 @@ export default {
     </div>
 </template>
 
-<style lang="scss">
-    table {
-        th, td {
-            border: 1px solid black;
-            padding: 3px 10px;
-        }
-
-        tr.active {
-            color: $color-link;
-        }
-    }
-
-
-    .tabs {
-        display: flex;
-        align-items: center;
-        margin: 20px 0;
-
-        > .s {
-            margin-left: 10px;
-            display: flex;
-            border: 1px solid black;
-        }
-    }
-
-    .tab {
-        padding: 0.25em 1em;
-        bordeR: 1px solid black;
-        cursor: pointer;
-
-        &.active {
-            cursor: default;
-            background: rgba(#000, 0.2);
-        }
-    }
-</style>
-
+<style lang="scss"></style>
