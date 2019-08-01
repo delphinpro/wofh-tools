@@ -11,12 +11,11 @@
 use WofhTools\Controllers\HomeController;
 use WofhTools\Controllers\UserController;
 use WofhTools\Controllers\DashboardController;
-use WofhTools\Controllers\Statistic\AccountsController;
 
 
-$app->get('/', HomeController::class.':dispatch')->setName('pageHome');
+$app->get('/', HomeController::class.':dispatch');
 
-$app->get('/login', UserController::class.':dispatch')->setName('pageLogin');
+$app->get('/login', UserController::class.':dispatch');
 
 $app->group('/stat', function () use ($app) {
 
@@ -27,6 +26,13 @@ $app->group('/stat', function () use ($app) {
 $app->group('/api', function () use ($app) {
 
     $app->post('/login', UserController::class.':doLogin');
+
+    $app->group('/user', function () use ($app) {
+
+        $app->get('/profile', UserController::class.':profile');
+        $app->post('/profile/save', UserController::class.':doSave');
+
+    });
 
     $app->group('/dashboard', function () use ($app) {
 
@@ -44,22 +50,3 @@ $app->group('/api', function () use ($app) {
     $app->get('/test', DashboardController::class.':test');
 
 });
-
-//        self::$app->get('/', function (Request $request, Response $response, $args) {
-//
-//            $settings = $this->settings;
-//
-//            return $this->view->render($response, 'ssr.twig', [
-//                'name' => $args['name'],
-//                'sett' => $settings,
-//            ]);
-//
-//        });
-
-//        self::$app->get('/api/{name}', function (Request $request, Response $response, $args) {
-//
-//            return $this->view->render($response, 'ssr.twig', [
-//                'name' => $args['name'],
-//            ]);
-//
-//        });

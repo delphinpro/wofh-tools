@@ -6,9 +6,8 @@
  */
 
 import Vue from 'vue';
-import { USER_ERROR, USER_REQUEST, USER_SUCCESS } from '../actions/user';
-import { AUTH_LOGOUT } from '../actions/auth';
-import apiCall from '@/utils/api';
+import { USER_ERROR, USER_REQUEST, USER_SUCCESS } from '@/store/actions/user';
+import { AUTH_LOGOUT } from '@/store/actions/auth';
 
 
 const state = {
@@ -43,14 +42,11 @@ const mutations = {
 const actions = {
     [USER_REQUEST](ctx) {
         ctx.commit(USER_REQUEST);
-        apiCall({ url: 'user/me' })
-            .then(resp => {
-                ctx.commit(USER_SUCCESS, resp);
-            })
-            .catch(resp => {
-                ctx.commit(USER_ERROR);
-                // if resp is unauthorized, logout, to
-                ctx.dispatch(AUTH_LOGOUT);
+        let user = {};
+        return Vue.axios
+            .get('/user/profile')
+            .then(res => {
+                return res.data.payload;
             });
     },
 };

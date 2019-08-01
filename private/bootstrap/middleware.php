@@ -5,6 +5,8 @@
  * @author      delphinpro <delphinpro@gmail.com>
  * @copyright   copyright © 2019 delphinpro
  * @license     licensed under the MIT license
+ *
+ * https://github.com/tuupola/slim-jwt-auth
  */
 
 $app->add(new \Tuupola\Middleware\JwtAuthentication([
@@ -12,7 +14,7 @@ $app->add(new \Tuupola\Middleware\JwtAuthentication([
     'secret' => env('JWT_SECRET_KEY'),
     'path'   => [
         '/api/dashboard',
-        '/api/profile',
+        '/api/user/profile',
     ],
     'error'  => function (\Slim\Http\Response $response, $arguments) {
         return $response

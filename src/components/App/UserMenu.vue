@@ -61,7 +61,7 @@ export default {
                         </router-link>
                     </li>
                     <li class="usermenu__item">
-                        <router-link class="usermenu__link" to="/profile">
+                        <router-link class="usermenu__link" :to="{name:'profile'}">
                             <span class="usermenu__icon"></span>
                             <span>Profile</span>
                         </router-link>

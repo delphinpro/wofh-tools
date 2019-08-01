@@ -30,6 +30,33 @@ final class UserController extends BaseController
     }
 
 
+    public function profile(Request $request, Response $response, $args)
+    {
+        $this->bootEloquent();
+
+        $token = $request->getAttribute('token');
+
+        $user = User::find($token['userId']);
+
+        $state = [
+            'user' => [
+                'id'        => $user->id,
+                'email'     => $user->email,
+                'username'  => $user->username,
+                'createdAt' => $user->created_at->timestamp,
+                'updatedAt' => $user->updated_at->timestamp,
+                'sex'       => $user->sex,
+                'status'    => $user->status,
+                'lang'      => $user->lang,
+                'avatar'    => $user->avatar,
+                'verified'  => $user->verified,
+            ],
+        ];
+
+        return $this->sendRequest($request, $response, $state);
+    }
+
+
     public function doLogin(Request $request, Response $response, $args)
     {
         $payload = [
@@ -84,6 +111,43 @@ final class UserController extends BaseController
         }
 
         return $this->sendRequest($request, $response, $payload, $status, $message);
+    }
+
+
+    public function doSave(Request $request, Response $response, $args)
+    {
+        $this->bootEloquent();
+
+        $token = $request->getAttribute('token');
+
+        $user = User::find($token['userId']);
+        $post = $request->getParsedBody();
+
+        if (!empty($post['password'])) {
+            if ($post['password'] !== $post['password2']) {
+                return $this->sendRequest($request, $response, [], false, 'Пароли не совпали');
+            }
+
+            $user->password = Password::hash($post['password'], PASSWORD_DEFAULT);
+        }
+
+        if ($user->id === 1) {
+            $user->email = $post['email'];
+        }
+
+
+        $user->username = $post['username'];
+        $user->sex = $post['sex'];
+
+        $user->save();
+
+        $state = [
+            'token' => $token,
+            'args'  => $args,
+            'user'  => $request->getParsedBody(),
+        ];
+
+        return $this->sendRequest($request, $response, $state);
     }
 
 

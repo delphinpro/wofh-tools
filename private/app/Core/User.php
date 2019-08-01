@@ -15,18 +15,19 @@ use Illuminate\Database\Eloquent\Model as EloquentModel;
  * @license     licensed under the MIT license
  * @package     WofhTools\Core
  *
- * @property $id
- * @property $username
- * @property $email
- * @property $password
- * @property $created_at
- * @property $updated_at
- * @property $sex
- * @property $status
- * @property $group
- * @property $avatar
- * @property $reset_hash
- * @property $verified
+ * @property int $id
+ * @property string $username
+ * @property string $email
+ * @property string $password
+ * @property \Illuminate\Support\Carbon $created_at
+ * @property \Illuminate\Support\Carbon $updated_at
+ * @property int $sex
+ * @property int $status
+ * @property int $lang
+ * @property int $group
+ * @property string $avatar
+ * @property string $reset_hash
+ * @property int $verified
  */
 class User extends EloquentModel
 {
