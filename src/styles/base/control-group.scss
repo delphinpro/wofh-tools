@@ -6,9 +6,12 @@
   display: flex;
 
   > .btn {
-    margin-left: -1px;
     padding-right: 1em;
     padding-left: 1em;
+
+    + .btn {
+      margin-left: -1px;
+    }
 
     &.active,
     &:active {
