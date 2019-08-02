@@ -8,3 +8,19 @@ table {
   border-collapse: collapse;
   vertical-align: middle;
 }
+
+$table-border-color: #4D565F;
+
+.table {
+  @include font(14px, 0.75);
+  border: 1px solid $table-border-color;
+
+  th,
+  td {
+    border: 1px solid $table-border-color;
+    padding: rhythm(0.25) rhythm(0.5);
+  }
+  th {
+    background: rgba(#000, 0.1);
+  }
+}
