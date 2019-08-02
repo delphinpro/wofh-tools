@@ -119,6 +119,10 @@
   justify-content: center;
 }
 
+// vertical rhythm helpers
+
+@include vertical-rhythm-helpers();
+
 /////////////////////
 .type-title {
   @include margin-leader(1);
