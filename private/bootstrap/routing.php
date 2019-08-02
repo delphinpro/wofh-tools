@@ -11,6 +11,7 @@
 use WofhTools\Controllers\HomeController;
 use WofhTools\Controllers\UserController;
 use WofhTools\Controllers\DashboardController;
+use WofhTools\Controllers\WofhController;
 
 
 $app->get('/', HomeController::class.':dispatch');
@@ -38,6 +39,12 @@ $app->group('/api', function () use ($app) {
 
         $app->get('/worlds', DashboardController::class.':listWorlds');
         $app->post('/check', DashboardController::class.':checkWorlds');
+
+    });
+
+    $app->group('/wofh', function () use ($app) {
+
+        $app->get('/worlds', WofhController::class.':worlds');
 
     });
 
