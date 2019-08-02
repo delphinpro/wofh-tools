@@ -5,6 +5,9 @@
  * licensed under the MIT license
  */
 
+import 'vue-awesome/icons/exclamation-triangle';
+
+
 export default {
     name: 'ErrorBox',
 
@@ -23,8 +26,8 @@ export default {
             if (this.lighting) classes += ` error-box_lighting`;
             return classes;
         },
-        iconClass() {
-            return 'fa-' + this.icon;
+        iconName() {
+            return this.icon;
         },
     },
 };
@@ -35,7 +38,7 @@ export default {
         <h2 class="error-box__error-code" v-if="code">{{code}}</h2>
         <div class="error-box__body">
             <div class="error-box__title">
-                <i class="error-box__icon fa" :class="iconClass"></i>
+                <FaIcon class="error-box__icon" :name="iconName" v-if="icon"/>
                 {{title}}
             </div>
             <div class="error-box__content">
@@ -45,4 +48,4 @@ export default {
     </div>
 </template>
 
-<style lang="scss" src="../@css/ErrorBox.scss"></style>
+<style src="../@css/ErrorBox.scss" lang="scss"></style>

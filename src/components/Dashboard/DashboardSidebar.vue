@@ -27,9 +27,9 @@ export default {
                 <li class="dashboard-menu-header">DEMO COMPONENTS</li>
                 <li class="dashboard-menu-parent" :class="{'active open':demoUIElementsOpen}">
                     <a href="#" @click.prevent="demoUIElementsOpen=!demoUIElementsOpen">
-                        <i class="fa fa-laptop"></i>
+                        <FaIcon name="laptop"/>
                         <span>UI Elements</span>
-                        <i class="fa fa-angle-left"></i>
+                        <FaIcon name="angle-left"/>
                     </a>
                     <ul>
                         <li><router-link to="/dashboard/css/palette">Color palette</router-link></li>
@@ -41,9 +41,9 @@ export default {
                 </li>
                 <li class="dashboard-menu-parent" :class="{'active open':demoWidgetsOpen}">
                     <a href="#" @click.prevent="demoWidgetsOpen=!demoWidgetsOpen">
-                        <i class="fa fa-th"></i>
+                        <FaIcon name="th"/>
                         <span>Widgets</span>
-                        <i class="fa fa-angle-left"></i>
+                        <FaIcon name="angle-left"/>
                     </a>
                     <ul>
                         <li><router-link to="/dashboard/css/boxes">Boxes</router-link></li>

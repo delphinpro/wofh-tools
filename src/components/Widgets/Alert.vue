@@ -5,8 +5,15 @@
  * licensed under the MIT license
  */
 
+import CloseButton from '@/components/Elements/CloseButton';
+
+
 export default {
     name: 'Alert',
+
+    components: {
+        CloseButton,
+    },
 
     props: {
         type: { type: String, default: 'default' },
@@ -15,6 +22,11 @@ export default {
         dismiss: { type: Boolean, default: false },
         callout: { type: Boolean, default: false },
     },
+
+    data: () => ({
+        isVisible: true,
+    }),
+
 
     computed: {
         baseClass() {
@@ -27,27 +39,32 @@ export default {
                 alert_dismissable: this.dismissable,
             };
         },
-        iconClass() {
-            return this.icon ? `fa fa-${this.icon}` : null;
-        },
         dismissable() {
             return this.dismiss && !this.callout;
+        },
+    },
+
+    methods: {
+        hideMe() {
+            this.isVisible = false;
         },
     },
 };
 </script>
 
 <template>
-    <div class="alert" :class="baseClass">
-        <button class="close" type="button" v-if="dismissable">×</button>
-        <div class="alert__header" v-if="title">
-            <i class="alert__icon" :class="iconClass" v-if="icon"></i>
-            <span class="alert__title" v-text="title"></span>
+    <transition name="fade">
+        <div class="alert" :class="baseClass" v-if="isVisible">
+            <CloseButton class="alert__close" :theme="type" v-if="dismissable" @click="hideMe"/>
+            <div class="alert__header" v-if="title">
+                <FaIcon class="alert__icon" :name="icon" v-if="icon"/>
+                <span class="alert__title" v-text="title"></span>
+            </div>
+            <div class="alert__content" v-if="$slots.default">
+                <slot></slot>
+            </div>
         </div>
-        <div class="alert__content" v-if="$slots.default">
-            <slot></slot>
-        </div>
-    </div>
+    </transition>
 </template>
 
-<style lang="scss" src="../@css/Alert.scss"></style>
+<style src="../@css/Alert.scss" lang="scss"></style>

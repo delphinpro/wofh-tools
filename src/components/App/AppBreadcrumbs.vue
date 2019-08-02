@@ -5,6 +5,8 @@
  * licensed under the MIT license
  */
 
+import 'vue-awesome/icons/home';
+
 export default {
     name: 'AppBreadcrumbs',
 };
@@ -12,7 +14,7 @@ export default {
 
 <template>
     <ol class="breadcrumb">
-        <li><a href="/"><i class="fa fa-home"></i> Главная</a></li>
+        <li><a href="/"><FaIcon name="home"/><span>Главная</span></a></li>
         <li class="active">Here</li>
     </ol>
 </template>

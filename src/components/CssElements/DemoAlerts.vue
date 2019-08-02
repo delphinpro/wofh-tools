@@ -5,6 +5,11 @@
  * licensed under the MIT license
  */
 
+import 'vue-awesome/icons/info';
+import 'vue-awesome/icons/check';
+import 'vue-awesome/icons/exclamation-triangle';
+import 'vue-awesome/icons/ban';
+
 
 const content = 'A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.';
 
@@ -21,18 +26,11 @@ export default {
             { title: 'Danger', content, icon: 'ban' },
         ],
     }),
-
-    methods: {
-        getClass(title, callout = false) {
-            return `alert alert-${title.toLowerCase()} ${callout ? 'alert-callout' : 'alert-dismissible'}`;
-        },
-        getIconClass: icon => `icon fa fa-${icon}`,
-    },
 };
 </script>
 
 <template>
-    <div>
+    <div class="mb-2">
         <div class="row">
             <div class="col-md-6">
                 <h3 class="type-title">Alerts</h3>
@@ -41,9 +39,13 @@ export default {
                     :type="item.title.toLowerCase()"
                     :title="item.title + ' alert!'"
                     :icon="item.icon"
-                    dismiss
+                    :dismiss="true"
                 >{{item.content}}
                 </Alert>
+                <Alert
+                    title="Alert without content"
+                    :dismiss="true"
+                />
             </div>
             <div class="col-md-6">
                 <h3 class="type-title">Callouts</h3>
@@ -51,9 +53,13 @@ export default {
                     v-for="item in alerts" :key="item.title"
                     :type="item.title.toLowerCase()"
                     :title="`I am a ${item.title.toLowerCase()} callout!`"
-                    callout
+                    :callout="true"
                 >{{item.content}}
                 </Alert>
+                <Alert
+                    title="Callout without content"
+                    :callout="true"
+                />
             </div>
         </div>
     </div>

@@ -5,13 +5,17 @@
  * licensed under the MIT license
  */
 
+import 'vue-awesome/icons/cog';
+import 'vue-awesome/icons/th';
+
+
 export default {
     name: 'DemoType',
 };
 </script>
 
 <template>
-    <div>
+    <div class="pb-2">
         <h3 class="type-title">Headlines</h3>
 
         <h1>h1. Bootstrap heading</h1>
@@ -188,7 +192,10 @@ export default {
                                     link</a></li>
                             </ul>
                         </li>
-                        <li class="pull-right"><a class="text-muted" href="#"><i class="fa fa-gear"></i></a>
+                        <li class="pull-right">
+                            <a class="text-muted" href="#">
+                                <FaIcon name="cog"/>
+                            </a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -268,7 +275,7 @@ export default {
                                     link</a></li>
                             </ul>
                         </li>
-                        <li class="pull-left header"><i class="fa fa-th"></i> Custom Tabs</li>
+                        <li class="pull-left header"><FaIcon name="th"/> Custom Tabs</li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_1-1">

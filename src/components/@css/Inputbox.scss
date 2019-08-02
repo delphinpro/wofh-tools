@@ -26,7 +26,8 @@ $inputbox-border-color-danger: $color-danger;
 
   &__label {
     @include font($inputbox-font-size - 2, 1);
-    display: block;
+    display: flex;
+    align-items: center;
     margin: 0;
     padding: 0;
   }

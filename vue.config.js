@@ -37,6 +37,10 @@ module.exports = {
         },
     },
 
+    transpileDependencies: [
+        /\bvue-awesome\b/
+    ],
+
     configureWebpack: () => ({
         entry: `./src/entry-${target}`,
         target: TARGET_NODE ? 'node' : 'web',

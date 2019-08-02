@@ -16,5 +16,16 @@
       padding: 0 5px;
       content: "#{$nbsp}»#{$nbsp}";
     }
+
+    > a {
+      display: flex;
+      align-items: center;
+
+      .fa-icon {
+        position: relative;
+        top: -0.1em;
+        margin-right: 0.5em;
+      }
+    }
   }
 }

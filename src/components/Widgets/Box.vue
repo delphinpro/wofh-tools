@@ -19,11 +19,11 @@ export default {
 <template>
     <div class="box2" :class="(type ? 'box2_style_'+type : '')">
         <div class="box2__header" v-if="title">
-            <span
+            <FaIcon
                 class="box2__icon"
-                :class="(icon ? 'fa fa-'+icon : '')"
+                :name="icon"
                 v-if="icon"
-            ></span>
+            ></FaIcon>
             <span class="box2__title">{{title}}</span>
         </div>
         <div class="box2__body">

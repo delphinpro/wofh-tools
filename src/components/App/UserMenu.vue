@@ -44,13 +44,13 @@ export default {
         <template v-if="isAuth">
             <li class="nav-menu__item">
                 <router-link class="nav-menu__link" to="/dashboard">
-                    <span class="nav-menu__icon fa fa-cogs"></span>
+                    <FaIcon class="nav-menu__icon" name="cogs" scale="1.2"/>
                     <span>Dashboard</span>
                 </router-link>
             </li>
             <li class="nav-menu__item" @mouseleave="usermenuOpen=false">
                 <span class="nav-menu__link" @click.prevent="usermenuOpen=!usermenuOpen">
-                    <span class="nav-menu__icon fa fa-user"></span>
+                    <FaIcon class="nav-menu__icon" name="user" scale="1"/>
                     <span>{{username}}</span>
                 </span>
                 <ul class="usermenu" v-if="usermenuOpen" @click="usermenuOpen=false">
@@ -68,7 +68,9 @@ export default {
                     </li>
                     <li class="usermenu__item">
                     <span class="usermenu__link" @click="logout">
-                        <span class="usermenu__icon fa fa-sign-out-alt"></span>
+                            <span class="usermenu__icon">
+                        <FaIcon name="sign-out-alt"/>
+                            </span>
                         <span>Sign out</span>
                     </span>
                     </li>
@@ -78,13 +80,13 @@ export default {
         <template v-if="!isAuth">
             <li class="nav-menu__item">
                 <router-link class="nav-menu__link" to="/registration">
-                    <span class="nav-menu__icon fa fa-user-plus"></span>
+                    <FaIcon class="nav-menu__icon" name="user-plus"/>
                     <span>Sign up</span>
                 </router-link>
             </li>
             <li class="nav-menu__item">
                 <router-link class="nav-menu__link" to="/login">
-                    <span class="nav-menu__icon fa fa-sign-in-alt"></span>
+                    <FaIcon class="nav-menu__icon" name="sign-in-alt"/>
                     <span>Sign in</span>
                 </router-link>
             </li>
@@ -92,4 +94,4 @@ export default {
     </ul>
 </template>
 
-<style lang="scss" src="../@css/UserMenu.scss"></style>
+<style src="../@css/UserMenu.scss" lang="scss"></style>

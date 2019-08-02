@@ -5,6 +5,8 @@
  * licensed under the MIT license
  */
 
+import 'vue-awesome/icons/check';
+import 'vue-awesome/icons/regular/envelope';
 import Box from '@/components/Widgets/Box';
 
 
@@ -91,7 +93,7 @@ export default {
                         <Inputbox
                             class="form-group"
                             placeholder="Email"
-                            addon-icon="envelope"
+                            addon-icon="regular/envelope"
                             addon-position="start"
                         />
 

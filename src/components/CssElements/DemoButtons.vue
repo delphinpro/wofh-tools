@@ -5,6 +5,22 @@
  * licensed under the MIT license
  */
 
+import 'vue-awesome/icons/align-left';
+import 'vue-awesome/icons/align-center';
+import 'vue-awesome/icons/align-right';
+import 'vue-awesome/icons/caret-down';
+import 'vue-awesome/icons/edit';
+import 'vue-awesome/icons/play';
+import 'vue-awesome/icons/redo-alt';
+import 'vue-awesome/icons/pause';
+import 'vue-awesome/icons/save';
+import 'vue-awesome/icons/bullhorn';
+import 'vue-awesome/icons/barcode';
+import 'vue-awesome/icons/users';
+import 'vue-awesome/icons/inbox';
+import 'vue-awesome/icons/envelope';
+import 'vue-awesome/icons/regular/heart';
+
 import Box from '@/components/Widgets/Box';
 
 
@@ -102,13 +118,13 @@ export default {
                 <div>
                     <div class="control-group">
                         <button class="btn btn_default" type="button">
-                            <i class="fa fa-align-left"></i>
+                            <FaIcon name="align-left"/>
                         </button>
                         <button class="btn btn_default" type="button">
-                            <i class="fa fa-align-center"></i>
+                            <FaIcon name="align-center"/>
                         </button>
                         <button class="btn btn_default" type="button">
-                            <i class="fa fa-align-right"></i>
+                            <FaIcon name="align-right"/>
                         </button>
                     </div>
                 </div>
@@ -140,7 +156,8 @@ export default {
                         <div class="input-group-btn">
                             <button class="btn btn_default dropdown-toggle" type="button" data-toggle="dropdown">
                                 Action
-                                <span class="fa fa-caret-down"></span></button>
+                                <FaIcon name="caret-down"/>
+                            </button>
                             <ul class="dropdown-menu">
                                 <li><a href="#">Action</a></li>
                                 <li><a href="#">Another action</a></li>
@@ -190,34 +207,34 @@ export default {
         <Box type="primary" title="Application Buttons" icon="">
             <p>Add the classes <code>.btn.btn_app</code> to an <code>&lt;a&gt;</code> tag to achieve the
                 following:</p>
-            <a class="btn btn_app"><i class="fa fa-edit"></i> Edit</a>
-            <a class="btn btn_app"><i class="fa fa-play"></i> Play</a>
-            <a class="btn btn_app"><i class="fa fa-repeat"></i> Repeat</a>
-            <a class="btn btn_app"><i class="fa fa-pause"></i> Pause</a>
-            <a class="btn btn_app"><i class="fa fa-save"></i> Save</a>
+            <a class="btn btn_app"><FaIcon name="edit"/> Edit</a>
+            <a class="btn btn_app"><FaIcon name="play"/> Play</a>
+            <a class="btn btn_app"><FaIcon name="redo-alt"/> Repeat</a>
+            <a class="btn btn_app"><FaIcon name="pause"/> Pause</a>
+            <a class="btn btn_app"><FaIcon name="save"/> Save</a>
             <a class="btn btn_app">
                 <span class="badge bg-yellow">3</span>
-                <i class="fa fa-bullhorn"></i> Notifications
+                <FaIcon name="bullhorn"/> Notifications
             </a>
             <a class="btn btn_app">
                 <span class="badge bg-green">300</span>
-                <i class="fa fa-barcode"></i> Products
+                <FaIcon name="barcode"/> Products
             </a>
             <a class="btn btn_app">
                 <span class="badge bg-purple">891</span>
-                <i class="fa fa-users"></i> Users
+                <FaIcon name="users"/> Users
             </a>
             <a class="btn btn_app">
                 <span class="badge bg-teal">67</span>
-                <i class="fa fa-inbox"></i> Orders
+                <FaIcon name="inbox"/> Orders
             </a>
             <a class="btn btn_app">
                 <span class="badge bg-aqua">12</span>
-                <i class="fa fa-envelope"></i> Inbox
+                <FaIcon name="envelope"/> Inbox
             </a>
             <a class="btn btn_app">
                 <span class="badge bg-red">531</span>
-                <i class="fa fa-heart-o"></i> Likes
+                <FaIcon name="regular/heart"/> Likes
             </a>
         </Box>
     </section>

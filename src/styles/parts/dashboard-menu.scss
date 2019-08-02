@@ -30,7 +30,7 @@
     color: $dashboard-sidebar-color;
     border-left: 3px solid transparent;
 
-    > .fa:first-child {
+    > .fa-icon:first-child {
       width: 30px;
     }
   }
@@ -104,11 +104,14 @@
     display: flex;
     align-items: center;
 
-    > .fa {
+    > .fa-icon {
       flex-shrink: 0;
+      width: 20px;
+      margin-right: 0.5em;
 
       &:last-child {
         width: 30px;
+        margin-right: 0;
         margin-left: auto;
         transition: 0.3s ease;
         text-align: center;
@@ -118,7 +121,7 @@
 
   &.open {
     > a {
-      > .fa:last-child {
+      > .fa-icon:last-child {
         transform: rotate(-90deg);
       }
     }

@@ -41,9 +41,10 @@ $error-box-title-height: 1.25;
   }
 
   &__icon {
-    margin-right: .5em;
+    @include size(0.85em);
+    margin-right: .25em;
+    margin-bottom: -0.1em;
     color: var(--theme-color);
-    font-size: 0.7em;
   }
 
   &__content {

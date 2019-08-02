@@ -18,7 +18,14 @@
 .alert {
   $alert-padding: 0.5;
   @include margin-trailer(0.75);
+  position: relative;
   padding: rhythm($alert-padding);
+
+  &__close {
+    position: absolute;
+    top: rhythm($alert-padding);
+    right: rhythm($alert-padding);
+  }
 
   &__header {
     display: flex;
@@ -30,20 +37,23 @@
   }
 
   &__icon {
-    @include font(20px, 1);
+    @include size(20px);
     margin-right: 1rem;
   }
 
   &__title {
     @include font(20px, 1);
+    padding-right: rhythm($alert-padding + 1);
     font-weight: 400;
   }
 
   &__content {
+    padding-right: rhythm($alert-padding + 1);
   }
 
   &__header + &__content {
     @include margin-leader(0.25);
+    padding-right: 0;
   }
 
   //==

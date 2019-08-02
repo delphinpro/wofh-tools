@@ -68,7 +68,7 @@ export default {
                     />
                     <div class="form-group">
                         <button class="btn btn_primary" type="submit">
-                            <i class="fa fa-sign-in-alt"></i>
+                            <FaIcon name="sign-in-alt"/>
                             Login
                         </button>
                     </div>

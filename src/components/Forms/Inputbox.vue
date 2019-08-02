@@ -62,7 +62,10 @@ export default {
             class="inputbox__label"
             :for="cid"
             v-if="label"
-        ><i class="inputbox__label-icon fa" :class="'fa-'+labelIcon" v-if="labelIcon"></i>{{label}}</label>
+        >
+            <FaIcon class="inputbox__label-icon" :name="labelIcon" v-if="labelIcon"/>
+            {{label}}
+        </label>
         <div class="inputbox__container">
             <input
                 class="inputbox__control inputbox__input"
@@ -92,7 +95,7 @@ export default {
                 v-if="isTextarea"
             ></textarea>
             <div class="inputbox__addon" v-if="hasAddon && !isTextarea">
-                <i class="fa" :class="'fa-'+addonIcon" v-if="addonIcon"></i>
+                <FaIcon :name="addonIcon" v-if="addonIcon"/>
                 <span v-else>{{addon}}</span>
             </div>
         </div>

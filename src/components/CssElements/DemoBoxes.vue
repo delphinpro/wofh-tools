@@ -5,6 +5,7 @@
  * licensed under the MIT license
  */
 
+import 'vue-awesome/icons/tag';
 import Box from '@/components/Widgets/Box';
 
 
