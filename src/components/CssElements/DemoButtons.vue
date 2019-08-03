@@ -246,7 +246,7 @@ export default {
         grid-template-columns: repeat(6, 1fr);
         background: $background-base;
         grid-gap: rhythm(1);
-        padding: rhythm(0.5, 1);
+        padding: rhythm(0.5);
 
         > div {
             display: flex;
