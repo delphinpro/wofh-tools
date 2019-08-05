@@ -58,8 +58,6 @@ class Worlds extends \Illuminate\Database\Eloquent\Model
         'time_of_update_started',
     ];
 
-    protected $age = null;
-
     protected $fullTitle = null;
 
     protected $realLastUpdate = null;
@@ -134,9 +132,49 @@ class Worlds extends \Illuminate\Database\Eloquent\Model
 
 
     /**
+     * @return \Carbon\CarbonInterval|null
+     */
+    public function getAge()
+    {
+        if (!$this->started) { // нет данных о старте
+            return null;
+        }
+
+        if (!$this->closed && !$this->working) { // нет данных об окончании завершенного мира
+            return null;
+        }
+
+        $closed = new Carbon();
+        $closed->setTimestamp(time());
+
+        if ($this->closed && $this->closed instanceof Carbon) {
+            $closed->setTimestamp($this->closed->timestamp);
+        }
+
+        $interval = $closed->diffAsCarbonInterval($this->started);
+
+        return $interval;
+    }
+
+
+    public function getAgeAsString()
+    {
+        $ageInterval = $this->getAge();
+
+        if (!$ageInterval) {
+            return 'Неизвестно';
+        }
+
+        $totalDays = (int)$ageInterval->totalDays;
+
+        return $totalDays.' дн.';
+    }
+
+
+    /**
      * @param $sign
      *
-     * @return bool|Collection|Eloquent|Worlds
+     * @return bool|Collection|\Illuminate\Database\Eloquent\Model|Worlds
      */
     public static function getBySign($sign)
     {
@@ -168,5 +206,31 @@ class Worlds extends \Illuminate\Database\Eloquent\Model
 
         $this->time_of_update_started = null;
         $this->save();
+    }
+
+
+    public function toArray()
+    {
+        return array_merge(
+            parent::toArray(),
+            $this->dateFieldsAsTimestamps(),
+            [
+                'fmtAge' => $this->getAgeAsString(),
+            ]
+        );
+    }
+
+
+    /**
+     * @return array
+     */
+    private function dateFieldsAsTimestamps(): array
+    {
+        $dates = [];
+        foreach ($this->dates as $dateField) {
+            $dates[$dateField] = $this->$dateField->timestamp;
+        }
+
+        return $dates;
     }
 }

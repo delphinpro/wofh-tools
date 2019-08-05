@@ -8,12 +8,13 @@
 import Vue from 'vue';
 import { USER_ERROR, USER_REQUEST, USER_SUCCESS } from '@/store/actions/user';
 import { AUTH_LOGOUT } from '@/store/actions/auth';
+import { mergeState } from '@/utils/mergeState';
 
 
-const state = {
+const state = mergeState({
     status: '',
     profile: {},
-};
+}, 'user');
 
 const getters = {
     getProfile: state => state.profile,

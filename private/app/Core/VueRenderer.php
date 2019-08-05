@@ -27,7 +27,7 @@ class VueRenderer
      */
     public function __construct(string $nodeModulesPath)
     {
-        $this->nodePath = rtrim($nodeModulesPath, '/\\').'/';
+        $this->nodePath = rtrim($nodeModulesPath, '/\\').DIRECTORY_SEPARATOR;
         $this->v8 = new \V8Js();
     }
 
@@ -37,6 +37,7 @@ class VueRenderer
      * @param array  $data
      *
      * @return string
+     * @throws \V8JsScriptException
      */
     public function render(string $entry, array $data): string
     {
@@ -45,9 +46,14 @@ class VueRenderer
 
         ob_start();
 
-        $this->setupVueRenderer();
-        $this->v8->executeString("var __PRELOAD_STATE__ = ${state}; this.global.__PRELOAD_STATE__ = __PRELOAD_STATE__;");
-        $this->v8->executeString($app);
+        try {
+            $this->setupVueRenderer();
+            $this->v8->executeString("var __PRELOAD_STATE__ = ${state}; this.global.__PRELOAD_STATE__ = __PRELOAD_STATE__;");
+            $this->v8->executeString($app);
+        } catch (\V8JsScriptException $e) {
+            ob_end_clean();
+            throw $e;
+        }
 
         return ob_get_clean();
     }

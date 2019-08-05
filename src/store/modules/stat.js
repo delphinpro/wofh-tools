@@ -6,9 +6,10 @@
  */
 
 import Vue from 'vue';
+import { mergeState } from '@/utils/mergeState';
 
 
-const state = {
+const state = mergeState({
     dd: 123,
 
     charts: {
@@ -16,7 +17,7 @@ const state = {
             series: [],
         },
     },
-};
+}, 'stat');
 
 const getters = {
     demoValue: state => state.dd,

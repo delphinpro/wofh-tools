@@ -12,6 +12,7 @@ import { userRoutes } from '@/router/routes-user';
 import { dashboardRoutes } from '@/router/routes-dashboard';
 import { statRoutes } from '@/router/routes-stat';
 import { error404Route } from '@/router/error404';
+import { isServerBundle } from '@/utils/mergeState';
 
 
 Vue.use(Router);
@@ -37,10 +38,12 @@ export function createRouter() {
     router.addRoutes(dashboardRoutes);
     router.addRoutes([error404Route]);
 
-    router.beforeEach((to, from, next) => {
-        Vue.$toast.removeAll();
-        next();
-    });
+    if (!isServerBundle()) {
+        router.beforeEach((to, from, next) => {
+            Vue.$toast.removeAll();
+            next();
+        });
+    }
 
     return router;
 }

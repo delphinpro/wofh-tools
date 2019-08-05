@@ -5,7 +5,6 @@
  * licensed under the MIT license
  */
 
-
 export default {
     name: 'Worlds',
 
@@ -44,7 +43,7 @@ export default {
         },
 
         async checkWorlds() {
-            let response = await this.axios.post('/wofh/check');
+            let response = await this.axios.post('/dashboard/worlds/check');
             this.worlds = [...response.data.payload.worlds];
         },
     },
@@ -52,19 +51,27 @@ export default {
 </script>
 
 <template>
-    <div>
-        <div class="mb-1" v-if="worlds.length">
+    <div class="pb-2">
+        <div class="mb-1">
             <div class="h4">
                 Game servers:
             </div>
-            <div class="control-group">
-                <div
-                    class="btn"
-                    :class="{btn_primary: (+index)===activeTabIndex}"
-                    v-for="(tab, index) in tabs"
-                    v-text="tab"
-                    @click="activeTabIndex = +index"
-                ></div>
+            <div class="d-flex">
+                <div class="control-group">
+                    <button class="btn btn_warning" @click="listWorlds">
+                        <FaIcon name="sync-alt"/>
+                        Update
+                    </button>
+                </div>
+                <div class="control-group" v-if="worlds.length">
+                    <div
+                        class="btn"
+                        :class="{btn_primary: (+index)===activeTabIndex}"
+                        v-for="(tab, index) in tabs"
+                        v-text="tab"
+                        @click="activeTabIndex = +index"
+                    ></div>
+                </div>
             </div>
         </div>
 
@@ -88,16 +95,16 @@ export default {
                 <td>{{world.sign}}</td>
                 <td>{{world.title}}</td>
                 <td class="text-center">
-                    <i class="fa fa-check text-green" v-if="world.can_reg"></i>
+                    <FaIcon class="text-green" name="check" v-if="world.can_reg"/>
                 </td>
                 <td class="text-center">
-                    <i class="fa fa-check text-green" v-if="world.working"></i>
+                    <FaIcon class="text-green" name="check" v-if="world.working"/>
                 </td>
                 <td class="text-center">
-                    <Checkbox v-model="world.statistic"/>
+                    <Checkbox v-model="world.statistic" :theme="world.statistic?'warning':null"/>
                 </td>
                 <td class="text-center">
-                    <Checkbox v-model="world.hidden"/>
+                    <Checkbox v-model="world.hidden" :theme="world.hidden?'danger':null"/>
                 </td>
                 <td class="text-right"><samp>{{world.time_of_loaded_stat}}</samp></td>
                 <td class="text-right"><samp>{{world.time_of_updated_stat}}</samp></td>

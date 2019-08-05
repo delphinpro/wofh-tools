@@ -26,44 +26,43 @@ final class UserController extends BaseController
 {
     public function dispatch(Request $request, Response $response, $args)
     {
-        return $this->sendRequest($request, $response);
+        return $this->sendRequest($request, $response, [
+            'user' => 123,
+        ]);
     }
 
 
     public function profile(Request $request, Response $response, $args)
     {
-        $this->bootEloquent();
-
         $token = $request->getAttribute('token');
 
         $user = User::find($token['userId']);
 
-        $state = [
-            'user' => [
-                'id'        => $user->id,
-                'email'     => $user->email,
-                'username'  => $user->username,
-                'createdAt' => $user->created_at->timestamp,
-                'updatedAt' => $user->updated_at->timestamp,
-                'sex'       => $user->sex,
-                'status'    => $user->status,
-                'lang'      => $user->lang,
-                'avatar'    => $user->avatar,
-                'verified'  => $user->verified,
-            ],
+        $userData = [
+            'id'        => $user->id,
+            'email'     => $user->email,
+            'username'  => $user->username,
+            'createdAt' => $user->created_at->timestamp,
+            'updatedAt' => $user->updated_at->timestamp,
+            'sex'       => $user->sex,
+            'status'    => $user->status,
+            'lang'      => $user->lang,
+            'avatar'    => $user->avatar,
+            'verified'  => $user->verified,
         ];
 
-        return $this->sendRequest($request, $response, $state);
+        $this->push('user', $userData);
+
+        return $this->sendRequest($request, $response);
     }
 
 
     public function doLogin(Request $request, Response $response, $args)
     {
-        $payload = [
-            'token' => '',
-            'form'  => [],
-            'post'  => $request->getParsedBody(),
-        ];
+        $this->push('token', '');
+        $this->push('form', []);
+        $this->push('post', $request->getParsedBody());
+
         $status = true;
         $message = '';
 
@@ -89,7 +88,7 @@ final class UserController extends BaseController
                 ->orWhere('email', '=', $username)
                 ->first();
 
-            $payload['user'] = $user;
+            $this->push('user', $user);
 
             if ($user) {
 
@@ -99,7 +98,7 @@ final class UserController extends BaseController
                         $user->save();
                     }
 
-                    $payload['token'] = $this->makeJWT($user);
+                    $this->push('token', $this->makeJWT($user));
                 }
 
             } else {
@@ -110,7 +109,7 @@ final class UserController extends BaseController
             }
         }
 
-        return $this->sendRequest($request, $response, $payload, $status, $message);
+        return $this->sendRequest($request, $response, [], $status, $message);
     }
 
 

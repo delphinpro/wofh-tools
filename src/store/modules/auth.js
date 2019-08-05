@@ -8,11 +8,12 @@
 import Vue from 'vue';
 import { AUTH_ERROR, AUTH_LOGOUT, AUTH_REQUEST, AUTH_SUCCESS } from '../actions/auth';
 import { HTTP_HEADER_AUTHORIZATION, LS_KEY_TOKEN } from '@/utils/constants';
+import { mergeState } from '@/utils/mergeState';
 
 
-const state = {
+const state = mergeState({
     token: null,
-};
+}, 'auth');
 
 try {
 

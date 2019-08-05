@@ -21,11 +21,20 @@ class WofhController extends BaseController
 {
     public function worlds(Request $request, Response $response, $args)
     {
-        $this->bootEloquent();
         $worlds = Worlds::getAll();
 
-        return $this->sendRequest($request, $response, [
-            'worlds' => $worlds,
-        ]);
+        $this->push('worlds', $worlds);
+
+        return $this->sendRequest($request, $response);
+    }
+
+
+    public function activeWorlds(Request $request, Response $response, $args)
+    {
+        $worlds = Worlds::getWorking();
+
+        $this->push('worlds', $worlds);
+
+        return $this->sendRequest($request, $response);
     }
 }

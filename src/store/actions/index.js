@@ -8,3 +8,4 @@
 
 export const LOADING_UP = 'LOADING_UP';
 export const LOADING_DOWN = 'LOADING_DOWN';
+export const ACTIVE_WORLDS = 'ACTIVE_WORLDS';

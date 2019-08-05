@@ -3,9 +3,9 @@
 namespace WofhTools\Core;
 
 
-use Psr\Http\Message\UriInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
+use Psr\Http\Message\UriInterface;
 use WofhTools\Helpers\JsonCustomException;
 
 
@@ -22,11 +22,15 @@ use WofhTools\Helpers\JsonCustomException;
  * @property \Slim\Views\Twig                     view
  * @property \WofhTools\Core\AppSettings          config
  * @property \WofhTools\Helpers\Json              json
+ * @property \WofhTools\Tools\Wofh                wofh
  */
 class BaseController
 {
     /** @var \Slim\Container */
     protected $DIContainer;
+
+    /** @var array */
+    protected $states;
 
 
     /**
@@ -37,6 +41,11 @@ class BaseController
     public function __construct(\Slim\Container $DIContainer)
     {
         $this->DIContainer = $DIContainer;
+        $this->bootEloquent();
+
+        $this->states = [
+            'default' => [],
+        ];
     }
 
 
@@ -62,11 +71,22 @@ class BaseController
     }
 
 
+    protected function push(string $key, $data, string $stateModule = 'default'): void
+    {
+        if (!array_key_exists($stateModule, $this->states)) {
+            $this->states[$stateModule] = [];
+        }
+
+        $this->states[$stateModule][$key] = $data;
+    }
+
+
     /**
      * @param UriInterface $uri
      * @param array        $state
      *
      * @return string
+     * @throws \V8JsScriptException
      */
     protected function fetchClientApp(UriInterface $uri, array $state): string
     {
@@ -76,7 +96,7 @@ class BaseController
         if ($this->config->ssrEnabled) {
 
             try {
-                $stateAsString = $this->json->encode($state, false, true);
+                $stateAsString = $this->json->encode($state, false, false);
             } catch (JsonCustomException $e) {
                 $stateAsString = "{}; /* {$e->getMessage()} */";
             }
@@ -84,7 +104,7 @@ class BaseController
             $renderer = new VueRenderer(DIR_ROOT.DIRECTORY_SEPARATOR.'node_modules');
             $ssrHtml = $renderer->render($this->config->ssrBundle, [
                 'URL'   => $uri->getPath(),
-                'STATE' => $stateAsString,
+                'STATE' => $state,
             ]);
         }
 
@@ -115,10 +135,10 @@ class BaseController
             $response = $response->withJson([
                 'status'  => $status,
                 'message' => $message,
-                'payload' => $state,
+                'payload' => $this->states['default'],
             ]);
         } else {
-            $body = $this->fetchClientApp($request->getUri(), $state);
+            $body = $this->fetchClientApp($request->getUri(), $this->states);
             $response->write($body);
         }
 

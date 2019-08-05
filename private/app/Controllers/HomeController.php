@@ -5,6 +5,7 @@ namespace WofhTools\Controllers;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
+use WofhTools\Models\Worlds;
 use WofhTools\Core\BaseController;
 
 
@@ -21,6 +22,14 @@ final class HomeController extends BaseController
 
     public function dispatch(Request $request, Response $response, $args)
     {
+        $worlds = Worlds::getWorking();
+        $r = [];
+        foreach ($worlds as $world) {
+            $r[] = ['title'=>$world['title']];
+        }
+
+        $this->push('activeWorlds', $r);
+
         return $this->sendRequest($request, $response);
     }
 }

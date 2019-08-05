@@ -10,6 +10,10 @@
 .text-justify    { text-align: justify; }
 .text-nowrap     { white-space: nowrap; }
 
+.text-top        { vertical-align: top; }
+.text-middle     { vertical-align: middle; }
+.text-bottom     { vertical-align: bottom; }
+
 .text-lowercase  { text-transform: lowercase; }
 .text-uppercase  { text-transform: uppercase; }
 .text-capitalize { text-transform: capitalize; }
@@ -119,6 +123,10 @@
   justify-content: center;
 }
 
+// Flex layout
+
+.d-flex { display: flex; }
+
 // vertical rhythm helpers
 
 @include vertical-rhythm-helpers();
@@ -127,6 +135,10 @@
 .type-title {
   @include margin-leader(1);
   position: relative;
+
+  &:first-child {
+    margin-top: 0;
+  }
 
   &::after {
     position: absolute;
