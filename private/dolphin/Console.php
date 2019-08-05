@@ -57,7 +57,7 @@ class Console
 
     public function writeFixedWidth($message, $length, $symbol = '.', $codes = null)
     {
-        $message = str_pad($message.' ', $length, $symbol).' ';
+        $message = str_pad($message, $length, $symbol).' ';
         $this->write($message, $codes, false);
     }
 
@@ -98,6 +98,32 @@ class Console
         }
 
         die;
+    }
+
+
+    public function colorCodeStart($codes)
+    {
+        if ($this->colorEnabled) {
+            if (is_int($codes)) {
+                $codes = (array)$codes;
+            }
+
+            if (is_array($codes)) {
+                echo "\033[".join(';', $codes).'m';
+            }
+        }
+    }
+
+
+    public function colorCodeEnd($eol = false)
+    {
+        if ($this->colorEnabled) {
+            echo "\033[0m";
+        }
+
+        if ($eol) {
+            echo PHP_EOL;
+        }
     }
 
 
