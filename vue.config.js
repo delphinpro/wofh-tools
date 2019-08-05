@@ -30,6 +30,7 @@ module.exports = {
     assetsDir,
     indexPath: NODE_ENV === 'production' ? '../private/templates/layouts/base.twig' : 'index.html',
     productionSourceMap: false,
+    integrity: true,
 
     devServer: {
         proxy: {
