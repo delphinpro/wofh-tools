@@ -51,5 +51,6 @@
     .svg-icon {
         width: auto;
         height: auto;
+        vertical-align: middle;
     }
 </style>
