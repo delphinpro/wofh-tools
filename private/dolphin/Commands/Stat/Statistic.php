@@ -252,15 +252,15 @@ class Statistic extends DolphinContainer
             $this->db->beginTransaction();
 
             $sqls = [
-                "TRUNCATE `z_{$world->sign}_towns`;",
-                "TRUNCATE `z_{$world->sign}_towns_stat`;",
-                "TRUNCATE `z_{$world->sign}_accounts`;",
-                "TRUNCATE `z_{$world->sign}_accounts_stat`;",
-                "TRUNCATE `z_{$world->sign}_countries`;",
-                "TRUNCATE `z_{$world->sign}_countries_stat`;",
-                "TRUNCATE `z_{$world->sign}_countries_diplomacy`;",
-                "TRUNCATE `z_{$world->sign}_events`;",
-                "TRUNCATE `z_{$world->sign}_common`;",
+                "DROP TABLE IF EXISTS `z_{$world->sign}_towns`;",
+                "DROP TABLE IF EXISTS `z_{$world->sign}_towns_stat`;",
+                "DROP TABLE IF EXISTS `z_{$world->sign}_accounts`;",
+                "DROP TABLE IF EXISTS `z_{$world->sign}_accounts_stat`;",
+                "DROP TABLE IF EXISTS `z_{$world->sign}_countries`;",
+                "DROP TABLE IF EXISTS `z_{$world->sign}_countries_stat`;",
+                "DROP TABLE IF EXISTS `z_{$world->sign}_countries_diplomacy`;",
+                "DROP TABLE IF EXISTS `z_{$world->sign}_events`;",
+                "DROP TABLE IF EXISTS `z_{$world->sign}_common`;",
                 "UPDATE wt_worlds SET time_of_loaded_stat = null, time_of_updated_stat = null WHERE id = {$world->id};",
             ];
 
