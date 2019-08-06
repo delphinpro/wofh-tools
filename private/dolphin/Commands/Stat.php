@@ -102,7 +102,7 @@ class Stat extends Command implements CommandInterface
     public function list()
     {
         $this->bootEloquent();
-        $this->statistic->listActiveWorlds();
+        $this->statistic->listWorlds();
     }
 
 
@@ -123,7 +123,7 @@ class Stat extends Command implements CommandInterface
         $help->addCommand('stat:clear', 'Clear statistic for one world', [
             '--world' => ['required' => true],
         ]);
-        $help->addCommand('stat:list', 'Display active worlds', []);
+        $help->addCommand('stat:list', 'Display status of worlds');
 
         $help->addOption('--world, -w', 'process only for one world');
         $help->addOption('--email, -e', 'level for send report to email [error, all]');

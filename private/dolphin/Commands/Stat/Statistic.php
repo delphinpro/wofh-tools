@@ -13,12 +13,12 @@ namespace Dolphin\Commands\Stat;
 
 use Carbon\Carbon;
 use Dolphin\Console;
+use WofhTools\Models\Worlds;
 use Dolphin\DolphinContainer;
 use Psr\Container\ContainerInterface;
-use WofhTools\Helpers\FileSystemException;
 use WofhTools\Helpers\HttpCustomException;
 use WofhTools\Helpers\JsonCustomException;
-use WofhTools\Models\Worlds;
+use WofhTools\Helpers\FileSystemException;
 
 
 /**
@@ -287,13 +287,43 @@ class Statistic extends DolphinContainer
     }
 
 
-    public function listActiveWorlds()
+    public function listWorlds()
     {
-        $worlds = Worlds::getWorking();
+        $this->console->write('Worlds status:', Console::GREEN);
+        $col = 19;
+
+        $worlds = Worlds::getAll();
+
+        $this->console->write('  ', false);
+        $this->console->writeFixedWidth('', 6, ' ');
+        $this->console->writeFixedWidth('Statistic', 10, ' ');
+        $this->console->writeFixedWidth('Load time', $col, ' ');
+        $this->console->write(' ', false);
+        $this->console->writeFixedWidth('Update time', $col, ' ');
+        $this->console->write('');
+
         /** @var Worlds $world */
-        $this->console->write('Active worlds:', Console::GREEN);
         foreach ($worlds as $world) {
-            $this->console->write($world->sign);
+            if (!$world->working) {
+                continue;
+            }
+
+            if ($world->working) {
+                $this->console->colorCodeStart(Console::CYAN);
+            }
+
+            $this->console->write($world->working ? '* ' : '  ', false);
+            $this->console->writeFixedWidth($world->sign, 6, ' ');
+            $this->console->writeFixedWidth('   '.($world->statistic ? 'On' : 'Off'), 10, ' ');
+            $this->console->writeFixedWidth(($world->time_of_loaded_stat), $col, '.');
+            $this->console->write(' ', false);
+            $this->console->writeFixedWidth(($world->time_of_updated_stat), $col, '.');
+
+            if ($world->working) {
+                $this->console->colorCodeEnd();
+            }
+
+            $this->console->write('');
         }
     }
 
