@@ -40,6 +40,7 @@ const actions = {
             worlds[i].fmtLoadedStat = dateFormat(worlds[i].time_of_loaded_stat);
             worlds[i].fmtUpdatedStat = dateFormat(worlds[i].time_of_updated_stat);
             worlds[i].fmtUpdatedConst = dateFormat(worlds[i].time_of_updated_const);
+            worlds[i].flag = /ru/i.test(sign) ? 'flag-russia' : 'flag-uk';
         }
 
         commit(WORLDS_LIST, worlds);

@@ -8,6 +8,7 @@
 
 import { mapGetters } from 'vuex';
 import { WORLDS_LIST } from '@/store/actions';
+import { cbSortWorldsByStarted } from '@/utils';
 
 
 export default {
@@ -22,10 +23,7 @@ export default {
 
         worlds: {
             get() {
-                return this.activeWorlds.sort((a, b) => {
-                    if (a.started === b.started) return 0;
-                    return a.started < b.started ? 1 : -1;
-                });
+                return this.activeWorlds.sort(cbSortWorldsByStarted);
             },
         },
     },
@@ -52,6 +50,7 @@ export default {
                 <thead>
                 <tr>
                     <th class="text-left" colspan="2">Мир</th>
+                    <th class="text-left">Название</th>
                     <th class="text-center">Регистрация</th>
                     <th class="text-right">Старт</th>
                     <th class="text-right">Длительность</th>
@@ -60,7 +59,15 @@ export default {
                 </thead>
                 <tbody>
                 <tr v-for="world in worlds">
-                    <td>{{world.sign}}</td>
+                    <td style="width: 20px; padding-right: 0;">
+                        <SvgIcon
+                            viewBox="0 0 512 341.4"
+                            size="20"
+                            :height="20*341.4/512"
+                            :name="world.flag"
+                        />
+                    </td>
+                    <td>{{world.signU}}</td>
                     <td>{{world.title}}</td>
                     <td class="text-center" :class="world['can_reg']?'text-green':'text-red'">
                         <SvgIcon :name="world['can_reg']?'check':'cross'" :size="world['can_reg']?'1rem':'0.75rem'"/>
@@ -76,7 +83,6 @@ export default {
                 </tr>
                 </tbody>
             </table>
-            <pre>{{worlds[3]}}</pre>
         </div>
         <Alert title="Нет даннных о действующих мирах" v-else></Alert>
     </div>
