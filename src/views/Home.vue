@@ -6,8 +6,8 @@
  */
 
 
-import { ACTIVE_WORLDS } from '@/store/actions';
-import { dateFormat } from '@/utils/date';
+import { mapGetters } from 'vuex';
+import { WORLDS_LIST } from '@/store/actions';
 
 
 export default {
@@ -16,9 +16,13 @@ export default {
     data: () => ({}),
 
     computed: {
+        ...mapGetters([
+            'activeWorlds',
+        ]),
+
         worlds: {
             get() {
-                return [...this.$store.state.activeWorlds].sort((a, b) => {
+                return this.activeWorlds.sort((a, b) => {
                     if (a.started === b.started) return 0;
                     return a.started < b.started ? 1 : -1;
                 });
@@ -27,24 +31,15 @@ export default {
     },
 
     mounted() {
-        // if (!this.worlds.length) {
-        this.getActiveWorlds();
-        // }
+        this.$store.dispatch(WORLDS_LIST);
     },
 
-    methods: {
-        async getActiveWorlds() {
-            let { worlds } = await this.axios.get('/wofh/worlds/active');
-            this.$store.commit(ACTIVE_WORLDS, worlds);
-        },
-
-        dateFormat: (ts) => dateFormat(ts),
-    },
+    methods: {},
 };
 </script>
 
 <template>
-    <div class="container">
+    <div class="container pb-2">
         <PageHeader
             title="WofhTools"
             desc=""
@@ -70,12 +65,10 @@ export default {
                     <td class="text-center" :class="world['can_reg']?'text-green':'text-red'">
                         <SvgIcon :name="world['can_reg']?'check':'cross'" :size="world['can_reg']?'1rem':'0.75rem'"/>
                     </td>
-                    <td class="text-right">{{dateFormat(world.started)}}</td>
+                    <td class="text-right">{{world.fmtStarted}}</td>
                     <td class="text-right">{{world['fmtAge']}}</td>
                     <td class="text-right">
-                        <a href="#" v-if="world['time_of_updated_stat']">
-                            {{dateFormat(world['time_of_updated_stat'])}}
-                        </a>
+                        <a href="#" v-if="world.fmtUpdatedStat">{{world.fmtUpdatedStat}}</a>
                         <div v-else>Отсутствует
                             <SvgIcon name="cross" size="0.75rem"/>
                         </div>
@@ -83,6 +76,8 @@ export default {
                 </tr>
                 </tbody>
             </table>
+            <pre>{{worlds[3]}}</pre>
         </div>
+        <Alert title="Нет даннных о действующих мирах" v-else></Alert>
     </div>
 </template>

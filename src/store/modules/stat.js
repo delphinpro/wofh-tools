@@ -6,40 +6,43 @@
  */
 
 import Vue from 'vue';
+import { WORLDS_LIST } from '@/store/actions';
 import { mergeState } from '@/utils/mergeState';
+import { dateFormat } from '@/utils/date';
 
 
 const state = mergeState({
-    dd: 123,
-
-    charts: {
-        accounts: {
-            series: [],
-        },
-    },
+    worlds: [],
 }, 'stat');
 
 const getters = {
-    demoValue: state => state.dd,
-    accountsChart: state => state.charts.accounts,
+    allWorlds: state => state.worlds.filter(item => true),
+    activeWorlds: state => state.worlds.filter(item => item.working),
+    closedWorlds: state => state.worlds.filter(item => !item.working),
 };
 
 const mutations = {
-    setDemo(state, data) {
-        Vue.set(state, 'dd', data);
-    },
-    setChart(state, data) {
-        Vue.set(state.charts, 'accounts', data);
-    },
+    [WORLDS_LIST]: (state, data) => state.worlds = data,
 };
 
 const actions = {
-    setDemo(ctx, data) {
-        ctx.commit('setDemo', data);
-    },
+    async [WORLDS_LIST]({ commit }, data) {
+        let force = data && data.force;
+        if (state.worlds.length && !force) return;
 
-    setChart(ctx, data) {
-        ctx.commit('setChart', data);
+        let { worlds } = await Vue.axios.get('/wofh/worlds');
+
+        for (let i in worlds) {
+            if (!worlds.hasOwnProperty(i)) continue;
+            let sign = worlds[i].sign;
+            worlds[i].signU = !sign ? sign : sign[0].toUpperCase() + sign.slice(1);
+            worlds[i].fmtStarted = dateFormat(worlds[i].started);
+            worlds[i].fmtLoadedStat = dateFormat(worlds[i].time_of_loaded_stat);
+            worlds[i].fmtUpdatedStat = dateFormat(worlds[i].time_of_updated_stat);
+            worlds[i].fmtUpdatedConst = dateFormat(worlds[i].time_of_updated_const);
+        }
+
+        commit(WORLDS_LIST, worlds);
     },
 };
 
