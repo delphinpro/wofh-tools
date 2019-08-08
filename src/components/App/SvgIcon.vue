@@ -15,6 +15,10 @@
                 type: [String, Number],
                 default: null,
             },
+            height: {
+                type: [String, Number],
+                default: null,
+            },
         },
 
         computed: {
@@ -41,7 +45,7 @@
         :class="className"
         :fill="color"
         :width="size"
-        :height="size">
+        :height="height || size">
         <!--suppress HtmlUnknownAttribute, XmlUnusedNamespaceDeclaration -->
         <use :xlink:href="iconPath" xmlns:xlink="http://www.w3.org/1999/xlink"/>
     </svg>
