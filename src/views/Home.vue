@@ -18,7 +18,7 @@ export default {
     computed: {
         worlds: {
             get() {
-                return this.$store.state.activeWorlds.sort((a, b) => {
+                return [...this.$store.state.activeWorlds].sort((a, b) => {
                     if (a.started === b.started) return 0;
                     return a.started < b.started ? 1 : -1;
                 });
@@ -27,15 +27,15 @@ export default {
     },
 
     mounted() {
-        if (!this.worlds.length) {
-            this.getActiveWorlds();
-        }
+        // if (!this.worlds.length) {
+        this.getActiveWorlds();
+        // }
     },
 
     methods: {
         async getActiveWorlds() {
-            let response = await this.axios.get('/wofh/worlds/active');
-            this.$store.commit(ACTIVE_WORLDS, response.data.payload.worlds);
+            let { worlds } = await this.axios.get('/wofh/worlds/active');
+            this.$store.commit(ACTIVE_WORLDS, worlds);
         },
 
         dateFormat: (ts) => dateFormat(ts),

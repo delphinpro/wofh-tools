@@ -12,7 +12,6 @@ import { mergeState } from '@/utils/mergeState';
 
 
 const state = mergeState({
-    status: '',
     profile: {},
 }, 'user');
 
@@ -22,10 +21,6 @@ const getters = {
 };
 
 const mutations = {
-    [USER_REQUEST](state) {
-        state.status = 'loading';
-    },
-
     [USER_SUCCESS](state, resp) {
         state.status = 'success';
         Vue.set(state, 'profile', resp);
@@ -41,14 +36,8 @@ const mutations = {
 };
 
 const actions = {
-    [USER_REQUEST](ctx) {
-        ctx.commit(USER_REQUEST);
-        let user = {};
-        return Vue.axios
-            .get('/user/profile')
-            .then(res => {
-                return res.data.payload;
-            });
+    [USER_REQUEST]() {
+        return Vue.axios.get('/user/profile');
     },
 };
 

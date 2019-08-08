@@ -95,7 +95,7 @@ class Field
     {
         return [
             'name'    => $this->name,
-            'value'   => $this->value,
+//            'value'   => $this->value,
             'isValid' => $this->valid,
             'message' => $this->message,
         ];

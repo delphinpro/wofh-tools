@@ -5,7 +5,7 @@
  * licensed under the MIT license
  */
 
-import Statistic from '@/views/Statistic';
+import Statistic from '@/views/StatisticView';
 
 
 export const statRoutes = [

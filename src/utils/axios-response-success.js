@@ -18,6 +18,8 @@ export default function responseSuccess(response) {
             });
         }
 
+        return response.data.payload;
+
     } else {
 
         Vue.$toast.warn({

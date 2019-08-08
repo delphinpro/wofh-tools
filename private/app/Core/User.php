@@ -3,10 +3,6 @@
 namespace WofhTools\Core;
 
 
-//use Illuminate\Database\Capsule;
-use Illuminate\Database\Eloquent\Model as EloquentModel;
-
-
 /**
  * Class User
  *
@@ -15,21 +11,21 @@ use Illuminate\Database\Eloquent\Model as EloquentModel;
  * @license     licensed under the MIT license
  * @package     WofhTools\Core
  *
- * @property int $id
- * @property string $username
- * @property string $email
- * @property string $password
+ * @property int                        $id
+ * @property string                     $username
+ * @property string                     $email
+ * @property string                     $password
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
- * @property int $sex
- * @property int $status
- * @property int $lang
- * @property int $group
- * @property string $avatar
- * @property string $reset_hash
- * @property int $verified
+ * @property int                        $sex
+ * @property int                        $status
+ * @property int                        $lang
+ * @property int                        $group
+ * @property string                     $avatar
+ * @property string                     $reset_hash
+ * @property int                        $verified
  */
-class User extends EloquentModel
+class User extends \Illuminate\Database\Eloquent\Model
 {
     /**
      * The table associated with the model.

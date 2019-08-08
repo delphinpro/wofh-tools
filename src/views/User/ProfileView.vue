@@ -58,7 +58,7 @@ export default {
 </script>
 
 <template>
-    <div class="container">
+    <div class="container pb-2">
         <PageHeader
             title="Ваш профиль"
             :desc="pageDescription"

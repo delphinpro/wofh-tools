@@ -59,14 +59,11 @@ final class UserController extends BaseController
 
     public function doLogin(Request $request, Response $response, $args)
     {
-        $this->push('token', '');
-        $this->push('form', []);
-        $this->push('post', $request->getParsedBody());
+        $this->push('token', null);
 
         $status = true;
         $message = '';
 
-        $this->bootEloquent();
         $form = new Form($request);
 
         $form->addField(new Field('username'))
@@ -76,8 +73,8 @@ final class UserController extends BaseController
             ->assert(Assert::notEmpty('Это обязательное поле'));
 
         $form->validate();
+        $this->push('validation', $form->toArray());
 
-        $users = null;
         if ($form->isValid()) {
 
             $username = $form->getField('username')->getValue();
@@ -88,8 +85,6 @@ final class UserController extends BaseController
                 ->orWhere('email', '=', $username)
                 ->first();
 
-            $this->push('user', $user);
-
             if ($user) {
 
                 if (Password::verify($password, $user->password)) {
@@ -99,6 +94,7 @@ final class UserController extends BaseController
                     }
 
                     $this->push('token', $this->makeJWT($user));
+                    $message = 'You are logged in.';
                 }
 
             } else {
@@ -140,13 +136,9 @@ final class UserController extends BaseController
 
         $user->save();
 
-        $state = [
-            'token' => $token,
-            'args'  => $args,
-            'user'  => $request->getParsedBody(),
-        ];
+        $message = 'Profile updated.';
 
-        return $this->sendRequest($request, $response, $state);
+        return $this->sendRequest($request, $response, [], true, $message);
     }
 
 

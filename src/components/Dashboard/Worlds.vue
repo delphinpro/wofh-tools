@@ -38,13 +38,13 @@ export default {
 
     methods: {
         async listWorlds() {
-            let response = await this.axios.get('/wofh/worlds');
-            this.worlds = [...response.data.payload.worlds];
+            let { worlds } = await this.axios.get('/wofh/worlds');
+            this.worlds = worlds;
         },
 
         async checkWorlds() {
-            let response = await this.axios.post('/dashboard/worlds/check');
-            this.worlds = [...response.data.payload.worlds];
+            let { worlds } = await this.axios.post('/dashboard/worlds/check');
+            this.worlds = worlds;
         },
     },
 };

@@ -52,10 +52,10 @@ const actions = {
         return Vue.axios
             .post('/login', user)
             .then(res => {
-                if (res.data.payload && res.data.payload.token) {
-                    ctx.commit(AUTH_SUCCESS, { token: res.data.payload.token });
+                if (res && res.token) {
+                    ctx.commit(AUTH_SUCCESS, { token: res.token });
                 }
-                return res.data;
+                return res;
             })
             .catch(err => console.log(err));
     },

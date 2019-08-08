@@ -56,11 +56,9 @@ final class DashboardController extends BaseController
 
         }
 
-        $worlds = Worlds::getAll();
+        $this->push('worlds', Worlds::getAll());
 
-        return $this->sendRequest($request, $response, [
-            'worlds' => $worlds,
-        ], $checkStatus, $message);
+        return $this->sendRequest($request, $response, [], $checkStatus, $message);
     }
 
 

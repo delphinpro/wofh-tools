@@ -14,6 +14,7 @@ use WofhTools\Controllers\HomeController;
 use WofhTools\Controllers\UserController;
 use WofhTools\Controllers\WofhController;
 use WofhTools\Controllers\DashboardController;
+use WofhTools\Controllers\StatisticController;
 
 
 $app->get('/', HomeController::class.':dispatch');
@@ -22,7 +23,7 @@ $app->get('/login', UserController::class.':dispatch');
 
 
 $app->group('/stat', function () use ($app) {
-    $app->get('', AccountsController::class.':dispatch');
+    $app->get('', StatisticController::class.':dispatch');
 });
 
 
@@ -67,7 +68,7 @@ $app->group('/api', function () use ($app) {
     });
 
     $app->group('/stat', function () use ($app) {
-        $app->get('', AccountsController::class.':dispatch');
+        $app->get('', StatisticController::class.':dispatch');
     });
 
     $app->get('/test', DashboardController::class.':test');

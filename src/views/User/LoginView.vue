@@ -22,20 +22,34 @@ export default {
 
         token: null,
         form: null,
+
         post: null,
         user: null,
     }),
 
     methods: {
 
-        login() {
+        async login() {
             let { username, password } = this;
             this.$toast.removeAll();
-            this.$store.dispatch(AUTH_REQUEST, { username, password }).then(res => {
-                if (res.status) {
-                    this.$router.push({ name: 'profile' });
-                }
-            });
+            this.form = null;
+            let { token, validation } = await this.$store.dispatch(AUTH_REQUEST, { username, password });
+            if (validation) this.form = validation.fields;
+            if (token) this.$router.push({ name: 'profile' });
+        },
+
+        fieldHelp(name) {
+            if (this.form && this.form[name] && !this.form[name]['isValid'] && this.form[name]['message']) {
+                return this.form[name]['message'];
+            }
+            return null;
+        },
+
+        fieldStatus(name) {
+            if (this.form && this.form[name] && !this.form[name]['isValid']) {
+                return 'danger';
+            }
+            return null;
         },
 
     },
@@ -45,7 +59,6 @@ export default {
 <template>
     <div class="container page-center">
         <div class="col-lg-5 no-gutter">
-
             <Box type="info" title="Вход в личный профиль" icon="lock">
                 <form class="login" @submit.prevent="login">
                     <Inputbox
@@ -55,6 +68,8 @@ export default {
                         placeholder="E-mail"
                         addon-icon="envelope"
                         addon-position="end"
+                        :help="fieldHelp('username')"
+                        :status="fieldStatus('username')"
                         v-model="username"
                     />
                     <Inputbox
@@ -64,6 +79,8 @@ export default {
                         placeholder="Password"
                         addon-icon="key"
                         addon-position="end"
+                        :help="fieldHelp('password')"
+                        :status="fieldStatus('password')"
                         v-model="password"
                     />
                     <div class="form-group">
