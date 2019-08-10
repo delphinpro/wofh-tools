@@ -7,7 +7,7 @@
 
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from '@/views/Home';
+import HomeView from '@/views/HomeView';
 import { userRoutes } from '@/router/routes-user';
 import { dashboardRoutes } from '@/router/routes-dashboard';
 import { statRoutes } from '@/router/routes-stat';
@@ -28,7 +28,7 @@ export function createRouter() {
             {
                 path: '/',
                 name: 'home',
-                component: Home,
+                component: HomeView,
             },
         ],
     });

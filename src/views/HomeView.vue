@@ -1,6 +1,6 @@
 <script>/*!
  * WofhTools
- * View: Home.vue
+ * View: HomeView.vue
  * © 2019 delphinpro <delphinpro@gmail.com>
  * licensed under the MIT license
  */
@@ -39,13 +39,12 @@ export default {
 <template>
     <div class="container pb-2">
         <PageHeader
-            title="WofhTools"
+            title="Действующие миры Путей истории"
             desc=""
             :crumbs="false"
         />
 
         <div v-if="worlds.length">
-            <h2>Действующие миры Путей истории</h2>
             <table class="table">
                 <thead>
                 <tr>
@@ -84,6 +83,6 @@ export default {
                 </tbody>
             </table>
         </div>
-        <Alert title="Нет даннных о действующих мирах" v-else></Alert>
+        <Alert title="Нет данных о действующих мирах" v-else></Alert>
     </div>
 </template>
