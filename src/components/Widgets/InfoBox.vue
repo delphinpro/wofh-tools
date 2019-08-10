@@ -9,18 +9,18 @@ export default {
     name: 'InfoBox',
 
     props: {
-        link: { type: String, default: null },
+        link: { type: [String, Object], default: null },
         theme: { type: String, default: null },
     },
 
     computed: {
-        tag() { return this.link ? 'a' : 'div'; },
+        tag() { return this.link ? 'router-link' : 'div'; },
     },
 };
 </script>
 
 <template>
-    <component class="info-box" :class="theme ? 'info-box_theme_'+theme : ''" :is="tag" :href="link">
+    <component class="info-box" :class="theme ? 'info-box_theme_'+theme : ''" :is="tag" :to="link">
         <div class="info-box__icon">
             <slot name="info"></slot>
         </div>
