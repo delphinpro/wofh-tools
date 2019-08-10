@@ -38,11 +38,7 @@ export default {
 
 <template>
     <div class="container pb-2">
-        <PageHeader
-            title="Действующие миры Путей истории"
-            desc=""
-            :crumbs="false"
-        />
+        <PageHeader title="Действующие миры Путей истории"/>
 
         <div v-if="worlds.length">
             <table class="table">

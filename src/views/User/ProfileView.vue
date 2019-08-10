@@ -60,9 +60,7 @@ export default {
 <template>
     <div class="container pb-2">
         <PageHeader
-            title="Ваш профиль"
-            :desc="pageDescription"
-            :crumbs="false"
+            :subtitle="pageDescription"
         />
 
         <div class="row" v-if="user.id">

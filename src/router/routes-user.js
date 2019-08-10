@@ -24,5 +24,9 @@ export const userRoutes = [
         name: 'profile',
         component: ProfileView,
         beforeEnter: requireAuthenticated,
+        meta: {
+            crumbsText: 'Ваш профиль',
+            pageTitle: 'Ваш профиль',
+        },
     },
 ];

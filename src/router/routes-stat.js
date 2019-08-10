@@ -5,13 +5,16 @@
  * licensed under the MIT license
  */
 
-import Statistic from '@/views/StatisticView';
+import StatisticView from '@/views/StatisticView';
 
 
 export const statRoutes = [
     {
         path: '/stat',
         name: 'stat',
-        component: Statistic,
+        component: StatisticView,
+        meta: {
+            crumbsText: 'Статистика',
+        },
     },
 ];

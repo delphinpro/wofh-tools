@@ -8,6 +8,7 @@
 import Vue from 'vue';
 import { mergeState } from '@/utils/mergeState';
 import { dateFormat } from '@/utils/date';
+import { ucFirst } from '@/utils';
 
 
 export const WORLDS_LIST = 'WORLDS_LIST';
@@ -27,6 +28,13 @@ const mutations = {
 };
 
 const actions = {
+    /**
+     * Получает список миров с сервера
+     *
+     * @param commit
+     * @param data
+     * @returns {Promise<void>}
+     */
     async [WORLDS_LIST]({ commit }, data) {
         let force = data && data.force;
         if (state.worlds.length && !force) return;
@@ -36,7 +44,7 @@ const actions = {
         for (let i in worlds) {
             if (!worlds.hasOwnProperty(i)) continue;
             let sign = worlds[i].sign;
-            worlds[i].signU = !sign ? sign : sign[0].toUpperCase() + sign.slice(1);
+            worlds[i].signU = ucFirst(sign);
             worlds[i].fmtStarted = dateFormat(worlds[i].started);
             worlds[i].fmtLoadedStat = dateFormat(worlds[i].time_of_loaded_stat);
             worlds[i].fmtUpdatedStat = dateFormat(worlds[i].time_of_updated_stat);

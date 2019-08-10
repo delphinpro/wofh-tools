@@ -23,11 +23,7 @@ export default {
             <DashboardSidebar/>
         </div>
         <div class="dashboard-layout__main">
-            <PageHeader
-                title="Dashboard"
-                desc=""
-                :crumbs="true"
-            />
+            <PageHeader/>
             <router-view/>
         </div>
     </div>

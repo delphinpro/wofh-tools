@@ -37,5 +37,8 @@ export default {
 </script>
 
 <template>
-    <component :is="view"></component>
+    <div>
+        <h1>{{view}}</h1>
+        <component :is="view"></component>
+    </div>
 </template>

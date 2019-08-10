@@ -12,6 +12,8 @@
   @include font(12px, 1);
 
   > li {
+    display: flex;
+
     + li:before {
       padding: 0 5px;
       content: "#{$nbsp}»#{$nbsp}";
