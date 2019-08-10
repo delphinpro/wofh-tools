@@ -1,6 +1,6 @@
 /*!
  * WofhTools
- * File: store/modules/stat.js
+ * File: store/modules/store-stat.js
  * © 2019 delphinpro <delphinpro@gmail.com>
  * licensed under the MIT license
  */

@@ -1,6 +1,6 @@
 /*!
  * WofhTools
- * File: store/modules/auth.js
+ * File: store/modules/store-auth.js
  * © 2019 delphinpro <delphinpro@gmail.com>
  * licensed under the MIT license
  */

@@ -7,9 +7,9 @@
 
 import Vue from 'vue';
 import Vuex from 'vuex';
-import auth from './modules/auth';
-import user from './modules/user';
-import stat from './modules/stat';
+import auth from './modules/store-auth';
+import user from './modules/store-user';
+import stat from './modules/store-stat';
 import { LOADING_DOWN, LOADING_UP } from '@/store/actions';
 import { mergeState } from '@/utils/mergeState';
 
