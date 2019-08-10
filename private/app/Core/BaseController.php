@@ -116,9 +116,12 @@ class BaseController
 
 
     /**
+     * Send request
+     *
+     * @noinspection PhpDocMissingThrowsInspection
+     *
      * @param Request  $request
      * @param Response $response
-     * @param array    $state
      * @param bool     $status
      * @param string   $message
      *
@@ -127,7 +130,6 @@ class BaseController
     protected function sendRequest(
         Request $request,
         Response $response,
-        array $state = [],
         bool $status = true,
         string $message = ''
     ): Response {
@@ -138,6 +140,7 @@ class BaseController
                 'payload' => $this->states['default'],
             ]);
         } else {
+            /** @noinspection PhpUnhandledExceptionInspection */
             $body = $this->fetchClientApp($request->getUri(), $this->states);
             $response->write($body);
         }

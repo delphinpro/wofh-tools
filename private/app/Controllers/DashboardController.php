@@ -27,11 +27,10 @@ final class DashboardController extends BaseController
         $this->bootEloquent();
         $worlds = Worlds::getAll();
 
+        $this->push('worlds', $worlds);
+
 //        return $response->withStatus(401, 'Unauthorized');
-        return $this->sendRequest($request, $response, [
-            'worlds' => $worlds,
-            'token'  => $token,
-        ]);
+        return $this->sendRequest($request, $response);
     }
 
 
@@ -58,7 +57,7 @@ final class DashboardController extends BaseController
 
         $this->push('worlds', Worlds::getAll());
 
-        return $this->sendRequest($request, $response, [], $checkStatus, $message);
+        return $this->sendRequest($request, $response, $checkStatus, $message);
     }
 
 

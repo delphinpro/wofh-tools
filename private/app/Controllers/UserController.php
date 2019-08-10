@@ -26,9 +26,7 @@ final class UserController extends BaseController
 {
     public function dispatch(Request $request, Response $response, $args)
     {
-        return $this->sendRequest($request, $response, [
-            'user' => 123,
-        ]);
+        return $this->sendRequest($request, $response);
     }
 
 
@@ -105,7 +103,7 @@ final class UserController extends BaseController
             }
         }
 
-        return $this->sendRequest($request, $response, [], $status, $message);
+        return $this->sendRequest($request, $response, $status, $message);
     }
 
 
@@ -120,7 +118,7 @@ final class UserController extends BaseController
 
         if (!empty($post['password'])) {
             if ($post['password'] !== $post['password2']) {
-                return $this->sendRequest($request, $response, [], false, 'Пароли не совпали');
+                return $this->sendRequest($request, $response, false, 'Пароли не совпали');
             }
 
             $user->password = Password::hash($post['password'], PASSWORD_DEFAULT);
@@ -138,7 +136,7 @@ final class UserController extends BaseController
 
         $message = 'Profile updated.';
 
-        return $this->sendRequest($request, $response, [], true, $message);
+        return $this->sendRequest($request, $response,true, $message);
     }
 
 
