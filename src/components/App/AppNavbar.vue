@@ -6,7 +6,7 @@
  */
 
 import { mapGetters, mapState } from 'vuex';
-import { AUTH_LOGOUT } from '@/store/actions/auth';
+import { AUTH_LOGOUT } from '@/store/modules/store-auth';
 import AppLogo from './AppLogo';
 import NavMenu from './NavMenu';
 import UserMenu from './UserMenu';

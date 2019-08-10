@@ -5,7 +5,7 @@
  * licensed under the MIT license
  */
 
-import { USER_REQUEST } from '@/store/actions/user';
+import { USER_REQUEST } from '@/store/modules/store-user';
 
 
 export default {

@@ -6,10 +6,11 @@
  */
 
 import Vue from 'vue';
-import { WORLDS_LIST } from '@/store/actions';
 import { mergeState } from '@/utils/mergeState';
 import { dateFormat } from '@/utils/date';
 
+
+export const WORLDS_LIST = 'WORLDS_LIST';
 
 const state = mergeState({
     worlds: [],

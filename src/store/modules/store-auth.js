@@ -6,10 +6,13 @@
  */
 
 import Vue from 'vue';
-import { AUTH_ERROR, AUTH_LOGOUT, AUTH_REQUEST, AUTH_SUCCESS } from '../actions/auth';
 import { HTTP_HEADER_AUTHORIZATION, LS_KEY_TOKEN } from '@/utils/constants';
 import { mergeState } from '@/utils/mergeState';
 
+export const AUTH_REQUEST = 'AUTH_REQUEST';
+export const AUTH_SUCCESS = 'AUTH_SUCCESS';
+export const AUTH_ERROR = 'AUTH_ERROR';
+export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
 const state = mergeState({
     token: null,

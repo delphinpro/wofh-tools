@@ -10,13 +10,15 @@ import Vuex from 'vuex';
 import auth from './modules/store-auth';
 import user from './modules/store-user';
 import stat from './modules/store-stat';
-import { LOADING_DOWN, LOADING_UP } from '@/store/actions';
 import { mergeState } from '@/utils/mergeState';
 
 
 Vue.use(Vuex);
 
 const strict = process.env.NODE_ENV !== 'production';
+
+export const LOADING_UP = 'LOADING_UP';
+export const LOADING_DOWN = 'LOADING_DOWN';
 
 let state = mergeState({
     projectName: 'Wofh Tools',

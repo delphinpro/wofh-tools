@@ -5,7 +5,7 @@
  * licensed under the MIT license
  */
 
-import { AUTH_REQUEST } from '@/store/actions/auth';
+import { AUTH_REQUEST } from '@/store/modules/store-auth';
 import Box from '@/components/Widgets/Box';
 
 

@@ -6,10 +6,13 @@
  */
 
 import Vue from 'vue';
-import { USER_ERROR, USER_REQUEST, USER_SUCCESS } from '@/store/actions/user';
-import { AUTH_LOGOUT } from '@/store/actions/auth';
+import { AUTH_LOGOUT } from '@/store/modules/store-auth';
 import { mergeState } from '@/utils/mergeState';
 
+
+export const USER_REQUEST = 'USER_REQUEST';
+export const USER_SUCCESS = 'USER_SUCCESS';
+export const USER_ERROR = 'USER_ERROR';
 
 const state = mergeState({
     profile: {},

@@ -5,7 +5,7 @@
  * licensed under the MIT license
  */
 
-import { AUTH_LOGOUT } from '@/store/actions/auth';
+import { AUTH_LOGOUT } from '@/store/modules/store-auth';
 import { mapGetters, mapState } from 'vuex';
 
 

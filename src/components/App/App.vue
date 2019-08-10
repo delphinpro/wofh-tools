@@ -9,8 +9,8 @@ import AppNavbar from '@/components/App/AppNavbar';
 import AppFooter from '@/components/App/AppFooter';
 import Loading from '@/components/Widgets/Loading';
 import { mapGetters } from 'vuex';
-import { LOADING_DOWN, LOADING_UP } from '@/store/actions';
-import { AUTH_LOGOUT } from '@/store/actions/auth';
+import { LOADING_DOWN, LOADING_UP } from '@/store';
+import { AUTH_LOGOUT } from '@/store/modules/store-auth';
 
 
 export default {

@@ -7,7 +7,7 @@
 
 import { mapGetters } from 'vuex';
 import InfoBox from '@/components/Widgets/InfoBox';
-import { WORLDS_LIST } from '@/store/actions';
+import { WORLDS_LIST } from '@/store/modules/store-stat';
 import { cbSortWorldsByStarted } from '@/utils';
 
 
