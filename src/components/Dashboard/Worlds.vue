@@ -5,12 +5,14 @@
  * licensed under the MIT license
  */
 
+import { WORLDS_LIST } from '@/store/modules/store-stat';
+import { mapGetters } from 'vuex';
+
+
 export default {
     name: 'Worlds',
 
     data: () => ({
-        worlds: [],
-
         tabs: {
             0: 'All',
             10: 'RU',
@@ -24,8 +26,12 @@ export default {
     }),
 
     computed: {
+        ...mapGetters([
+            'allWorlds'
+        ]),
+
         displayWorlds() {
-            return this.worlds.filter(item => {
+            return this.allWorlds.filter(item => {
                 if (this.activeTabIndex === 0) return true;
                 return Math.floor(item.id / 1000) === this.activeTabIndex;
             });
@@ -37,14 +43,13 @@ export default {
     },
 
     methods: {
-        async listWorlds() {
-            let { worlds } = await this.axios.get('/wofh/worlds');
-            this.worlds = worlds;
+        listWorlds() {
+            this.$store.dispatch(WORLDS_LIST, { force: true });
         },
 
         async checkWorlds() {
-            let { worlds } = await this.axios.post('/dashboard/worlds/check');
-            this.worlds = worlds;
+            await this.axios.post('/dashboard/worlds/check');
+            this.listWorlds();
         },
     },
 };
@@ -63,7 +68,7 @@ export default {
                         Update
                     </button>
                 </div>
-                <div class="control-group" v-if="worlds.length">
+                <div class="control-group" v-if="allWorlds.length">
                     <div
                         class="btn"
                         :class="{btn_primary: (+index)===activeTabIndex}"
@@ -106,8 +111,8 @@ export default {
                 <td class="text-center">
                     <Checkbox v-model="world.hidden" :theme="world.hidden?'danger':null"/>
                 </td>
-                <td class="text-right"><samp>{{world.time_of_loaded_stat}}</samp></td>
-                <td class="text-right"><samp>{{world.time_of_updated_stat}}</samp></td>
+                <td class="text-right"><samp>{{world.fmtLoadedStat}}</samp></td>
+                <td class="text-right"><samp>{{world.fmtUpdatedStat}}</samp></td>
             </tr>
             </tbody>
         </table>
