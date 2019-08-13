@@ -28,7 +28,7 @@ export default {
             <div class="info-box__content">
                 <slot name="default"></slot>
             </div>
-            <div class="info-box__footer">
+            <div class="info-box__footer" v-if="$slots.footer">
                 <slot name="footer"></slot>
             </div>
         </div>
