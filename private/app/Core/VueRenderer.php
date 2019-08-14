@@ -62,11 +62,9 @@ class VueRenderer
     private function setupVueRenderer()
     {
         $prepareCode = 'var process={env:{VUE_ENV:"server",NODE_ENV:"production"}};this.global={process:process};';
-        $vueSource = file_get_contents($this->nodePath.'vue/dist/vue.js');
         $rendererSource = file_get_contents($this->nodePath.'vue-server-renderer/basic.js');
 
         $this->v8->executeString($prepareCode);
-        $this->v8->executeString($vueSource);
         $this->v8->executeString($rendererSource);
     }
 }
