@@ -321,7 +321,11 @@ class Statistic extends DolphinContainer
 
         /** @var Worlds $world */
         foreach ($worlds as $world) {
-            if (!$world->working) {
+            if (!$world->working &&
+                !$world->time_of_loaded_stat &&
+                !$world->time_of_updated_stat &&
+                !$world->statistic
+            ) {
                 continue;
             }
 
