@@ -40,19 +40,36 @@ class Statistic extends DolphinContainer
     private $printLength = 26;
 
 
+    /**
+     * Statistic constructor.
+     *
+     * @param \Psr\Container\ContainerInterface $container
+     *
+     * @throws \Exception
+     */
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);
 
         $this->useZip = false;
+        $this->oneWorld = false;
+        $this->limit = false;
 
-        $this->oneWorld = array_key_exists('world', $this->params)
-            ? strtolower($this->params['world'])
-            : false;
+        if (array_key_exists('world', $this->params)) {
+            $this->oneWorld = strtolower(trim($this->params['world']));
+            if (!$this->oneWorld
+                or !$this->wofh->signToId((string)$this->oneWorld)
+            ) {
+                throw new \Exception('Invalid parameter --world');
+            }
+        }
 
-        $this->limit = array_key_exists('limit', $this->params)
-            ? (int)$this->params['limit']
-            : false;
+        if (array_key_exists('limit', $this->params)) {
+            $this->limit = (int)$this->params['limit'];
+            if (!$this->limit or $this->limit < 0) {
+                throw new \Exception('Invalid parameter --limit');
+            }
+        }
     }
 
 

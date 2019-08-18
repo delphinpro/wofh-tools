@@ -38,6 +38,13 @@ class Stat extends Command implements CommandInterface
     private $statistic;
 
 
+    /**
+     * Stat constructor.
+     *
+     * @param \Psr\Container\ContainerInterface $container
+     *
+     * @throws \Exception
+     */
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);
