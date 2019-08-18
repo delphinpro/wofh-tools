@@ -97,9 +97,71 @@ class Dolphin extends DolphinContainer
 
         } catch (\Exception $e) {
 
-            $this->console->error($e->getMessage());
-            $this->console->error($e->getTraceAsString());
+            $ARG_STRING_MAX_LENGTH = 20;
 
+            $this->console->lineDouble(Console::LINE_WIDTH, Console::RED);
+            $this->console->error('Exception: \\'.get_class($e));
+            $this->console->error('Message  : '.$e->getMessage());
+//            $this->console->error(str_replace(DIR_ROOT, '', $e->getTraceAsString()));
+            foreach ($e->getTrace() as $index => $item) {
+                $this->console->write('#'.$index, Console::BLACK, false);
+                if (array_key_exists('file', $item)) {
+                    $file = str_replace([DIR_ROOT, '\\'], ['', '/'], $item['file']);
+                    $this->console->write(' '.$file.'', Console::BLUE, false);
+                } else {
+                    $this->console->write(' [internal function]', Console::BLUE, false);
+                }
+                if (array_key_exists('line', $item)) {
+                    $this->console->write('('.$item['line'].')', Console::GREEN, false);
+                }
+                $this->console->write(':', Console::BLUE, false);
+                $this->console->write('');
+                $this->console->write('    ', null, false);
+
+                if (array_key_exists('class', $item)) {
+                    $this->console->write($item['class'], null, false);
+                }
+                if (array_key_exists('type', $item)) {
+                    $this->console->write($item['type'], Console::YELLOW, false);
+                }
+                if (array_key_exists('function', $item)) {
+                    $this->console->write($item['function'].'(', Console::CYAN, false);
+
+                    if (array_key_exists('args', $item)) {
+                        foreach ($item['args'] as $i => $arg) {
+                            if ($i > 0) {
+                                $this->console->write(', ', null, false);
+                            }
+                            switch (true) {
+                                case is_string($arg):
+                                    $arg = str_replace(DIR_ROOT, '…', $arg);
+                                    if (mb_strlen($arg) > $ARG_STRING_MAX_LENGTH) {
+                                        $arg = mb_substr($arg, 0, $ARG_STRING_MAX_LENGTH).'…';
+                                    }
+                                    $this->console->write('\''.$arg.'\'', Console::YELLOW, false);
+                                    break;
+                                case is_null($arg):
+                                    $this->console->write('NULL', Console::YELLOW, false);
+                                    break;
+                                case is_object($arg):
+                                    $this->console->write('<'.get_class($arg).'>', Console::YELLOW, false);
+                                    break;
+                                case is_bool($arg):
+                                    $this->console->write($arg ? 'TRUE' : 'FALSE', Console::YELLOW, false);
+                                    break;
+                                case is_array($arg):
+                                    $this->console->write('['.$arg.']', Console::YELLOW, false);
+                                    break;
+                                default:
+                                    $this->console->write(''.$arg.'', Console::YELLOW, false);
+                            }
+                        }
+                    }
+                    $this->console->write(')', Console::CYAN, false);
+                }
+                $this->console->write('');
+            }
+            $this->console->lineDouble(Console::LINE_WIDTH, Console::RED);
         }
     }
 
