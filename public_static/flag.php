@@ -7,63 +7,23 @@
  * @license     licensed under the MIT license
  */
 
+use WofhTools\Tools\Wofh;
+use WofhTools\Helpers\Http;
+use WofhTools\Helpers\Json;
+
+
 defined('DIR_ROOT') or define('DIR_ROOT', realpath('../'));
 
-function getRemoteFile($url, $referrer)
-{
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_FAILONERROR, true);
-    curl_setopt($ch, CURLOPT_COOKIEFILE, '');
-    curl_setopt($ch, CURLOPT_REFERER, $referrer);
-    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0');
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
-    $data = curl_exec($ch);
-    curl_close($ch);
+require_once '../vendor/autoload.php';
+require_once '../private/bootstrap/global_functions.php';
 
-    return $data;
-}
-
-
-function router($_uri)
-{
-    $processor = new Processor();
-     list($uri, $qs) = explode('?', trim($_uri, '/'), 2);
-    $segments = explode('/', $uri);
-
-    if ($qs === 'test') {
-        $processor->debug = true;
-    }
-
-    if (count($segments) !== 3 or $segments[0] !== 'flags') {
-        $processor->error('Wrong request');
-    }
-
-    $sign = $segments[1];
-    $flag = $segments[2];
-
-    if (!preg_match('`^(ru|en|de|int)(\d+)([st])*$`Us', $sign, $m)) {
-        $processor->error('Wrong world identifier');
-    }
-
-    if (!preg_match('`^[a-z0-9]+\.gif$`Usi', $flag)) {
-        $processor->error('Wrong flag identifier');
-    }
-
-    $processor->sign = strtolower($sign);
-    $processor->flag = str_replace('.gif', '', $flag);
-    $processor->country = $m[1];
-    $processor->worldNum = (int)$m[2];
-    $processor->worldType = !empty($m[3]) ? $m[3] : '';
-
-    return $processor;
-}
+loadGlobalConfiguration(realpath('../config'));
 
 
 class Processor
 {
     public $sign;
+    public $worldId;
     public $flag;
     public $country;
     public $worldNum;
@@ -72,6 +32,48 @@ class Processor
     public $serverUrl;
     public $debug = false;
 
+    /** @var \WofhTools\Tools\Wofh */
+    private $wofh;
+
+
+    public function __construct()
+    {
+        $this->wofh = new Wofh(new Http(), new Json());
+    }
+
+
+    public function parseUri($_uri)
+    {
+        list($uri, $qs) = explode('?', trim($_uri, '/'), 2);
+        $segments = explode('/', $uri);
+
+        if ($qs === 'test') {
+            $this->debug = true;
+        }
+
+        if (count($segments) !== 3 or $segments[0] !== 'flags') {
+            $this->error('Wrong request');
+        }
+
+        $sign = $segments[1];
+        $flag = $segments[2];
+
+        if (!preg_match('`^(ru|en|de|int)(\d+)([st])*$`Us', $sign, $m)) {
+            $this->error('Wrong world identifier');
+        }
+
+        if (!preg_match('`^[a-z0-9]+\.gif$`Usi', $flag)) {
+            $this->error('Wrong flag identifier');
+        }
+
+        $this->sign = strtolower($sign);
+        $this->flag = str_replace('.gif', '', $flag);
+        $this->country = $m[1];
+        $this->worldNum = (int)$m[2];
+        $this->worldType = !empty($m[3]) ? $m[3] : '';
+        $this->worldId = $this->wofh->signToId($this->sign);
+    }
+
 
     public function error($message = '')
     {
@@ -79,6 +81,7 @@ class Processor
             echo PHP_EOL.'<br>'.'ERROR: '.$message;
             echo PHP_EOL.'<br>'.'<pre>';
             echo print_r(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS), true);
+            echo print_r($this, true);
             echo '</pre>';
         } else {
             $defaultFlagPath = __DIR__.'/defaults/no-flag.png';
@@ -112,6 +115,33 @@ class Processor
     }
 
 
+    public function checkWorld()
+    {
+        try {
+
+            $dsn = ''.env('DB_DRIVER').':dbname='.env('DB_DATABASE').';host='.env('DB_HOST').'';
+            $pdo = new \PDO($dsn, env('DB_USERNAME'), env('DB_PASSWORD'));
+
+            $stmt = $pdo->prepare('SELECT * FROM `wt_worlds` WHERE id = :id');
+            $stmt->execute(['id' => $this->worldId]);
+            $res =$stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+            if (!intval($res['working'])) {
+                $stmt = $pdo->prepare('SELECT id FROM `wt_worlds` WHERE working = 1 AND id < 11000 ORDER BY id DESC LIMIT 1');
+                $stmt->execute();
+                $res =$stmt->fetchAll(\PDO::FETCH_ASSOC);
+            }
+
+            $this->serverUrl = $this->wofh->idToDomain($res[0]['id'], true);
+
+        } catch (PDOException $e) {
+
+            $this->error('Could not connect: '.$e->getMessage());
+
+        }
+    }
+
+
     public function defineServerUrl()
     {
         switch ($this->country) {
@@ -134,9 +164,11 @@ class Processor
 }
 
 
-$processor = router($_SERVER['REQUEST_URI']);
+$processor = new Processor();
+$processor->parseUri($_SERVER['REQUEST_URI']);
 $processor->makeFlagDirectories();
 $processor->defineServerUrl();
+$processor->checkWorld();
 
 $flagFilename = __DIR__.'/flags/'.$processor->sign.'/'.$processor->flag.'.gif';
 

@@ -162,3 +162,19 @@ function GUID()
         .chr(125);// "}"
     return $uuid;
 }
+
+function getRemoteFile($url, $referrer)
+{
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_FAILONERROR, true);
+    curl_setopt($ch, CURLOPT_COOKIEFILE, '');
+    curl_setopt($ch, CURLOPT_REFERER, $referrer);
+    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0');
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+    $data = curl_exec($ch);
+    curl_close($ch);
+
+    return $data;
+}
