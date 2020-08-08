@@ -1,18 +1,32 @@
-# Wofh-Tools.ru
+# Wofh-tools.ru
 
 Repository of wofh-tools.ru
 
-## Project setup (frontend)
+Работает на [Laravel 7](https://laravel.com/docs/7.x) \([Русская документация](https://delphinpro.gitbook.io/laravel-ru/)\)
+
+## Используемые пакеты
+
+Административная панель [laravelrus/sleepingowl](https://sleepingowladmin.ru/#/ru/installation)
+
+## Установка
+
 ```
-npm install
+git clone git@github.com:delphinpro/wofh-tools.git .
+composer install --no-dev
+composer dumpautoload
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+> __Note:__ В development среде устанавливать пакеты без ключа `--no-dev`
 
-### Compiles and minifies for production
+В development среде можно сгенерировать файлы автодополнения для IDE (phpStorm)
 ```
-npm run build
+php artisan ide-helper:generate
+php artisan ide-helper:models
 ```
+https://github.com/barryvdh/laravel-ide-helper/issues/126#issuecomment-328281716
+
+**При генерации PhpDoc для моделей, следует размещать их прямо в файлах моделей
+(делайте это перед коммитом новой или измененной модели).
+Для этого нужно ответить `yes` на вопрос команды.**
+
+
