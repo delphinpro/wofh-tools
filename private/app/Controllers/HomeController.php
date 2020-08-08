@@ -25,7 +25,7 @@ final class HomeController extends BaseController
         $worlds = Worlds::getWorking();
         $r = [];
         foreach ($worlds as $world) {
-            $r[] = ['title'=>$world['title']];
+            $r[] = ['title' => $world['title']];
         }
 
         $this->push('activeWorlds', $r);

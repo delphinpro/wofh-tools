@@ -6,6 +6,7 @@
  */
 
 import StatisticView from '@/views/StatisticView';
+import StatWorldView from '@/views/Stat/StatWorldView';
 
 
 export const statRoutes = [
@@ -16,5 +17,16 @@ export const statRoutes = [
         meta: {
             crumbsText: 'Статистика',
         },
+        children: [
+            {
+                path: ':sign',
+                name: 'statWorld',
+                component: StatWorldView,
+                meta: {
+                    crumbsGetter: 'currentWorld',
+                    crumbsText: world => world.signU,
+                },
+            },
+        ],
     },
 ];

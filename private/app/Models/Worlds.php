@@ -171,6 +171,20 @@ class Worlds extends \Illuminate\Database\Eloquent\Model
     }
 
 
+    public function getAgeAsNumber()
+    {
+        $ageInterval = $this->getAge();
+
+        if (!$ageInterval) {
+            return 0;
+        }
+
+        $totalDays = (int)$ageInterval->totalDays;
+
+        return $totalDays;
+    }
+
+
     /**
      * @param $sign
      *
@@ -216,6 +230,7 @@ class Worlds extends \Illuminate\Database\Eloquent\Model
             $this->dateFieldsAsTimestamps(),
             [
                 'fmtAge' => $this->getAgeAsString(),
+                'nAge'   => $this->getAgeAsNumber(),
             ]
         );
     }

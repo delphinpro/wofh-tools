@@ -17,7 +17,7 @@ use Dolphin\Commands\Stat\DataStorage;
 trait DataNormalizer
 {
 
-    private function normalizeTowns()
+    private function normalizeTowns(string $timePoint)
     {
         foreach ($this->raw['towns'] as $id => $town) {
 
@@ -31,22 +31,23 @@ trait DataNormalizer
                 ? $town[DataStorage::TOWN_KEY_WONDER]
                 : 0;
 
-            $this->towns[$id] = [
+            $this->{$timePoint}['towns'][$id] = [
                 DataStorage::TOWN_KEY_TITLE        => $town[DataStorage::TOWN_KEY_TITLE],
                 DataStorage::TOWN_KEY_ACCOUNT_ID   => $town[DataStorage::TOWN_KEY_ACCOUNT_ID],
                 DataStorage::TOWN_KEY_POP          => $town[DataStorage::TOWN_KEY_POP],
                 DataStorage::TOWN_KEY_WONDER       => $wonder,
                 DataStorage::TOWN_KEY_WONDER_ID    => $wonder % 1000,
                 DataStorage::TOWN_KEY_WONDER_LEVEL => (int)floor($wonder / 1000),
+                DataStorage::TOWN_KEY_COUNTRY_ID   => 0,
             ];
         }
     }
 
 
-    private function normalizeAccounts()
+    private function normalizeAccounts(string $timePoint)
     {
         foreach ($this->raw['accounts'] as $id => $account) {
-            $this->accounts[$id] = [
+            $this->{$timePoint}['accounts'][$id] = [
                 DataStorage::ACCOUNT_KEY_TITLE             => $account[DataStorage::ACCOUNT_KEY_TITLE],
                 DataStorage::ACCOUNT_KEY_RACE              => $account[DataStorage::ACCOUNT_KEY_RACE],
                 DataStorage::ACCOUNT_KEY_SEX               => $account[DataStorage::ACCOUNT_KEY_SEX],
@@ -63,7 +64,7 @@ trait DataNormalizer
     }
 
 
-    private function normalizeCountries()
+    private function normalizeCountries(string $timePoint)
     {
         if (empty($this->raw['countries'])) {
             $this->raw['countries'] = [];
@@ -74,7 +75,7 @@ trait DataNormalizer
                 ? $country[DataStorage::COUNTRY_KEY_DIPLOMACY]
                 : [];
 
-            $this->countries[$id] = [
+            $this->{$timePoint}['countries'][$id] = [
                 DataStorage::COUNTRY_KEY_TITLE      => $country[DataStorage::COUNTRY_KEY_TITLE],
                 DataStorage::COUNTRY_KEY_FLAG       => $country[DataStorage::COUNTRY_KEY_FLAG],
                 DataStorage::COUNTRY_KEY_DIPLOMACY  => $diplomacy,

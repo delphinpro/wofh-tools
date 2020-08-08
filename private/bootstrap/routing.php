@@ -69,6 +69,7 @@ $app->group('/api', function () use ($app) {
 
     $app->group('/stat', function () use ($app) {
         $app->get('', StatisticController::class.':dispatch');
+        $app->get('/{sign:(?:ru|en|de|int)(?:\d+)(?:s|t)*}', StatisticController::class.':common');
     });
 
     $app->get('/test', DashboardController::class.':test');

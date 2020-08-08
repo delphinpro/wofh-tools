@@ -127,5 +127,3 @@ export default {
         >Check worlds</button>
     </div>
 </template>
-
-<style lang="scss"></style>

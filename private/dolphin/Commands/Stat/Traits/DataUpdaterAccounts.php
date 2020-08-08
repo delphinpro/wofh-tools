@@ -53,7 +53,7 @@ trait DataUpdaterAccounts
         $first = true;
 
         foreach ($this->insertAccountIds as $id) {
-            $account = $this->accounts[$id];
+            $account = $this->curr['accounts'][$id];
             if (!$first) {
                 $sql .= ',';
             } else {
@@ -76,10 +76,25 @@ trait DataUpdaterAccounts
     }
 
 
+    private function updateAccountsDeleted()
+    {
+        if (empty($this->deleteAccountIds)) {
+            return;
+        }
+
+        // UPDATE TABLE tbl_name SET `lost` = 1 WHERE `id` IN (a, b, c);
+        $sql = "UPDATE `z_{$this->world->sign}_accounts`";
+        $sql .= " SET `active` = 0";
+        $sql .= " WHERE `accountId` IN (".join(',', $this->deleteAccountIds).")";
+
+        $this->db->statement($sql);
+    }
+
+
     private function insertAccountsStatistic()
     {
         $columns = [
-            'stateDate',
+            'stateAt',
             'accountId',
             'countryId',
             'role',
@@ -108,7 +123,7 @@ trait DataUpdaterAccounts
         $pdo = $this->db->getPdo();
         $first = true;
 
-        foreach ($this->accounts as $id => $account) {
+        foreach ($this->curr['accounts'] as $id => $account) {
             if (!$first) {
                 $sql .= ',';
             } else {
@@ -126,12 +141,12 @@ trait DataUpdaterAccounts
             $sql .= (intval($account[DataStorage::ACCOUNT_KEY_RATING_PRODUCTION])).",";
             $sql .= (intval($account[DataStorage::ACCOUNT_KEY_RATING_ATTACK])).",";
             $sql .= (intval($account[DataStorage::ACCOUNT_KEY_RATING_DEFENSE])).",";
-            $sql .= "0,";
-            $sql .= "0,";
-            $sql .= "0,";
-            $sql .= "0,";
-            $sql .= "0,";
-            $sql .= "0";
+            $sql .= (intval($account[DataStorage::ACCOUNT_KEY_DELTA_POP])).",";
+            $sql .= (intval($account[DataStorage::ACCOUNT_KEY_DELTA_TOWNS])).",";
+            $sql .= (intval($account[DataStorage::ACCOUNT_KEY_DELTA_SCIENCE])).",";
+            $sql .= (intval($account[DataStorage::ACCOUNT_KEY_DELTA_PRODUCTION])).",";
+            $sql .= (intval($account[DataStorage::ACCOUNT_KEY_DELTA_ATTACK])).",";
+            $sql .= (intval($account[DataStorage::ACCOUNT_KEY_DELTA_DEFENSE]))."";
             $sql .= ")";
         }
 
@@ -142,6 +157,7 @@ trait DataUpdaterAccounts
     private function updateAccounts()
     {
         $this->insertAccounts();
+        $this->updateAccountsDeleted();
         $this->insertAccountsStatistic();
     }
 }

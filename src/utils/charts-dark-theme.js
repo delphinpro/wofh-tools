@@ -251,3 +251,5 @@ export const darkTheme = {
     textColor: '#E0E0E0',
     maskColor: 'rgba(255,255,255,0.3)',
 };
+
+export default darkTheme;

@@ -225,8 +225,15 @@ class Statistic extends DolphinContainer
      */
     public function update()
     {
-        $id = $this->wofh->signToId((string)$this->oneWorld);
-        $worlds = Worlds::getWorking($id);
+        $worlds = Worlds::getAll();
+
+
+        if ($this->oneWorld) {
+            $id = $this->wofh->signToId((string)$this->oneWorld);
+            $worlds = array_filter($worlds, function ($world) use ($id) {
+                return $world->id == $id;
+            });
+        }
 
         if ($this->oneWorld && !count($worlds)) {
             throw new \Exception('Invalid parameter --world');
@@ -398,8 +405,9 @@ class Statistic extends DolphinContainer
         $this->console->writeFixedWidth('Last time update ', $fixedWidth);
         $this->console->write($textLastTimeUpdate);
 
-        $dataFiles = $this->getFileNames($realDataPath, $world);
+        list($previousFilename, $dataFiles) = $this->getFileNames($realDataPath, $world);
         // pre($dataFiles);
+        // pre($previousFilename);
 
         $counter = 0;
 
@@ -434,7 +442,8 @@ class Statistic extends DolphinContainer
 
             }
 
-            $updater->update($realDataPath, $dataFile);
+            $updater->update($realDataPath, $dataFile, $previousFilename);
+            $previousFilename = $dataFile;
             unset($updater);
 
             $fixedWidth = 30;
@@ -497,7 +506,7 @@ class Statistic extends DolphinContainer
         $ts = $world->time_of_updated_stat->timestamp;
 
         // Берем только те, которые не внесены в базу
-        $fileNames = array_filter($fileNames, function ($item) use ($ts) {
+        $newFileNames = array_filter($fileNames, function ($item) use ($ts) {
             if (pathinfo($item, PATHINFO_EXTENSION) != 'json') {
                 return false;
             }
@@ -512,8 +521,16 @@ class Statistic extends DolphinContainer
             return true;
         });
 
-        sort($fileNames);
+        $oldFileNames = array_diff($fileNames, $newFileNames);
 
-        return $fileNames;
+        sort($oldFileNames);
+//        pre($oldFileNames);
+
+        $previousFilename = array_pop($oldFileNames);
+//        pre($previousFilename);
+
+        sort($newFileNames);
+
+        return [$previousFilename, $newFileNames];
     }
 }

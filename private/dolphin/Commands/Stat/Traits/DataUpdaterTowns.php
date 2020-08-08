@@ -35,7 +35,7 @@ trait DataUpdaterTowns
             'townTitle',
             'accountId',
             'lost',
-            'destroyed',
+            //            'destroyed',
             'extra',
         ];
 
@@ -51,7 +51,7 @@ trait DataUpdaterTowns
         $first = true;
 
         foreach ($this->insertTownIds as $id) {
-            $town = $this->towns[$id];
+            $town = $this->curr['towns'][$id];
             if (!$first) {
                 $sql .= ',';
             } else {
@@ -63,10 +63,24 @@ trait DataUpdaterTowns
             $sql .= ($pdo->quote($town[DataStorage::TOWN_KEY_TITLE])).",";
             $sql .= (intval($town[DataStorage::TOWN_KEY_ACCOUNT_ID])).",";
             $sql .= "0,";
-            $sql .= "0,";
+//            $sql .= "0,";
             $sql .= "NULL";
             $sql .= ")";
         }
+
+        $this->db->statement($sql);
+    }
+
+    private function updateTownsLost()
+    {
+        if (empty($this->lostTownIds)) {
+            return;
+        }
+
+        // UPDATE TABLE tbl_name SET `lost` = 1 WHERE `id` IN (a, b, c);
+        $sql = "UPDATE `z_{$this->world->sign}_towns`";
+        $sql .= " SET `lost` = 1";
+        $sql .= " WHERE `townId` IN (".join(',', $this->lostTownIds).")";
 
         $this->db->statement($sql);
     }
@@ -75,13 +89,13 @@ trait DataUpdaterTowns
     private function insertTownsStatistic()
     {
         $columns = [
-            'stateDate',
+            'stateAt',
             'townId',
-            'accountId',// TODO Why that here?
+            //            'accountId',// TODO Why that here?
             'pop',
             'wonderId',
             'wonderLevel',
-            'delta',
+            'deltaPop',
         ];
 
 
@@ -95,7 +109,7 @@ trait DataUpdaterTowns
         $pdo = $this->db->getPdo();
         $first = true;
 
-        foreach ($this->towns as $id => $town) {
+        foreach ($this->curr['towns'] as $id => $town) {
             if (!$first) {
                 $sql .= ',';
             } else {
@@ -105,11 +119,11 @@ trait DataUpdaterTowns
             $sql .= "(";
             $sql .= ($pdo->quote($this->time)).",";
             $sql .= (intval($id)).",";
-            $sql .= (intval($town[DataStorage::TOWN_KEY_ACCOUNT_ID])).",";
+//            $sql .= (intval($town[DataStorage::TOWN_KEY_ACCOUNT_ID])).",";
             $sql .= (intval($town[DataStorage::TOWN_KEY_POP])).",";
             $sql .= (intval($town[DataStorage::TOWN_KEY_WONDER_ID])).",";
             $sql .= (intval($town[DataStorage::TOWN_KEY_WONDER_LEVEL])).",";
-            $sql .= "0";
+            $sql .= (intval($town[DataStorage::TOWN_KEY_DELTA_POP]))."";
             $sql .= ")";
         }
 
@@ -120,6 +134,7 @@ trait DataUpdaterTowns
     private function updateTowns()
     {
         $this->insertTowns();
+        $this->updateTownsLost();
         $this->insertTownsStatistic();
     }
 }

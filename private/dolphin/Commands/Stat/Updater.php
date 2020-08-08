@@ -3,12 +3,11 @@
 namespace Dolphin\Commands\Stat;
 
 
-use Carbon\Carbon;
-use Dolphin\Commands\Stat\Traits\UpdaterChecker;
 use Dolphin\Console;
+use WofhTools\Models\Worlds;
 use Dolphin\DolphinContainer;
 use Psr\Container\ContainerInterface;
-use WofhTools\Models\Worlds;
+use Dolphin\Commands\Stat\Traits\UpdaterChecker;
 
 
 /**
@@ -19,9 +18,6 @@ use WofhTools\Models\Worlds;
  * @license     licensed under the MIT license
  *
  * @package     Dolphin\Commands\Stat
- *
- * @property array  raw
- * @property Carbon time
  */
 class Updater extends DolphinContainer
 {
@@ -41,12 +37,15 @@ class Updater extends DolphinContainer
 
 
     /**
-     * @param string $realDataPath
-     * @param string $dataFile
+     * @param string      $realDataPath
+     * @param string      $dataFile
+     * @param string|null $previousDataFile
      *
+     * @throws \WofhTools\Helpers\FileSystemException
+     * @throws \WofhTools\Helpers\JsonCustomException
      * @throws \Exception
      */
-    public function update(string $realDataPath, string $dataFile)
+    public function update(string $realDataPath, string $dataFile, $previousDataFile)
     {
         $dataStorage = new DataStorage($this->container, $this->world);
         $dataStorage->loadFromFile($realDataPath.DIRECTORY_SEPARATOR.$dataFile);
@@ -57,32 +56,39 @@ class Updater extends DolphinContainer
 
             $this->world->beginUpdate();
 
-//            $tableName = 'towns';
-//            $table = $this->db->table('z_'.$this->world->sign.'_'.$tableName.'_stat');
-//            $t = $table->select('UNIX_TIMESTAMP(stateDate)')->max('stateDate');
-//            $t = Carbon::createFromTimeString($t);
-//            pre(var_dump($t));
-
             $this->db->beginTransaction();
 
-            $dataStorage->normalize();
-            $dataStorage->calculate();
-            $dataStorage->filter();
-            $dataStorage->readPreviousIndex();
+            $dataStorage->fixTotalAccountsValue();
+            $dataStorage->normalize('curr');
+            $dataStorage->calculate('curr');
+            $dataStorage->filter('curr');
+
+            $this->console->writeFixedWidth('Reading previous data', Updater::PRINT_WIDTH);
+            if ($previousDataFile) {
+                $dataStorage->readPreviousIndex($realDataPath.DIRECTORY_SEPARATOR.$previousDataFile);
+                $dataStorage->normalize('prev');
+                $dataStorage->calculate('prev');
+                $dataStorage->filter('prev');
+            } else {
+//                $this->firstInsert = true;
+                $this->console->write('No previous data', Console::YELLOW);
+
+//                $this->insertTownIds = array_keys($this->curr['towns']);
+//                $this->insertAccountIds = array_keys($this->curr['accounts']);
+//                $this->insertCountryIds = array_keys($this->curr['countries']);
+            }
+
+            $dataStorage->unsetRaw();
+
+            $dataStorage->checkEventsOfTowns();
+            $dataStorage->checkEventsOfAccounts();
+            $dataStorage->checkEventsOfCountries();
+
+            $dataStorage->calculateDeltas();
+
+            $dataStorage->dump();
 
             $dataStorage->update();
-
-//            $events = new Events($this->world, $data);
-//            $updaterTowns = new Towns($this->world, $data, $events, 'towns', $this->container);
-//            $updaterAccounts = new Accounts($world, $data, $events, 'accounts');
-//            $updaterCountries = new Countries($world, $data, $events, 'countries');
-
-//            $updaterTowns->update();
-//            $updaterAccounts->update();
-//            $updaterCountries->update();
-//            $events->update();
-
-//            $this->updateCommonData($world, $data, $events);
 
             $this->db->commit();
 
@@ -101,10 +107,7 @@ class Updater extends DolphinContainer
 
         } finally {
 
-            unset($data);
-            unset($deletedAccounts, $deletedCountries);
-            unset($updaterCountries, $updaterAccounts, $updaterTowns, $events);
-            unset($updaterEvents);
+            unset($dataStorage);
 
         }
     }

@@ -12,19 +12,23 @@ import { ucFirst } from '@/utils';
 
 
 export const WORLDS_LIST = 'WORLDS_LIST';
+export const CURRENT_WORLD = 'CURRENT_WORLD';
 
 const state = mergeState({
     worlds: [],
+    currentWorld: null,
 }, 'stat');
 
 const getters = {
     allWorlds: state => state.worlds.filter(item => true),
     activeWorlds: state => state.worlds.filter(item => item.working),
     closedWorlds: state => state.worlds.filter(item => !item.working),
+    currentWorld: state => state.currentWorld,
 };
 
 const mutations = {
     [WORLDS_LIST]: (state, data) => state.worlds = data,
+    [CURRENT_WORLD]: (state, world) => state.currentWorld = world,
 };
 
 const actions = {
@@ -53,6 +57,18 @@ const actions = {
         }
 
         commit(WORLDS_LIST, worlds);
+    },
+
+    /**
+     * Устанавливает текущий (выбранный) мир
+     *
+     * @param commit
+     * @param sign
+     * @returns {Promise<void>}
+     */
+    async [CURRENT_WORLD]({ commit }, sign) {
+        let world = [...state.worlds].filter(w => w.sign === sign);
+        if (world.length) commit(CURRENT_WORLD, world[0]);
     },
 };
 

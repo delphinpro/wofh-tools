@@ -50,19 +50,24 @@ trait DataUpdaterCountries
         $first = true;
 
         foreach ($this->insertCountryIds as $id) {
-            $country = $this->countries[$id];
+            $country = $this->curr['countries'][$id];
             if (!$first) {
                 $sql .= ',';
             } else {
                 $first = false;
             }
 
+            $json = "JSON_OBJECT(
+              'flags', JSON_ARRAY(JSON_OBJECT('{$this->time->timestamp}', '{$country[DataStorage::COUNTRY_KEY_FLAG]}')),
+              'titles', JSON_ARRAY(JSON_OBJECT('{$this->time->timestamp}', '{$country[DataStorage::COUNTRY_KEY_TITLE]}'))
+            )";
+
             $sql .= "(";
             $sql .= (intval($id)).",";
             $sql .= ($pdo->quote($country[DataStorage::COUNTRY_KEY_TITLE])).",";
             $sql .= ($pdo->quote($country[DataStorage::COUNTRY_KEY_FLAG])).",";
             $sql .= (intval(1)).",";
-            $sql .= "NULL";
+            $sql .= $json;
             $sql .= ")";
         }
 
@@ -70,14 +75,62 @@ trait DataUpdaterCountries
     }
 
 
+    private function updateCountriesDeleted()
+    {
+        if (empty($this->deleteCountryIds)) {
+            return;
+        }
+
+        // UPDATE TABLE tbl_name SET `lost` = 1 WHERE `id` IN (a, b, c);
+        $sql = "UPDATE `z_{$this->world->sign}_countries`";
+        $sql .= " SET `active` = 0";
+        $sql .= " WHERE `countryId` IN (".join(',', $this->deleteCountryIds).")";
+
+        $this->db->statement($sql);
+    }
+
+
+    private function updateCountriesData()
+    {
+        if (empty($this->updateCountryIds)) {
+            return;
+        }
+
+        $pdo = $this->db->getPdo();
+
+        foreach ($this->updateCountryIds as $id => $data) {
+            $fields = [];
+            $extra = [];
+            if (!is_null($data['currTitle'])) {
+                $fields[] = "`countryTitle` = ".$pdo->quote($data['currTitle']);
+                $extra[] = ",'$.titles', JSON_OBJECT('{$this->time->timestamp}', '{$data['currTitle']}')";
+            }
+            if (!is_null($data['currFlag'])) {
+                $fields[] = "`countryFlag` = ".$pdo->quote($data['currFlag']);
+                $extra[] = ",'$.flags', JSON_OBJECT('{$this->time->timestamp}', '{$data['currFlag']}')";
+            }
+            if (count($extra)) {
+                $fields[] = "`extra` = JSON_ARRAY_APPEND( `extra` ".join($extra)." )";
+            }
+            if (count($fields)) {
+                $this->db->statement("
+                    UPDATE `z_{$this->world->sign}_countries`
+                    SET ".join(', ', $fields)."
+                    WHERE countryId = {$id}
+                ");
+            }
+        }
+    }
+
+
     private function insertCountriesStatistic()
     {
-        if (empty($this->countries)) {
+        if (empty($this->curr['countries'])) {
             return;
         }
 
         $columns = [
-            'stateDate',
+            'stateAt',
             'countryId',
             'pop',
             'accounts',
@@ -106,7 +159,7 @@ trait DataUpdaterCountries
         $pdo = $this->db->getPdo();
         $first = true;
 
-        foreach ($this->countries as $id => $country) {
+        foreach ($this->curr['countries'] as $id => $country) {
             if (!$first) {
                 $sql .= ',';
             } else {
@@ -123,13 +176,13 @@ trait DataUpdaterCountries
             $sql .= (intval($country[DataStorage::COUNTRY_KEY_PRODUCTION])).",";
             $sql .= (intval($country[DataStorage::COUNTRY_KEY_ATTACK])).",";
             $sql .= (intval($country[DataStorage::COUNTRY_KEY_DEFENSE])).",";
-            $sql .= (intval(0)).",";
-            $sql .= (intval(0)).",";
-            $sql .= (intval(0)).",";
-            $sql .= (intval(0)).",";
-            $sql .= (intval(0)).",";
-            $sql .= (intval(0)).",";
-            $sql .= (intval(0))."";
+            $sql .= (intval($country[DataStorage::COUNTRY_KEY_DELTA_POP])).",";
+            $sql .= (intval($country[DataStorage::COUNTRY_KEY_DELTA_ACCOUNTS])).",";
+            $sql .= (intval($country[DataStorage::COUNTRY_KEY_DELTA_TOWNS])).",";
+            $sql .= (intval($country[DataStorage::COUNTRY_KEY_DELTA_SCIENCE])).",";
+            $sql .= (intval($country[DataStorage::COUNTRY_KEY_DELTA_PRODUCTION])).",";
+            $sql .= (intval($country[DataStorage::COUNTRY_KEY_DELTA_ATTACK])).",";
+            $sql .= (intval($country[DataStorage::COUNTRY_KEY_DELTA_DEFENSE]))."";
             $sql .= ")";
         }
 
@@ -140,6 +193,8 @@ trait DataUpdaterCountries
     private function updateCountries()
     {
         $this->insertCountries();
+        $this->updateCountriesDeleted();
+        $this->updateCountriesData();
         $this->insertCountriesStatistic();
     }
 }

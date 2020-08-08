@@ -31,7 +31,7 @@ trait DataPreviousReader
      */
     private function getLastDate()
     {
-        $table = $this->db->table('z_'.$this->world->sign.'_towns_stat');
+        $table = $this->db->table('z_'.$this->world->sign.'_common');
         $datetime = $table->select('stateDate')->max('stateDate');
 
         if (is_null($datetime)) {
@@ -50,23 +50,25 @@ trait DataPreviousReader
             ->where('s.stateDate', '=', $lastDate);
         $data = $table->get();
 
-        foreach ($data as $datum) {
-            $this->prev['towns'][$datum->townId] = (array)$datum;
-            if ($this->isTownLost($datum->townId)) {
-                $this->console->write('town lost: ('.$datum->townId.') '.$datum->townTitle.'');
-            }
+//        print_r('$data[1000]');
+//        print_r($data[1000]);
+
+        foreach ($data as $prevTown) {
+//            $this->prev['towns'][$prevTown->townId] = (array)$prevTown;
+            $this->prev['towns'][$prevTown->townId] = [
+                DataStorage::TOWN_KEY_TITLE        => $prevTown->townTitle,
+                DataStorage::TOWN_KEY_ACCOUNT_ID   => $prevTown->accountId,
+                DataStorage::TOWN_KEY_POP          => $prevTown->pop,
+                DataStorage::TOWN_KEY_WONDER       => $prevTown->wonderId * 1000 + $prevTown->wonderLevel,
+                DataStorage::TOWN_KEY_WONDER_ID    => $prevTown->wonderId,
+                DataStorage::TOWN_KEY_WONDER_LEVEL => $prevTown->wonderLevel,
+                DataStorage::TOWN_KEY_COUNTRY_ID   => 0,
+            ];
+//            $this->checkEventsOfTowns();
+//            if ($this->isTownLost($prevTown->townId)) {
+//                $this->console->write('town lost: ('.$prevTown->townId.') '.$prevTown->townTitle.'');
+//            }
         }
-    }
-
-
-    /**
-     * @param int $townId
-     *
-     * @return bool
-     */
-    private function isTownLost(int $townId)
-    {
-        return !array_key_exists($townId, $this->towns);
     }
 
 
@@ -79,34 +81,50 @@ trait DataPreviousReader
             ->where('s.stateDate', '=', $lastDate);
         $data = $table->get();
 
-        foreach ($data as $datum) {
-            $this->prev['accounts'][$datum->accountId] = (array)$datum;
-            if ($this->isAccountDeleted($datum->accountId)) {
-                $this->console->write('account deleted: ('.$datum->accountId.') '
-                    .$datum->accountName.'');
-            }
+        foreach ($data as $account) {
+//            $this->prev['accounts'][$account->accountId] = (array)$account;
+            $this->prev['accounts'][$account->accountId] = [
+                static::ACCOUNT_KEY_TITLE             => $account->accountName,
+                static::ACCOUNT_KEY_RACE              => $account->accountRace,
+                static::ACCOUNT_KEY_SEX               => $account->accountSex,
+                static::ACCOUNT_KEY_COUNTRY_ID        => $account->countryId,
+                static::ACCOUNT_KEY_RATING_ATTACK     => $account->attack,
+                static::ACCOUNT_KEY_RATING_DEFENSE    => $account->defense,
+                static::ACCOUNT_KEY_RATING_SCIENCE    => $account->science,
+                static::ACCOUNT_KEY_RATING_PRODUCTION => $account->production,
+                static::ACCOUNT_KEY_ROLE              => $account->role,
+                static::ACCOUNT_KEY_POP               => $account->pop,
+                static::ACCOUNT_KEY_TOWNS             => $account->towns,
+            ];
+//            if ($this->isAccountDeleted($account->accountId)) {
+//                $this->console->write('account deleted: ('.$account->accountId.') '
+//                    .$account->accountName.'');
+//            }
         }
 
-        foreach ($this->accounts as $accountId => $account) {
-            if ($this->isAccountNew($accountId)) {
-                $this->insertAccountIds[] = $accountId;
-                $this->console->write('account created: ('.$accountId.') '
-                    .$this->accounts[DataStorage::ACCOUNT_KEY_TITLE].'');
-            }
-        }
+//        foreach ($this->accounts as $accountId => $account) {
+//            if ($this->isAccountNew($accountId)) {
+//                $this->insertAccountIds[] = $accountId;
+//                $this->console->write('account created: ('.$accountId.') '
+//                    .$this->accounts[DataStorage::ACCOUNT_KEY_TITLE].'');
+//            }
+//        }
+
+//        print_r($this->prev['accounts'][994]);
+//        print_r($this->accounts[994]);
     }
 
 
-    private function isAccountDeleted($accountId)
-    {
-        return !array_key_exists($accountId, $this->accounts);
-    }
-
-
-    private function isAccountNew($accountId)
-    {
-        return !array_key_exists($accountId, $this->prev['accounts']);
-    }
+//    private function isAccountDeleted($accountId)
+//    {
+//        return !array_key_exists($accountId, $this->accounts);
+//    }
+//
+//
+//    private function isAccountNew($accountId)
+//    {
+//        return !array_key_exists($accountId, $this->prev['accounts']);
+//    }
 
 
     private function readPreviousIndexOfCountries(Carbon $lastDate)
