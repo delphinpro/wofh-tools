@@ -6,7 +6,7 @@ Repository of wofh-tools.ru
 
 ## Используемые пакеты
 
-Административная панель [laravelrus/sleepingowl](https://sleepingowladmin.ru/#/ru/installation)  
+Административная панель [tcg/voyager](https://delphinpro.gitbook.io/voyager-ru/)  
 Фронтэнд [laravel/ui](https://github.com/laravel/ui)
 
 ## Установка
