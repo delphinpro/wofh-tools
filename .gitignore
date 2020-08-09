@@ -27,6 +27,7 @@ Homestead.yaml
 *.sln
 *.sw*
 _ide_helper.php
+_ide_helper_models.php
 
 
 #================================================
@@ -46,3 +47,4 @@ yarn-error.log*
 /*.bat
 .DS_Store
 robots.txt
+artisan.cmd
