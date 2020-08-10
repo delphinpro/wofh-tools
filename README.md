@@ -7,7 +7,8 @@ Repository of wofh-tools.ru
 ## Используемые пакеты
 
 Административная панель [tcg/voyager](https://delphinpro.gitbook.io/voyager-ru/)  
-Фронтэнд [laravel/ui](https://github.com/laravel/ui)
+Фронтэнд [laravel/ui](https://github.com/laravel/ui)  
+Серверный рендер [spatie/laravel-server-side-rendering](https://github.com/spatie/laravel-server-side-rendering)  
 
 ## Установка
 

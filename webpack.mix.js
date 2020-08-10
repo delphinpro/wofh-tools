@@ -12,6 +12,15 @@ const mix = require('laravel-mix');
  */
 
 mix
-  .js('resources/js/app.js', 'public/static/js')
-  .sass('resources/sass/app.scss', 'public/static/css')
+
+  .js('resources/js/entry-client.js', 'public/static/js')
+  .js('resources/js/entry-server.js', 'public/static/js')
+
+  .sourceMaps()
+
+  .browserSync({
+    proxy: 'wofh-tools.project',
+    browser: ['chrome'],
+  })
+
 ;
