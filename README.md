@@ -15,9 +15,15 @@ Repository of wofh-tools.ru
 git clone git@github.com:delphinpro/wofh-tools.git .
 composer install --no-dev
 composer dumpautoload
+php artisan storage:link
 ```
 
 > __Note:__ В development среде устанавливать пакеты без ключа `--no-dev`
+
+Решение проблемы с нехваткой памяти
+```
+php -d memory_limit=-1 composer.phar <...>
+```
 
 В development среде можно сгенерировать файлы автодополнения для IDE (phpStorm)
 ```
@@ -29,5 +35,4 @@ https://github.com/barryvdh/laravel-ide-helper/issues/126#issuecomment-328281716
 **При генерации PhpDoc для моделей, следует размещать их прямо в файлах моделей
 (делайте это перед коммитом новой или измененной модели).
 Для этого нужно ответить `yes` на вопрос команды.**
-
 
