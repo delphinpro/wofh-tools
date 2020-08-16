@@ -1,27 +1,32 @@
 <?php
+/**
+ * WofhTools
+ *
+ * @author      delphinpro <delphinpro@yandex.ru>
+ * @copyright   copyright © 2016-2020 delphinpro
+ * @license     licensed under the MIT license
+ */
 
-namespace WofhTools\Tools;
+namespace App\Services;
 
 
-use WofhTools\Helpers\Http;
-use WofhTools\Helpers\HttpCustomException;
-use WofhTools\Helpers\Json;
-use WofhTools\Helpers\JsonCustomException;
-use WofhTools\Models\Worlds;
+use App\World;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
+use App\Exceptions\WofhServiceException;
 
 
 /**
  * Class Wofh
- * Game data processing
  *
- * @author      delphinpro <delphinpro@gmail.com>
- * @copyright   Copyright © 2016—2019 delphinpro
- * @license     Licensed under the MIT license
- *
- * @package     WofhTools\Tools
+ * @package App\Services
  */
 class Wofh
 {
+    const STD_DATETIME = 'Y-m-d H:i:s';
+    // const STD_DATE_H   = 'Y-m-d__H-00-00';
+    const DATE_FILE    = 'Y-m-d_H';
+
     const SERVER_LANG_RU  = 1;
     const SERVER_LANG_EN  = 2;
     const SERVER_LANG_DE  = 3;
@@ -51,16 +56,12 @@ class Wofh
 
     private static $linkStatistic = '/aj_statistics';
 
-    /** @var Http */
-    private $http;
-
     /** @var Json */
     private $json;
 
 
-    public function __construct(Http $http, Json $json)
+    public function __construct(Json $json)
     {
-        $this->http = $http;
         $this->json = $json;
     }
 
@@ -174,9 +175,7 @@ class Wofh
     {
         $sign = $this->idToSign($id);
 
-        $domain = $sign ? ($https ? 'https://' : '').$sign.'.waysofhistory.com' : '';
-
-        return $domain;
+        return $sign ? ($https ? 'https://' : '').$sign.'.waysofhistory.com' : '';
     }
 
 
@@ -201,7 +200,7 @@ class Wofh
      *
      * @return bool|string Ссылка или false для неизвестного языка
      */
-    public function getStatusLink(string $lang)
+    public function makeStatusLink(string $lang)
     {
         if (!array_key_exists($lang, self::$serversLang)) {
             return false;
@@ -220,16 +219,14 @@ class Wofh
      *
      * @return array
      */
-    public function getAllStatusLinks(): array
+    public function makeAllStatusLinks(): array
     {
-        $links = array_unique(
+        return array_unique(
             array_map(
-                function ($lang) { return $this->getStatusLink($lang); },
+                function ($lang) { return $this->makeStatusLink($lang); },
                 array_keys(self::$serversLang)
             )
         );
-
-        return $links;
     }
 
 
@@ -239,28 +236,32 @@ class Wofh
      * @param array $links Массив ссылок для получения статуса
      *
      * @return array
-     * @throws WofhException
+     * @throws \App\Exceptions\WofhServiceException
      */
     public function loadStatusOfWorlds(array $links): array
     {
         try {
             $result = [];
             foreach ($links as $link) {
-                $json = $this->http->readUrl($link);
-                $data = $this->json->decode($json);
+                $data = Http::get($link)
+                    ->throw()
+                    ->json();
 
                 if (!array_key_exists('worlds', $data)) {
-                    throw new WofhException('Invalid data on the status of worlds. Perhaps the format has been changed.');
+                    throw new WofhServiceException('Invalid data on the status of worlds. Perhaps the format has been changed.');
                 }
 
                 $result = array_merge($result, $data['worlds']);
             }
+//
+//            file_put_contents(
+//                storage_path('logs/status_worlds.json'),
+//                json_encode($result, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT)
+//            );
 
             return $result;
-        } catch (HttpCustomException $e) {
-            throw new WofhException($e->getMessage());
-        } catch (JsonCustomException $e) {
-            throw new WofhException($e->getMessage());
+        } catch (\Exception $e) {
+            throw new WofhServiceException($e->getMessage());
         }
     }
 
@@ -268,13 +269,16 @@ class Wofh
     /**
      * Проверка и обновление статуса игровых миров
      *
-     * @param array $links
+     * @param array|null $links
      *
-     * @return void
-     * @throws WofhException
+     * @throws \App\Exceptions\WofhServiceException
      */
-    public function check(array $links): void
+    public function check(array $links = null): void
     {
+        if (!$links) {
+            $links = $this->makeAllStatusLinks();
+        }
+
         $data = $this->loadStatusOfWorlds($links);
 
         foreach ($data as $domain => $status) {
@@ -287,12 +291,11 @@ class Wofh
 
             $name = $status['name'];
 
-            if (preg_match('/[\d]+\s\-\s(\D+)$/Usi', $status['name'], $m)) {
+            if (preg_match('/[\d]+\s-\s(\D+)$/Usi', $status['name'], $m)) {
                 $name = $m[1];
             }
 
-            /** @var Worlds $world */
-            $world = Worlds::findOrNew($id);
+            $world = World::findOrNew($id);
 
             $world->id = $id;
             $world->title = $name;
@@ -301,6 +304,11 @@ class Wofh
             $world->working = (bool)(int)$status['working'];
             $world->version = '1.4';
 
+            // Для новых миров метка времени старта — текущее время
+            if (!$world->started_at && $world->working) {
+                $world->started_at = new Carbon();
+            }
+
             $world->save();
 
             unset($world);
@@ -308,6 +316,11 @@ class Wofh
     }
 
 
+    /**
+     * @param int $index
+     *
+     * @return false|string
+     */
     private function getLangOfServer(int $index)
     {
         $a = array_flip(self::$serversLang);
@@ -316,6 +329,11 @@ class Wofh
     }
 
 
+    /**
+     * @param int $index
+     *
+     * @return false|string
+     */
     private function getTypeOfServer(int $index)
     {
         if ($index === 0) {
