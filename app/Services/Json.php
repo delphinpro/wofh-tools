@@ -1,16 +1,19 @@
 <?php
-
-namespace WofhTools\Helpers;
-
-
 /**
- * JSON utilities
+ * WofhTools
  *
- * @author      delphinpro <delphinpro@gmail.com>
- * @copyright   Copyright © 2014–2019 delphinpro
- * @license     Licensed under the MIT license
- * @package     WofhTools\Helpers
+ * @author      delphinpro <delphinpro@yandex.ru>
+ * @copyright   copyright © 2014-2020 delphinpro
+ * @license     licensed under the MIT license
  */
+
+
+namespace App\Services;
+
+
+use App\Exceptions\JsonServiceException;
+
+
 class Json
 {
     /**
@@ -21,14 +24,14 @@ class Json
      * @param int    $depth Глубина рекурсии
      *
      * @return mixed
-     * @throws JsonCustomException
+     * @throws JsonServiceException
      */
     public function decode(string $json, bool $assoc = true, int $depth = 512)
     {
         $data = json_decode($json, $assoc, $depth);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new JsonCustomException('JSON: '.json_last_error_msg());
+            throw new JsonServiceException('JSON: '.json_last_error_msg());
         }
 
         return $data;
@@ -43,7 +46,7 @@ class Json
      * @param bool  $forceObject Кодировать массивы как объекты
      *
      * @return string
-     * @throws \WofhTools\Helpers\JsonCustomException
+     * @throws JsonServiceException
      */
     public function encode($value, bool $pretty = false, $forceObject = false): string
     {
@@ -65,7 +68,7 @@ class Json
         $json = json_encode($value, $options);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new JsonCustomException(json_last_error_msg());
+            throw new JsonServiceException(json_last_error_msg());
         }
 
         return $json;
