@@ -1,6 +1,6 @@
 <?php
 
-use App\Role;
+use TCG\Voyager\Models\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
