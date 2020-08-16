@@ -60,28 +60,6 @@ class Stat extends Command implements CommandInterface
     }
 
 
-    public function check()
-    {
-        $message = 'The status of worlds has been updated successfully';
-        $this->console->write('The status of worlds updating... ', null, false);
-
-        try {
-
-            $this->bootEloquent();
-            $links = $this->wofh->getAllStatusLinks();
-            $this->wofh->check($links);
-            $this->console->write('SUCCESS !', Console::GREEN);
-            $this->console->write($message, Console::GREEN);
-
-        } catch (\Exception $e) {
-
-            $this->console->write('FAIL !', Console::RED);
-            $this->console->write($e->getMessage(), Console::RED);
-
-        }
-    }
-
-
     /**
      * @throws \Exception
      */
