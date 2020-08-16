@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.2.5",
         "ext-json": "*",
+        "ext-curl": "*",
         "barryvdh/laravel-ide-helper": "^2.7",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
