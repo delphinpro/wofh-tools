@@ -2,35 +2,11 @@
 //== Helper classes
 //== ======================================= ==//
 
+/* Helpers */
+
 // @formatter:off
 
-.text-left       { text-align: left; }
-.text-right      { text-align: right; }
-.text-center     { text-align: center; }
-.text-justify    { text-align: justify; }
-.text-nowrap     { white-space: nowrap; }
-
-.text-top        { vertical-align: top; }
-.text-middle     { vertical-align: middle; }
-.text-bottom     { vertical-align: bottom; }
-
-.text-lowercase  { text-transform: lowercase; }
-.text-uppercase  { text-transform: uppercase; }
-.text-capitalize { text-transform: capitalize; }
-
-@each $bp in $grid-breakpoints {
-  @include media-breakpoint-up($bp) {
-    .text-#{$bp}-left       { text-align: left; }
-    .text-#{$bp}-right      { text-align: right; }
-    .text-#{$bp}-center     { text-align: center; }
-    .text-#{$bp}-justify    { text-align: justify; }
-    .text-#{$bp}-nowrap     { white-space: nowrap; }
-
-    .text-#{$bp}-lowercase  { text-transform: lowercase; }
-    .text-#{$bp}-uppercase  { text-transform: uppercase; }
-    .text-#{$bp}-capitalize { text-transform: capitalize; }
-  }
-}
+@include make-grid-utilities();
 
 //==
 //== Contextual colors
@@ -108,12 +84,6 @@
 //Disabled!
 [class^="bg-"].disabled { opacity:.65; }
 
-
-.no-gutter {
-  padding-right: 0 !important;
-  padding-left: 0 !important;
-}
-
 // Alignment
 
 .page-center {
@@ -122,10 +92,6 @@
   flex-direction: column;
   justify-content: center;
 }
-
-// Flex layout
-
-.d-flex { display: flex; }
 
 // vertical rhythm helpers
 
@@ -152,3 +118,5 @@
     background: currentColor;
   }
 }
+
+/* End helpers */

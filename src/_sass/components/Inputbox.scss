@@ -74,7 +74,7 @@ $inputbox-border-color-danger: $color-danger;
 
     &:-webkit-autofill {
       color: $inputbox-color !important;
-      border-color: $palette-aqua;
+      //border-color: $palette-aqua;
       -webkit-box-shadow: inset 0 0 0 50px $inputbox-background !important;
       -webkit-text-fill-color: $inputbox-color !important;
     }
@@ -118,7 +118,7 @@ $inputbox-border-color-danger: $color-danger;
   }
 
   &__control:-webkit-autofill + &__addon {
-    border-color: $palette-aqua;
+    //border-color: $palette-aqua;
   }
 
   &__help {

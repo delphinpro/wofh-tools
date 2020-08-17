@@ -1,16 +1,16 @@
 ////
-/// @author delphinpro <delphinpro@gmail.com>
+/// @author delphinpro <delphinpro@yandex.ru>
 /// @copyright copyright © 2019 delphinpro
 /// @license licensed under the MIT license
 ////
-
+$NODE_ENV: development;
 $DEV_MODE: $NODE_ENV == development;
 $MAX_INT32: 2147483647;
 
 @import "cfg-vrhythm";
 @import "cfg-grid";
 @import "../../../node_modules/vrhythm/source/vrhythm";
-@import "../../../node_modules/bs-grid-system/source/scss/bs-grid";
+@import "../../../node_modules/bs-grid-system/bs-grid";
 @import "../mixins";
 @import "cfg-z-indexes";
 

@@ -1,5 +1,5 @@
 ////
-/// @author delphinpro <delphinpro@gmail.com>
+/// @author delphinpro <delphinpro@yandex.ru>
 /// @copyright copyright © 2019 delphinpro
 /// @license licensed under the MIT license
 ////
@@ -21,3 +21,9 @@ body {
 }
 
 @include make-grid-system();
+
+.svg-icon {
+  width: auto;
+  height: auto;
+  vertical-align: middle;
+}

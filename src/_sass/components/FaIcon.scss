@@ -1,0 +1,12 @@
+//==
+//== Component: FaIcon.vue
+//== ======================================= ==//
+
+.fa-icon {
+  @include size(1.1em);
+  fill: currentColor;
+}
+
+.fa-icon-bug {
+  color: red !important;
+}
