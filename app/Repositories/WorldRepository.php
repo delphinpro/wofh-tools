@@ -112,7 +112,7 @@ class WorldRepository implements Interfaces\WorldRepositoryInterface
      */
     private function sort(Collection $collection)
     {
-        $collection = $collection->sort(function ($a, $b) {
+        $sorted = $collection->sort(function ($a, $b) {
             $countryId1 = floor($a['id'] / 10000);
             $countryId2 = floor($b['id'] / 10000);
 
@@ -127,6 +127,6 @@ class WorldRepository implements Interfaces\WorldRepositoryInterface
             return $countryId1 > $countryId2 ? 1 : -1;
         });
 
-        return $collection;
+        return $sorted->values();
     }
 }
