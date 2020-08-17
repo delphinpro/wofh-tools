@@ -30,10 +30,12 @@ if (!mix.inProduction() && IS_CLIENT) {
 
 if (IS_CLIENT) {
   mix.sass(`${src}/_sass/main.scss`, dist);
+  mix.js(`${src}/entry-client.js`, dist);
   mix.browserSync({
     proxy: 'wofh-tools.project',
     browser: ['chrome'],
   });
+  mix.extract();
   mix.copyDirectory(
     path.join(__dirname, `resources/assets/images`),
     path.join(__dirname, `public/${dist}/images`),
@@ -51,3 +53,33 @@ if (IS_CLIENT) {
     path.join(__dirname, `public/${dist}/custom.svg`),
   );
 }
+
+if (IS_SERVER) {
+  mix.js(`${src}/entry-server.js`, dist);
+}
+
+mix.webpackConfig(() => {
+  const config = {};
+
+  config.resolve = {
+    alias: {
+      '@': path.join(__dirname, src),
+      'vue$': 'vue/dist/vue.runtime.esm.js',
+    },
+  };
+
+  return config;
+});
+
+mix.options({
+  extractVueStyles: false,
+  processCssUrls: false,
+  terser: {},
+  purifyCss: false,
+  //purifyCss: {},
+  postCss: [require('autoprefixer')],
+  clearConsole: false,
+  cssNano: {
+    // discardComments: {removeAll: true},
+  }
+});

@@ -41,24 +41,24 @@ $radio-size: 18px !default;
   }
 
   &__tick {
-      $p: ceil($radio-size / 4);
-      @include size($radio-size - $p * 2);
-      position: relative;
-      display: block;
-      overflow: hidden;
-      margin: auto;
-      transition: .15s ease;
-      opacity: 0;
-      border-radius: 100%;
-      background: var(--radio-theme-color);
-    }
+    $p: ceil($radio-size / 4);
+    @include size($radio-size - $p * 2);
+    position: relative;
+    display: block;
+    overflow: hidden;
+    margin: auto;
+    transition: .15s ease;
+    opacity: 0;
+    border-radius: 100%;
+    background: var(--radio-theme-color);
+  }
 
   &__element:checked + &__box &__tick {
     opacity: 1;
   }
 
   &__label:hover &__indicator {
-    box-shadow:inset 0 0 0 30px var(--radio-theme-shadow);
+    box-shadow: inset 0 0 0 30px var(--radio-theme-shadow);
   }
 
   &__text {

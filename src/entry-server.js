@@ -1,24 +1,18 @@
-/*!
+/**!
  * WofhTools
  * File: entry-server.js
- * © 2019 delphinpro <delphinpro@gmail.com>
+ * © 2019-2020 delphinpro <delphinpro@yandex.ru>
  * licensed under the MIT license
  *
- * @external    __PRELOAD_STATE__
+ * @external dispatch
+ * @external context
  */
 
-import { createApp } from '@/main';
+import renderVueComponentToString from 'vue-server-renderer/basic';
+import { createApp } from '@/app';
 
 
-const { app, router } = createApp(__PRELOAD_STATE__);
-
-router.onReady(() => {
-
-    renderVueComponentToString(app, (err, res) => {
-
-        if (err) throw new Error(err);
-        print(res);
-
-    });
-
+renderVueComponentToString(createApp(context.state, context.url), (err, html) => {
+  if (err) throw new Error(err);
+  dispatch(html);
 });

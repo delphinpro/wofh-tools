@@ -10,7 +10,7 @@
  * @returns {boolean}
  */
 export function isObject(item) {
-    return (item && typeof item === 'object' && !Array.isArray(item));
+  return (item && typeof item === 'object' && !Array.isArray(item));
 }
 
 /**
@@ -19,21 +19,21 @@ export function isObject(item) {
  * @param sources
  */
 export function deepMergeObject(target, ...sources) {
-    if (!sources.length) return target;
-    const source = sources.shift();
+  if (!sources.length) return target;
+  const source = sources.shift();
 
-    if (isObject(target) && isObject(source)) {
-        for (const key in source) {
-            if (source.hasOwnProperty(key)) {
-                if (isObject(source[key])) {
-                    if (!target[key]) Object.assign(target, { [key]: {} });
-                    deepMergeObject(target[key], source[key]);
-                } else {
-                    Object.assign(target, { [key]: source[key] });
-                }
-            }
+  if (isObject(target) && isObject(source)) {
+    for (const key in source) {
+      if (source.hasOwnProperty(key)) {
+        if (isObject(source[key])) {
+          if (!target[key]) Object.assign(target, { [key]: {} });
+          deepMergeObject(target[key], source[key]);
+        } else {
+          Object.assign(target, { [key]: source[key] });
         }
+      }
     }
+  }
 
-    return deepMergeObject(target, ...sources);
+  return deepMergeObject(target, ...sources);
 }

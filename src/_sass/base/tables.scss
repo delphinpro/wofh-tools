@@ -9,7 +9,7 @@ table {
   vertical-align: middle;
 }
 
-$table-border-color: #4D565F;
+$table-border-color: #4d565f;
 //$table-border-color: darken($background-base, 5%);
 $table-border-color: lighten($background-base, 5%);
 
@@ -23,12 +23,13 @@ $table-border-color: lighten($background-base, 5%);
     border-bottom: 1px solid $table-border-color;
     padding: rhythm(0.25) rhythm(0.5);
   }
+
   th {
     background: rgba(#000, 0.1);
     background: $table-border-color;
   }
 
-  tbody:not(:first-child){
+  tbody:not(:first-child) {
     border-top: 2px solid $table-border-color;
   }
 }
