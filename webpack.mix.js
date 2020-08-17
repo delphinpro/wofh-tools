@@ -1,3 +1,6 @@
+const path = require('path');
+
+/** @type {Api} */
 const mix = require('laravel-mix');
 
 /*
@@ -11,16 +14,24 @@ const mix = require('laravel-mix');
  |
  */
 
-mix
+if (!process.env.NODE_ENV) process.env.NODE_ENV = 'production';
 
-  .js('resources/js/entry-client.js', 'public/static/js')
-  .js('resources/js/entry-server.js', 'public/static/js')
+const IS_SERVER = process.env.BUNDLE === 'server';
+const IS_CLIENT = !IS_SERVER;
 
-  .sourceMaps()
+const src = 'src';
+const dist = 'assets';
 
-  .browserSync({
+console.log({ NODE_ENV: process.env.NODE_ENV, BUNDLE: process.env.BUNDLE });
+
+if (!mix.inProduction() && IS_CLIENT) {
+  mix.sourceMaps();
+}
+
+if (IS_CLIENT) {
+  mix.sass(`${src}/_sass/main.scss`, dist);
+  mix.browserSync({
     proxy: 'wofh-tools.project',
     browser: ['chrome'],
-  })
-
-;
+  });
+}
