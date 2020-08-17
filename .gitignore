@@ -49,3 +49,5 @@ yarn-error.log*
 .DS_Store
 robots.txt
 artisan.cmd
+/public/assets/
+/public/mix-manifest.json
