@@ -30,6 +30,7 @@ if (!mix.inProduction() && IS_CLIENT) {
 
 if (IS_CLIENT) {
   mix.sass(`${src}/_sass/main.scss`, dist);
+  mix.sass(`${src}/admin/sass/custom.scss`, `${dist}/admin`);
   mix.js(`${src}/entry-client.js`, dist);
   mix.browserSync({
     proxy: 'wofh-tools.project',
