@@ -1,6 +1,5 @@
 <?php
 
-use TCG\Voyager\Models\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -29,10 +28,8 @@ class UserSeeder extends Seeder
                     'email_verified_at' => new \Carbon\Carbon('2017-07-07 07:07:07'),
                     'password'          => bcrypt($userPass),
                     'remember_token'    => Str::random(60),
-                    'settings'          => collect(['locale' => 'ru']),
                     'created_at'        => new \Carbon\Carbon('2017-07-07 07:07:07'),
                     'updated_at'        => new \Carbon\Carbon('2017-07-07 07:07:07'),
-                    'role_id'           => $roleId,
                 ])->save();
             }
 
@@ -50,7 +47,7 @@ class UserSeeder extends Seeder
     {
         $roleId = null;
         try {
-            $roleId = Role::where('name', $roleName)->firstOrFail()->id;
+            // $roleId = Role::where('name', $roleName)->firstOrFail()->id;
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
         }
 

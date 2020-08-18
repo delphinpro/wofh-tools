@@ -1,9 +1,6 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use TCG\Voyager\Facades\Voyager;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +22,4 @@ Route::get('/stat', 'StatController@index')->name('stat');
 
 Route::group(['prefix' => 'api'], function () {
     Route::get('/worlds', 'ApiController@worlds');
-});
-
-Route::group(['prefix' => 'admin'], function () {
-    /** @noinspection PhpUndefinedMethodInspection */
-    Voyager::routes();
 });
