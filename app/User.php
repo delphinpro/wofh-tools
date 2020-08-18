@@ -3,13 +3,19 @@
 namespace App;
 
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Encore\Admin\Auth\Database\Administrator;
+use Encore\Admin\Auth\Database\HasPermissions;
+use Encore\Admin\Traits\DefaultDatetimeFormat;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 
-class User extends Authenticatable
+class User extends Administrator
 {
     use Notifiable;
+    use Authenticatable;
+    use HasPermissions;
+    use DefaultDatetimeFormat;
 
 
     /**

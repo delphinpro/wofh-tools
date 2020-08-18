@@ -9,6 +9,7 @@ Repository of wofh-tools.ru
 | Назначение | Назание и ссылка
 |---|---
 | Отладчик | [`recca0120/laravel-tracy`](https://github.com/recca0120/laravel-tracy)
+| Административная панель | [`encore/laravel-admin`](https://github.com/z-song/laravel-admin)
 | Фронтэнд | [`laravel/ui`](https://github.com/laravel/ui)
 | Серверный рендер | [`spatie/laravel-server-side-rendering`](https://github.com/spatie/laravel-server-side-rendering)
 
@@ -32,6 +33,7 @@ php -d memory_limit=-1 composer.phar <...>
 ```
 php artisan ide-helper:generate
 php artisan ide-helper:models
+php artisan ide-helper:models --filename=_ide_helper_models_admin.php --dir=vendor/encore/laravel-admin/src/Auth/Database
 ```
 https://github.com/barryvdh/laravel-ide-helper/issues/126#issuecomment-328281716
 
