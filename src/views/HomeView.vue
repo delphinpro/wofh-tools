@@ -84,7 +84,6 @@ export default {
       </table>
     </div>
     <Alert title="Нет данных о действующих мирах" v-else></Alert>
-    <pre>{{ worlds }}</pre>
   </div>
 
 </template>
