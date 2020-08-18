@@ -45,9 +45,9 @@ yarn-error.log*
 
 /*.phar
 /*.bat
+/*.cmd
 .DS_Store
 robots.txt
-artisan.cmd
 /public/assets/
 /public/mix-manifest.json
 /public/vendor/laravel-admin/laravel-admin.min.css
