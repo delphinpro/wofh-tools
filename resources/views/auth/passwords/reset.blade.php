@@ -1,4 +1,5 @@
-@extends('layouts.app')
+@extends('layouts.vue')
+{{--
 
 @section('content')
 <div class="container">
@@ -63,3 +64,4 @@
     </div>
 </div>
 @endsection
+--}}

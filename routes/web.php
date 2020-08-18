@@ -16,17 +16,18 @@ use TCG\Voyager\Facades\Voyager;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes([
     'register' => false,
 ]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'IndexController@show')->name('home');
+Route::get('/stat', 'StatController@index')->name('stat');
 
+Route::group(['prefix' => 'api'], function () {
+    Route::get('/worlds', 'ApiController@worlds');
+});
 
 Route::group(['prefix' => 'admin'], function () {
+    /** @noinspection PhpUndefinedMethodInspection */
     Voyager::routes();
 });

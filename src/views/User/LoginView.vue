@@ -1,96 +1,96 @@
-<script>/*!
- * WofhTools
- * View: LoginView.vue
- * © 2019 delphinpro <delphinpro@gmail.com>
- * licensed under the MIT license
- */
-
+<!--
+  WofhTools
+  View: LoginView.vue
+  © 2019-2020 delphinpro <delphinpro@yandex.ru>
+  licensed under the MIT license
+-->
+<script>
 import { AUTH_REQUEST } from '@/store/modules/store-auth';
 import Box from '@/components/Widgets/Box';
 
 
 export default {
-    name: 'login',
+  name: 'login',
 
-    components: {
-        Box,
+  components: {
+    Box,
+  },
+
+  data: () => ({
+    username: '',
+    password: '',
+
+    token: null,
+    form: null,
+
+    post: null,
+    user: null,
+  }),
+
+  methods: {
+
+    async login() {
+      let { username, password } = this;
+      this.$toast.removeAll();
+      this.form = null;
+      let { token, validation } = await this.$store.dispatch(AUTH_REQUEST, { username, password });
+      if (validation) this.form = validation.fields;
+      if (token) this.$router.push({ name: 'profile' });
     },
 
-    data: () => ({
-        username: '',
-        password: '',
-
-        token: null,
-        form: null,
-
-        post: null,
-        user: null,
-    }),
-
-    methods: {
-
-        async login() {
-            let { username, password } = this;
-            this.$toast.removeAll();
-            this.form = null;
-            let { token, validation } = await this.$store.dispatch(AUTH_REQUEST, { username, password });
-            if (validation) this.form = validation.fields;
-            if (token) this.$router.push({ name: 'profile' });
-        },
-
-        fieldHelp(name) {
-            if (this.form && this.form[name] && !this.form[name]['isValid'] && this.form[name]['message']) {
-                return this.form[name]['message'];
-            }
-            return null;
-        },
-
-        fieldStatus(name) {
-            if (this.form && this.form[name] && !this.form[name]['isValid']) {
-                return 'danger';
-            }
-            return null;
-        },
-
+    fieldHelp(name) {
+      if (this.form && this.form[name] && !this.form[name]['isValid'] && this.form[name]['message']) {
+        return this.form[name]['message'];
+      }
+      return null;
     },
+
+    fieldStatus(name) {
+      if (this.form && this.form[name] && !this.form[name]['isValid']) {
+        return 'danger';
+      }
+      return null;
+    },
+
+  },
 };
 </script>
 
 <template>
-    <div class="container page-center">
-        <div class="col-lg-5 no-gutter">
-            <Box type="info" title="Вход в личный профиль" icon="lock">
-                <form class="login" @submit.prevent="login">
-                    <Inputbox
-                        class="form-group"
-                        label="E-mail"
-                        type="email"
-                        placeholder="E-mail"
-                        addon-icon="envelope"
-                        addon-position="end"
-                        :help="fieldHelp('username')"
-                        :status="fieldStatus('username')"
-                        v-model="username"
-                    />
-                    <Inputbox
-                        class="form-group"
-                        label="Password"
-                        type="password"
-                        placeholder="Password"
-                        addon-icon="key"
-                        addon-position="end"
-                        :help="fieldHelp('password')"
-                        :status="fieldStatus('password')"
-                        v-model="password"
-                    />
-                    <div class="form-group">
-                        <button class="btn btn_primary" type="submit">
-                            <FaIcon name="sign-in-alt"/>
-                            Login
-                        </button>
-                    </div>
-                </form>
-            </Box>
-        </div>
+  <div class="container page-center">
+    <div class="col-lg-5 no-gutter">
+      <Box icon="lock" title="Вход в личный профиль" type="info">
+        <form @submit.prevent="login" class="login">
+          <Inputbox
+            :help="fieldHelp('username')"
+            :status="fieldStatus('username')"
+            addon-icon="envelope"
+            addon-position="end"
+            class="form-group"
+            label="E-mail"
+            placeholder="E-mail"
+            type="email"
+            v-model="username"
+          />
+          <Inputbox
+            :help="fieldHelp('password')"
+            :status="fieldStatus('password')"
+            addon-icon="key"
+            addon-position="end"
+            class="form-group"
+            label="Password"
+            placeholder="Password"
+            type="password"
+            v-model="password"
+          />
+          <div class="form-group">
+            <button class="btn btn_primary" type="submit">
+              <FaIcon name="sign-in-alt"/>
+              Login
+            </button>
+          </div>
+        </form>
+      </Box>
     </div>
+  </div>
 </template>

@@ -1,0 +1,100 @@
+//==
+//== Component: RadioButton.vue
+//== ======================================= ==//
+
+$radio-size: 18px !default;
+
+.radio {
+  --radio-theme-color: #{$color-primary};
+  --radio-theme-shadow: #{rgba($color-primary, 0.3)};
+
+  &__label {
+    display: inline-flex;
+    align-items: flex-start;
+    cursor: pointer;
+    vertical-align: middle;
+  }
+
+  &__element {
+    position: absolute;
+    left: -999999px;
+  }
+
+  &__box {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    height: rem($rhythm-base-line-height);
+  }
+
+  &__indicator {
+    @include size($radio-size);
+    position: relative;
+    display: flex;
+    align-items: center;
+    align-self: center;
+    flex-shrink: 0;
+    transition: 0.15s ease;
+    border: $radio-border solid var(--radio-theme-color);
+    border-radius: 100%;
+    background: $background-base;
+  }
+
+  &__tick {
+    $p: ceil($radio-size / 4);
+    @include size($radio-size - $p * 2);
+    position: relative;
+    display: block;
+    overflow: hidden;
+    margin: auto;
+    transition: .15s ease;
+    opacity: 0;
+    border-radius: 100%;
+    background: var(--radio-theme-color);
+  }
+
+  &__element:checked + &__box &__tick {
+    opacity: 1;
+  }
+
+  &__label:hover &__indicator {
+    box-shadow: inset 0 0 0 30px var(--radio-theme-shadow);
+  }
+
+  &__text {
+    padding-left: 0.5rem;
+    user-select: none;
+    line-height: rhythm(1);
+  }
+
+  &_theme_info {
+    --radio-theme-color: #{$color-info};
+    --radio-theme-shadow: #{rgba($color-primary, 0.3)};
+  }
+
+  &_theme_success {
+    --radio-theme-color: #{$color-success};
+    --radio-theme-shadow: #{rgba($color-success, 0.3)};
+  }
+
+  &_theme_warning {
+    --radio-theme-color: #{$color-warning};
+    --radio-theme-shadow: #{rgba($color-warning, 0.3)};
+  }
+
+  &_theme_danger {
+    --radio-theme-color: #{$color-danger};
+    --radio-theme-shadow: #{rgba($color-danger, 0.3)};
+  }
+
+  &_disabled .radio {
+    &__indicator {
+      opacity: 0.5;
+      box-shadow: none !important;
+    }
+  }
+
+  &_disabled &__label {
+    cursor: default;
+  }
+}

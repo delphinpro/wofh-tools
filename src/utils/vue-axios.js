@@ -10,32 +10,32 @@
  */
 export default function plugin(Vue, axios) {
 
-    if (plugin.installed) {
-        return;
-    }
+  if (plugin.installed) {
+    return;
+  }
 
-    plugin.installed = true;
+  plugin.installed = true;
 
-    if (!axios) {
-        console.error('You have to install axios');
-        return;
-    }
+  if (!axios) {
+    console.error('You have to install axios');
+    return;
+  }
 
-    Vue.axios = axios;
+  Vue.axios = axios;
 
-    Object.defineProperties(Vue.prototype, {
+  Object.defineProperties(Vue.prototype, {
 
-        axios: {
-            get() {
-                return axios;
-            },
-        },
+    axios: {
+      get() {
+        return axios;
+      },
+    },
 
-        $http: {
-            get() {
-                return axios;
-            },
-        },
+    $http: {
+      get() {
+        return axios;
+      },
+    },
 
-    });
+  });
 }

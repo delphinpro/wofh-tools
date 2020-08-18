@@ -1,0 +1,162 @@
+<?php
+/**
+ * WofhTools
+ *
+ * @author      delphinpro <delphinpro@yandex.ru>
+ * @copyright   copyright © 2016-2020 delphinpro
+ * @license     licensed under the MIT license
+ */
+
+namespace App;
+
+
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+
+
+/**
+ * Class World
+ *
+ * @package App
+ *
+ * @property int            $id
+ * @property string         $title
+ * @property string         $title_alt
+ * @property string         $sign
+ * @property boolean        $can_reg
+ * @property boolean        $working
+ * @property boolean        $statistic
+ * @property boolean        $hidden
+ * @property \Carbon\Carbon started_at
+ * @property \Carbon\Carbon closed_at
+ * @property \Carbon\Carbon stat_loaded_at
+ * @property \Carbon\Carbon stat_updated_at
+ * @property \Carbon\Carbon const_updated_at
+ * @property \Carbon\Carbon update_started_at
+ * @property string         $desc
+ * @property string         $metainfo
+ * @property string         $version
+ */
+class World extends Model
+{
+    public $timestamps = false;
+
+    public $table = 'wt_worlds';
+
+    protected $casts = [
+        'can_reg'   => 'boolean',
+        'working'   => 'boolean',
+        'statistic' => 'boolean',
+        'hidden'    => 'boolean',
+    ];
+
+    protected $dates = [
+        'started_at',
+        'closed_at',
+        'stat_loaded_at',
+        'stat_updated_at',
+        'const_updated_at',
+        'update_started_at',
+    ];
+
+
+    public function beginUpdate()
+    {
+        $this->update_started_at = Carbon::now();
+        $this->save();
+    }
+
+
+    public function endUpdate(Carbon $statUpdatedAt = null)
+    {
+        if ($statUpdatedAt instanceof Carbon) {
+            $this->stat_updated_at = $statUpdatedAt;
+        }
+
+        $this->update_started_at = null;
+        $this->save();
+    }
+
+
+    public function toArray()
+    {
+        return array_merge(
+            parent::toArray(),
+            $this->dateFieldsAsTimestamps(),
+            [
+                'fmtAge' => $this->getAgeAsString(),
+                'nAge'   => $this->getAgeAsNumber(),
+            ]
+        );
+    }
+
+
+    /**
+     * @return \Carbon\CarbonInterval|null
+     */
+    public function getAge()
+    {
+        if (!$this->started_at) { // нет данных о старте
+            return null;
+        }
+
+        if (!$this->closed_at && !$this->working) { // нет данных об окончании завершенного мира
+            return null;
+        }
+
+        $closed = new Carbon();
+        $closed->setTimestamp(time());
+
+        if ($this->closed_at && $this->closed_at instanceof Carbon) {
+            $closed->setTimestamp($this->closed_at->timestamp);
+        }
+
+        return $closed->diffAsCarbonInterval($this->started_at);
+    }
+
+
+    public function getAgeAsString()
+    {
+        $ageInterval = $this->getAge();
+
+        if (!$ageInterval) {
+            return 'Неизвестно';
+        }
+
+        $totalDays = (int)$ageInterval->totalDays;
+
+        return $totalDays.' дн.';
+    }
+
+
+    public function getAgeAsNumber()
+    {
+        $ageInterval = $this->getAge();
+
+        if (!$ageInterval) {
+            return 0;
+        }
+
+        return (int)$ageInterval->totalDays;
+    }
+
+
+    /**
+     * @return array
+     */
+    private function dateFieldsAsTimestamps(): array
+    {
+        $dates = [];
+        foreach ($this->dates as $dateField) {
+            /** @var \Carbon\Carbon $carbon */
+            $carbon = $this->{$dateField};
+            if ($carbon instanceof \Illuminate\Support\Carbon) {
+                $dates[$dateField] = $carbon->timestamp;
+            } else {
+                $dates[$dateField] = null;
+            }
+        }
+
+        return $dates;
+    }
+}

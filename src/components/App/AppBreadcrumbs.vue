@@ -1,38 +1,35 @@
-<script>/*!
- * WofhTools
- * File: AppBreadcrumbs.vue
- * © 2019 delphinpro <delphinpro@gmail.com>
- * licensed under the MIT license
- */
-
-import 'vue-awesome/icons/home';
+<!--
+  WofhTools
+  File: AppBreadcrumbs.vue
+  © 2019-2020 delphinpro <delphinpro@yandex.ru>
+  licensed under the MIT license
+-->
+<script>
 import AppBreadcrumb from '@/components/App/AppBreadcrumb';
 
 
 export default {
-    name: 'AppBreadcrumbs',
+  name: 'AppBreadcrumbs',
 
-    components: {
-        AppBreadcrumb,
-    },
+  components: {
+    AppBreadcrumb,
+  },
 };
 </script>
 
 <template>
-    <ol class="breadcrumb" v-if="$route.name !== 'home'">
-        <li>
-            <router-link :to="{ name: 'home' }">
-                <FaIcon name="home"/>
-                <span>WofhTools</span>
-            </router-link>
-        </li>
-        <AppBreadcrumb
-            v-for="(route, index) in $route.matched"
-            :key="index"
-            :route="route"
-            :last="index===$route.matched.length-1"
-        />
-    </ol>
+  <ol class="breadcrumb" v-if="$route.name !== 'home'">
+    <li>
+      <router-link :to="{ name: 'home' }">
+        <FaIcon name="home"/>
+        <span>WofhTools</span>
+      </router-link>
+    </li>
+    <AppBreadcrumb
+      :key="index"
+      :last="index===$route.matched.length-1"
+      :route="route"
+      v-for="(route, index) in $route.matched"
+    />
+  </ol>
 </template>
-
-<style lang="scss" src="../@css/AppBreadcrumbs.scss"></style>

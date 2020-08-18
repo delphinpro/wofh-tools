@@ -1,0 +1,202 @@
+////
+/// @author delphinpro <delphinpro@yandex.ru>
+/// @copyright copyright © 2019 delphinpro
+/// @license licensed under the MIT license
+////
+$NODE_ENV: development;
+$DEV_MODE: $NODE_ENV == development;
+$MAX_INT32: 2147483647;
+
+@import "cfg-vrhythm";
+@import "cfg-grid";
+@import "../../../node_modules/vrhythm/source/vrhythm";
+@import "../../../node_modules/bs-grid-system/bs-grid";
+@import "../mixins";
+@import "cfg-z-indexes";
+
+// @formatter:off
+
+$wt-family-base: "Open Sans", sans-serif;
+$wt-family-head: "Roboto Slab", serif;
+$font-family-monospace:  "Fira Code", Menlo, Monaco, Consolas, "Courier New", monospace;
+
+//==
+//== Color palette
+//== ======================================= ==//
+
+$palette-light-blue: #3c8dbc; // Primary
+$palette-red       : #dd4b39; // Danger
+$palette-green     : #00a65a; // Success
+$palette-aqua      : #00c0ef; // Info
+$palette-yellow    : #f39c12; // Warning
+
+$palette-blue    : #0073b7;
+$palette-navy    : #001f3f;
+$palette-teal    : #39cccc;
+$palette-olive   : #3d9970;
+$palette-lime    : #01ff70;
+$palette-orange  : #ff851b;
+$palette-fuchsia : #f012be;
+$palette-purple  : #605ca8;
+$palette-maroon  : #d81b60;
+$palette-black   : #111;
+$gray-lte: #d2d6de;
+
+//==
+//== Semantic colors
+//== ======================================= ==//
+
+$wt-accent-color: #d149d0;
+$text-muted     : lighten(#000, 46.7%);
+
+$wt-second-color     : #25628f;
+$wt-second-color-dark: #21577f;
+
+$color-primary: $palette-light-blue;
+
+$color-info   : $palette-aqua;
+$color-success: $palette-green;
+$color-warning: $palette-yellow;
+$color-danger : $palette-red;
+
+$color-link      : #42b983;
+$color-link-hover: #42a5f5;
+
+$background-base: #222d32;
+$background-base-dark: darken($background-base, 3%);
+$color-text-base: #8896a1;
+
+
+//==
+//== Forms
+//== ======================================= ==//
+
+$checkbox-size: 18px;
+$checkbox-border: 2px;
+$radio-size: $checkbox-size;
+$radio-border: $checkbox-border;
+
+
+//==
+//== Code
+//== ======================================= ==//
+
+$pre-bg:                      transparent;
+$pre-color:                   $color-text-base;
+$pre-border-color:            darken($pre-color, 25%);
+
+$code-color:                  darken($palette-lime, 8%);
+$code-bg:                     darken($background-base, 5%);
+
+$kbd-color:                   #fff !default;
+$kbd-bg:                      #333 !default;
+
+
+//==
+//== Tables
+//== ======================================= ==//
+
+$table-cell-padding:            8px;
+$table-condensed-cell-padding:  5px;
+
+$table-bg-accent:               #f9f9f9;
+$table-bg-hover:                #f5f5f5;
+$table-bg-active:               $table-bg-hover;
+
+$table-border-color:            #ddd;
+
+//==
+//== Dashboard sidebar
+//== ======================================= ==//
+
+$sidebar-width: 230px;
+
+$dashboard-sidebar-bg         : darken($background-base, 3%);
+$dashboard-sidebar-bg-hover   : darken($dashboard-sidebar-bg, 2%);
+$dashboard-sidebar-color      : lighten($dashboard-sidebar-bg, 60%);
+$dashboard-sidebar-color-hover: #fff;
+$dashboard-sidebar-active-color: $palette-aqua;
+
+$dashboard-sidebar-submenu-bg         : lighten($dashboard-sidebar-bg, 5%);
+$dashboard-sidebar-submenu-color      : lighten($dashboard-sidebar-submenu-bg, 40%);
+$dashboard-sidebar-submenu-hover-color: #fff;
+
+//==
+//== Navbar
+//== ======================================= ==//
+
+$app-navbar-background      : $palette-light-blue;
+$app-navbar-background-hover: darken($app-navbar-background, 5%);
+$app-navbar-color           : #fff;
+$app-navbar-color-hover     : lighten($app-navbar-color, 0);
+
+$navbar-height-rhythm : 2;
+$navbar-padding-rhythm: 0.25;
+
+
+//==
+//== Boxes
+//== ======================================= ==//
+
+$box2-border-radius: 4px;
+$box2-border-top-width: 3px;
+$box2-divider-color: rgba(#fff, 0.05);
+$box2-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+
+$box2-theme-default: $color-text-base;
+$box2-theme-primary: $color-primary;
+$box2-theme-info   : $color-info;
+$box2-theme-danger : $color-danger;
+$box2-theme-warning: $color-warning;
+$box2-theme-success: $color-success;
+
+
+//==
+//== Page header
+//== ======================================= ==//
+
+$page-header-font-size: 26px;
+
+
+//==
+//== Alerts
+//== ======================================= ==//
+
+$alert-padding:               0.5;
+$alert-border-radius:         3px;
+
+$alert-success-bg:            $color-success;
+$alert-success-text:          #fff;
+
+$alert-info-bg:               $color-info;
+$alert-info-text:             #fff;
+
+$alert-warning-bg:            $color-warning;
+$alert-warning-text:          #fff;
+
+$alert-danger-bg:             $color-danger;
+$alert-danger-text:           #fff;
+
+//==
+//== Misc.
+//== ======================================= ==//
+
+$blockquote-border-color: adjust_hue(desaturate(darken($color-text-base, 20%), 2%), 2);
+$blockquote-small-color : $gray-lte;
+$blockquote-font-size   : ($rhythm-base-font-size * 1.25);
+
+@import "cfg-headings";
+@import "cfg-buttons";
+
+
+$shadow-bar: 0 3px 7px rgba(0, 0, 0, 0.3);
+
+//== Transition global options
+$transition-speed: .25s;
+$transition-fn   : ease-in-out;
+
+//== Disabled cursor for form controls and buttons.
+$cursor-disabled:   not-allowed;
+
+//@import "../bootstrap-sass/bootstrap/variables";
+//@import "adminLTE-vars";

@@ -1,7 +1,7 @@
 /*!
  * WofhTools
  * File: router/routes-dashboard.js
- * © 2019 delphinpro <delphinpro@gmail.com>
+ * © 2019 delphinpro <delphinpro@yandex.ru>
  * licensed under the MIT license
  */
 
@@ -18,18 +18,19 @@ let children = [];
 children.push({ path: 'worlds', component: Worlds, meta: { crumbsText: 'Worlds', pageTitle: 'Worlds' } });
 
 if ((process.env.NODE_ENV === 'development') && (process.env.WEBPACK_TARGET !== 'node')) {
-    children.push({ path: 'css/:id', component: CssElements, meta: { crumbsText: 'CSS Elements', pageTitle: '' } });
+  children.push({ path: 'css/:id', component: CssElements, meta: { crumbsText: 'CSS Elements', pageTitle: '' } });
 }
 
 children.push(error404Route);
 
+/** @var Array<RouteConfig> */
 export const dashboardRoutes = [
-    {
-        path: '/dashboard',
-        name: 'dashboard',
-        component: Dashboard,
-        beforeEnter: requireAuthenticated,
-        meta: { crumbsText: 'Dashboard', pageTitle: 'Dashboard' },
-        children: children,
-    },
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: Dashboard,
+    beforeEnter: requireAuthenticated,
+    meta: { crumbsText: 'Dashboard', pageTitle: 'Dashboard' },
+    children: children,
+  },
 ];

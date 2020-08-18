@@ -1,0 +1,122 @@
+//==
+//== Helper classes
+//== ======================================= ==//
+
+/* Helpers */
+
+// @formatter:off
+
+@include make-grid-utilities();
+
+//==
+//== Contextual colors
+//== ======================================= ==//
+
+.text-muted { color: $text-muted; }
+
+// TODO text-variant
+//@include text-emphasis-variant('.text-primary', $brand-primary);
+//@include text-emphasis-variant('.text-success', $state-success-text);
+//@include text-emphasis-variant('.text-info',    $state-info-text);
+//@include text-emphasis-variant('.text-warning', $state-warning-text);
+//@include text-emphasis-variant('.text-danger',  $state-danger-text);
+
+.text-red        { color: $palette-red        !important; }
+.text-yellow     { color: $palette-yellow     !important; }
+.text-aqua       { color: $palette-aqua       !important; }
+.text-blue       { color: $palette-blue       !important; }
+.text-black      { color: $palette-black      !important; }
+.text-light-blue { color: $palette-light-blue !important; }
+.text-green      { color: $palette-green      !important; }
+.text-gray       { color: $gray-lte           !important; }
+.text-navy       { color: $palette-navy       !important; }
+.text-teal       { color: $palette-teal       !important; }
+.text-olive      { color: $palette-olive      !important; }
+.text-lime       { color: $palette-lime       !important; }
+.text-orange     { color: $palette-orange     !important; }
+.text-fuchsia    { color: $palette-fuchsia    !important; }
+.text-purple     { color: $palette-purple     !important; }
+.text-maroon     { color: $palette-maroon     !important; }
+
+.bg-primary { color: #fff; }
+//@include bg-variant('.bg-primary', $brand-primary);
+//@include bg-variant('.bg-success', $state-success-bg);
+//@include bg-variant('.bg-info',    $state-info-bg);
+//@include bg-variant('.bg-warning', $state-warning-bg);
+//@include bg-variant('.bg-danger',  $state-danger-bg);
+
+.bg-gray       { color: #000; background-color: $gray-lte !important; }
+.bg-gray-light { background-color: #f7f7f7; }
+.bg-black      { background-color: $palette-black      !important; }
+.bg-red        { background-color: $palette-red        !important; }
+.bg-yellow     { background-color: $palette-yellow     !important; }
+.bg-aqua       { background-color: $palette-aqua       !important; }
+.bg-blue       { background-color: $palette-blue       !important; }
+.bg-light-blue { background-color: $palette-light-blue !important; }
+.bg-green      { background-color: $palette-green      !important; }
+.bg-navy       { background-color: $palette-navy       !important; }
+.bg-teal       { background-color: $palette-teal       !important; }
+.bg-olive      { background-color: $palette-olive      !important; }
+.bg-lime       { background-color: $palette-lime       !important; }
+.bg-orange     { background-color: $palette-orange     !important; }
+.bg-fuchsia    { background-color: $palette-fuchsia    !important; }
+.bg-purple     { background-color: $palette-purple     !important; }
+.bg-maroon     { background-color: $palette-maroon     !important; }
+
+//Set of Active Background Colors
+.bg-gray-active       { color: #000; background-color: darken($gray-lte, 10%)          !important; }
+.bg-black-active      { background-color: darken($palette-black, 10%)     !important; }
+.bg-red-active        { background-color: darken($palette-red, 6%)        !important; }
+.bg-yellow-active     { background-color: darken($palette-yellow, 6%)     !important; }
+.bg-aqua-active       { background-color: darken($palette-aqua, 6%)       !important; }
+.bg-blue-active       { background-color: darken($palette-blue, 10%)      !important; }
+.bg-light-blue-active { background-color: darken($palette-light-blue, 6%) !important; }
+.bg-green-active      { background-color: darken($palette-green, 5%)      !important; }
+.bg-navy-active       { background-color: darken($palette-navy, 2%)       !important; }
+.bg-teal-active       { background-color: darken($palette-teal, 5%)       !important; }
+.bg-olive-active      { background-color: darken($palette-olive, 5%)      !important; }
+.bg-lime-active       { background-color: darken($palette-lime, 5%)       !important; }
+.bg-orange-active     { background-color: darken($palette-orange, 5%)     !important; }
+.bg-fuchsia-active    { background-color: darken($palette-fuchsia, 5%)    !important; }
+.bg-purple-active     { background-color: darken($palette-purple, 5%)     !important; }
+.bg-maroon-active     { background-color: darken($palette-maroon, 3%)     !important; }
+
+//Disabled!
+[class^="bg-"].disabled { opacity:.65; }
+
+// Alignment
+
+.page-center {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+// vertical rhythm helpers
+
+@include vertical-rhythm-helpers();
+
+/////////////////////
+.type-title {
+  @include margin-leader(1);
+  position: relative;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &::after {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    margin-top: -1px;
+    content: '';
+    opacity: 0.4;
+    background: currentColor;
+  }
+}
+
+/* End helpers */

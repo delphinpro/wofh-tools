@@ -1,0 +1,78 @@
+////
+/// delphinpro <delphinpro@yandex.ru>
+/// copyright © 2019 delphinpro
+/// licensed under the MIT license
+////
+
+/*==
+ *==
+ *== ======================================= ==*/
+
+body {
+  .toast-top-right {
+    top: rhythm($navbar-height-rhythm + 0.25);
+    right: rhythm(0.5);
+    max-height: calc(100% - #{rhythm($navbar-height-rhythm + 0.25)});
+  }
+
+  .cxlt-toastr-container {
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: $z-toast;
+    @include webkit-scrollbar($color-text-base, $size: 5px);
+  }
+
+  .cxlt-toastr-container > :hover {
+    cursor: default;
+    box-shadow: none;
+  }
+
+  .cxlt-toastr-container > div {
+    @include margin-trailer(0.25);
+    width: 350px;
+    padding: 0;
+    opacity: 1;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .toast-title,
+  .toast-close-button {
+    @include font(15px, 0.75);
+    font-weight: 400;
+  }
+
+  .toast-title {
+    padding: rhythm(0.25) rhythm(0.75 + 0.25 * 2) rhythm(0.25) rhythm(0.5);
+    background: rgba(black, 0.2);
+    font-family: $wt-family-head;
+  }
+
+  .toast-message {
+    @include font(13px, 0.75);
+    padding: rhythm(0.25) rhythm(0.5) rhythm(0.5);
+    font-weight: 400;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .toast-title + .toast-message {
+  }
+
+  .toast-icon {
+    display: none;
+  }
+
+  .toast-close-button {
+    top: 0;
+    right: 0;
+    width: rhythm(0.75 + 0.25 * 2);
+    height: rhythm(0.75 + 0.25 * 2);
+  }
+
+  .toast-info {
+    background-color: $color-info;
+  }
+}

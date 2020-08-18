@@ -1,84 +1,89 @@
-<script>/*!
- * WofhTools
- * View: HomeView.vue
- * © 2019 delphinpro <delphinpro@gmail.com>
- * licensed under the MIT license
- */
-
-
-import { mapGetters } from 'vuex';
-import { WORLDS_LIST } from '@/store/modules/store-stat';
+<!--
+  WofhTools
+  View: HomeView.vue
+  © 2019-2020 delphinpro <delphinpro@yandex.ru>
+  licensed under the MIT license
+-->
+<script>
+import { mapActions, mapGetters } from 'vuex';
 import { cbSortWorldsByStarted } from '@/utils';
 
 
 export default {
-    name: 'Home',
+  name: 'Home',
 
-    data: () => ({}),
+  data: () => ({}),
 
-    computed: {
-        ...mapGetters([
-            'activeWorlds',
-        ]),
+  computed: {
+    ...mapGetters([
+      'activeWorlds',
+    ]),
 
-        worlds: {
-            get() {
-                return this.activeWorlds.sort(cbSortWorldsByStarted);
-            },
-        },
+    worlds: {
+      get() {
+        if (!this.activeWorlds) return [];
+        return this.activeWorlds.sort(cbSortWorldsByStarted);
+      },
     },
+  },
 
-    mounted() {
-        this.$store.dispatch(WORLDS_LIST);
-    },
+  mounted() {
+    this.updateWorlds();
+  },
 
-    methods: {},
+  methods: {
+    ...mapActions([
+      'updateWorlds',
+    ]),
+  },
 };
 </script>
 
 <template>
-    <div class="container pb-2">
-        <PageHeader title="Действующие миры Путей истории"/>
+  <div class="container pb-2">
+    <!--    <PageHeader title="Действующие миры Путей истории"/>-->
+    <PageHeader title="Список"/>
 
-        <div v-if="worlds.length">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th class="text-left" colspan="2">Мир</th>
-                    <th class="text-left">Название</th>
-                    <th class="text-center">Регистрация</th>
-                    <th class="text-right">Старт</th>
-                    <th class="text-right">Длительность</th>
-                    <th class="text-right">Статистика</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="world in worlds">
-                    <td style="width: 20px; padding-right: 0;">
-                        <SvgIcon
-                            viewBox="0 0 512 341.4"
-                            size="20"
-                            :height="20*341.4/512"
-                            :name="world.flag"
-                        />
-                    </td>
-                    <td>{{world.signU}}</td>
-                    <td>{{world.title}}</td>
-                    <td class="text-center" :class="world['can_reg']?'text-green':'text-red'">
-                        <SvgIcon :name="world['can_reg']?'check':'cross'" :size="world['can_reg']?'1rem':'0.75rem'"/>
-                    </td>
-                    <td class="text-right">{{world.fmtStarted}}</td>
-                    <td class="text-right">{{world['fmtAge']}}</td>
-                    <td class="text-right">
-                        <a href="#" v-if="world.fmtUpdatedStat">{{world.fmtUpdatedStat}}</a>
-                        <div v-else>Отсутствует
-                            <SvgIcon name="cross" size="0.75rem"/>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <Alert title="Нет данных о действующих мирах" v-else></Alert>
+    <div v-if="worlds.length">
+      <table class="table">
+        <thead>
+        <tr>
+          <th class="text-left" colspan="2">Мир</th>
+          <th class="text-left">Название</th>
+          <th class="text-center">Регистрация</th>
+          <th class="text-right">Старт</th>
+          <th class="text-right">Длительность</th>
+          <th class="text-right">Статистика</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="world in worlds">
+          <td style="width: 20px; padding-right: 0;">
+            <img
+              :src="'/assets/images/icons/'+world.flag+'.svg'"
+              :alt="world.flag"
+              :height="20*341.4/512"
+              width="20"
+            >
+          </td>
+          <td>{{ world.signU }}</td>
+          <td>{{ world.title }}</td>
+          <td :class="world['can_reg']?'text-green':'text-red'" class="text-center">
+            <FaIcon :name="world['can_reg']?'c.check':'times'"/>
+          </td>
+          <td class="text-right">{{ world.fmtStarted }}</td>
+          <td class="text-right">{{ world['fmtAge'] }}</td>
+          <td class="text-right">
+            <a href="#" v-if="world.fmtUpdatedStat">{{ world.fmtUpdatedStat }}</a>
+            <div v-else>Отсутствует
+              <FaIcon name="times"/>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
+    <Alert title="Нет данных о действующих мирах" v-else></Alert>
+  </div>
+
 </template>
