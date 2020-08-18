@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Schema;
  * @copyright   copyright © 2020 delphinpro
  * @license     licensed under the MIT license
  */
-class MigrationHelper extends Migration
+trait MigrationHelper
 {
     protected function dropColumnSafe(string $table, string $column)
     {
