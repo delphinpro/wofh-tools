@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             $user = \App\User::firstOrNew(['email' => $userEmail]);
             if (!$user->exists) {
                 $user->fill([
-                    'name'              => $userName,
+                    'username'          => $userName,
                     'email'             => $userEmail,
                     'email_verified_at' => new \Carbon\Carbon('2017-07-07 07:07:07'),
                     'password'          => bcrypt($userPass),

@@ -10,7 +10,7 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 
-class User extends Administrator
+class User extends Administrator implements \Illuminate\Contracts\Auth\Authenticatable
 {
     use Notifiable;
     use Authenticatable;

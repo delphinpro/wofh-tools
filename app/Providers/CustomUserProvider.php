@@ -34,7 +34,7 @@ class CustomUserProvider implements UserProvider
      */
     public function retrieveByToken($identifier, $token)
     {
-        return User::find($identifier)->whereRememberToken($token);
+        return User::find($identifier)->whereRememberToken($token)->first();
     }
 
 
@@ -61,7 +61,12 @@ class CustomUserProvider implements UserProvider
      */
     public function retrieveByCredentials(array $credentials)
     {
-        return User::where('email', $credentials['username'])->first();
+        /** @var User $model */
+        $model = User::where('email', $credentials['username'])
+            ->orWhere('username', $credentials['username'])
+            ->first();
+
+        return $model;
     }
 
 
