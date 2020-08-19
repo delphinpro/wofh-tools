@@ -82,7 +82,7 @@ class AdminSeeder extends Seeder
             ],
             [
                 'parent_id' => 0,
-                'order'     => 2,
+                'order'     => 3,
                 'title'     => 'Админ',
                 'icon'      => 'fa-tasks',
                 'uri'       => '',
@@ -121,6 +121,13 @@ class AdminSeeder extends Seeder
                 'title'     => 'Лог операций',
                 'icon'      => 'fa-history',
                 'uri'       => 'auth/logs',
+            ],
+            [
+                'parent_id' => 0,
+                'order'     => 2,
+                'title'     => 'Игровые миры',
+                'icon'      => 'fa-globe',
+                'uri'       => 'worlds?_scope_=visible',
             ],
         ]);
 

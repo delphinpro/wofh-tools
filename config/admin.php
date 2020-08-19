@@ -133,7 +133,7 @@ return [
         'providers'   => [
             'admin' => [
                 'driver' => 'custom',
-                'model' => App\User::class,
+                'model'  => App\User::class,
             ],
         ],
 
