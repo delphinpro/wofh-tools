@@ -222,7 +222,7 @@ return [
 
     'operation_log' => [
 
-        'enable'          => true,
+        'enable'          => env('ADMIN_OPERATION_LOG', false),
 
         /*
          * Only logging allowed methods in the list
