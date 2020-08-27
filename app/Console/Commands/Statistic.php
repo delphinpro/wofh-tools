@@ -11,12 +11,13 @@
 namespace App\Console\Commands;
 
 
+use App\Traits\CliListCommands;
 use Illuminate\Console\Command;
 
 
 class Statistic extends Command
 {
-    use ListCommands;
+    use CliListCommands;
 
 
     protected $signature = 'stat';

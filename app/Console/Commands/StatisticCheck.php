@@ -10,16 +10,16 @@
 namespace App\Console\Commands;
 
 
-use App\Console\Traits\CliHelper;
-use App\Console\Traits\ConsoleColors;
 use App\Repositories\WorldRepository;
 use App\Services\Wofh;
+use App\Traits\CliColors;
+use App\Traits\CliHelper;
 use Illuminate\Console\Command;
 
 
 class StatisticCheck extends Command
 {
-    use ConsoleColors;
+    use CliColors;
     use CliHelper;
 
 

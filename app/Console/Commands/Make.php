@@ -10,12 +10,13 @@
 namespace App\Console\Commands;
 
 
+use App\Traits\CliListCommands;
 use Illuminate\Console\Command;
 
 
-class MakeCommand extends Command
+class Make extends Command
 {
-    use ListCommands;
+    use CliListCommands;
 
 
     protected $signature = 'make';

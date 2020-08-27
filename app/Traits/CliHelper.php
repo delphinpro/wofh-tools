@@ -7,7 +7,7 @@
  * @license     licensed under the MIT license
  */
 
-namespace App\Console\Traits;
+namespace App\Traits;
 
 
 use App\Console\Color;

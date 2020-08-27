@@ -10,8 +10,8 @@
 namespace App\Console\Commands;
 
 
-use App\Console\Traits\ConsoleColors;
 use App\Repositories\WorldRepository;
+use App\Traits\CliColors;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Schema;
 
 class StatisticClear extends Command
 {
-    use ConsoleColors;
+    use CliColors;
 
 
     /** @var string */

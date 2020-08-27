@@ -7,19 +7,18 @@
  * @license     licensed under the MIT license
  */
 
-namespace App\Console\Commands;
+namespace App\Traits;
 
 
 use App\Console\Color;
-use App\Console\Traits\ConsoleColors;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 
 
-trait ListCommands
+trait CliListCommands
 {
-    use ConsoleColors;
+    use CliColors;
 
 
     /**

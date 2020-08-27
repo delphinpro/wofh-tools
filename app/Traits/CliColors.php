@@ -8,14 +8,14 @@
  */
 
 
-namespace App\Console\Traits;
+namespace App\Traits;
 
 
 use App\Console\Color;
 use Illuminate\Support\Str;
 
 
-trait ConsoleColors
+trait CliColors
 {
     protected $colorEnabled = true;
 
