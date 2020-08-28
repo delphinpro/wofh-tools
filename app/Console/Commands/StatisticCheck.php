@@ -59,6 +59,6 @@ class StatisticCheck extends Command
     {
         $this->alert('Updating the status of worlds');
 
-        return $this->checkWorlds() ? 0 : 1;
+        return $this->checkWorlds() === true ? 1 : 0;
     }
 }

@@ -132,6 +132,13 @@ class AdminSeeder extends Seeder
             ],
             [
                 'parent_id' => 0,
+                'order'     => 3,
+                'title'     => 'Лог статистики',
+                'icon'      => 'fa-bar-chart',
+                'uri'       => 'stat-logs',
+            ],
+            [
+                'parent_id' => 0,
                 'order'     => 4,
                 'title'     => 'Файл-менеджер',
                 'icon'      => 'fa-folder-open',

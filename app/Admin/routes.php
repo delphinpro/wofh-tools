@@ -16,5 +16,6 @@ Route::group([
     $router->get('/', 'HomeController@index')->name('dashboard');
 
     $router->resource('worlds', 'WorldController')->names('worlds');
+    $router->resource('stat-logs', 'StatLogController')->names('stat-logs');
 
 });

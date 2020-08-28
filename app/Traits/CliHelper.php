@@ -50,7 +50,7 @@ trait CliHelper
 
 
     /**
-     * @return bool
+     * @return bool|string
      */
     protected function checkWorlds(): bool
     {
@@ -66,7 +66,7 @@ trait CliHelper
 
             $this->error('[FAIL] '.$e->getMessage());
 
-            return false;
+            return $e->getMessage();
         }
     }
 }
