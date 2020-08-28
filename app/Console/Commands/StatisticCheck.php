@@ -10,16 +10,16 @@
 namespace App\Console\Commands;
 
 
-use App\Console\Traits\CliHelper;
-use App\Console\Traits\ConsoleColors;
 use App\Repositories\WorldRepository;
 use App\Services\Wofh;
+use App\Traits\CliColors;
+use App\Traits\CliHelper;
 use Illuminate\Console\Command;
 
 
 class StatisticCheck extends Command
 {
-    use ConsoleColors;
+    use CliColors;
     use CliHelper;
 
 
@@ -59,6 +59,6 @@ class StatisticCheck extends Command
     {
         $this->alert('Updating the status of worlds');
 
-        return $this->checkWorlds() ? 0 : 1;
+        return $this->checkWorlds() === true ? 1 : 0;
     }
 }

@@ -3,12 +3,20 @@
 namespace App;
 
 
+use Encore\Admin\Auth\Database\Administrator;
+use Encore\Admin\Auth\Database\HasPermissions;
+use Encore\Admin\Traits\DefaultDatetimeFormat;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 
-class User extends \TCG\Voyager\Models\User
+class User extends Administrator implements \Illuminate\Contracts\Auth\Authenticatable
 {
     use Notifiable;
+    use Authenticatable;
+    use HasPermissions;
+    use DefaultDatetimeFormat;
+
 
     /**
      * The attributes that are mass assignable.

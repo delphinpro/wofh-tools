@@ -26,8 +26,7 @@ Homestead.yaml
 *.njsproj
 *.sln
 *.sw*
-_ide_helper.php
-_ide_helper_models.php
+_ide_helper*.php
 .phpstorm.meta.php
 
 
@@ -46,8 +45,11 @@ yarn-error.log*
 
 /*.phar
 /*.bat
+/*.cmd
 .DS_Store
 robots.txt
-artisan.cmd
 /public/assets/
 /public/mix-manifest.json
+/public/vendor/laravel-admin/laravel-admin.min.css
+/public/vendor/laravel-admin/laravel-admin.min.js
+/public/vendor/laravel-admin/minify-manifest.json
