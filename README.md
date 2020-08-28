@@ -17,9 +17,17 @@ Repository of wofh-tools.ru
 
 ```
 git clone git@github.com:delphinpro/wofh-tools.git .
+
 composer install --no-dev
 composer dumpautoload
+
 php artisan storage:link
+php artisan key:generate
+php artisan migrate:install
+php artisan migrate
+
+npm install
+npm run production
 ```
 
 > __Note:__ В development среде устанавливать пакеты без ключа `--no-dev`
