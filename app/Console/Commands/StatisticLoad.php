@@ -235,7 +235,7 @@ class StatisticLoad extends Command
                 $this->error($message);
                 $this->log([
                     'operation' => StatLog::STAT_LOAD,
-                    'status'    => StatLog::STATUS_OK,
+                    'status'    => StatLog::STATUS_ERR,
                     'world_id'  => $world->id,
                     'message'   => $message,
                 ]);
