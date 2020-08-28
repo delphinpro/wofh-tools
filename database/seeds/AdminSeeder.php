@@ -128,7 +128,7 @@ class AdminSeeder extends Seeder
                 'order'     => 2,
                 'title'     => 'Игровые миры',
                 'icon'      => 'fa-globe',
-                'uri'       => 'worlds?_scope_=visible',
+                'uri'       => 'worlds',
             ],
             [
                 'parent_id' => 0,
