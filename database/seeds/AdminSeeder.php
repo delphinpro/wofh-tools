@@ -77,7 +77,7 @@ class AdminSeeder extends Seeder
                 'parent_id' => 0,
                 'order'     => 1,
                 'title'     => 'Панель управления',
-                'icon'      => 'fa-bar-chart',
+                'icon'      => 'fa-th',
                 'uri'       => '/',
             ],
             [
@@ -122,12 +122,20 @@ class AdminSeeder extends Seeder
                 'icon'      => 'fa-history',
                 'uri'       => 'auth/logs',
             ],
+
             [
                 'parent_id' => 0,
                 'order'     => 2,
                 'title'     => 'Игровые миры',
                 'icon'      => 'fa-globe',
                 'uri'       => 'worlds?_scope_=visible',
+            ],
+            [
+                'parent_id' => 0,
+                'order'     => 4,
+                'title'     => 'Файл-менеджер',
+                'icon'      => 'fa-folder-open',
+                'uri'       => 'media',
             ],
         ]);
 
