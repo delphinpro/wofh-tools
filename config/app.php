@@ -230,4 +230,6 @@ return [
 
     ],
 
+
+    'stat_load_interval' => env('STAT_LOAD_INTERVAL', 6),
 ];
