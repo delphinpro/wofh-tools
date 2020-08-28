@@ -305,7 +305,7 @@ class Wofh
             $world->version = '1.4';
 
             // Для новых миров метка времени старта — текущее время
-            if (!$world->started_at && $world->working) {
+            if (!$world->started_at && $world->working && !$world->stat_loaded_at) {
                 $world->started_at = new Carbon();
             }
 
