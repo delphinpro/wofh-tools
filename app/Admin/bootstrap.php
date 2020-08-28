@@ -2,6 +2,7 @@
 
 /**
  * Laravel-admin - admin builder based on Laravel.
+ *
  * @author z-song <https://github.com/z-song>
  *
  * Bootstraper for Admin.
@@ -17,5 +18,15 @@
  * Admin::js('/packages/prettydocs/js/main.js');
  *
  */
+
+use App\Admin\EXtensions\Nav\LinksRight;
+use Encore\Admin\Facades\Admin;
+
+
+Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
+
+    $navbar->right(new LinksRight());
+
+});
 
 Encore\Admin\Form::forget(['map', 'editor']);
