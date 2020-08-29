@@ -23,3 +23,7 @@ Route::get('/stat', 'StatController@index')->name('stat');
 Route::group(['prefix' => 'api'], function () {
     Route::get('/worlds', 'ApiController@worlds');
 });
+
+Route::fallback(function(){
+    return view('errors.404');
+});
