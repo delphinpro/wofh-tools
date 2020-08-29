@@ -25,6 +25,8 @@ $NODE_ENV: development;
 //
 @import "parts/toastr";
 //
+@import "components/FaIcon";
+//
 @import "components/Alert";
 @import "components/App";
 @import "components/AppBreadcrumbs";
@@ -35,7 +37,6 @@ $NODE_ENV: development;
 @import "components/Checkbox";
 @import "components/CloseButton";
 @import "components/ErrorBox";
-@import "components/FaIcon";
 @import "components/InfoBox";
 @import "components/Inputbox";
 @import "components/Loading";

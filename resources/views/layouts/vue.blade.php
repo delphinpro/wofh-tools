@@ -26,9 +26,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    {{--    <link rel="dns-prefetch" href="//fonts.gstatic.com">--}}
-    {{--    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">--}}
-
+    <style>.fa-icon{height:1.1em;width:1.1em;fill: currentColor;}</style>
     <link href="{{ asset('assets/main.css') }}" rel="stylesheet">
 </head>
 <body>
