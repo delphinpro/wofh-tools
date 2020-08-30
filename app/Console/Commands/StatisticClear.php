@@ -24,7 +24,7 @@ class StatisticClear extends Command
 
     /** @var string */
     protected $signature = 'stat:clear
-                            {--w= : Process only for one world (required)}';
+                            {world : Process only for one world (ex. ru23)}';
 
     /** @var string */
     protected $description = 'Clear statistic for one world';
@@ -52,25 +52,15 @@ class StatisticClear extends Command
      */
     public function handle()
     {
-        $oneWorld = $this->option('w');
-
-        $this->alert('Clear statistic for '.$oneWorld);
-
-        if (!$oneWorld) {
-            $this->error('Required parameter --w');
-
-            return 1;
-        }
-
-        $world = $this->worldRepository->bySign($oneWorld);
-
-        if (!$world) {
-            $this->error('Invalid parameter --w');
-
-            return 1;
-        }
+        $sign = $this->argument('world');
+        $this->alert('Clear statistic for '.$sign);
+        $world = $this->worldRepository->bySign($sign);
 
         try {
+            if (!$world) {
+                throw new \Exception('Invalid argument {world}');
+            }
+
             DB::beginTransaction();
 
             Schema::dropIfExists("z_{$world->sign}_towns");
