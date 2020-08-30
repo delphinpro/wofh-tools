@@ -140,7 +140,7 @@ class StatisticLoad extends Command
             }
 
             if ($this->noDownloadRequired($world)) {
-                $this->coloredLine('No download required', Color::YELLOW);
+                $this->colorLine('No download required', Color::YELLOW);
                 $this->log([
                     'operation' => StatLog::STATISTIC_LOAD,
                     'status'    => StatLog::STATUS_INFO,
@@ -163,7 +163,7 @@ class StatisticLoad extends Command
                     throw new \Exception('The server returned an empty response');
                 }
 
-                $this->coloredLine(
+                $this->colorLine(
                     sprintf(' SUCCESS (%ss)', round(microtime(true) - $start, 2)),
                     Color::GREEN
                 );
@@ -189,7 +189,7 @@ class StatisticLoad extends Command
                     $world->stat_loaded_at = $time;
                     $world->save();
                     $message = 'File exists: '.$filename;
-                    $this->coloredLine($message, Color::YELLOW);
+                    $this->colorLine($message, Color::YELLOW);
                     $this->log([
                         'operation' => StatLog::STATISTIC_LOAD,
                         'status'    => StatLog::STATUS_WARN,
@@ -215,7 +215,7 @@ class StatisticLoad extends Command
                 $world->save();
 
                 $this->line('FILE  : '.$filename);
-                $this->coloredLine('New last time download '.
+                $this->colorLine('New last time download '.
                     $time->format(Wofh::STD_DATETIME).
                     ' '.
                     $time->timezone->getName(), Color::GREEN);
@@ -244,7 +244,7 @@ class StatisticLoad extends Command
         }
 
         $this->output->newLine();
-        $this->coloredLine(
+        $this->colorLine(
             sprintf('Complete. Total time: (%ss)', round(microtime(true) - $startTotal, 2)),
             Color::MAGENTA
         );
@@ -261,7 +261,7 @@ class StatisticLoad extends Command
 
         if (!$statLoadedAt) {
 
-            $this->coloredLine('never', Color::GREEN);
+            $this->colorLine('never', Color::GREEN);
 
             return false;
 

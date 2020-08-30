@@ -75,6 +75,7 @@ class StatisticClear extends Command
 
             $world->stat_loaded_at = null;
             $world->stat_updated_at = null;
+            $world->update_started_at = null;
             $world->save();
 
             DB::commit();

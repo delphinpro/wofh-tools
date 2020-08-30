@@ -15,6 +15,12 @@ use App\Console\Color;
 use Illuminate\Support\Str;
 
 
+/**
+ * Trait CliColors
+ *
+ * @package App\Traits
+ * @property \Illuminate\Console\OutputStyle output
+ */
 trait CliColors
 {
     protected $colorEnabled = true;
@@ -31,9 +37,9 @@ trait CliColors
     {
         $length = Str::length(strip_tags($string)) + 12;
 
-        $this->coloredLine(str_repeat('*', $length), Color::CYAN);
-        $this->coloredLine('*     '.$string.'     *', Color::CYAN);
-        $this->coloredLine(str_repeat('*', $length), Color::CYAN);
+        $this->colorLine(str_repeat('*', $length), Color::CYAN);
+        $this->colorLine('*     '.$string.'     *', Color::CYAN);
+        $this->colorLine(str_repeat('*', $length), Color::CYAN);
 
         $this->output->newLine();
     }
@@ -47,11 +53,11 @@ trait CliColors
      */
     public function error($string, $verbosity = null)
     {
-        $this->coloredLine($string, Color::RED);
+        $this->colorLine($string, Color::RED);
     }
 
 
-    public function coloredLine($message, $codes)
+    public function colorLine($message, $codes)
     {
         $this->line($this->makeString($message, $codes));
     }
