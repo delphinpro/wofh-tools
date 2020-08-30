@@ -94,7 +94,7 @@ class StatLogController extends AdminController
             return '<div class="text-center">'.self::$statuses[$value]['icon'].'</div>';
         });
         $grid->column('world_id', __('World'))->display(function ($value) {
-            return '<div class="text-right"><code>'.resolve(Wofh::class)->idToSign($value).'</code></div>';
+            return '<div class="text-right"><code>'.($value ? resolve(Wofh::class)->idToSign($value) : '—').'</code></div>';
         });
         $grid->column('message', __('Message'));
         $grid->column('created_at', __('Time'))->display(function ($value) {
