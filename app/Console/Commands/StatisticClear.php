@@ -80,6 +80,7 @@ class StatisticClear extends Command
             DB::commit();
 
             $this->info('Statistic cleared for '.$world->sign);
+            $this->line('');
 
         } catch (\Throwable $e) {
 

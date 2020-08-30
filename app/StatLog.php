@@ -14,11 +14,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class StatLog extends Model
 {
-    const STAT_LOAD   = 1;
-    const STAT_UPDATE = 2;
+    const STATISTIC_LOAD   = 1;
+    const STATISTIC_UPDATE = 2;
 
-    const STATUS_OK  = 0;
-    const STATUS_ERR = 1;
+    const STATUS_OK   = 0;
+    const STATUS_ERR  = 1;
     const STATUS_WARN = 2;
     const STATUS_INFO = 3;
 

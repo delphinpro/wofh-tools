@@ -95,7 +95,7 @@ class StatisticLoad extends Command
         if ($checkStatus !== true) {
             $this->line('Exit');
             $this->log([
-                'operation' => StatLog::STAT_LOAD,
+                'operation' => StatLog::STATISTIC_LOAD,
                 'status'    => StatLog::STATUS_ERR,
                 'world_id'  => null,
                 'message'   => $checkStatus,
@@ -130,7 +130,7 @@ class StatisticLoad extends Command
                     $message = sprintf('Error. Can not create dir: %s', $realDataPath);
                     $this->error($message);
                     $this->log([
-                        'operation' => StatLog::STAT_LOAD,
+                        'operation' => StatLog::STATISTIC_LOAD,
                         'status'    => StatLog::STATUS_ERR,
                         'world_id'  => $world->id,
                         'message'   => $message,
@@ -142,7 +142,7 @@ class StatisticLoad extends Command
             if ($this->noDownloadRequired($world)) {
                 $this->coloredLine('No download required', Color::YELLOW);
                 $this->log([
-                    'operation' => StatLog::STAT_LOAD,
+                    'operation' => StatLog::STATISTIC_LOAD,
                     'status'    => StatLog::STATUS_INFO,
                     'world_id'  => $world->id,
                     'message'   => 'No download required',
@@ -191,7 +191,7 @@ class StatisticLoad extends Command
                     $message = 'File exists: '.$filename;
                     $this->coloredLine($message, Color::YELLOW);
                     $this->log([
-                        'operation' => StatLog::STAT_LOAD,
+                        'operation' => StatLog::STATISTIC_LOAD,
                         'status'    => StatLog::STATUS_WARN,
                         'world_id'  => $world->id,
                         'message'   => $message,
@@ -203,7 +203,7 @@ class StatisticLoad extends Command
                     $message = 'Error saving file: '.$filename;
                     $this->error($message);
                     $this->log([
-                        'operation' => StatLog::STAT_LOAD,
+                        'operation' => StatLog::STATISTIC_LOAD,
                         'status'    => StatLog::STATUS_ERR,
                         'world_id'  => $world->id,
                         'message'   => $message,
@@ -221,7 +221,7 @@ class StatisticLoad extends Command
                     $time->timezone->getName(), Color::GREEN);
 
                 $this->log([
-                    'operation' => StatLog::STAT_LOAD,
+                    'operation' => StatLog::STATISTIC_LOAD,
                     'status'    => StatLog::STATUS_OK,
                     'world_id'  => $world->id,
                     'message'   => 'SUCCESS. '.
@@ -234,7 +234,7 @@ class StatisticLoad extends Command
                 $this->error(' ERROR');
                 $this->error($message);
                 $this->log([
-                    'operation' => StatLog::STAT_LOAD,
+                    'operation' => StatLog::STATISTIC_LOAD,
                     'status'    => StatLog::STATUS_ERR,
                     'world_id'  => $world->id,
                     'message'   => $message,
@@ -281,7 +281,7 @@ class StatisticLoad extends Command
                 $message = $e->getMessage();
                 $this->error('[ERR] '.$message);
                 $this->log([
-                    'operation' => StatLog::STAT_LOAD,
+                    'operation' => StatLog::STATISTIC_LOAD,
                     'status'    => StatLog::STATUS_ERR,
                     'world_id'  => $world->id,
                     'message'   => $message,
