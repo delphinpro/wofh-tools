@@ -107,7 +107,7 @@ class StatisticLoad extends Command
         $worlds = $this->worldRepository->working();
         $startTotal = microtime(true);
 
-        $fs = Storage::disk('stat');
+        $fs = Storage::disk(config('app.stat_disk'));
 
         /** @var \App\World $world */
         foreach ($worlds as $world) {
