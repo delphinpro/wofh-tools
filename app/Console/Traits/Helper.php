@@ -50,15 +50,20 @@ trait Helper
 
 
     /**
+     * @param bool $printTable Печатать таблицу статуса миров
+     *
      * @return bool|string
      */
-    protected function checkWorlds(): bool
+    protected function checkWorlds(bool $printTable = true): bool
     {
         try {
 
             $this->wofh->check();
             $this->info('[OK] The status of worlds has been updated successfully');
-            $this->printStatusOfWorlds($this->worldRepository->all());
+
+            if ($printTable) {
+                $this->printStatusOfWorlds($this->worldRepository->all());
+            }
 
             return true;
 

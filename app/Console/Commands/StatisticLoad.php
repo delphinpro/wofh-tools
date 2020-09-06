@@ -91,7 +91,7 @@ class StatisticLoad extends Command
         $this->line('Updating the status of worlds...');
 
 
-        $checkStatus = $this->checkWorlds();
+        $checkStatus = $this->checkWorlds($printTable = false);
         if ($checkStatus !== true) {
             $this->line('Exit');
             $this->log([
