@@ -11,12 +11,12 @@ namespace App\Console\Commands;
 
 
 use App\Console\Color;
+use App\Console\Traits\Helper;
 use App\Repositories\WorldRepository;
 use App\Services\Json;
 use App\Services\Wofh;
 use App\StatLog;
 use App\Traits\CliColors;
-use App\Traits\CliHelper;
 use App\Traits\StatLogger;
 use App\World;
 use Carbon\Carbon;
@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Storage;
 class StatisticLoad extends Command
 {
     use CliColors;
-    use CliHelper;
+    use Helper;
     use StatLogger;
 
 

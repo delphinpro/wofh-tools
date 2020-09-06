@@ -7,7 +7,7 @@
  * @license     licensed under the MIT license
  */
 
-namespace App\Traits;
+namespace App\Console\Traits;
 
 
 use App\Console\Color;
@@ -15,7 +15,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 
-trait CliHelper
+trait Helper
 {
     /**
      * @param \App\World[]|\Illuminate\Support\Collection $worlds
