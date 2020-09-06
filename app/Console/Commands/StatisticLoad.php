@@ -20,6 +20,7 @@ use App\Traits\CliColors;
 use App\Traits\StatLogger;
 use App\World;
 use Carbon\Carbon;
+use Carbon\CarbonTimeZone;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -32,6 +33,9 @@ class StatisticLoad extends Command
     use StatLogger;
 
 
+    const FILENAME_PATTERN = '~_(\d+)\.json$~';
+
+
     /** @var string */
     protected $signature = 'stat:load
                             {world? : Process only for one world (ex. ru23)}';
@@ -42,11 +46,6 @@ class StatisticLoad extends Command
     /** @var \App\Services\Wofh */
     private $wofh;
 
-    /** @var false */
-    private $useZip;
-
-    /** @var false */
-    private $limit;
     /**
      * @var \App\Services\Json
      */
@@ -70,10 +69,6 @@ class StatisticLoad extends Command
         $this->wofh = $wofh;
         $this->json = $json;
         $this->worldRepository = $worldRepository;
-
-        //todo: params
-        $this->useZip = false;
-        $this->limit = false;
     }
 
 
@@ -100,7 +95,6 @@ class StatisticLoad extends Command
                 'world_id'  => null,
                 'message'   => $checkStatus,
             ]);
-
             return 1;
         }
 
@@ -116,16 +110,14 @@ class StatisticLoad extends Command
                 continue;
             }
 
-            $title = 'Load statistic '.strtoupper($world->sign);
-            $this->output->section($title);
+            $this->output->section('Load statistic '.strtoupper($world->sign));
 
             $statisticLink = $this->wofh->getStatisticLink($world->id);
-            // todo: 'statistic' брать из конфига или рутовую папку сделать (??)
-            $realDataPath = str_replace('/', DIRECTORY_SEPARATOR, 'statistic/'.$world->sign);
+            $realDataPath = 'statistic/'.$world->sign;
             $this->line('SOURCE: '.$statisticLink);
             $this->line('DEST  : '.$this->trimPath($fs->path($realDataPath)));
 
-            if (!is_dir($realDataPath)) {
+            if (!$fs->exists($realDataPath)) {
                 if (!$fs->makeDirectory($realDataPath)) {
                     $message = sprintf('Error. Can not create dir: %s', $realDataPath);
                     $this->error($message);
@@ -139,7 +131,9 @@ class StatisticLoad extends Command
                 }
             }
 
-            if ($this->noDownloadRequired($world)) {
+            $this->line('Destination directory is ready');
+
+            if ($this->noDownloadRequired($world, $realDataPath)) {
                 $this->colorLine('No download required', Color::YELLOW);
                 $this->log([
                     'operation' => StatLog::STATISTIC_LOAD,
@@ -153,24 +147,25 @@ class StatisticLoad extends Command
             $start = microtime(true);
             $this->line('Start downloading...');
 
-            $now = Carbon::now(new \DateTimeZone(config('app.timezone')));
+            $now = Carbon::now(new CarbonTimeZone(config('app.timezone')));
 
             try {
                 $data = Http::get($statisticLink)->throw()->json();
-                // $data = $this->json->decode($fs->get($realDataPath.'/'.'ru44_test.json'));
+                // $data = $this->json->decode($fs->get($realDataPath.'/'.config('app.stat_test_filename')));
 
                 if (!$data) {
                     throw new \Exception('The server returned an empty response');
                 }
 
                 $this->colorLine(
-                    sprintf(' SUCCESS (%ss)', round(microtime(true) - $start, 2)),
+                    sprintf('Download SUCCESS (%ss)', round(microtime(true) - $start, 2)),
                     Color::GREEN
                 );
 
                 $timestampFromData = $data['time'];
                 $time = Carbon::createFromTimestamp($timestampFromData, config('app.timezone'));
                 if ($time->greaterThan($now)) {
+                    $this->warn('Timestamp from server: '.$time->format(Wofh::STD_DATETIME).' '.$time->timezone->getName());
                     // С сервера приходит какой-то странный таймстамп.
                     // Временная метка из будущего.
                     // Или я туплю. В общем пока этот хак здесь побудет
@@ -230,9 +225,8 @@ class StatisticLoad extends Command
                 ]);
 
             } catch (\Exception $e) {
-                $message = $e->getMessage();
-                $this->error(' ERROR');
-                $this->error($message);
+                $message = get_class($e).': '.$e->getMessage();
+                $this->error('[ERR] '.$message);
                 $this->log([
                     'operation' => StatLog::STATISTIC_LOAD,
                     'status'    => StatLog::STATUS_ERR,
@@ -253,41 +247,72 @@ class StatisticLoad extends Command
     }
 
 
-    protected function noDownloadRequired(World $world)
+    /**
+     * @param \App\World $world
+     * @param string     $dataPath
+     *
+     * @return \Carbon\Carbon|null
+     */
+    protected function getStatLoadedAt(World $world, string $dataPath)
     {
         $statLoadedAt = $world->stat_loaded_at;
 
-        $this->output->write('Last time download: ');
+        if (!$statLoadedAt) {
+            $fs = Storage::disk(config('app.stat_disk'));
+            $allFiles = collect($fs->allFiles($dataPath))
+                ->filter(function ($item) { return preg_match(self::FILENAME_PATTERN, $item); })
+                ->sort();
+
+            if (!$allFiles->count()) {
+                return null;
+            }
+
+            $lastFile = $allFiles->pop();
+
+            if (!preg_match(self::FILENAME_PATTERN, $lastFile, $m)) {
+                return null;
+            }
+
+            $statLoadedAt = Carbon::createFromTimestamp($m[1], config('app.timezone'));
+            $world->stat_loaded_at = $statLoadedAt;
+            $world->save();
+        }
+
+        return $statLoadedAt;
+    }
+
+
+    protected function noDownloadRequired(World $world, string $dataPath)
+    {
+        $statLoadedAt = $this->getStatLoadedAt($world, $dataPath);
 
         if (!$statLoadedAt) {
 
-            $this->colorLine('never', Color::GREEN);
-
+            $this->line('Last time download: '.$this->makeString('never', Color::GREEN));
             return false;
 
         } else {
 
-            $this->line($statLoadedAt->format(Wofh::STD_DATETIME).' '.$statLoadedAt->timezone->getName());
-
-            $now = Carbon::now(new \DateTimeZone(config('app.timezone')));
-
-            $this->line('Current time:       '.$now->format(Wofh::STD_DATETIME).' '.$now->timezone->getName());
-
-            $diff = $now->diffAsCarbonInterval($statLoadedAt);
-
             try {
-                $this->line('Diff time:          '.$diff->locale('en')->forHumans());
+
+                $now = Carbon::now(new CarbonTimeZone(config('app.timezone')));
+                $diff = $now->diffAsCarbonInterval($statLoadedAt);
+
+                $this->line('Last time download: '.$statLoadedAt->format(Wofh::STD_DATETIME).' '.$statLoadedAt->timezone->getName());
+                $this->line('Current time:       '.$now->format(Wofh::STD_DATETIME).' '.$now->timezone->getName());
+                $this->line('Diff time:          '.$diff->locale('en')->forHumans($short = true).' [ '.$diff->totalHours.'h ]');
+
             } catch (\Exception $e) {
-                $message = $e->getMessage();
-                $this->error('[ERR] '.$message);
+
+                $this->error('[ERR] '.$e->getMessage());
                 $this->log([
                     'operation' => StatLog::STATISTIC_LOAD,
                     'status'    => StatLog::STATUS_ERR,
                     'world_id'  => $world->id,
-                    'message'   => $message,
+                    'message'   => $e->getMessage(),
                 ]);
-
                 return false;
+
             }
 
             if ($diff->totalHours >= config('app.stat_load_interval')) {
