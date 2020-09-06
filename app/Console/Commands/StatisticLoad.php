@@ -34,7 +34,7 @@ class StatisticLoad extends Command
 
     /** @var string */
     protected $signature = 'stat:load
-                            {--w= : Process only for one world (--w=ru23)}';
+                            {world? : Process only for one world (ex. ru23)}';
 
     /** @var string */
     protected $description = 'Load statistic from server of game';
@@ -84,7 +84,7 @@ class StatisticLoad extends Command
      */
     public function handle()
     {
-        $oneWorld = $this->option('w');
+        $sign = $this->argument('world');
 
         $this->alert('Download statistic');
         $this->line('The download interval is set to '.config('app.stat_load_interval').' hours');
@@ -112,7 +112,7 @@ class StatisticLoad extends Command
         /** @var \App\World $world */
         foreach ($worlds as $world) {
 
-            if ($oneWorld && $oneWorld !== $world->sign) {
+            if ($sign && $sign !== $world->sign) {
                 continue;
             }
 
