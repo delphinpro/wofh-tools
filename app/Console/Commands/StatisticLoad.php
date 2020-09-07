@@ -11,13 +11,13 @@ namespace App\Console\Commands;
 
 
 use App\Console\Color;
+use App\Console\Services\Statistic\StatisticLogger;
 use App\Console\Traits\Helper;
 use App\Repositories\WorldRepository;
 use App\Services\Json;
 use App\Services\Wofh;
 use App\StatLog;
 use App\Traits\CliColors;
-use App\Traits\StatLogger;
 use App\World;
 use Carbon\Carbon;
 use Carbon\CarbonTimeZone;
@@ -30,7 +30,6 @@ class StatisticLoad extends Command
 {
     use CliColors;
     use Helper;
-    use StatLogger;
 
 
     const FILENAME_PATTERN = '~_(\d+)\.json$~';
@@ -54,21 +53,26 @@ class StatisticLoad extends Command
     /** @var \App\Repositories\WorldRepository */
     protected $worldRepository;
 
+    /** @var \App\Console\Services\Statistic\StatisticLogger */
+    protected $logger;
+
 
     /**
      * Create a new command instance.
      *
-     * @param \App\Services\Wofh                $wofh
-     * @param \App\Services\Json                $json
-     * @param \App\Repositories\WorldRepository $worldRepository
+     * @param \App\Services\Wofh                              $wofh
+     * @param \App\Services\Json                              $json
+     * @param \App\Repositories\WorldRepository               $worldRepository
+     * @param \App\Console\Services\Statistic\StatisticLogger $logger
      */
-    public function __construct(Wofh $wofh, Json $json, WorldRepository $worldRepository)
+    public function __construct(Wofh $wofh, Json $json, WorldRepository $worldRepository, StatisticLogger $logger)
     {
         parent::__construct();
 
         $this->wofh = $wofh;
         $this->json = $json;
         $this->worldRepository = $worldRepository;
+        $this->logger = $logger;
     }
 
 
@@ -88,13 +92,7 @@ class StatisticLoad extends Command
 
         $checkStatus = $this->checkWorlds($printTable = false);
         if ($checkStatus !== true) {
-            $this->line('Exit');
-            $this->log([
-                'operation' => StatLog::STATISTIC_LOAD,
-                'status'    => StatLog::STATUS_ERR,
-                'world_id'  => null,
-                'message'   => $checkStatus,
-            ]);
+            $this->logger->error(StatLog::STATISTIC_LOAD, $checkStatus);
             return 1;
         }
 
@@ -120,13 +118,7 @@ class StatisticLoad extends Command
             if (!$fs->exists($realDataPath)) {
                 if (!$fs->makeDirectory($realDataPath)) {
                     $message = sprintf('Error. Can not create dir: %s', $realDataPath);
-                    $this->error($message);
-                    $this->log([
-                        'operation' => StatLog::STATISTIC_LOAD,
-                        'status'    => StatLog::STATUS_ERR,
-                        'world_id'  => $world->id,
-                        'message'   => $message,
-                    ]);
+                    $this->logger->error(StatLog::STATISTIC_LOAD, $message, $world->id);
                     continue;
                 }
             }
@@ -134,13 +126,7 @@ class StatisticLoad extends Command
             $this->line('Destination directory is ready');
 
             if ($this->noDownloadRequired($world, $realDataPath)) {
-                $this->colorLine('No download required', Color::YELLOW);
-                $this->log([
-                    'operation' => StatLog::STATISTIC_LOAD,
-                    'status'    => StatLog::STATUS_INFO,
-                    'world_id'  => $world->id,
-                    'message'   => 'No download required',
-                ]);
+                $this->logger->info(StatLog::STATISTIC_LOAD, 'No download required', $world->id);
                 continue;
             }
 
@@ -184,25 +170,13 @@ class StatisticLoad extends Command
                     $world->stat_loaded_at = $time;
                     $world->save();
                     $message = 'File exists: '.$filename;
-                    $this->colorLine($message, Color::YELLOW);
-                    $this->log([
-                        'operation' => StatLog::STATISTIC_LOAD,
-                        'status'    => StatLog::STATUS_WARN,
-                        'world_id'  => $world->id,
-                        'message'   => $message,
-                    ]);
+                    $this->logger->warn(StatLog::STATISTIC_LOAD, $message, $world->id);
                     continue;
                 }
 
                 if (!$fs->put($realDataPath.'/'.$filename, $stat)) {
                     $message = 'Error saving file: '.$filename;
-                    $this->error($message);
-                    $this->log([
-                        'operation' => StatLog::STATISTIC_LOAD,
-                        'status'    => StatLog::STATUS_ERR,
-                        'world_id'  => $world->id,
-                        'message'   => $message,
-                    ]);
+                    $this->logger->error(StatLog::STATISTIC_LOAD, $message, $world->id);
                     continue;
                 }
 
@@ -215,24 +189,17 @@ class StatisticLoad extends Command
                     ' '.
                     $time->timezone->getName(), Color::GREEN);
 
-                $this->log([
-                    'operation' => StatLog::STATISTIC_LOAD,
-                    'status'    => StatLog::STATUS_OK,
-                    'world_id'  => $world->id,
-                    'message'   => 'SUCCESS. '.
-                        'File ['.$filename.']. '.
-                        'LoadedAt: '.$time->format(Wofh::STD_DATETIME).' '.$time->timezone->getName(),
-                ]);
+                $this->logger->ok(
+                    StatLog::STATISTIC_LOAD,
+                    'SUCCESS. '.
+                    'File ['.$filename.']. '.
+                    'LoadedAt: '.$time->format(Wofh::STD_DATETIME).' '.$time->timezone->getName(),
+                    $world->id
+                );
 
             } catch (\Exception $e) {
                 $message = get_class($e).': '.$e->getMessage();
-                $this->error('[ERR] '.$message);
-                $this->log([
-                    'operation' => StatLog::STATISTIC_LOAD,
-                    'status'    => StatLog::STATUS_ERR,
-                    'world_id'  => $world->id,
-                    'message'   => $message,
-                ]);
+                $this->logger->error(StatLog::STATISTIC_LOAD, $message, $world->id);
                 continue;
             }
         }
@@ -304,13 +271,7 @@ class StatisticLoad extends Command
 
             } catch (\Exception $e) {
 
-                $this->error('[ERR] '.$e->getMessage());
-                $this->log([
-                    'operation' => StatLog::STATISTIC_LOAD,
-                    'status'    => StatLog::STATUS_ERR,
-                    'world_id'  => $world->id,
-                    'message'   => $e->getMessage(),
-                ]);
+                $this->logger->error(StatLog::STATISTIC_LOAD, $e->getMessage(), $world->id);
                 return false;
 
             }
