@@ -44,6 +44,7 @@ class StatisticLogger
 
     public function ok(int $operation, string $message, $worldId = null)
     {
+        $message = $this->truncateMessage($message);
         $this->console->line(''.$message);
         $this->log([
             'operation' => $operation,
@@ -56,6 +57,7 @@ class StatisticLogger
 
     public function error(int $operation, string $message, $worldId = null)
     {
+        $message = $this->truncateMessage($message);
         $this->console->error('[ERR] '.$message);
         $this->log([
             'operation' => $operation,
@@ -68,6 +70,7 @@ class StatisticLogger
 
     public function info(int $operation, string $message, $worldId = null)
     {
+        $message = $this->truncateMessage($message);
         $this->console->info('[INFO] '.$message);
         $this->log([
             'operation' => $operation,
@@ -80,6 +83,7 @@ class StatisticLogger
 
     public function warn(int $operation, string $message, $worldId = null)
     {
+        $message = $this->truncateMessage($message);
         $this->console->warn('[WARN] '.$message);
         $this->log([
             'operation' => $operation,
@@ -87,5 +91,12 @@ class StatisticLogger
             'world_id'  => $worldId,
             'message'   => $message,
         ]);
+    }
+
+
+    private function truncateMessage($message)
+    {
+        if (mb_strlen($message) > 300) $message = mb_substr($message, 0, 300);
+        return $message;
     }
 }
