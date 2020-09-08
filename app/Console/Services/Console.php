@@ -11,7 +11,7 @@ namespace App\Console\Services;
 
 
 use Illuminate\Console\OutputStyle;
-use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
@@ -44,6 +44,7 @@ class Console
     const BG_CYAN    = 46;
     const BG_WHITE   = 47;
 
+
     /** @var \Illuminate\Console\OutputStyle */
     private $output;
 
@@ -55,43 +56,82 @@ class Console
         $this->output = new OutputStyle($input, $output);
     }
 
-
-    public function line($string, $style = null)
+    public function line($string = '', $codes = null)
     {
-        $styled = $style ? "<$style>$string</$style>" : $string;
-        $this->output->writeln($styled);
+        $this->output->writeln($this->makeString($string, $codes));
     }
-
 
     public function info($string)
     {
-        $this->line($string, 'info');
+        $this->line($string, self::BLUE);
     }
 
-
-    public function error($string)
+    public function success($string)
     {
-        $this->line($string, 'error');
+        $this->line($string, self::GREEN);
     }
-
 
     public function warn($string)
     {
-        if (!$this->output->getFormatter()->hasStyle('warning')) {
-            $style = new OutputFormatterStyle('yellow');
+        $this->line($string, self::YELLOW);
+    }
 
-            $this->output->getFormatter()->setStyle('warning', $style);
+    public function error($string)
+    {
+        $this->line($string, Console::RED);
+    }
+
+    public function alert($string)
+    {
+        $length = Str::length(strip_tags($string)) + 12;
+
+        $this->line(str_repeat('*', $length), self::CYAN);
+        $this->line('*     '.$string.'     *', self::CYAN);
+        $this->line(str_repeat('*', $length), self::CYAN);
+    }
+
+    public function title(string $string)
+    {
+        $this->line();
+        $this->info($string);
+        $this->info(str_repeat('=', Str::length($string)));
+    }
+
+    public function section(string $string)
+    {
+        $this->line();
+        $this->line($string, self::MAGENTA);
+        $this->line(str_repeat('-', Str::length($string)), self::MAGENTA);
+    }
+
+    public function stackTrace(\Throwable $e)
+    {
+        foreach ($e->getTrace() as $index => $item) {
+            $call = '';
+            if (array_key_exists('file', $item)) {
+                $file = $this->trimPath($item['file']);
+                if (Str::startsWith($file, '~/vendor')) break;
+                $call .= $file.':'.$item['line'].'  ';
+            }
+            if (array_key_exists('class', $item)) $call .= $item['class'];
+            if (array_key_exists('type', $item)) $call .= $item['type'];
+            if (array_key_exists('function', $item)) $call .= $item['function'].'()';
+            if ($call) $this->error('[ '.$index.' ] '.$call);
+        }
+    }
+
+    public function makeString($string, $codes = null)
+    {
+        if (is_int($codes)) {
+            $codes = (array)$codes;
         }
 
-        $this->line($string, 'warning');
+        if (is_array($codes)) {
+            return "\033[".join(';', $codes).'m'.$string."\033[0m";
+        }
+
+        return $string;
     }
-
-
-    public function section(string $message)
-    {
-        $this->output->section($message);
-    }
-
 
     public function trimPath($path)
     {
