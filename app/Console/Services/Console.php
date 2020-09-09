@@ -11,7 +11,9 @@ namespace App\Console\Services;
 
 
 use Illuminate\Console\OutputStyle;
+use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
@@ -102,6 +104,32 @@ class Console
         $this->line();
         $this->line($string, self::MAGENTA);
         $this->line(str_repeat('-', Str::length($string)), self::MAGENTA);
+    }
+
+    /**
+     * Format input to textual table.
+     *
+     * @param  array  $headers
+     * @param  \Illuminate\Contracts\Support\Arrayable|array  $rows
+     * @param  string  $tableStyle
+     * @param  array  $columnStyles
+     * @return void
+     */
+    public function table(array $headers, $rows, $tableStyle = 'default', array $columnStyles = [])
+    {
+        $table = new Table($this->output);
+
+        if ($rows instanceof Arrayable) {
+            $rows = $rows->toArray();
+        }
+
+        $table->setHeaders((array) $headers)->setRows($rows)->setStyle($tableStyle);
+
+        foreach ($columnStyles as $columnIndex => $columnStyle) {
+            $table->setColumnStyle($columnIndex, $columnStyle);
+        }
+
+        $table->render();
     }
 
     public function stackTrace(\Throwable $e)
