@@ -25,7 +25,7 @@ class Wofh
 {
     const STD_DATETIME = 'Y-m-d H:i:s';
     // const STD_DATE_H   = 'Y-m-d__H-00-00';
-    const DATE_FILE    = 'Y-m-d_H';
+    const DATE_FILE = 'Y-m-d_H';
 
     const SERVER_LANG_RU  = 1;
     const SERVER_LANG_EN  = 2;
@@ -34,6 +34,33 @@ class Wofh
 
     const SERVER_TYPE_SPEED = 1;
     const SERVER_TYPE_TEST  = 2;
+
+    const EVENT_TOWN_CREATE  = 101;
+    const EVENT_TOWN_RENAME  = 102;
+    const EVENT_TOWN_LOST    = 103;
+    const EVENT_TOWN_DESTROY = 104;
+
+    const EVENT_ACCOUNT_CREATE         = 201;
+    const EVENT_ACCOUNT_COUNTRY_IN     = 202;
+    const EVENT_ACCOUNT_COUNTRY_OUT    = 203;
+    const EVENT_ACCOUNT_COUNTRY_CHANGE = 204;
+    const EVENT_ACCOUNT_DELETE         = 205;
+    const EVENT_ACCOUNT_RENAME         = 206;
+    const EVENT_ACCOUNT_ROLE_IN        = 207;
+    const EVENT_ACCOUNT_ROLE_OUT       = 208;
+    const EVENT_ACCOUNT_RATING_HIDE    = 209;
+    const EVENT_ACCOUNT_RATING_SHOW    = 210;
+
+    const EVENT_COUNTRY_CREATE  = 301;
+    const EVENT_COUNTRY_FLAG    = 302;
+    const EVENT_COUNTRY_RENAME  = 303;
+    const EVENT_COUNTRY_DESTROY = 304;
+    const EVENT_COUNTRY_PEACE   = 305;
+    const EVENT_COUNTRY_WAR     = 306;
+
+    const EVENT_WONDER_DESTROY  = 401;
+    const EVENT_WONDER_CREATE   = 402;
+    const EVENT_WONDER_ACTIVATE = 403;
 
     private static $serversLang = [
         'ru'  => self::SERVER_LANG_RU,
