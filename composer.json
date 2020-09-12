@@ -17,6 +17,7 @@
         "guzzlehttp/guzzle": "^6.3",
         "laravel-admin-ext/media-manager": "^1.1",
         "laravel/framework": "^7.0",
+        "laravel/passport": "^9.3",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1",
         "matthiasmullie/minify": "^1.3",
