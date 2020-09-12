@@ -1,1 +1,1 @@
-@extends('layouts.vue')
+@extends('vue')

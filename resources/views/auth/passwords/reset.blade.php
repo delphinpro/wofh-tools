@@ -1,4 +1,4 @@
-@extends('layouts.vue')
+@extends('vue')
 {{--
 
 @section('content')

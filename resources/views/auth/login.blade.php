@@ -1,4 +1,4 @@
-@extends('layouts.vue')
+@extends('vue')
 {{--
 @extends('layouts.app')
 
