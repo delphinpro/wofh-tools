@@ -10,17 +10,13 @@ import { mergeState } from '@/utils/mergeState';
 import { dateFormat } from '@/utils/date';
 import { ucFirst } from '@/utils';
 
-
-export const WORLDS_LIST = 'updateWorlds';
-export const CURRENT_WORLD = 'CURRENT_WORLD';
-
 const state = mergeState({
-  worlds: [],
+  worlds      : [],
   currentWorld: null,
 }, 'stat');
 
 const getters = {
-  allWorlds: state => state.worlds.filter(() => true),
+  allWorlds   : state => state.worlds.filter(() => true),
   activeWorlds: state => state.worlds.filter(item => item.working),
   closedWorlds: state => state.worlds.filter(item => !item.working),
   currentWorld: state => state.currentWorld,
@@ -28,7 +24,6 @@ const getters = {
 
 const mutations = {
   updateWorlds: (state, worlds) => {
-
     for (let i in worlds) {
       if (!worlds.hasOwnProperty(i)) continue;
       let sign = worlds[i].sign;
@@ -39,10 +34,10 @@ const mutations = {
       worlds[i].fmtUpdatedConst = dateFormat(worlds[i].const_updated_at);
       worlds[i].flag = /ru/i.test(sign) ? 'flag-ru' : 'flag-uk';
     }
-
     state.worlds = worlds;
   },
-  [CURRENT_WORLD]: (state, world) => state.currentWorld = world,
+
+  setCurrentWorld: (state, world) => state.currentWorld = world,
 };
 
 const actions = {
@@ -69,9 +64,9 @@ const actions = {
    * @param sign
    * @returns {Promise<void>}
    */
-  async [CURRENT_WORLD]({ commit }, sign) {
+  async setCurrentWorld({ commit }, sign) {
     let world = [...state.worlds].filter(w => w.sign === sign);
-    if (world.length) commit(CURRENT_WORLD, world[0]);
+    if (world.length) commit('setCurrentWorld', world[0]);
   },
 };
 

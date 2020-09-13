@@ -5,9 +5,8 @@
   licensed under the MIT license
 -->
 <script>
-import { CURRENT_WORLD, WORLDS_LIST } from '@/store/modules/store-stat';
+import { mapActions } from 'vuex';
 import InfoBox from '@/components/Widgets/InfoBox';
-
 
 export default {
   name: 'StatWorldView',
@@ -17,10 +16,9 @@ export default {
   },
 
   data: () => ({
-    stat: [],
+    stat     : [],
     countries: [],
   }),
-
 
   computed: {
     pageTitle() {
@@ -32,8 +30,8 @@ export default {
   },
 
   async mounted() {
-    await this.$store.dispatch(WORLDS_LIST);
-    await this.$store.dispatch(CURRENT_WORLD, this.$route.params['sign']);
+    await this.updateWorlds();
+    await this.setCurrentWorld(this.$route.params['sign']);
     let { args, commonStat, countries } = await this.getCommonStat(this.$store.getters.currentWorld.sign);
     console.log(args, commonStat, countries);
     this.stat = commonStat[0];
@@ -41,6 +39,10 @@ export default {
   },
 
   methods: {
+    ...mapActions([
+      'updateWorlds',
+      'setCurrentWorld',
+    ]),
     getCommonStat(sign) {
       return this.axios.get(`/stat/${sign}`);
     },
