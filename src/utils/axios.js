@@ -5,8 +5,8 @@
  */
 
 import Vue from 'vue';
-import { colors } from '@/utils/console-tools.js';
 import trimRootPath from '@/utils/trimRootPath.js';
+import { CONSOLE_WARN, CONSOLE_DANGER, CONSOLE_INFO } from '@/constants.js';
 
 /**
  * Vue Axios plugin
@@ -47,7 +47,7 @@ export default function plugin(Vue, axios) {
 export function requestSuccess(config) {
   if (process.env.NODE_ENV === 'development') {
 
-    console.log(`%c<Interceptor> Request [${config.baseURL + config.url}]`, colors.warn);
+    console.log(`%c<Interceptor> Request [${config.baseURL + config.url}]`, CONSOLE_WARN);
 
   }
   return config;
@@ -103,7 +103,7 @@ export function responseFailed(error) {
 
   if (process.env.NODE_ENV === 'development') {
 
-    console.log(`%c<Interceptor> Response Error ${httpStatusCode} with message: ${error.response.data.message}`, colors.warn);
+    console.log(`%c<Interceptor> Response Error ${httpStatusCode} with message: ${error.response.data.message}`, CONSOLE_WARN);
 
     message = `Request [${error.config.method.toUpperCase()}] ${error.config.url}`;
 
@@ -120,8 +120,8 @@ export function responseFailed(error) {
       message += `<br>${err.file}:${err.line}.<br>`;
       message += `<br>See console.`;
 
-      console.groupCollapsed(`%c${err.type}: ${err.message}`, colors.danger);
-      console.log(`%cFile:    ${err.file}:${err.line}`, colors.info);
+      console.groupCollapsed(`%c${err.type}: ${err.message}`, CONSOLE_DANGER);
+      console.log(`%cFile:    ${err.file}:${err.line}`, CONSOLE_INFO);
       err.trace.map(item => console.log(trimRootPath(item)));
       console.groupEnd();
     }
