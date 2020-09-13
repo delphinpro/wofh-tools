@@ -52,7 +52,7 @@ const actions = {
     let force = data && data.force;
     if (state.worlds.length && !force) return;
 
-    let { worlds } = await Vue.axios.get('/worlds');
+    let worlds = await Vue.axios.get('/world?active=true');
 
     commit('updateWorlds', worlds);
   },

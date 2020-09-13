@@ -11,6 +11,5 @@ export function ucFirst(str) {
 }
 
 export function cbSortWorldsByStarted(a, b) {
-  if (a.started_at === b.started_at) return 0;
-  return a.started_at < b.started_at ? 1 : -1;
+  return b.started_at - a.started_at;
 }

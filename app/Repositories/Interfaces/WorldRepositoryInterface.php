@@ -19,15 +19,13 @@ interface WorldRepositoryInterface
 {
     public function create(array $attributes);
 
-
     public function all($columns = ['*']);
-
 
     public function find(int $id, $columns = ['*']);
 
-
     public function working(int $id = null);
 
+    public function active();
 
     public function bySign(string $sign);
 }

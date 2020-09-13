@@ -20,10 +20,6 @@ Auth::routes([
 Route::get('/', 'IndexController@show')->name('home');
 Route::get('/stat', 'StatController@index')->name('stat');
 
-Route::group(['prefix' => 'api'], function () {
-    Route::get('/worlds', 'ApiController@worlds');
-});
-
 Route::fallback(function(){
-    return view('errors.404');
+    return response()->view('errors.404', [], 404);
 });

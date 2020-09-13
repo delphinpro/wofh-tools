@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 
 use App\Services\State;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Routing\Controller as BaseController;
 
 
 class Controller extends BaseController
@@ -18,9 +18,16 @@ class Controller extends BaseController
     /** @var \App\Services\State */
     protected $state;
 
-
     public function __construct(State $state)
     {
         $this->state = $state;
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    protected function view()
+    {
+        return view('vue');
     }
 }

@@ -10,8 +10,8 @@
 namespace App\Repositories;
 
 
-use App\World;
 use App\Services\Wofh;
+use App\World;
 use Illuminate\Support\Collection;
 
 
@@ -25,7 +25,6 @@ class WorldRepository implements Interfaces\WorldRepositoryInterface
     /** @var \App\Services\Wofh */
     protected $wofh;
 
-
     /**
      * WorldRepository constructor.
      *
@@ -36,12 +35,10 @@ class WorldRepository implements Interfaces\WorldRepositoryInterface
         $this->wofh = $wofh;
     }
 
-
     public function create(array $attributes)
     {
         World::create($attributes);
     }
-
 
     /**
      * @param string[] $columns
@@ -56,7 +53,6 @@ class WorldRepository implements Interfaces\WorldRepositoryInterface
         return $this->sort($collection);
     }
 
-
     /**
      * @param int      $id      Идентификатор мира
      * @param string[] $columns Столбики для выборки
@@ -67,7 +63,6 @@ class WorldRepository implements Interfaces\WorldRepositoryInterface
     {
         return World::findOrFail($id, $columns);
     }
-
 
     /**
      * @param int|null $id
@@ -87,6 +82,15 @@ class WorldRepository implements Interfaces\WorldRepositoryInterface
         return $this->sort($collection);
     }
 
+    /**
+     * @return \App\World[]|\Illuminate\Support\Collection
+     */
+    public function active()
+    {
+        $builder = World::where('working', 1)->orWhere('statistic', 1);
+        $collection = $builder->get();
+        return $this->sort($collection);
+    }
 
     /**
      * @param string $sign
@@ -103,7 +107,6 @@ class WorldRepository implements Interfaces\WorldRepositoryInterface
 
         return World::find($id);
     }
-
 
     /**
      * @param \Illuminate\Support\Collection $collection

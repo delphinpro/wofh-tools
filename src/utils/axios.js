@@ -68,8 +68,8 @@ export function requestFailed(error) {
  *== ======================================= ==*/
 
 export function responseSuccess(response) {
+  if (process.env.NODE_ENV === 'development') console.log('<Interceptor> Response',response);
 
-  console.log(response);
   if (response.data.status !== false) {
 
     if (response.data.message) {
@@ -79,7 +79,7 @@ export function responseSuccess(response) {
       });
     }
 
-    return response.data.payload;
+    return response.data;
 
   } else {
 
@@ -90,7 +90,7 @@ export function responseSuccess(response) {
 
   }
 
-  console.log('<Interceptor> Response', response.data);
+  if (process.env.NODE_ENV === 'development') console.log('<Interceptor> Response', response.data);
   return response;
 }
 
