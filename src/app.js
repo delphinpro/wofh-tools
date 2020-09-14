@@ -29,7 +29,6 @@ export function createApp(preloadState = [], url = null) {
   Vue.component('Checkbox', Checkbox);
   Vue.component('RadioButton', RadioButton);
 
-
   const newState = {
     ...store.state,
     ...preloadState,

@@ -5,7 +5,7 @@
   licensed under the MIT license
 -->
 <script>
-import StatHomeView from '@/views/Stat/StatHomeView';
+import StatIndexView from '@/views/Stat/StatIndexView.vue';
 
 
 // const Chart = () => import(/* webpackChunkName: "statistic" */ 'highcharts-vue');
@@ -14,7 +14,7 @@ export default {
   name: 'StatisticView',
 
   components: {
-    StatHomeView,
+    StatIndexView,
     // Chart,
   },
 
@@ -46,7 +46,7 @@ export default {
 
 <template>
   <div class="container pb-2">
-    <StatHomeView v-if="$route.name === 'stat'"></StatHomeView>
+    <StatIndexView v-if="$route.name === 'stat'"/>
     <router-view v-else></router-view>
 
     <!--<Chart :options="chartOptions"/>-->
