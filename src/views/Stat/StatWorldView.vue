@@ -5,7 +5,7 @@
   licensed under the MIT license
 -->
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import InfoBox from '@/components/Widgets/InfoBox';
 
 export default {
@@ -21,11 +21,12 @@ export default {
   }),
 
   computed: {
+    ...mapGetters(['currentWorld']),
     pageTitle() {
-      return this.$store.getters.currentWorld ? `Статистика ${this.$store.getters.currentWorld['signU']}` : '';
+      return this.currentWorld ? `Статистика ${this.currentWorld['signU']}` : '';
     },
     worldAge() {
-      return this.$store.getters.currentWorld ? this.$store.getters.currentWorld.nAge : '';
+      return this.currentWorld ? this.currentWorld.nAge : '';
     },
   },
 

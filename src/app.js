@@ -16,7 +16,6 @@ import Inputbox from '@/components/Forms/Inputbox';
 import Checkbox from '@/components/Forms/Checkbox';
 import RadioButton from '@/components/Forms/RadioButton';
 
-
 export function createApp(preloadState = [], url = null) {
 
   //==
@@ -30,10 +29,13 @@ export function createApp(preloadState = [], url = null) {
   Vue.component('Checkbox', Checkbox);
   Vue.component('RadioButton', RadioButton);
 
-  for (let mutation in preloadState) {
-    if (!preloadState.hasOwnProperty(mutation)) continue;
-    store.commit(mutation, preloadState[mutation]);
-  }
+
+  const newState = {
+    ...store.state,
+    ...preloadState,
+  };
+
+  store.replaceState(newState);
 
   if (url) router.push(url);
 

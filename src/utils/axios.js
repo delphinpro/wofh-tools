@@ -7,6 +7,7 @@
 import Vue from 'vue';
 import trimRootPath from '@/utils/trimRootPath.js';
 import { CONSOLE_WARN, CONSOLE_DANGER, CONSOLE_INFO } from '@/constants.js';
+import { isDev } from '@/utils/index.js';
 
 /**
  * Vue Axios plugin
@@ -45,7 +46,7 @@ export default function plugin(Vue, axios) {
  *== ======================================= ==*/
 
 export function requestSuccess(config) {
-  if (process.env.NODE_ENV === 'development') {
+  if (isDev()) {
 
     console.log(`%c<Interceptor> Request [${config.baseURL + config.url}]`, CONSOLE_WARN);
 
@@ -54,7 +55,7 @@ export function requestSuccess(config) {
 }
 
 export function requestFailed(error) {
-  if (process.env.NODE_ENV === 'development') {
+  if (isDev()) {
 
     // Todo: Do something with request error
     console.log('<Interceptor> Request Error: ', error);
@@ -68,7 +69,7 @@ export function requestFailed(error) {
  *== ======================================= ==*/
 
 export function responseSuccess(response) {
-  if (process.env.NODE_ENV === 'development') console.log('<Interceptor> Response',response);
+  if (isDev()) console.log('<Interceptor> Response',response);
 
   if (response.data.status !== false) {
 
@@ -90,7 +91,7 @@ export function responseSuccess(response) {
 
   }
 
-  if (process.env.NODE_ENV === 'development') console.log('<Interceptor> Response', response.data);
+  if (isDev()) console.log('<Interceptor> Response', response.data);
   return response;
 }
 
@@ -101,7 +102,7 @@ export function responseFailed(error) {
   let title = `${httpStatusCode} ${httpStatusText}`;
   let message = '';
 
-  if (process.env.NODE_ENV === 'development') {
+  if (isDev()) {
 
     console.log(`%c<Interceptor> Response Error ${httpStatusCode} with message: ${error.response.data.message}`, CONSOLE_WARN);
 

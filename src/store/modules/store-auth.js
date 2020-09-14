@@ -7,23 +7,21 @@
 
 import Vue from 'vue';
 import { HTTP_HEADER_AUTHORIZATION, LS_KEY_TOKEN } from '@/constants';
-import { mergeState } from '@/utils/mergeState';
-
 
 export const AUTH_REQUEST = 'AUTH_REQUEST';
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
-const state = mergeState({
+const state = {
   token: null,
-}, 'auth');
+};
 
 try {
 
   state.token = localStorage.getItem(LS_KEY_TOKEN);
 
-} catch ( e ) {}
+} catch (e) {}
 
 const getters = {
   isAuth: state => !!state.token,

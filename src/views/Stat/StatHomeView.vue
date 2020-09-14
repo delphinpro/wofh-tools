@@ -34,7 +34,6 @@ export default {
   },
 
   mounted() {
-    // this.$store.dispatch(WORLDS_LIST, { force: true });
     this.updateWorlds({ force: true });
   },
 
@@ -54,7 +53,6 @@ export default {
 
     getTheme(ts) {
       if (!ts) return null;
-
       return 'info';
     },
   },

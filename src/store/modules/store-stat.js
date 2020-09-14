@@ -6,14 +6,14 @@
  */
 
 import Vue from 'vue';
-import { mergeState } from '@/utils/mergeState';
 import { dateFormat } from '@/utils/date';
 import { ucFirst } from '@/utils';
 
-const state = mergeState({
+const state = {
   worlds      : [],
   currentWorld: null,
-}, 'stat');
+  common      : [],
+};
 
 const getters = {
   allWorlds   : state => state.worlds.filter(() => true),

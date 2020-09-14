@@ -10,7 +10,11 @@ import Toast from 'cxlt-vue2-toastr';
 import axios from 'axios';
 import { createApp } from '@/app';
 import VueAxiosBridge, { requestSuccess, requestFailed, responseSuccess, responseFailed } from '@/utils/axios.js';
-import { HTTP_HEADER_AUTHORIZATION, LS_KEY_TOKEN } from '@/constants';
+import { isDev } from '@/utils';
+import { HTTP_HEADER_AUTHORIZATION, LS_KEY_TOKEN, CONSOLE_DANGER } from '@/constants';
+
+Vue.config.productionTip = false;
+if (isDev()) console.log(`%cVue in development mode.`, CONSOLE_DANGER);
 
 //==
 //== Toast
@@ -41,6 +45,7 @@ Vue.use(VueAxiosBridge, axios.create({
   responseEncoding: 'utf8',
   headers         : {
     'X-Requested-With': 'XMLHttpRequest',
+    'Accept'          : 'application/json',
   },
 
   // Reject only if the status code is greater than or equal to 500
@@ -63,7 +68,7 @@ createApp(window.__STATE__).$mount('#app');
 //== Debug bar
 //== ======================================= ==//
 
-// if (process.env.NODE_ENV === 'development') {
+// if (isDev()) {
 //   const Debugger = () => import('@/components/Debugger/Debugger');
 //   const dbg = document.createElement('div');
 //   dbg.setAttribute('id', 'debugger');

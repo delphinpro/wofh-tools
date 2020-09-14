@@ -10,26 +10,25 @@ import Vuex from 'vuex';
 import auth from '@/store/modules/store-auth';
 import user from '@/store/modules/store-user';
 import stat from '@/store/modules/store-stat';
-import { mergeState } from '@/utils/mergeState';
-
+import { isDev } from '@/utils';
 
 Vue.use(Vuex);
 
-const strict = process.env.NODE_ENV !== 'production';
+const strict = isDev();
 
 export const LOADING_UP = 'loadingUp';
 export const LOADING_DOWN = 'loadingDown';
 
-let state = mergeState({
+let state = {
   projectName: 'Wofh Tools',
-  projectVer: '4.0',
-  loading: 1,
-});
+  projectVer : '4.0',
+  loading    : 1,
+};
 
 const getters = {
   projectName: state => state.projectName,
-  projectVer: state => state.projectVer,
-  loading: state => state.loading > 0,
+  projectVer : state => state.projectVer,
+  loading    : state => state.loading > 0,
 };
 
 const mutations = {

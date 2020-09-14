@@ -7,19 +7,17 @@
 
 import Vue from 'vue';
 import { AUTH_LOGOUT } from '@/store/modules/store-auth';
-import { mergeState } from '@/utils/mergeState';
-
 
 export const USER_REQUEST = 'USER_REQUEST';
 export const USER_SUCCESS = 'USER_SUCCESS';
 export const USER_ERROR = 'USER_ERROR';
 
-const state = mergeState({
+const state = {
   profile: {},
-}, 'user');
+};
 
 const getters = {
-  getProfile: state => state.profile,
+  getProfile     : state => state.profile,
   isProfileLoaded: state => !!state.profile.name,
 };
 
