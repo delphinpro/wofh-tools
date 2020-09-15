@@ -233,6 +233,7 @@ return [
 
     'stat_load_interval' => env('STAT_LOAD_INTERVAL', 6),
     'stat_disk'          => env('STAT_DISK', 'stat'),
-
     'stat_test_filename' => env('STAT_TEST_FILENAME', 'test.json'),
+
+    'artificial_delay_api' => env('ARTIFICIAL_DELAY_API', false),
 ];

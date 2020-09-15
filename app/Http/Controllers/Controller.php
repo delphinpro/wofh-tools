@@ -22,8 +22,9 @@ class Controller extends BaseController
     public function __construct(State $state)
     {
         $this->state = $state;
-        if (request()->isXmlHttpRequest()) {
-            sleep(3);
+
+        if (config('app.artificial_delay_api') && request()->isXmlHttpRequest()) {
+            sleep((int)config('app.artificial_delay_api'));
         }
     }
 
