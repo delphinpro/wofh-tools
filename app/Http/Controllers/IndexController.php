@@ -3,16 +3,11 @@
 namespace App\Http\Controllers;
 
 
-use App\Repositories\WorldRepository;
-
-
 class IndexController extends Controller
 {
-    public function show(WorldRepository $worldRepository)
+    public function show()
     {
-        $worlds = $worldRepository->active();
-        $this->state->push('updateWorlds', $worlds->toArray());
-
+        $this->apiGet('stat.worlds', '/world?active=true');
         return $this->view();
     }
 }

@@ -30,7 +30,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Route::pattern('sign', '(ru|int)(\d+)(s|t)?');
 
         parent::boot();
     }

@@ -15,12 +15,12 @@ class State
 {
     private $state = [];
 
-
-    public function push($mutation, $data)
+    public function push(string $compositeKey, $data)
     {
-        $this->state[$mutation] = $data;
+        [$module, $key] = explode('.', $compositeKey, 2);
+        if (!array_key_exists($module, $this->state)) $this->state[$module] = [];
+        $this->state[$module][$key] = $data;
     }
-
 
     public function toArray()
     {
