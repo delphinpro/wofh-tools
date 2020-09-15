@@ -56,6 +56,12 @@ body {
     &:empty {
       display: none;
     }
+
+    code {
+      background: none;
+      color: currentColor;
+      padding: 0;
+    }
   }
 
   .toast-title + .toast-message {
