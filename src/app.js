@@ -16,7 +16,7 @@ import Inputbox from '@/components/Forms/Inputbox';
 import Checkbox from '@/components/Forms/Checkbox';
 import RadioButton from '@/components/Forms/RadioButton';
 
-export function createApp(preloadState = [], url = null) {
+export function createApp({ state, url }, parameters = null) {
 
   //==
   //== Global Components
@@ -31,12 +31,18 @@ export function createApp(preloadState = [], url = null) {
 
   const newState = {
     ...store.state,
-    ...preloadState,
+    ...state,
   };
 
   store.replaceState(newState);
 
   if (url) router.push(url);
+
+  if ((parameters && typeof parameters === 'object' && !Array.isArray(parameters))) { // isObject()
+    if (typeof parameters.onBeforeCreateApp === 'function') {
+      parameters.onBeforeCreateApp(store, router);
+    }
+  }
 
   return new Vue({
     router,

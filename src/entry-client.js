@@ -12,6 +12,7 @@ import { createApp } from '@/app';
 import VueAxiosBridge, { requestSuccess, requestFailed, responseSuccess, responseFailed } from '@/utils/axios.js';
 import { isDev } from '@/utils';
 import { HTTP_HEADER_AUTHORIZATION, LS_KEY_TOKEN, CONSOLE_DANGER } from '@/constants';
+import { AUTH_LOGOUT } from '@/store/modules/store-auth.js';
 
 Vue.config.productionTip = false;
 if (isDev()) console.log(`%cVue in development mode.`, CONSOLE_DANGER);
@@ -62,7 +63,33 @@ if (token) Vue.axios.defaults.headers.common[HTTP_HEADER_AUTHORIZATION] = `Beare
 //== Main app
 //== ======================================= ==//
 
-createApp(window.__STATE__).$mount('#app');
+createApp({ state: window.__STATE__ }, {
+  onBeforeCreateApp(store, router) {
+
+    /* Axios: REQUEST */
+    Vue.axios.interceptors.request.use(config => {
+      store.dispatch('loadingOn');
+      return config;
+    });
+
+    /* Axios: RESPONSE */
+    Vue.axios.interceptors.response.use(
+      response => {
+        store.dispatch('loadingOff');
+        if (response.status === 401) {
+          store.dispatch(AUTH_LOGOUT);
+          router.push({ name: 'login' });
+        }
+        return response;
+      },
+      error => {
+        store.dispatch('loadingOff');
+        return Promise.reject(error);
+      },
+    );
+
+  },
+}).$mount('#app');
 
 //==
 //== Debug bar

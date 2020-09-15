@@ -12,7 +12,7 @@ import renderVueComponentToString from 'vue-server-renderer/basic';
 import { createApp } from '@/app';
 
 
-renderVueComponentToString(createApp(context.state, context.url), (err, html) => {
+renderVueComponentToString(createApp(context), (err, html) => {
   if (err) throw new Error(err);
   dispatch(html);
 });
