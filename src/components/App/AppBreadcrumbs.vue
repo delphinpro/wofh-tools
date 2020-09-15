@@ -22,7 +22,7 @@ export default {
     <li>
       <router-link :to="{ name: 'home' }">
         <FaIcon name="home"/>
-        <span>WofhTools</span>
+        <span>Главная</span>
       </router-link>
     </li>
     <AppBreadcrumb
