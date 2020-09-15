@@ -1,6 +1,8 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +22,31 @@ Auth::routes([
 Route::get('/', 'IndexController@show')->name('home');
 Route::get('/stat', 'StatController@index')->name('stat');
 
-Route::fallback(function(){
+
+/*=========================================================*\
+ |                                                         |
+ |           00            000000            00            |
+ |          00            00    00          00             |
+ |         00    00      00    0 00        00    00        |
+ |        00     00     00    00  00      00     00        |
+ |       00      00     00   00   00     00      00        |
+ |      00       00     00  00    00    00       00        |
+ |     00000000000000    00 0    00    00000000000000      |
+ |               00       00    00               00        |
+ |               00        000000                00        |
+ |                                                         |
+\*=========================================================*/
+
+
+Route::fallback(function () {
+    if (request()->isXmlHttpRequest()) {
+        return response()->view('errors.api-404', [
+            'data' => [
+                'status'  => false,
+                'message' => 'Requested resource does not exist',
+            ],
+        ], 404);
+    }
+
     return response()->view('errors.404', [], 404);
 });
