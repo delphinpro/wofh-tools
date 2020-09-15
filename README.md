@@ -27,7 +27,7 @@ php artisan migrate:install
 php artisan migrate
 
 npm install
-npm run production
+npm run prod
 ```
 
 > __Note:__ В development среде устанавливать пакеты без ключа `--no-dev`
@@ -44,8 +44,4 @@ php artisan ide-helper:models
 php artisan ide-helper:models --filename=_ide_helper_models_admin.php --dir=vendor/encore/laravel-admin/src/Auth/Database
 ```
 https://github.com/barryvdh/laravel-ide-helper/issues/126#issuecomment-328281716
-
-**При генерации PhpDoc для моделей, следует размещать их прямо в файлах моделей
-(делайте это перед коммитом новой или измененной модели).
-Для этого нужно ответить `yes` на вопрос команды.**
 
