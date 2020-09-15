@@ -9,7 +9,7 @@ export function isDev() {
   return process.env.NODE_ENV === 'development';
 }
 
-export function ucFirst(str) {
+export function ucfirst(str) {
   if (!str || typeof str !== 'string') return str;
   return str[0].toUpperCase() + str.slice(1);
 }
