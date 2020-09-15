@@ -10,6 +10,7 @@
 namespace App;
 
 
+use App\Traits\ModelAttributesToCamelCaseArray;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,6 +40,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class World extends Model
 {
+    use ModelAttributesToCamelCaseArray;
+
+
     public $timestamps = false;
 
     public $table = 'wt_worlds';
@@ -59,13 +63,11 @@ class World extends Model
         'update_started_at',
     ];
 
-
     public function beginUpdate()
     {
         $this->update_started_at = Carbon::now();
         $this->save();
     }
-
 
     public function endUpdate(Carbon $statUpdatedAt = null)
     {
@@ -77,19 +79,16 @@ class World extends Model
         $this->save();
     }
 
-
     public function toArray()
     {
         return array_merge(
-            parent::toArray(),
-            $this->dateFieldsAsTimestamps(),
+            $this->attributesToCamelCaseArray(),
             [
                 'fmtAge' => $this->getAgeAsString(),
                 'nAge'   => $this->getAgeAsNumber(),
             ]
         );
     }
-
 
     /**
      * @return \Carbon\CarbonInterval|null
@@ -114,7 +113,6 @@ class World extends Model
         return $closed->diffAsCarbonInterval($this->started_at);
     }
 
-
     public function getAgeAsString()
     {
         $ageInterval = $this->getAge();
@@ -128,7 +126,6 @@ class World extends Model
         return $totalDays.' дн.';
     }
 
-
     public function getAgeAsNumber()
     {
         $ageInterval = $this->getAge();
@@ -138,25 +135,5 @@ class World extends Model
         }
 
         return (int)$ageInterval->totalDays;
-    }
-
-
-    /**
-     * @return array
-     */
-    private function dateFieldsAsTimestamps(): array
-    {
-        $dates = [];
-        foreach ($this->dates as $dateField) {
-            /** @var \Carbon\Carbon $carbon */
-            $carbon = $this->{$dateField};
-            if ($carbon instanceof \Illuminate\Support\Carbon) {
-                $dates[$dateField] = $carbon->timestamp;
-            } else {
-                $dates[$dateField] = null;
-            }
-        }
-
-        return $dates;
     }
 }
