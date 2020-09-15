@@ -15,5 +15,5 @@ export function ucfirst(str) {
 }
 
 export function cbSortWorldsByStarted(a, b) {
-  return b.started_at - a.started_at;
+  return b.startedAt - a.startedAt;
 }

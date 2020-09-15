@@ -7,6 +7,7 @@
 
 import StatisticView from '@/views/StatisticView';
 import StatWorldView from '@/views/Stat/StatWorldView';
+import { ucfirst } from '@/utils';
 
 
 /** @var Array<RouteConfig> */
@@ -25,7 +26,7 @@ export const statRoutes = [
         component: StatWorldView,
         meta: {
           crumbsGetter: 'currentWorld',
-          crumbsText: world => world.signU,
+          crumbsText: world => ucfirst(world.sign),
         },
       },
     ],

@@ -3,16 +3,11 @@
 namespace App\Http\Controllers;
 
 
-use App\Repositories\WorldRepository;
-
-
 class StatController extends Controller
 {
-    public function index(WorldRepository $worldRepository)
+    public function index()
     {
-        $worlds = $worldRepository->active();
-        $this->state->push('updateWorlds', $worlds->toArray());
-
+        $this->apiGet('stat.worlds', '/world?active=true');
         return $this->view();
     }
 }

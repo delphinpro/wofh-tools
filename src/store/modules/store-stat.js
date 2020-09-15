@@ -6,8 +6,6 @@
  */
 
 import Vue from 'vue';
-import { dateFormat } from '@/utils/date';
-import { ucFirst } from '@/utils';
 
 const state = {
   worlds      : [],
@@ -16,55 +14,35 @@ const state = {
 };
 
 const getters = {
-  allWorlds   : state => state.worlds.filter(() => true),
+  allWorlds   : state => state.worlds,
   activeWorlds: state => state.worlds.filter(item => item.working),
   closedWorlds: state => state.worlds.filter(item => !item.working),
   currentWorld: state => state.currentWorld,
 };
 
 const mutations = {
-  updateWorlds: (state, worlds) => {
-    for (let i in worlds) {
-      if (!worlds.hasOwnProperty(i)) continue;
-      let sign = worlds[i].sign;
-      worlds[i].signU = ucFirst(sign);
-      worlds[i].fmtStarted = dateFormat(worlds[i].started_at);
-      worlds[i].fmtLoadedStat = dateFormat(worlds[i].stat_loaded_at);
-      worlds[i].fmtUpdatedStat = dateFormat(worlds[i].stat_updated_at);
-      worlds[i].fmtUpdatedConst = dateFormat(worlds[i].const_updated_at);
-      worlds[i].flag = /ru/i.test(sign) ? 'flag-ru' : 'flag-uk';
-    }
-    state.worlds = worlds;
-  },
-
+  updateWorlds   : (state, worlds) => state.worlds = worlds,
   setCurrentWorld: (state, world) => state.currentWorld = world,
 };
 
 const actions = {
   /**
    * Получает список миров с сервера
-   *
-   * @param commit
-   * @param data
    * @returns {Promise<void>}
    */
-  async updateWorlds({ commit }, data) {
+  async updateWorlds({ commit, state }, data) {
     let force = data && data.force;
     if (state.worlds.length && !force) return;
 
     let worlds = await Vue.axios.get('/world?active=true');
-
     commit('updateWorlds', worlds);
   },
 
   /**
    * Устанавливает текущий (выбранный) мир
-   *
-   * @param commit
-   * @param sign
    * @returns {Promise<void>}
    */
-  async setCurrentWorld({ commit }, sign) {
+  async setCurrentWorld({ commit, state }, sign) {
     let world = [...state.worlds].filter(w => w.sign === sign);
     if (world.length) commit('setCurrentWorld', world[0]);
   },

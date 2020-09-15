@@ -32,10 +32,13 @@ trait ModelAttributesToCamelCaseArray
         foreach ($fieldNames as $fieldName) {
             /** @var \Carbon\Carbon $carbon */
             $carbon = $this->{$fieldName};
+            $key = $this->stringSnake2CamelCase($fieldName);
             if ($carbon instanceof \Illuminate\Support\Carbon) {
-                $dates[$this->stringSnake2CamelCase($fieldName)] = $carbon->timestamp;
+                $dates[$key] = $carbon->timestamp;
+                $dates['local'.ucfirst($key)] = $this->localizeDate($carbon->format('j F Y'), $carbon->locale);
             } else {
-                $dates[$this->stringSnake2CamelCase($fieldName)] = null;
+                $dates[$key] = null;
+                $dates['local'.ucfirst($key)] = null;
             }
         }
 
@@ -54,5 +57,38 @@ trait ModelAttributesToCamelCaseArray
         $pieces = explode('_', $snakeString);
         $camel = implode('', array_map('ucfirst', $pieces));
         return $first ? $camel : lcfirst($camel);
+    }
+
+    private function localizeDate(string $date, string $locale)
+    {
+        if (!preg_match('/ru/', $locale)) return $date;
+
+        return str_replace([
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December',
+        ], [
+            'января',
+            'февраля',
+            'марта',
+            'апреля',
+            'мая',
+            'июня',
+            'июля',
+            'августа',
+            'сентября',
+            'октября',
+            'ноября',
+            'декабря',
+        ], $date);
     }
 }

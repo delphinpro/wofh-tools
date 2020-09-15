@@ -27,6 +27,15 @@
   <title>{{ config('app.name', 'Laravel') }}</title>
 
   <style>.fa-icon{height:1.1em;width:1.1em;fill: currentColor;}</style>
+  <style>
+      .loader {width: 2em;}
+      .breadcrumb,
+      .breadcrumb li,
+      header ul,
+      header li {
+          display: inline;list-style: none;
+      }
+  </style>
   <link href="{{ asset('assets/main.css') }}" rel="stylesheet">
 </head>
 <body>

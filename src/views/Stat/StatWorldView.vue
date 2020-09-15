@@ -16,27 +16,22 @@ export default {
   },
 
   data: () => ({
-    stat     : [],
+    stat     : null,
     countries: [],
   }),
 
   computed: {
     ...mapGetters(['currentWorld']),
     pageTitle() {
-      return this.currentWorld ? `Статистика ${this.currentWorld['signU']}` : '';
+      return this.currentWorld ? `Статистика ${this.currentWorld.uSign}` : '';
     },
     worldAge() {
-      return this.currentWorld ? this.currentWorld.nAge : '';
+      return this.currentWorld ? this.currentWorld.age : '';
     },
   },
 
-  async mounted() {
-    await this.updateWorlds();
-    await this.setCurrentWorld(this.$route.params['sign']);
-    let { args, commonStat, countries } = await this.getCommonStat(this.$store.getters.currentWorld.sign);
-    console.log(args, commonStat, countries);
-    this.stat = commonStat[0];
-    this.countries = countries;
+  mounted() {
+    this.loadData();
   },
 
   methods: {
@@ -44,8 +39,19 @@ export default {
       'updateWorlds',
       'setCurrentWorld',
     ]),
+    async loadData() {
+      await this.updateWorlds();
+      await this.setCurrentWorld(this.$route.params['sign']);
+      // let stat = await this.getCommonStat(this.currentWorld.sign);
+      this.stat = await this.getCommonStat(this.currentWorld.sign);
+      // let { args, commonStat, countries } = await this.getCommonStat(this.$store.getters.currentWorld.sign);
+      // this.stat = commonStat[0];
+      // this.countries = countries;
+    },
     getCommonStat(sign) {
-      return this.axios.get(`/stat/${sign}`);
+      return this.axios.get(`/stat/${sign}/last`).catch(e => {
+
+      });
     },
     getFlag(flag) {
       return `//st.wofh-tools.project/flags/${this.$store.getters.currentWorld.sign}/${flag}.gif`;
@@ -63,28 +69,28 @@ export default {
       <div class="col-lg-9">
         <h2 class="h3">Общая статистика</h2>
         <div class="row">
-          <div class="col-md-3 d-flex">
+          <div class="col-sm-6 col-md-3 d-flex" v-if="worldAge">
             <div class="info-card info-card_theme_info">
               <FaIcon class="info-card__icon" name="clock"></FaIcon>
               <div class="info-card__title">{{ worldAge }}</div>
               <div class="info-card__content">дней длится раунд</div>
             </div>
           </div>
-          <div class="col-md-3">
-            <div class="info-card info-card_theme_success">
+          <div class="col-sm-6 col-md-3" v-if="stat">
+            <div class="info-card info-card_theme_warning">
               <FaIcon class="info-card__icon" name="users"></FaIcon>
               <div class="info-card__title">{{ stat.accountsTotal }}</div>
               <div class="info-card__content">регистраций</div>
             </div>
           </div>
-          <div class="col-md-3" v-if="stat.accountsActive">
-            <div class="info-card info-card_theme_warning">
+          <div class="col-sm-6 col-md-3" v-if="stat">
+            <div class="info-card info-card_theme_success">
               <FaIcon class="info-card__icon" name="user-check"></FaIcon>
               <div class="info-card__title">{{ stat.accountsActive }}</div>
               <div class="info-card__content">активных игроков</div>
             </div>
           </div>
-          <div class="col-md-3">
+          <div class="col-sm-6 col-md-3" v-if="stat">
             <div class="info-card info-card_theme_danger">
               <FaIcon class="info-card__icon" name="flag"></FaIcon>
               <div class="info-card__title">{{ stat.countriesTotal }}</div>

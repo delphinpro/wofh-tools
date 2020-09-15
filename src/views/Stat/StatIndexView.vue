@@ -42,7 +42,7 @@ export default {
       'updateWorlds',
     ]),
     getLink(world) {
-      if (!world.fmtUpdatedStat) return null;
+      if (!world.statUpdatedAt) return null;
       return {
         name: 'statWorld',
         params: {
@@ -68,12 +68,12 @@ export default {
 
       <div class="row">
         <div class="col-lg-6 d-flex mb-1.25" v-for="w in group" v-if="w.statistic">
-          <InfoBox :link="getLink(w)" :theme="getTheme(w.fmtUpdatedStat)" class="world-card">
+          <InfoBox :link="getLink(w)" :theme="getTheme(w.statUpdatedAt)" class="world-card">
             <div class="world-card__info" slot="info">
-              <div class="world-card__sign">{{ w.sign }}</div>
+              <div class="world-card__sign">{{ w.uSign }}</div>
               <img
                 class="world-card__flag"
-                :src="'/assets/images/icons/'+w.flag+'.svg'"
+                :src="'/assets/images/icons/'+w.serverCountryFlag+'.svg'"
                 :alt="w.flag"
                 :height="30*341.4/512"
               >
@@ -83,8 +83,8 @@ export default {
               <div class="world-card__desc">{{ w.desc }}</div>
             </div>
             <div class="world-card__footer" slot="footer">
-              <div v-if="w.fmtUpdatedStat">Updated at: {{ w.fmtUpdatedStat }}</div>
-              <div v-else>No data</div>
+              <div v-if="w.statUpdatedAt">Обновлено: {{ w.localStatUpdatedAt }}</div>
+              <div v-else>Нет статистики</div>
             </div>
           </InfoBox>
         </div>

@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::resource('/world', 'Api\WorldController')->only(['index']);
+
+Route::get('/stat/{sign}', 'Api\StatWorldController@index');
+Route::get('/stat/{sign}/last', 'Api\StatWorldController@last');

@@ -84,10 +84,17 @@ class World extends Model
         return array_merge(
             $this->attributesToCamelCaseArray(),
             [
-                'fmtAge' => $this->getAgeAsString(),
-                'nAge'   => $this->getAgeAsNumber(),
+                'uSign'             => ucfirst($this->sign),
+                'age'               => $this->getAgeAsNumber(),
+                'localAge'          => $this->getAgeAsString(),
+                'serverCountryFlag' => $this->getServerFlag(),
             ]
         );
+    }
+
+    public function getServerFlag()
+    {
+        return preg_match('/ru/i', $this->sign) ? 'flag-ru' : 'flag-uk';
     }
 
     /**
