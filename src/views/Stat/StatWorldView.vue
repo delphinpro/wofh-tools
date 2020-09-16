@@ -102,32 +102,7 @@ export default {
       <div class="col-lg-3"></div>
     </div>
     <pre>{{ stat }}</pre>
-    <hr>
     <!--        <img width="60" height="40" src="//st.wofh-tools.project/flags/ru3t/d0aacloloagaaaaaaaa.gif" alt="//st.wofh-tools.project/flags/ru3t/d0aacloloagaaaaaaaa.gif">-->
-    <hr>
-    <div style="display: flex;flex-wrap: wrap;">
-      <img
-        :src="getFlag(country.countryFlag)" height="40"
-        :alt="getFlag(country.countryFlag)"
-        width="60"
-        v-for="country in countries"
-      >
-    </div>
-    <ul>
-      <li v-for="country in countries">
-        {{ country.countryId }}
-        {{ country.countryTitle }}
-        {{ country.countryActive }}
-        <kbd>{{ country.countryFlag }}</kbd>
-        <img
-          :src="getFlag(country.countryFlag)"
-          :alt="getFlag(country.countryFlag)"
-          height="20"
-          width="30"
-        >
-      </li>
-    </ul>
-    <pre>{{ countries }}</pre>
   </div>
 </template>
 
