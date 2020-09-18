@@ -13,38 +13,13 @@ $NODE_ENV: development;
 @import "config/cfg-app";
 
 @import "./quasar";
+
 @import "base/init";
 @import "base/typography";
-@import "base/code";
 @import "base/links";
-@import "base/tables";
-@import "base/control-group";
-@import "base/general-form";
-@import "parts/transitions";
 //
 @import "parts/toastr";
 //
 //
-@import "components/Alert";
-@import "components/App";
-@import "components/AppBreadcrumbs";
-@import "components/Box";
-@import "components/Checkbox";
-@import "components/CloseButton";
-@import "components/ErrorBox";
-@import "components/InfoBox";
-@import "components/Inputbox";
-@import "components/Loading";
-@import "components/NavMenu";
-@import "components/PageHeader";
-@import "components/RadioButton";
-@import "components/UserMenu";
 //
-@import "parts/dashboard-layout";
-@import "parts/dashboard-sidebar";
-@import "parts/dashboard-menu";
-@import "parts/world-card";
-@import "parts/info-card";
 //
-@import "parts/helpers.scss";
-@import "parts/override-toast.scss";
