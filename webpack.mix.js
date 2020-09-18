@@ -40,18 +40,6 @@ if (IS_CLIENT) {
     path.join(__dirname, `resources/assets/images`),
     path.join(__dirname, `public/${dist}/images`),
   );
-  mix.copy(
-    path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free/sprites/regular.svg'),
-    path.join(__dirname, `public/${dist}/regular.svg`),
-  );
-  mix.copy(
-    path.join(__dirname, 'node_modules/@fortawesome/fontawesome-free/sprites/solid.svg'),
-    path.join(__dirname, `public/${dist}/solid.svg`),
-  );
-  mix.copy(
-    path.join(__dirname, `resources/assets/custom.svg`),
-    path.join(__dirname, `public/${dist}/custom.svg`),
-  );
 }
 
 if (IS_SERVER) {

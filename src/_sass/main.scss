@@ -12,27 +12,22 @@
 $NODE_ENV: development;
 @import "config/cfg-vars";
 
-@import "base/normalize";
+@import "~quasar/src/css/index.sass";
 @import "base/init";
 @import "base/typography";
 @import "base/code";
 @import "base/links";
 @import "base/tables";
-@import "base/buttons";
 @import "base/control-group";
 @import "base/general-form";
 @import "parts/transitions";
 //
 @import "parts/toastr";
 //
-@import "components/FaIcon";
 //
 @import "components/Alert";
 @import "components/App";
 @import "components/AppBreadcrumbs";
-@import "components/AppFooter";
-@import "components/AppLogo";
-@import "components/AppNavbar";
 @import "components/Box";
 @import "components/Checkbox";
 @import "components/CloseButton";
