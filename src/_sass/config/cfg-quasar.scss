@@ -90,18 +90,16 @@ $h-tags: (h1: map-get($headings, "h1"), h2: map-get($headings, "h2"), h3: map-ge
 // sorry for long line; we need .sass and it doesn't support multi-line list
 $text-weights: (thin: 100, light: 300, regular: 400, medium: 500, bold: 700, bolder: 900);
 
-$primary   : #3c8dbc;//#1976D2;
+$primary   : $color-primary;
 $secondary : #26A69A;
-$accent    : #9C27B0;
+$accent    : $wt-accent-color;
 
-// used by dark mode
-$dark-page : #232D32;//#121212;
-$dark      : #232D32;//#1d1d1d;
+$dark      : $background-base;
 
-$positive  : #21BA45;
-$negative  : #C10015;
-$info      : #31CCEC;
-$warning   : #F2C037;
+$positive  : $color-success;
+$negative  : $color-danger;
+$info      : $color-info;
+$warning   : $color-warning;
 
 $dimmed-background       : rgba(0, 0, 0, .4);
 $light-dimmed-background : rgba(255, 255, 255, .6);

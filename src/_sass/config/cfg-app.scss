@@ -1,6 +1,6 @@
 ////
 /// @author delphinpro <delphinpro@yandex.ru>
-/// @copyright copyright © 2019 delphinpro
+/// @copyright copyright © 2019-2020 delphinpro
 /// @license licensed under the MIT license
 ////
 $NODE_ENV: development;
@@ -39,7 +39,7 @@ $palette-fuchsia : #f012be;
 $palette-purple  : #605ca8;
 $palette-maroon  : #d81b60;
 $palette-black   : #111;
-$gray-lte: #d2d6de;
+$gray-lte        : #d2d6de;
 
 //==
 //== Semantic colors
@@ -180,7 +180,6 @@ $alert-danger-text:           #fff;
 //== Misc.
 //== ======================================= ==//
 
-
 @import "cfg-headings";
 
 
@@ -192,8 +191,5 @@ $transition-fn   : ease-in-out;
 
 //== Disabled cursor for form controls and buttons.
 $cursor-disabled:   not-allowed;
-
-//@import "../bootstrap-sass/bootstrap/variables";
-//@import "adminLTE-vars";
 
 @import "cfg-quasar";

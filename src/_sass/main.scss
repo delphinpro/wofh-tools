@@ -10,9 +10,9 @@
 //@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
 
 $NODE_ENV: development;
-@import "config/cfg-vars";
+@import "config/cfg-app";
 
-@import "~quasar/src/css/index.sass";
+@import "./quasar";
 @import "base/init";
 @import "base/typography";
 @import "base/code";
