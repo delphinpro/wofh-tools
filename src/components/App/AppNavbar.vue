@@ -67,8 +67,8 @@ export default {
     <AppLogo class="self-stretch"/>
     <QSeparator class="gt-sm" dark vertical inset=""/>
     <NavMenu class="gt-sm" :items="mainmenu"/>
-    <QSpace/>
-    <UserMenu/>
+<!--    <QSpace/>-->
+<!--    <UserMenu/>-->
   </QToolbar>
 </template>
 
