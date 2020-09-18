@@ -11,7 +11,7 @@ import InfoBox from '@/components/Widgets/InfoBox';
 
 
 export default {
-  name: 'StatHomeView',
+  name: 'StatIndexView',
 
   components: {
     InfoBox,
@@ -60,7 +60,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <QPage padding>
     <PageHeader title="Статистика игровых миров"/>
 
     <div v-for="(group, index) in worlds" v-if="worlds.length">
@@ -91,5 +91,5 @@ export default {
       </div>
     </div>
     <!--    <pre>{{ worlds }}</pre>-->
-  </div>
+  </QPage>
 </template>

@@ -7,6 +7,7 @@
 
 // import { mapGetters, mapState } from 'vuex';
 // import { AUTH_LOGOUT } from '@/store/modules/store-auth';
+import AppBreadcrumbs from '@/components/App/AppBreadcrumbs.vue';
 import AppLogo from '@/components/App/AppLogo';
 import NavMenu from '@/components/App/NavMenu';
 import UserMenu from '@/components/App/UserMenu';
@@ -16,6 +17,7 @@ import { mapGetters } from 'vuex';
 
 export default {
   components: {
+    AppBreadcrumbs,
     AppLogo,
     NavMenu,
     UserMenu,
@@ -56,20 +58,23 @@ export default {
 </script>
 
 <template>
-  <QToolbar class="app-navbar bg-primary text-white">
-    <QBtn class="q-mr-sm"
-      flat
-      round
-      :icon="matMenu"
-      @click="$emit('toggle-left-drawer')"
-      v-if="lsEnabled"
-    />
-    <AppLogo class="self-stretch"/>
-    <QSeparator class="gt-sm" dark vertical inset=""/>
-    <NavMenu class="gt-sm" :items="mainmenu"/>
-<!--    <QSpace/>-->
-<!--    <UserMenu/>-->
-  </QToolbar>
+  <div class="app-navbar bg-primary text-white">
+    <QToolbar>
+      <QBtn class="q-mr-sm"
+        flat
+        round
+        :icon="matMenu"
+        @click="$emit('toggle-left-drawer')"
+        v-if="lsEnabled"
+      />
+      <AppLogo class="self-stretch"/>
+      <QSeparator class="gt-sm" dark vertical inset=""/>
+      <NavMenu class="gt-sm" :items="mainmenu"/>
+      <!--    <QSpace/>-->
+      <!--    <UserMenu/>-->
+    </QToolbar>
+    <AppBreadcrumbs v-if="$route.name!=='home'"/>
+  </div>
 </template>
 
 <style lang="scss">

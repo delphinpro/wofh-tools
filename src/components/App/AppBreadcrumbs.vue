@@ -5,31 +5,67 @@
   licensed under the MIT license
 -->
 <script>
-import AppBreadcrumb from '@/components/App/AppBreadcrumb';
-
+import { mdiHome } from '@quasar/extras/mdi-v5';
 
 export default {
   name: 'AppBreadcrumbs',
 
-  components: {
-    AppBreadcrumb,
+  data: () => ({
+    mdiHome,
+  }),
+
+  methods: {
+    bcValue(route) { return route.meta.crumbsGetter ? this.$store.getters[route.meta.crumbsGetter] : null; },
+    formattedValue(route) { return route.meta.crumbsText(this.value); },
+    loadingText(route) { return route.meta.crumbsLoadingText || '…?'; },
+    routerLinkText(route) {
+      let text = '';
+      if (!route.meta.crumbsGetter) {
+        text += route.meta.crumbsText;
+      } else {
+        text += this.bcValue(route) ? this.formattedValue(route) : this.loadingText(route);
+      }
+      return text;
+    },
+    routerLinkTo(route) {
+      if (this.last) return null;
+      let to = { name: route.name };
+      if (route.meta.crumbsGetter) to.params = { id: this.$route.params.id };
+      return to;
+    },
   },
 };
 </script>
 
 <template>
-  <ol class="breadcrumb" v-if="$route.name !== 'home'">
-    <li>
-      <router-link :to="{ name: 'home' }">
-        <FaIcon name="home"/>
-        <span>Главная</span>
-      </router-link>
-    </li>
-    <AppBreadcrumb
-      :key="index"
-      :last="index===$route.matched.length-1"
-      :route="route"
-      v-for="(route, index) in $route.matched"
-    />
-  </ol>
+  <q-toolbar :inset="false" class="app-breadcrumbs" style="min-height: 24px;">
+    <q-breadcrumbs>
+      <q-breadcrumbs-el label="Главная" :icon="mdiHome" :to="{ name: 'home' }"/>
+      <q-breadcrumbs-el
+        :key="index"
+        :label="routerLinkText(route)"
+        :to="routerLinkTo(route)"
+        v-for="(route, index) in $route.matched"
+        v-if="route.meta.crumbsText"
+      />
+    </q-breadcrumbs>
+  </q-toolbar>
 </template>
+
+<style lang="scss">
+@import "src/_sass/config/cfg-app";
+
+.app-breadcrumbs {
+  font-size: 12px;
+  background: $background-base-dark;
+  a {
+    color: $color-link !important;
+    &:hover { color: $color-link-hover !important; }
+  }
+  .q-breadcrumbs--last {
+    a {
+      color: #fff !important;
+    }
+  }
+}
+</style>
