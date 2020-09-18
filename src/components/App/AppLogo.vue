@@ -41,5 +41,12 @@
     top: -0.5em;
     margin-left: 0.5em;
   }
+
+  @media (max-width: $breakpoint-xs) {
+    &__name,
+    &__beta {
+      //display: none;
+    }
+  }
 }
 </style>

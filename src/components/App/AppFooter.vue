@@ -13,15 +13,15 @@
           <a href="http://delphinpro.ru" target="_blank" rel="noreferrer">delphinpro</a>,
           2013—2020 гг.
         </p>
-        <p>
-          <a href="#">Last update: xx.xx.xxxx, xx:xx</a>
-        </p>
+<!--        <p><router-link to="/changelog">Last update: xx.xx.xxxx, xx:xx</router-link></p>-->
       </div>
+<!--
       <QSeparator class="q-my-sm lt-md"/>
       <div class="flex justify-center">
-        <QBtn size="sm" flat no-caps label="Обратная связь"/>
-        <QBtn size="sm" flat no-caps label="Карта сайта"/>
+        <QBtn size="sm" flat no-caps label="Обратная связь" to="/feedback"/>
+        <QBtn size="sm" flat no-caps label="Карта сайта" to="sitemap"/>
       </div>
+-->
       <QSeparator class="q-my-sm lt-md"/>
       <div class="flex justify-center">
         <img src="/assets/images/main/counter.png" alt="">

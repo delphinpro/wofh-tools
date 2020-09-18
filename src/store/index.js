@@ -18,12 +18,16 @@ let state = {
   projectName: 'Wofh Tools',
   projectVer : '4.0',
   loading    : 0,
+  lsEnabled  : false,
+  rsEnabled  : false,
 };
 
 const getters = {
   projectName: state => state.projectName,
   projectVer : state => state.projectVer,
   loading    : state => state.loading > 0,
+  lsEnabled  : state => state.lsEnabled,
+  rsEnabled  : state => state.rsEnabled,
 };
 
 const mutations = {

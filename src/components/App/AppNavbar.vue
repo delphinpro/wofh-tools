@@ -11,6 +11,8 @@ import AppLogo from '@/components/App/AppLogo';
 import NavMenu from '@/components/App/NavMenu';
 import UserMenu from '@/components/App/UserMenu';
 
+import { matMenu } from '@quasar/extras/material-icons';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -20,23 +22,29 @@ export default {
   },
 
   data: () => ({
+    matMenu,
+
     mainmenu: [
       { id: 1, title: 'Статистика', icon: null, path: '/stat' },
-      { id: 2, title: 'Науки', icon: null, path: '/technology' },
-      { id: 3, title: 'Квесты', icon: null, path: '/quests' },
-      { id: 4, title: 'Таблицы', icon: null, path: 'tables' },
+      // { id: 2, title: 'Науки', icon: null, path: '/technology' },
+      // { id: 3, title: 'Квесты', icon: null, path: '/quests' },
+      // { id: 4, title: 'Таблицы', icon: null, path: 'tables' },
     ],
   }),
 
   computed: {
-    // ...mapGetters([
-    //     'getProfile',
-    //     'isAuth',
-    //     'isProfileLoaded',
-    // ]),
+    ...mapGetters([
+      'lsEnabled',
+      //     'getProfile',
+      //     'isAuth',
+      //     'isProfileLoaded',
+    ]),
     // ...mapState({
     //     name: state => `${state.user.profile.title} ${state.user.profile.name}`,
     // }),
+  },
+
+  created() {
   },
 
   methods: {
@@ -48,15 +56,26 @@ export default {
 </script>
 
 <template>
-  <header class="app-navbar">
-    <div class="app-navbar__container">
-      <AppLogo class="app-navbar__logo"/>
-      <!--<button class="app-navbar__sidebar-toggle sidebar-toggle" type="button">
-          <span class="fa fa-bars"></span>
-          <span class="sr-only">Toggle navigation</span>
-      </button>-->
-      <NavMenu :items="mainmenu" class="app-navbar__mainmenu"/>
-      <UserMenu class="app-navbar__usermenu"/>
-    </div>
-  </header>
+  <QToolbar class="app-navbar bg-primary text-white">
+    <QBtn class="q-mr-sm"
+      flat
+      round
+      :icon="matMenu"
+      @click="$emit('toggle-left-drawer')"
+      v-if="lsEnabled"
+    />
+    <AppLogo class="self-stretch"/>
+    <QSeparator class="gt-sm" dark vertical inset=""/>
+    <NavMenu class="gt-sm" :items="mainmenu"/>
+    <QSpace/>
+    <UserMenu/>
+  </QToolbar>
 </template>
+
+<style lang="scss">
+.app-navbar {
+  a {
+    color: inherit;
+  }
+}
+</style>

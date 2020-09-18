@@ -7,7 +7,7 @@
 <script>
 import { AUTH_REQUEST } from '@/store/modules/store-auth';
 import Box from '@/components/Widgets/Box';
-
+import { mdiEmail, mdiKey } from '@quasar/extras/mdi-v5';
 
 export default {
   name: 'login',
@@ -17,11 +17,14 @@ export default {
   },
 
   data: () => ({
+    mdiEmail,
+    mdiKey,
+
     username: '',
     password: '',
 
     token: null,
-    form: null,
+    form : null,
 
     post: null,
     user: null,
@@ -58,6 +61,23 @@ export default {
 
 <template>
   <div class="container page-center">
+    <div style="padding: 40px;width: 500px;margin:auto;">
+      <QCard>
+        <QForm>
+          <q-input color="teal" dense filled v-model="username" label="Email">
+            <template v-slot:append>
+              <q-icon :name="mdiEmail"/>
+            </template>
+          </q-input>
+          <q-input color="teal" dense filled v-model="password" type="password" label="Password">
+            <template v-slot:append>
+              <q-icon :name="mdiKey"/>
+            </template>
+          </q-input>
+        </QForm>
+      </QCard>
+    </div>
+
     <div class="col-lg-5 no-gutter">
       <Box icon="lock" title="Вход в личный профиль" type="info">
         <form @submit.prevent="login" class="login">

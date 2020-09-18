@@ -20,23 +20,41 @@ export default {
     Loading,
   },
 
-  data: () => ({}),
+  data: () => ({
+    left      : false,
+    right     : false,
+  }),
 
   computed: {
     ...mapGetters([
       'loading',
+      'lsEnabled',
+      'rsEnabled',
     ]),
   },
 };
 </script>
 
 <template>
-  <div class="app" id="app">
-    <AppNavbar class="app__navbar"/>
-    <router-view class="app__main"/>
-    <AppFooter class="app__footer"/>
-    <div class="app__loader" v-if="loading">
-      <Loading/>
-    </div>
-  </div>
+    <QLayout view="hHh LpR lff" id="app">
+
+      <QHeader reveal elevated class="bg-primary text-white">
+        <AppNavbar @toggle-left-drawer="left = !left"/>
+      </QHeader>
+
+      <QDrawer v-model="left" side="left" overlay bordered v-if="lsEnabled">
+        <!-- drawer content -->
+      </QDrawer>
+
+      <QDrawer  v-model="right" side="right" v-if="rsEnabled">
+        <!-- drawer content -->
+      </QDrawer>
+
+      <QPageContainer>
+          <router-view/>
+      </QPageContainer>
+
+      <AppFooter/>
+
+    </QLayout>
 </template>
