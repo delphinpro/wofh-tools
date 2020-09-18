@@ -46,123 +46,18 @@
 //== Content
 //== ======================================= ==//
 
-%default-element {
-  @include rhythm-margins(0, 1);
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-}
-
-p {
-  @extend %default-element;
-}
-
-.lead {
-  @include font($rhythm-base-font-size * 1.25, 1.25);
-  font-weight: 300;
-}
 
 //==
 //== Block Quotes
 //== ======================================= ==//
 
-%blockquote-base {
-  @include rhythm-padding(0);
-  @include font($blockquote-font-size);
-  margin-right: 0;
-  margin-left: 0;
-
-  > :last-child {
-    margin-bottom: 0;
-  }
-
-  footer {
-    position: relative;
-    top: rhythm(-0.5);
-    display: block;
-    color: $blockquote-small-color;
-    font-size: 80%;
-  }
-}
-
-blockquote:not(.blockquote-reverse),
-.blockquote {
-  @extend %default-element;
-  @extend %blockquote-base;
-  padding-left: rhythm(1);
-  border-left: 5px solid $blockquote-border-color;
-
-  footer::before {
-    content: "\2014 \00A0"; // em dash, nbsp
-  }
-}
-
-.blockquote-reverse {
-  @extend %default-element;
-  @extend %blockquote-base;
-  padding-right: rhythm(1);
-  text-align: right;
-  border-right: 5px solid $blockquote-border-color;
-
-  footer::after {
-    content: "\00A0 \2014"; // nbsp, em dash
-  }
-}
 
 //==
 //== Lists
 //== ======================================= ==//
 
-ul,
-ol {
-  @extend %default-element;
-
-  ul,
-  ol {
-    margin-bottom: 0;
-  }
-}
-
-.list-unstyled {
-  @include list-unstyled();
-
-  & > li > & {
-    padding-left: 2em;
-  }
-}
 
 //==
 //== Description list
 //== ======================================= ==//
 
-dl {
-  @extend %default-element;
-
-  &:not(.dl-horizontal) {
-    > dd + dt {
-      @include margin-leader(0.5);
-    }
-  }
-}
-
-dt {
-  font-weight: 700;
-}
-
-dd {
-  margin-left: 0; // Undo browser default
-}
-
-.dl-horizontal {
-  @include media-breakpoint-up(sm) {
-    display: grid;
-    grid-template-columns: minmax(min-content, max-content) 3fr;
-    grid-column-gap: rhythm(1);
-    grid-row-gap: rhythm(0.5);
-
-    dt {
-      text-align: right;
-    }
-  }
-}

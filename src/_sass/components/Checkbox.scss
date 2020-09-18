@@ -24,7 +24,7 @@ $checkbox-size: 18px !default;
     display: flex;
     align-items: center;
     flex-shrink: 0;
-    height: rem($rhythm-base-line-height);
+    height: rem($base-line-height);
   }
 
   &__indicator {

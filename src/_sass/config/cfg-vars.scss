@@ -7,10 +7,9 @@ $NODE_ENV: development;
 $DEV_MODE: $NODE_ENV == development;
 $MAX_INT32: 2147483647;
 
-@import "cfg-vrhythm";
-@import "cfg-grid";
-@import "../../../node_modules/vrhythm/source/vrhythm";
-@import "../../../node_modules/bs-grid-system/bs-grid";
+$base-font-size: 15px !default;
+$base-line-height: 24px !default; //1.6em
+
 @import "../mixins";
 @import "cfg-z-indexes";
 
@@ -181,12 +180,8 @@ $alert-danger-text:           #fff;
 //== Misc.
 //== ======================================= ==//
 
-$blockquote-border-color: adjust_hue(desaturate(darken($color-text-base, 20%), 2%), 2);
-$blockquote-small-color : $gray-lte;
-$blockquote-font-size   : ($rhythm-base-font-size * 1.25);
 
 @import "cfg-headings";
-@import "cfg-buttons";
 
 
 $shadow-bar: 0 3px 7px rgba(0, 0, 0, 0.3);
@@ -200,3 +195,5 @@ $cursor-disabled:   not-allowed;
 
 //@import "../bootstrap-sass/bootstrap/variables";
 //@import "adminLTE-vars";
+
+@import "cfg-quasar";

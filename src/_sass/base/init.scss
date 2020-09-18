@@ -4,26 +4,25 @@
 /// @license licensed under the MIT license
 ////
 
-:root {
+body,
+.q-markup-table {
+  @include webkit-scrollbar($color-text-base, $size: 7px);
 }
 
-@include establish-baseline() {
-  height: 100%;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-body {
-  min-height: 100%;
+body.body--dark,
+.q-dark {
   color: $color-text-base;
   background: $background-base;
-  font-family: $wt-family-base;
-  @include webkit-scrollbar($color-text-base);
 }
 
-@include make-grid-system();
+.q-header .q-separator--dark {
+  background: rgba(#fff, 0.22);
+}
 
-.svg-icon {
-  width: auto;
-  height: auto;
-  vertical-align: middle;
+caption {
+  font-size: 20px;
+  letter-spacing: .005em;
+  font-weight: 400;
+  text-align: left;
+  padding: 12px 16px;
 }

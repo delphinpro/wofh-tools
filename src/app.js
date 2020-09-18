@@ -10,11 +10,11 @@ import router from '@/router';
 import store from '@/store';
 import App from '@/components/App/App.vue';
 import PageHeader from '@/components/App/PageHeader';
-import FaIcon from '@/components/App/FaIcon';
 import Alert from '@/components/Widgets/Alert';
 import Inputbox from '@/components/Forms/Inputbox';
 import Checkbox from '@/components/Forms/Checkbox';
 import RadioButton from '@/components/Forms/RadioButton';
+import quasar, { Dark } from 'quasar';
 
 export function createApp({ state, url }, parameters = null) {
 
@@ -22,7 +22,6 @@ export function createApp({ state, url }, parameters = null) {
   //== Global Components
   //== ======================================= ==//
 
-  Vue.component('FaIcon', FaIcon);
   Vue.component('PageHeader', PageHeader);
   Vue.component('Alert', Alert);
   Vue.component('Inputbox', Inputbox);
@@ -43,6 +42,9 @@ export function createApp({ state, url }, parameters = null) {
       parameters.onBeforeCreateApp(store, router);
     }
   }
+
+  Vue.use(quasar);
+  Dark.set(true);
 
   return new Vue({
     router,

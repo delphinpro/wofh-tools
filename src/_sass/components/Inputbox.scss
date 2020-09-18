@@ -2,7 +2,7 @@
 //== Input box
 //== ======================================= ==//
 
-$inputbox-font-size: $rhythm-base-font-size;
+$inputbox-font-size: $base-font-size;
 $inputbox-h-padding: rhythm(0.5);
 $inputbox-border-bottom: 2px;
 $inputbox-background: lighten($dashboard-sidebar-bg, 10%);
