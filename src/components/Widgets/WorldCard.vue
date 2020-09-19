@@ -84,7 +84,7 @@ export default {
 </template>
 
 <style lang="scss">
-@import "src/_sass/config/cfg-app";
+@import "src/app-styles/config";
 
 .world-card {
   background-color: $blue-grey-10;

@@ -41,7 +41,7 @@ export default {
 </template>
 
 <style lang="scss">
-@import "src/_sass/config/cfg-app";
+@import "src/app-styles/config";
 
 .info-card {
   $iconSize: $base-line-height * (2.5);

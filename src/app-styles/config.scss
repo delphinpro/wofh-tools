@@ -10,8 +10,8 @@ $MAX_INT32: 2147483647;
 $base-font-size: 15px !default;
 $base-line-height: 24px !default; //1.6em
 
-@import "../mixins";
-@import "cfg-z-indexes";
+@import "mixins";
+@import "config/cfg-z-indexes";
 
 // @formatter:off
 
@@ -180,7 +180,7 @@ $alert-danger-text:           #fff;
 //== Misc.
 //== ======================================= ==//
 
-@import "cfg-headings";
+@import "config/cfg-headings";
 
 
 $shadow-bar: 0 3px 7px rgba(0, 0, 0, 0.3);
@@ -192,4 +192,4 @@ $transition-fn   : ease-in-out;
 //== Disabled cursor for form controls and buttons.
 $cursor-disabled:   not-allowed;
 
-@import "cfg-quasar";
+@import "config/cfg-quasar";

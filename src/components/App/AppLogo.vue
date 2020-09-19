@@ -13,7 +13,7 @@
 </template>
 
 <style lang="scss">
-@import "src/_sass/config/cfg-app";
+@import "src/app-styles/config";
 
 .app-logo {
   display: flex;

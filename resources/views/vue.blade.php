@@ -24,7 +24,7 @@
 
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <title>{{ config('app.name', 'Laravel') }}</title>
+  <title>{{ config('app.name', 'Wofh Tools') }}</title>
 
   <style>.fa-icon{height:1.1em;width:1.1em;fill: currentColor;}</style>
   <style>
@@ -36,7 +36,7 @@
           display: inline;list-style: none;
       }
   </style>
-  <link href="{{ asset('assets/main.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/app.css') }}" rel="stylesheet">
 </head>
 <body>
 

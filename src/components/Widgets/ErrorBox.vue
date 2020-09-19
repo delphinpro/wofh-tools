@@ -48,7 +48,7 @@ export default {
 </template>
 
 <style lang="scss">
-@import "src/_sass/config/cfg-app";
+@import "src/app-styles/config";
 
 $error-box-title-height: 1.25;
 
