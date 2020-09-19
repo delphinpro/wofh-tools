@@ -1,9 +1,12 @@
 {
     "private": true,
     "scripts": {
-        "start": "npm run dev -- --watch",
-        "dev": "cross-env BUNDLE=client NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "start": "cross-env BUNDLE=client NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js --watch",
         "prod": "cross-env NODE_ENV=production npm run build:server && cross-env NODE_ENV=production npm run build:client",
+        "client:dev": "cross-env NODE_ENV=development npm run build:client",
+        "client:prod": "cross-env NODE_ENV=production npm run build:client",
+        "server:dev": "cross-env NODE_ENV=development npm run build:server",
+        "server:prod": "cross-env NODE_ENV=production npm run build:server",
         "build:client": "cross-env BUNDLE=client node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "build:server": "cross-env BUNDLE=server node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
