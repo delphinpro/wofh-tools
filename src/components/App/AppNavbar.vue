@@ -13,7 +13,6 @@ import NavMenu from '@/components/App/NavMenu';
 import UserMenu from '@/components/App/UserMenu';
 
 import { matMenu } from '@quasar/extras/material-icons';
-import { mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -23,7 +22,10 @@ export default {
     UserMenu,
   },
 
-  data: () => ({
+  props: {
+    lsLeft: Boolean,
+  },
+  data : () => ({
     matMenu,
 
     mainmenu: [
@@ -35,18 +37,14 @@ export default {
   }),
 
   computed: {
-    ...mapGetters([
-      'lsEnabled',
-      //     'getProfile',
-      //     'isAuth',
-      //     'isProfileLoaded',
-    ]),
+    // ...mapGetters([
+    //     'getProfile',
+    //     'isAuth',
+    //     'isProfileLoaded',
+    // ]),
     // ...mapState({
     //     name: state => `${state.user.profile.title} ${state.user.profile.name}`,
     // }),
-  },
-
-  created() {
   },
 
   methods: {
@@ -65,7 +63,7 @@ export default {
         round
         :icon="matMenu"
         @click="$emit('toggle-left-drawer')"
-        v-if="lsEnabled"
+        v-if="lsLeft"
       />
       <AppLogo class="self-stretch"/>
       <QSeparator class="gt-sm" dark vertical inset=""/>
@@ -73,7 +71,7 @@ export default {
       <!--    <QSpace/>-->
       <!--    <UserMenu/>-->
     </QToolbar>
-    <AppBreadcrumbs v-if="$route.name!=='home'"/>
+<!--    <AppBreadcrumbs v-if="$route.name!=='home'"/>-->
   </div>
 </template>
 

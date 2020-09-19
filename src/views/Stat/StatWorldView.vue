@@ -6,28 +6,40 @@
 -->
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import InfoBox from '@/components/Widgets/InfoBox';
+import InfoCard from '@/components/Widgets/InfoCard.vue';
+import { farClock, fasUsers, fasUserCheck, fasFlag } from '@quasar/extras/fontawesome-v5';
 
 export default {
   name: 'StatWorldView',
 
   components: {
-    InfoBox,
+    InfoCard,
   },
 
   data: () => ({
+    farClock,
+    fasUsers,
+    fasUserCheck,
+    fasFlag,
+
     stat     : null,
     countries: [],
   }),
 
   computed: {
-    ...mapGetters(['currentWorld']),
-    pageTitle() {
-      return this.currentWorld ? `Статистика ${this.currentWorld.uSign}` : '';
-    },
-    worldAge() {
-      return this.currentWorld ? this.currentWorld.age : '';
-    },
+    ...mapGetters([
+      'getWorldBySign',
+    ]),
+
+    pageTitle() { return this.currentWorld ? `Статистика ${this.currentWorld.uSign}` : ''; },
+    worldAge() { return this.currentWorld ? this.currentWorld.age : ''; },
+
+    currentWorld() { return this.getWorldBySign(this.$route.params['sign']); },
+
+    statSkeleton() { return !this.stat; },
+    accountsTotal() { return this.stat ? this.stat.accountsTotal : null; },
+    accountsActive() { return this.stat ? this.stat.accountsActive : null; },
+    countriesTotal() { return this.stat ? this.stat.countriesTotal : null; },
   },
 
   mounted() {
@@ -37,75 +49,60 @@ export default {
   methods: {
     ...mapActions([
       'updateWorlds',
-      'setCurrentWorld',
     ]),
+
     async loadData() {
       await this.updateWorlds();
-      await this.setCurrentWorld(this.$route.params['sign']);
-      // let stat = await this.getCommonStat(this.currentWorld.sign);
-      this.stat = await this.getCommonStat(this.currentWorld.sign);
-      // let { args, commonStat, countries } = await this.getCommonStat(this.$store.getters.currentWorld.sign);
-      // this.stat = commonStat[0];
-      // this.countries = countries;
+      this.stat = await this.getCommonStat(this.$route.params['sign']);
     },
+
     getCommonStat(sign) {
       return this.axios.get(`/stat/${sign}/last`).catch(e => {
-
+        console.log(e);
       });
-    },
-    getFlag(flag) {
-      return `//st.wofh-tools.project/flags/${this.$store.getters.currentWorld.sign}/${flag}.gif`;
-      // return `/flag.php?w=${this.$store.getters.currentWorld.sign}&f=${flag}`;
     },
   },
 };
 </script>
 
 <template>
-  <div>
+  <q-page padding>
     <PageHeader :title="pageTitle"/>
 
-    <div class="row">
-      <div class="col-lg-9">
-        <h2 class="h3">Общая статистика</h2>
-        <div class="row">
-          <div class="col-sm-6 col-md-3 d-flex" v-if="worldAge">
-            <div class="info-card info-card_theme_info">
-              <FaIcon class="info-card__icon" name="clock"></FaIcon>
-              <div class="info-card__title">{{ worldAge }}</div>
-              <div class="info-card__content">дней длится раунд</div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-3" v-if="stat">
-            <div class="info-card info-card_theme_warning">
-              <FaIcon class="info-card__icon" name="users"></FaIcon>
-              <div class="info-card__title">{{ stat.accountsTotal }}</div>
-              <div class="info-card__content">регистраций</div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-3" v-if="stat">
-            <div class="info-card info-card_theme_success">
-              <FaIcon class="info-card__icon" name="user-check"></FaIcon>
-              <div class="info-card__title">{{ stat.accountsActive }}</div>
-              <div class="info-card__content">активных игроков</div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-3" v-if="stat">
-            <div class="info-card info-card_theme_danger">
-              <FaIcon class="info-card__icon" name="flag"></FaIcon>
-              <div class="info-card__title">{{ stat.countriesTotal }}</div>
-              <div class="info-card__content">стран</div>
-            </div>
-          </div>
-        </div>
+    <h2>Общая статистика</h2>
+    <div class="row q-col-gutter-md">
+      <div class="col-grow c-ol-sm-6 col-md-3 d-flex" v-if="worldAge">
+        <InfoCard class="bg-info text-white"
+          :skeleton="statSkeleton"
+          :icon="farClock"
+          :title="worldAge"
+          text="дней длится раунд"
+        />
       </div>
-      <div class="col-lg-3"></div>
+      <div class="col-grow c-ol-sm-6 col-md-3">
+        <InfoCard class="bg-warning text-white"
+          :skeleton="statSkeleton"
+          :icon="fasUsers"
+          :title="accountsTotal"
+          text="регистраций"
+        />
+      </div>
+      <div class="col-grow c-ol-sm-6 col-md-3">
+        <InfoCard class="bg-positive text-white"
+          :skeleton="statSkeleton"
+          :icon="fasUserCheck"
+          :title="accountsActive"
+          text="активных игроков"
+        />
+      </div>
+      <div class="col-grow c-ol-sm-6 col-md-3">
+        <InfoCard class="bg-negative text-white"
+          :skeleton="statSkeleton"
+          :icon="fasFlag"
+          :title="countriesTotal"
+          text="стран"
+        />
+      </div>
     </div>
-    <pre>{{ stat }}</pre>
-    <!--        <img width="60" height="40" src="//st.wofh-tools.project/flags/ru3t/d0aacloloagaaaaaaaa.gif" alt="//st.wofh-tools.project/flags/ru3t/d0aacloloagaaaaaaaa.gif">-->
-  </div>
+  </q-page>
 </template>
-
-<style>
-
-</style>

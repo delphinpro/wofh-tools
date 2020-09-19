@@ -17,7 +17,7 @@ export default {
 <template>
   <div class="flex self-stretch" v-if="items.length">
       <div class="flex self-stretch" v-for="item in items" :key="item.id">
-        <q-btn stretch flat no-caps :label="item.title" :to="item.path"/>
+        <QBtn stretch flat no-caps :label="item.title" :to="item.path"/>
       </div>
   </div>
 </template>

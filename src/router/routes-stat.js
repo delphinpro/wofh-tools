@@ -8,25 +8,31 @@
 import StatisticView from '@/views/StatisticView';
 import StatWorldView from '@/views/Stat/StatWorldView';
 import { ucfirst } from '@/utils';
-
+import ViewSidebarStat from '@/views/Sidebar/ViewSidebarStat.vue';
 
 /** @var Array<RouteConfig> */
 export const statRoutes = [
   {
-    path: '/stat',
-    name: 'stat',
-    component: StatisticView,
-    meta: {
+    path      : '/stat',
+    name      : 'stat',
+    components: {
+      default: StatisticView,
+      // right  : ViewSidebarStat,
+    },
+    meta      : {
       crumbsText: 'Статистика',
     },
-    children: [
+    children  : [
       {
-        path: ':sign',
-        name: 'statWorld',
-        component: StatWorldView,
-        meta: {
+        path     : ':sign',
+        name     : 'statWorld',
+        components: {
+          default: StatWorldView,
+          // right: ViewSidebarStat,
+        },
+        meta     : {
           crumbsGetter: 'currentWorld',
-          crumbsText: world => ucfirst(world.sign),
+          crumbsText  : world => ucfirst(world.sign),
         },
       },
     ],

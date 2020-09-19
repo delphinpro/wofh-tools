@@ -11,6 +11,7 @@
 %heading-common {
   color: lighten($color-text-base, 5%);
   font-family: $wt-family-head;
+  &:first-child {    margin-top: 0;  }
 }
 
 @each $h, $params in $headings {
