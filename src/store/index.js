@@ -32,12 +32,8 @@ const mutations = {
 };
 
 const actions = {
-  loadingOn({ commit }) {
-    commit('loadingUp');
-  },
-  loadingOff({ commit }) {
-    commit('loadingDown');
-  },
+  loadingOn({ commit }) { commit('loadingUp'); },
+  loadingOff({ commit }) { commit('loadingDown'); },
 };
 
 export default new Vuex.Store({

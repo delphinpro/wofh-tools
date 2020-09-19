@@ -5,10 +5,10 @@
 ////
 
 @function rem($font-size) {
-  @return $font-size / $rhythm-base-font-size * 1rem,
+  @return $font-size / $base-font-size * 1rem,
 }
 
-@function em($font-size, $base: $rhythm-base-font-size) {
+@function em($font-size, $base: $base-font-size) {
   @return $font-size / $base * 1em,
 }
 
@@ -44,61 +44,6 @@
   }
 }
 
-@mixin z-depth($depth: 1) {
-  @if ($depth == 1) {
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
-  } @else if ($depth == 2) {
-    box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-  } @else if ($depth == 3) {
-    box-shadow: 0 8px 17px 2px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
-  } @else if ($depth == 4) {
-    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -7px rgba(0, 0, 0, 0.2);
-  } @else if ($depth == 5) {
-    box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
-  } @else {
-    @warn 'Invalid param: $depth (allow in 1..5)';
-  }
-}
-
-@mixin wt-transition($properties...) {
-  transition: $transition-speed $transition-fn;
-  @if length($properties) > 0 {
-    transition-property: $properties;
-  }
-}
-
-@mixin list-unstyled() {
-  padding-left: 0;
-  list-style: none;
-}
-
-@mixin text-emphasis-variant($parent, $color) {
-  #{$parent} {
-    color: $color;
-  }
-  a#{$parent}:hover,
-  a#{$parent}:focus {
-    color: darken($color, 10%);
-  }
-}
-
-@mixin bg-variant($parent, $color) {
-  #{$parent} {
-    background-color: $color;
-  }
-  a#{$parent}:hover,
-  a#{$parent}:focus {
-    background-color: darken($color, 10%);
-  }
-}
-
-@mixin tab-focus() {
-  // WebKit-specific. Other browsers will keep their default outline style.
-  // (Initially tried to also force default via `outline: initial`,
-  // but that seems to erroneously remove the outline in Firefox altogether.)
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
-}
 
 @function map-get-safe($map, $key, $default: null) {
   @if map_has_key($map, $key) {

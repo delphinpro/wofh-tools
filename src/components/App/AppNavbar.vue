@@ -7,24 +7,32 @@
 
 // import { mapGetters, mapState } from 'vuex';
 // import { AUTH_LOGOUT } from '@/store/modules/store-auth';
+import AppBreadcrumbs from '@/components/App/AppBreadcrumbs.vue';
 import AppLogo from '@/components/App/AppLogo';
 import NavMenu from '@/components/App/NavMenu';
 import UserMenu from '@/components/App/UserMenu';
 
+import { matMenu } from '@quasar/extras/material-icons';
 
 export default {
   components: {
+    AppBreadcrumbs,
     AppLogo,
     NavMenu,
     UserMenu,
   },
 
-  data: () => ({
+  props: {
+    lsLeft: Boolean,
+  },
+  data : () => ({
+    matMenu,
+
     mainmenu: [
       { id: 1, title: 'Статистика', icon: null, path: '/stat' },
-      { id: 2, title: 'Науки', icon: null, path: '/technology' },
-      { id: 3, title: 'Квесты', icon: null, path: '/quests' },
-      { id: 4, title: 'Таблицы', icon: null, path: 'tables' },
+      // { id: 2, title: 'Науки', icon: null, path: '/technology' },
+      // { id: 3, title: 'Квесты', icon: null, path: '/quests' },
+      // { id: 4, title: 'Таблицы', icon: null, path: 'tables' },
     ],
   }),
 
@@ -48,15 +56,29 @@ export default {
 </script>
 
 <template>
-  <header class="app-navbar">
-    <div class="app-navbar__container">
-      <AppLogo class="app-navbar__logo"/>
-      <!--<button class="app-navbar__sidebar-toggle sidebar-toggle" type="button">
-          <span class="fa fa-bars"></span>
-          <span class="sr-only">Toggle navigation</span>
-      </button>-->
-      <NavMenu :items="mainmenu" class="app-navbar__mainmenu"/>
-      <UserMenu class="app-navbar__usermenu"/>
-    </div>
-  </header>
+  <div class="app-navbar bg-primary text-white">
+    <QToolbar>
+      <QBtn class="q-mr-sm"
+        flat
+        round
+        :icon="matMenu"
+        @click="$emit('toggle-left-drawer')"
+        v-if="lsLeft"
+      />
+      <AppLogo class="self-stretch"/>
+      <QSeparator class="gt-sm" dark vertical inset=""/>
+      <NavMenu class="gt-sm" :items="mainmenu"/>
+      <!--    <QSpace/>-->
+      <!--    <UserMenu/>-->
+    </QToolbar>
+<!--    <AppBreadcrumbs v-if="$route.name!=='home'"/>-->
+  </div>
 </template>
+
+<style lang="scss">
+.app-navbar {
+  a {
+    color: inherit;
+  }
+}
+</style>

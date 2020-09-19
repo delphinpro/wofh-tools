@@ -1,7 +1,7 @@
 <!--
   WofhTools
   Component: AppLogo.vue
-  © 2019 delphinpro <delphinpro@yandex.ru>
+  © 2019—2020 delphinpro <delphinpro@yandex.ru>
   licensed under the MIT license
 -->
 <template>
@@ -11,3 +11,42 @@
     <span class="app-logo__beta">beta</span>
   </router-link>
 </template>
+
+<style lang="scss">
+@import "src/_sass/config/cfg-app";
+
+.app-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none !important;
+  color: currentColor !important;
+  font-family: $wt-family-head;
+  font-weight: 400;
+  padding-right: 1.5em;
+
+  &__image {
+    @include size(48px);
+  }
+
+  &__name {
+    font-size: 20px;
+    margin-left: 0.5em;
+    transform: scaleY(1.3);
+    white-space: nowrap;
+  }
+
+  &__beta {
+    font-size: 11px;
+    position: relative;
+    top: -0.5em;
+    margin-left: 0.5em;
+  }
+
+  @media (max-width: $breakpoint-xs) {
+    &__name,
+    &__beta {
+      //display: none;
+    }
+  }
+}
+</style>

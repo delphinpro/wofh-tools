@@ -21,6 +21,7 @@ Auth::routes([
 
 Route::get('/', 'IndexController@show')->name('home');
 Route::get('/stat', 'StatController@index')->name('stat');
+Route::get('/stat/{sign}', 'StatController@world')->name('statWorld');
 
 
 /*=========================================================*\

@@ -5,14 +5,10 @@
   licensed under the MIT license
 -->
 <script>
-import CloseButton from '@/components/Elements/CloseButton';
-
-
 export default {
   name: 'Alert',
 
   components: {
-    CloseButton,
   },
 
   props: {
@@ -55,9 +51,9 @@ export default {
 <template>
   <transition name="fade">
     <div class="alert" :class="baseClass" v-if="isVisible">
-      <CloseButton class="alert__close" :theme="type" v-if="dismissable" @click="hideMe"/>
+<!--      <CloseButton class="alert__close" :theme="type" v-if="dismissable" @click="hideMe"/>-->
       <div class="alert__header" v-if="title">
-        <FaIcon class="alert__icon" :name="icon" v-if="icon"/>
+<!--        <FaIcon class="alert__icon" :name="icon" v-if="icon"/>-->
         <span class="alert__title" v-text="title"></span>
       </div>
       <div class="alert__content" v-if="$slots.default">

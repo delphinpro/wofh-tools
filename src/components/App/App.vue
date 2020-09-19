@@ -1,7 +1,7 @@
 <!--
   WofhTools
   Component: App.vue
-  © 2019 delphinpro <delphinpro@yandex.ru>
+  © 2019—2020 delphinpro <delphinpro@yandex.ru>
   licensed under the MIT license
 -->
 <script>
@@ -20,23 +20,47 @@ export default {
     Loading,
   },
 
-  data: () => ({}),
+  data: () => ({
+    left : false,
+    right: false,
+  }),
 
   computed: {
     ...mapGetters([
       'loading',
     ]),
+    lsEnabled() {
+      return this.$route.meta.left;
+    },
+    rsEnabled() {
+      return !!this.$route.matched[this.$route.matched.length - 1].components.right;
+    },
   },
 };
 </script>
 
 <template>
-  <div class="app" id="app">
-    <AppNavbar class="app__navbar"/>
-    <router-view class="app__main"/>
-    <AppFooter class="app__footer"/>
-    <div class="app__loader" v-if="loading">
-      <Loading/>
-    </div>
-  </div>
+  <QLayout view="hHh LpR lff" id="app">
+
+    <QHeader reveal elevated class="bg-primary text-white">
+      <AppNavbar
+        :ls-left="left"
+        @toggle-left-drawer="left=!left"
+      />
+    </QHeader>
+
+    <QDrawer v-model="left" side="left" overlay bordered v-if="lsEnabled">
+    </QDrawer>
+
+    <QDrawer v-model="right" side="right" v-if="rsEnabled">
+      <router-view name="right"/>
+    </QDrawer>
+
+    <QPageContainer>
+      <router-view/>
+    </QPageContainer>
+
+    <AppFooter/>
+
+  </QLayout>
 </template>

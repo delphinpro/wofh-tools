@@ -1,16 +1,15 @@
 ////
 /// @author delphinpro <delphinpro@yandex.ru>
-/// @copyright copyright © 2019 delphinpro
+/// @copyright copyright © 2019-2020 delphinpro
 /// @license licensed under the MIT license
 ////
 $NODE_ENV: development;
 $DEV_MODE: $NODE_ENV == development;
 $MAX_INT32: 2147483647;
 
-@import "cfg-vrhythm";
-@import "cfg-grid";
-@import "../../../node_modules/vrhythm/source/vrhythm";
-@import "../../../node_modules/bs-grid-system/bs-grid";
+$base-font-size: 15px !default;
+$base-line-height: 24px !default; //1.6em
+
 @import "../mixins";
 @import "cfg-z-indexes";
 
@@ -40,7 +39,7 @@ $palette-fuchsia : #f012be;
 $palette-purple  : #605ca8;
 $palette-maroon  : #d81b60;
 $palette-black   : #111;
-$gray-lte: #d2d6de;
+$gray-lte        : #d2d6de;
 
 //==
 //== Semantic colors
@@ -181,12 +180,7 @@ $alert-danger-text:           #fff;
 //== Misc.
 //== ======================================= ==//
 
-$blockquote-border-color: adjust_hue(desaturate(darken($color-text-base, 20%), 2%), 2);
-$blockquote-small-color : $gray-lte;
-$blockquote-font-size   : ($rhythm-base-font-size * 1.25);
-
 @import "cfg-headings";
-@import "cfg-buttons";
 
 
 $shadow-bar: 0 3px 7px rgba(0, 0, 0, 0.3);
@@ -198,5 +192,4 @@ $transition-fn   : ease-in-out;
 //== Disabled cursor for form controls and buttons.
 $cursor-disabled:   not-allowed;
 
-//@import "../bootstrap-sass/bootstrap/variables";
-//@import "adminLTE-vars";
+@import "cfg-quasar";

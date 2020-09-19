@@ -6,15 +6,14 @@
 -->
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import WorldCard from '@/components/Widgets/WorldCard.vue';
 import { cbSortWorldsByStarted } from '@/utils';
-import InfoBox from '@/components/Widgets/InfoBox';
-
 
 export default {
-  name: 'StatHomeView',
+  name: 'StatIndexView',
 
   components: {
-    InfoBox,
+    WorldCard,
   },
 
   data: () => ({}),
@@ -41,55 +40,25 @@ export default {
     ...mapActions([
       'updateWorlds',
     ]),
-    getLink(world) {
-      if (!world.statUpdatedAt) return null;
-      return {
-        name: 'statWorld',
-        params: {
-          sign: world.sign,
-        },
-      };
-    },
-
-    getTheme(ts) {
-      if (!ts) return null;
-      return 'info';
-    },
   },
 };
 </script>
 
 <template>
-  <div>
+  <QPage padding>
     <PageHeader title="Статистика игровых миров"/>
 
-    <div v-for="(group, index) in worlds" v-if="worlds.length">
+    <div class="q-mt-md"
+      v-for="(group, index) in worlds"
+      v-if="worlds.length"
+    >
       <h3 v-if="index === 1 && group.length">Завершенные миры</h3>
-
-      <div class="row">
-        <div class="col-lg-6 d-flex mb-1.25" v-for="w in group" v-if="w.statistic">
-          <InfoBox :link="getLink(w)" :theme="getTheme(w.statUpdatedAt)" class="world-card">
-            <div class="world-card__info" slot="info">
-              <div class="world-card__sign">{{ w.uSign }}</div>
-              <img
-                class="world-card__flag"
-                :src="'/assets/images/icons/'+w.serverCountryFlag+'.svg'"
-                :alt="w.flag"
-                :height="30*341.4/512"
-              >
-            </div>
-            <div class="world-card__content" slot="default">
-              <div class="world-card__title">{{ w.title }}</div>
-              <div class="world-card__desc">{{ w.desc }}</div>
-            </div>
-            <div class="world-card__footer" slot="footer">
-              <div v-if="w.statUpdatedAt">Обновлено: {{ w.localStatUpdatedAt }}</div>
-              <div v-else>Нет статистики</div>
-            </div>
-          </InfoBox>
+      <div class="row q-col-gutter-lg">
+        <div class="col-12 col-sm-6" v-for="w in group" v-if="w.statistic">
+          <WorldCard :world="w"/>
         </div>
       </div>
     </div>
-    <!--    <pre>{{ worlds }}</pre>-->
-  </div>
+
+  </QPage>
 </template>

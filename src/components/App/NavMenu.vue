@@ -15,12 +15,9 @@ export default {
 </script>
 
 <template>
-  <ul class="nav-menu" v-if="items.length">
-    <li class="nav-menu__item" v-for="item in items" :key="item.id">
-      <router-link class="nav-menu__link" :to="item.path">
-        <span class="nav-menu__icon" :class="item.icon" v-if="item.icon"></span>
-        <span>{{ item.title }}</span>
-      </router-link>
-    </li>
-  </ul>
+  <div class="flex self-stretch" v-if="items.length">
+      <div class="flex self-stretch" v-for="item in items" :key="item.id">
+        <QBtn stretch flat no-caps :label="item.title" :to="item.path"/>
+      </div>
+  </div>
 </template>

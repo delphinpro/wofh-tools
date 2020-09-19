@@ -49,7 +49,6 @@ export default {
 
 <template>
   <div class="page-header-container">
-    <AppBreadcrumbs v-if="crumbs"/>
     <div class="page-header" v-if="pageTitle">
       <h1><span v-html="pageTitle"></span><small v-html="pageSubtitle" v-if="pageSubtitle"></small></h1>
     </div>
