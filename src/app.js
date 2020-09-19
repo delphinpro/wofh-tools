@@ -10,10 +10,6 @@ import router from '@/router';
 import store from '@/store';
 import App from '@/components/App/App.vue';
 import PageHeader from '@/components/App/PageHeader';
-import Alert from '@/components/Widgets/Alert';
-import Inputbox from '@/components/Forms/Inputbox';
-import Checkbox from '@/components/Forms/Checkbox';
-import RadioButton from '@/components/Forms/RadioButton';
 import quasar, { Dark } from 'quasar';
 
 export function createApp({ state, url }, parameters = null) {
@@ -23,10 +19,6 @@ export function createApp({ state, url }, parameters = null) {
   //== ======================================= ==//
 
   Vue.component('PageHeader', PageHeader);
-  Vue.component('Alert', Alert);
-  Vue.component('Inputbox', Inputbox);
-  Vue.component('Checkbox', Checkbox);
-  Vue.component('RadioButton', RadioButton);
 
   const newState = {
     ...store.state,

@@ -67,16 +67,6 @@ $color-text-base: #8896a1;
 
 
 //==
-//== Forms
-//== ======================================= ==//
-
-$checkbox-size: 18px;
-$checkbox-border: 2px;
-$radio-size: $checkbox-size;
-$radio-border: $checkbox-border;
-
-
-//==
 //== Code
 //== ======================================= ==//
 
@@ -89,48 +79,6 @@ $code-bg:                     darken($background-base, 5%);
 
 $kbd-color:                   #fff !default;
 $kbd-bg:                      #333 !default;
-
-
-//==
-//== Tables
-//== ======================================= ==//
-
-$table-cell-padding:            8px;
-$table-condensed-cell-padding:  5px;
-
-$table-bg-accent:               #f9f9f9;
-$table-bg-hover:                #f5f5f5;
-$table-bg-active:               $table-bg-hover;
-
-$table-border-color:            #ddd;
-
-//==
-//== Dashboard sidebar
-//== ======================================= ==//
-
-$sidebar-width: 230px;
-
-$dashboard-sidebar-bg         : darken($background-base, 3%);
-$dashboard-sidebar-bg-hover   : darken($dashboard-sidebar-bg, 2%);
-$dashboard-sidebar-color      : lighten($dashboard-sidebar-bg, 60%);
-$dashboard-sidebar-color-hover: #fff;
-$dashboard-sidebar-active-color: $palette-aqua;
-
-$dashboard-sidebar-submenu-bg         : lighten($dashboard-sidebar-bg, 5%);
-$dashboard-sidebar-submenu-color      : lighten($dashboard-sidebar-submenu-bg, 40%);
-$dashboard-sidebar-submenu-hover-color: #fff;
-
-//==
-//== Navbar
-//== ======================================= ==//
-
-$app-navbar-background      : $palette-light-blue;
-$app-navbar-background-hover: darken($app-navbar-background, 5%);
-$app-navbar-color           : #fff;
-$app-navbar-color-hover     : lighten($app-navbar-color, 0);
-
-$navbar-height-rhythm : 2;
-$navbar-padding-rhythm: 0.25;
 
 
 //==
@@ -156,25 +104,6 @@ $box2-theme-success: $color-success;
 
 $page-header-font-size: 26px;
 
-
-//==
-//== Alerts
-//== ======================================= ==//
-
-$alert-padding:               0.5;
-$alert-border-radius:         3px;
-
-$alert-success-bg:            $color-success;
-$alert-success-text:          #fff;
-
-$alert-info-bg:               $color-info;
-$alert-info-text:             #fff;
-
-$alert-warning-bg:            $color-warning;
-$alert-warning-text:          #fff;
-
-$alert-danger-bg:             $color-danger;
-$alert-danger-text:           #fff;
 
 //==
 //== Misc.

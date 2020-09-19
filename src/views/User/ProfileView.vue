@@ -120,7 +120,7 @@ export default {
         </div>
       </div>
     </div>
-    <Alert v-else :title="serviceMessage"></Alert>
+    <div v-else v-text="serviceMessage"></div>
     <div class="row">
       <div class="col-sm-4">
         <pre>{{ user }}</pre>
