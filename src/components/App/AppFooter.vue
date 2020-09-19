@@ -5,8 +5,8 @@
   licensed under the MIT license
 -->
 <template>
-  <QFooter class="app-footer">
-    <div class="app-footer__container q-px-md q-py-sm">
+  <QFooter class="AppFooter">
+    <div class="AppFooter__container q-px-md q-py-sm">
       <div>
         <p>
           © {{ this.$store.getters.projectName }}, v{{ this.$store.getters.projectVer }},
@@ -33,7 +33,7 @@
 <style lang="scss">
 @import "src/app-styles/config";
 
-.app-footer {
+.AppFooter {
   font-size: 11px;
   color: $color-text-base;
   background: darken($dashboard-sidebar-bg, 3%);

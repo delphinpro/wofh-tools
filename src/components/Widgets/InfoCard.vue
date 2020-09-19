@@ -25,15 +25,15 @@ export default {
 </script>
 
 <template>
-  <div class="info-card">
-    <q-skeleton class="info-card__icon" type="circle" :animation="animation" v-if="skeleton"/>
-    <q-icon class="info-card__icon" :name="icon" v-else/>
+  <div class="InfoCard">
+    <q-skeleton class="InfoCard__icon" type="circle" :animation="animation" v-if="skeleton"/>
+    <q-icon class="InfoCard__icon" :name="icon" v-else/>
 
-    <div class="info-card__title">
+    <div class="InfoCard__title">
       <q-skeleton type="text" :animation="animation" v-if="skeleton"/>
       <span v-else>{{ title }}</span>
     </div>
-    <div class="info-card__content">
+    <div class="InfoCard__content">
       <q-skeleton type="text" :animation="animation" v-if="skeleton"/>
       <span v-else>{{ text }}</span>
     </div>
@@ -43,7 +43,7 @@ export default {
 <style lang="scss">
 @import "src/app-styles/config";
 
-.info-card {
+.InfoCard {
   $iconSize: $base-line-height * (2.5);
 
   position: relative;

@@ -21,8 +21,8 @@ export default {
   computed: {
     rootClasses() {
       let classes = '';
-      if (this.theme) classes += `error-box_theme_${this.theme}`;
-      if (this.lighting) classes += ` error-box_lighting`;
+      if (this.theme) classes += `ErrorBox_theme_${this.theme}`;
+      if (this.lighting) classes += ` ErrorBox_lighting`;
       return classes;
     },
     iconName() {
@@ -33,14 +33,14 @@ export default {
 </script>
 
 <template>
-  <div class="error-box" :class="rootClasses">
-    <div class="error-box__error-code" v-if="code">{{ code }}</div>
-    <div class="error-box__body">
-      <div class="error-box__title">
-        <QIcon class="error-box__icon" :name="iconName" v-if="icon"/>
+  <div class="ErrorBox" :class="rootClasses">
+    <div class="ErrorBox__error-code" v-if="code">{{ code }}</div>
+    <div class="ErrorBox__body">
+      <div class="ErrorBox__title">
+        <QIcon class="ErrorBox__icon" :name="iconName" v-if="icon"/>
         {{ title }}
       </div>
-      <div class="error-box__content">
+      <div class="ErrorBox__content">
         <slot name="default"></slot>
       </div>
     </div>
@@ -50,13 +50,13 @@ export default {
 <style lang="scss">
 @import "src/app-styles/config";
 
-$error-box-title-height: 1.25;
+$ErrorBox-title-height: 1.25;
 
 :root {
   --theme-color: #{$color-text-base};
 }
 
-.error-box {
+.ErrorBox {
   display: flex;
   align-items: center;
   width: 650px;

@@ -38,7 +38,7 @@ export default {
 </script>
 
 <template>
-  <QToolbar :inset="false" class="app-breadcrumbs" style="min-height: 24px;">
+  <QToolbar :inset="false" class="AppBreadcrumbs" style="min-height: 24px;">
     <QBreadcrumbs>
       <QBreadcrumbsEl label="Главная" :icon="mdiHome" :to="{ name: 'home' }"/>
       <QBreadcrumbsEl
@@ -55,7 +55,7 @@ export default {
 <style lang="scss">
 @import "src/app-styles/config";
 
-.app-breadcrumbs {
+.AppBreadcrumbs {
   font-size: 12px;
   background: $background-base-dark;
   a {

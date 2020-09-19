@@ -50,19 +50,19 @@ export default {
 </script>
 
 <template>
-  <QCard class="world-card" :class="{'world-card_closed':!world.working}">
+  <QCard class="WorldCard" :class="{'WorldCard_closed':!world.working}">
     <QCardSection horizontal>
-      <QCardSection class="world-card__sign">
+      <QCardSection class="WorldCard__sign">
         {{ world.sign }}
       </QCardSection>
       <QCardSection class="col-grow">
-        <!--<div class="world-card__title">{{ world.title }}</div>-->
-        <div class="world-card__info">
-          <QIcon class="world-card__icon" :name="canRegIcon" :color="canRegColor"/>
+        <!--<div class="WorldCard__title">{{ world.title }}</div>-->
+        <div class="WorldCard__info">
+          <QIcon class="WorldCard__icon" :name="canRegIcon" :color="canRegColor"/>
           <span v-text="canRegText"></span>
         </div>
-        <div class="world-card__info" v-if="world.age">
-          <QIcon class="world-card__icon" :name="mdiClockOutline" color="positive"/>
+        <div class="WorldCard__info" v-if="world.age">
+          <QIcon class="WorldCard__icon" :name="mdiClockOutline" color="positive"/>
           <span v-text="ageText"></span>
         </div>
         <QBadge floating color="blue-grey-10 shadow-1">
@@ -86,7 +86,7 @@ export default {
 <style lang="scss">
 @import "src/app-styles/config";
 
-.world-card {
+.WorldCard {
   background-color: $blue-grey-10;
   &__sign {
     background: $green-7;

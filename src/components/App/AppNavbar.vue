@@ -56,7 +56,7 @@ export default {
 </script>
 
 <template>
-  <div class="app-navbar bg-primary text-white">
+  <div class="AppNavbar bg-primary text-white">
     <QToolbar>
       <QBtn class="q-mr-sm"
         flat
@@ -76,7 +76,7 @@ export default {
 </template>
 
 <style lang="scss">
-.app-navbar {
+.AppNavbar {
   a {
     color: inherit;
   }
