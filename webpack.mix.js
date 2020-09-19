@@ -30,9 +30,10 @@ if (!mix.inProduction() && IS_CLIENT) {
 
 if (IS_CLIENT) {
   mix.sass(`${src}/app-styles/app.scss`, dist);
+  mix.sass(`${src}/app-styles/components.scss`, dist);
   mix.js(`${src}/entry-client.js`, dist);
   mix.browserSync({
-    proxy: 'wofh-tools.project',
+    proxy  : 'wofh-tools.project',
     browser: ['chrome'],
   });
   mix.extract();
@@ -47,6 +48,7 @@ if (IS_CLIENT) {
 }
 
 if (IS_SERVER) {
+  mix.sass(`${src}/app-styles/components.scss`, dist);
   mix.js(`${src}/entry-server.js`, dist);
 }
 
@@ -55,7 +57,7 @@ mix.webpackConfig(() => {
 
   config.resolve = {
     alias: {
-      '@': path.join(__dirname, src),
+      '@'   : path.join(__dirname, src),
       'vue$': 'vue/dist/vue.runtime.esm.js',
     },
   };
@@ -64,14 +66,15 @@ mix.webpackConfig(() => {
 });
 
 mix.options({
-  extractVueStyles: false,
-  processCssUrls: false,
-  terser: {},
-  purifyCss: false,
+  extractVueStyles: true,
+  globalVueStyles : path.join(__dirname, 'src/app-styles/config.scss'),
+  processCssUrls  : false,
+  terser          : {},
+  purifyCss       : false,
   //purifyCss: {},
-  postCss: [require('autoprefixer')],
-  clearConsole: false,
-  cssNano: {
+  postCss         : [require('autoprefixer')],
+  clearConsole    : false,
+  cssNano         : {
     // discardComments: {removeAll: true},
-  }
+  },
 });

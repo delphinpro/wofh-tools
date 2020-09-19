@@ -84,8 +84,6 @@ export default {
 </template>
 
 <style lang="scss">
-@import "src/app-styles/config";
-
 .WorldCard {
   background-color: $blue-grey-10;
   &__sign {

@@ -53,8 +53,6 @@ export default {
 </template>
 
 <style lang="scss">
-@import "src/app-styles/config";
-
 .AppBreadcrumbs {
   font-size: 12px;
   background: $background-base-dark;

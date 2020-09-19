@@ -26,7 +26,7 @@
 
   <title>{{ config('app.name', 'Wofh Tools') }}</title>
 
-  <style>.fa-icon{height:1.1em;width:1.1em;fill: currentColor;}</style>
+  <style>.q-icon{height:1em;width:1em;}</style>
   <style>
       .loader {width: 2em;}
       .breadcrumb,
@@ -37,6 +37,7 @@
       }
   </style>
   <link href="{{ asset('assets/app.css') }}" rel="stylesheet">
+  <link href="{{ asset('assets/components.css') }}" rel="stylesheet">
 </head>
 <body>
 

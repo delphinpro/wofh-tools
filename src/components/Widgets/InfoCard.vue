@@ -41,8 +41,6 @@ export default {
 </template>
 
 <style lang="scss">
-@import "src/app-styles/config";
-
 .InfoCard {
   $iconSize: $base-line-height * (2.5);
 

@@ -31,12 +31,10 @@
 </template>
 
 <style lang="scss">
-@import "src/app-styles/config";
-
 .AppFooter {
   font-size: 11px;
   color: $color-text-base;
-  background: darken($dashboard-sidebar-bg, 3%);
+  background: darken(darken($background-base, 3%), 3%);
 
   &__container {
     text-align: center;

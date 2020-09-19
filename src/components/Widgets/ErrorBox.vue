@@ -48,8 +48,6 @@ export default {
 </template>
 
 <style lang="scss">
-@import "src/app-styles/config";
-
 $ErrorBox-title-height: 1.25;
 
 :root {

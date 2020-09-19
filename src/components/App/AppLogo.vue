@@ -13,8 +13,6 @@
 </template>
 
 <style lang="scss">
-@import "src/app-styles/config";
-
 .AppLogo {
   display: flex;
   align-items: center;
