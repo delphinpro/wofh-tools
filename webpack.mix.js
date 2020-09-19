@@ -40,6 +40,10 @@ if (IS_CLIENT) {
     path.join(__dirname, `resources/assets/images`),
     path.join(__dirname, `public/${dist}/images`),
   );
+  mix.copyDirectory(
+    path.join(__dirname, `resources/assets/admin`),
+    path.join(__dirname, `public/${dist}/admin`),
+  );
 }
 
 if (IS_SERVER) {
