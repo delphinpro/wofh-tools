@@ -8,7 +8,6 @@
 import { mapGetters, mapState } from 'vuex';
 import { AUTH_LOGOUT } from '@/store/modules/auth.store';
 import { mdiAccountPlus, mdiLoginVariant } from '@quasar/extras/mdi-v5';
-// const includeCssDemo = (process.env.NODE_ENV === 'development') && (process.env.WEBPACK_TARGET !== 'node');
 
 export default {
   name: 'UserMenu',
@@ -16,7 +15,6 @@ export default {
   data: () => ({
     mdiAccountPlus,
     mdiLoginVariant,
-    // includeCssDemo,
     username    : 'Сергей delphinpro',
     usermenuOpen: false,
   }),
