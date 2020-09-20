@@ -8,13 +8,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import HomeView from '@/views/HomeView';
-import { userRoutes } from '@/router/routes-user';
-import { statRoutes } from '@/router/routes-stat';
-import { error404Route } from '@/router/error404';
-
+import Error404 from '@/views/Error404';
+import { userRoutes } from '@/router/groups/user.route';
+import { statRoutes } from '@/router/groups/stat.route.js';
 
 Vue.use(Router);
-
 
 const router = new Router({
   mode: 'history',
@@ -23,8 +21,8 @@ const router = new Router({
 
   routes: [
     {
-      path: '/',
-      name: 'home',
+      path     : '/',
+      name     : 'home',
       component: HomeView,
     },
   ],
@@ -32,8 +30,12 @@ const router = new Router({
 
 router.addRoutes(userRoutes);
 router.addRoutes(statRoutes);
-router.addRoutes([error404Route]);
-
+router.addRoutes([
+  {
+    path     : '*',
+    component: Error404,
+  },
+]);
 
 export default router;
 

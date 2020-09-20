@@ -1,12 +1,12 @@
 /*!
  * WofhTools
- * File: router/routes-stat.js
+ * File: router/groups/stat.route.js
  * © 2019-2020 delphinpro <delphinpro@yandex.ru>
  * licensed under the MIT license
  */
 
-import StatisticView from '@/views/StatisticView';
-import StatWorldView from '@/views/Stat/StatWorldView';
+import ViewStatistic from '@/views/ViewStatistic';
+import ViewStatWorld from '@/views/Stat/ViewStatWorld';
 import { ucfirst } from '@/utils';
 import ViewSidebarStat from '@/views/Sidebar/ViewSidebarStat.vue';
 
@@ -16,7 +16,7 @@ export const statRoutes = [
     path      : '/stat',
     name      : 'stat',
     components: {
-      default: StatisticView,
+      default: ViewStatistic,
       // right  : ViewSidebarStat,
     },
     meta      : {
@@ -27,7 +27,7 @@ export const statRoutes = [
         path     : ':sign',
         name     : 'statWorld',
         components: {
-          default: StatWorldView,
+          default: ViewStatWorld,
           // right: ViewSidebarStat,
         },
         meta     : {

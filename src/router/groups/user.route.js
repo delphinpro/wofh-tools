@@ -1,31 +1,30 @@
 /*!
  * WofhTools
- * File: router/routes-user.js
+ * File: router/groups/user.route.js
  * © 2019-2020 delphinpro <delphinpro@yandex.ru>
  * licensed under the MIT license
  */
 
+import ViewLogin from '@/views/User/ViewLogin';
+import ViewProfile from '@/views/User/ViewProfile';
 import { onlyGuest, requireAuthenticated } from '@/router/helpers/authentication';
-import LoginView from '@/views/User/LoginView';
-import ProfileView from '@/views/User/ProfileView';
-
 
 /** @var Array<RouteConfig> */
 export const userRoutes = [
   {
-    path: '/login',
-    name: 'login',
-    component: LoginView,
+    path       : '/login',
+    name       : 'login',
+    component  : ViewLogin,
     beforeEnter: onlyGuest,
   },
   {
-    path: '/user/profile',
-    name: 'profile',
-    component: ProfileView,
+    path       : '/user/profile',
+    name       : 'profile',
+    component  : ViewProfile,
     beforeEnter: requireAuthenticated,
-    meta: {
+    meta       : {
       crumbsText: 'Ваш профиль',
-      pageTitle: 'Ваш профиль',
+      pageTitle : 'Ваш профиль',
     },
   },
 ];
