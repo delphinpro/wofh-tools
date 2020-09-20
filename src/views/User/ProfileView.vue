@@ -5,7 +5,7 @@
   licensed under the MIT license
 -->
 <script>
-import { USER_REQUEST } from '@/store/modules/store-user';
+import { USER_REQUEST } from '@/store/modules/user.store';
 
 
 export default {

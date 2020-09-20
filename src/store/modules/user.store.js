@@ -1,12 +1,12 @@
 /*!
  * WofhTools
- * File: store/modules/store-user.js
+ * File: store/modules/user.store.js
  * © 2019-2020 delphinpro <delphinpro@yandex.ru>
  * licensed under the MIT license
  */
 
 import Vue from 'vue';
-import { AUTH_LOGOUT } from '@/store/modules/store-auth';
+import { AUTH_LOGOUT } from '@/store/modules/auth.store';
 
 export const USER_REQUEST = 'USER_REQUEST';
 export const USER_SUCCESS = 'USER_SUCCESS';

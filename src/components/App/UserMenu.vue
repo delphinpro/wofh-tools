@@ -5,9 +5,8 @@
   licensed under the MIT license
 -->
 <script>
-import { AUTH_LOGOUT } from '@/store/modules/store-auth';
 import { mapGetters, mapState } from 'vuex';
-
+import { AUTH_LOGOUT } from '@/store/modules/auth.store';
 import { mdiAccountPlus, mdiLoginVariant } from '@quasar/extras/mdi-v5';
 // const includeCssDemo = (process.env.NODE_ENV === 'development') && (process.env.WEBPACK_TARGET !== 'node');
 

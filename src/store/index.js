@@ -7,9 +7,9 @@
 
 import Vue from 'vue';
 import Vuex from 'vuex';
-import auth from '@/store/modules/store-auth';
-import user from '@/store/modules/store-user';
-import stat from '@/store/modules/store-stat';
+import auth from '@/store/modules/auth.store';
+import user from '@/store/modules/user.store';
+import stat from '@/store/modules/stat.store';
 import { isDev } from '@/utils';
 
 Vue.use(Vuex);

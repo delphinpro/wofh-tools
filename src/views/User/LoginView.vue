@@ -5,8 +5,8 @@
   licensed under the MIT license
 -->
 <script>
-import { AUTH_REQUEST } from '@/store/modules/store-auth';
 import Box from '@/components/Widgets/Box';
+import { AUTH_REQUEST } from '@/store/modules/auth.store';
 import { mdiEmail, mdiKey } from '@quasar/extras/mdi-v5';
 
 export default {

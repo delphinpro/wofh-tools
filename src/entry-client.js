@@ -12,7 +12,7 @@ import { createApp } from '@/app';
 import VueAxiosBridge, { requestSuccess, requestFailed, responseSuccess, responseFailed } from '@/utils/axios.js';
 import { isDev } from '@/utils';
 import { HTTP_HEADER_AUTHORIZATION, LS_KEY_TOKEN, CONSOLE_DANGER } from '@/constants';
-import { AUTH_LOGOUT } from '@/store/modules/store-auth.js';
+import { AUTH_LOGOUT } from '@/store/modules/auth.store.js';
 
 Vue.config.productionTip = false;
 if (isDev()) console.log(`%cVue in development mode.`, CONSOLE_DANGER);
