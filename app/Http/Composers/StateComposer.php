@@ -37,9 +37,9 @@ class StateComposer
     public function compose(View $view)
     {
         $view->with('state', $this->state->toArray());
-        $view->with('WT', [
+        $view->with('WT', array_merge([
             'updatedAt' => $this->getLastUpdateTime(),
-        ]);
+        ], $this->state->getWt()));
     }
 
     private function getLastUpdateTime()
