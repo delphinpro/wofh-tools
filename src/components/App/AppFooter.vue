@@ -4,6 +4,19 @@
   © 2019—2020 delphinpro <delphinpro@yandex.ru>
   licensed under the MIT license
 -->
+<script>
+export default {
+  name    : 'AppFooter',
+  computed: {
+    appUpdatedAt() {
+      if (window.WT && window.WT.updatedAt && typeof window.WT.updatedAt === 'number') {
+        return new Date(window.WT.updatedAt * 1000);
+      }
+      return false;
+    },
+  },
+};
+</script>
 <template>
   <QFooter class="AppFooter">
     <div class="AppFooter__container q-px-md q-py-sm">
@@ -11,9 +24,11 @@
         <p>
           © {{ this.$store.getters.projectName }}, v{{ this.$store.getters.projectVer }},
           <a href="http://delphinpro.ru" target="_blank" rel="noreferrer">delphinpro</a>,
-          2013—2020 гг.
+          2013—{{ appUpdatedAt.getFullYear() }} гг.
         </p>
-<!--        <p><router-link to="/changelog">Last update: xx.xx.xxxx, xx:xx</router-link></p>-->
+        <p v-if="appUpdatedAt">
+          <router-link to="/changelog">Last update: {{ appUpdatedAt.toLocaleString() }}</router-link>
+        </p>
       </div>
 <!--
       <QSeparator class="q-my-sm lt-md"/>

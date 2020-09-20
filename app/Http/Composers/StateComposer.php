@@ -22,12 +22,10 @@ class StateComposer
      */
     private $state;
 
-
     public function __construct(State $state)
     {
         $this->state = $state;
     }
-
 
     /**
      * Bind data to the view.
@@ -39,5 +37,15 @@ class StateComposer
     public function compose(View $view)
     {
         $view->with('state', $this->state->toArray());
+        $view->with('WT', [
+            'updatedAt' => $this->getLastUpdateTime(),
+        ]);
+    }
+
+    private function getLastUpdateTime()
+    {
+        $file = base_path('.git/logs/HEAD');
+        if (file_exists($file)) return filemtime($file);
+        return false;
     }
 }

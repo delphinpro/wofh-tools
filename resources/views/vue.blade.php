@@ -46,6 +46,7 @@
             ->fallback('<div id="app"></div>')
             ->render() !!}
 
+<script>window.WT=@json($WT);</script>
 <script>window.__STATE__ = @json($state, JSON_UNESCAPED_UNICODE);</script>
 <script src="{{ asset('assets/manifest.js') }}"></script>
 <script src="{{ asset('assets/vendor.js') }}"></script>
