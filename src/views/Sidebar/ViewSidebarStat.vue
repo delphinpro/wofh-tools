@@ -1,6 +1,6 @@
 <!--
   WofhTools
-  File: ViewSidebarStat.vue
+  File: views/Sidebar/ViewSidebarStat.vue
   © 2020 delphinpro <delphinpro@yandex.ru>
   licensed under the MIT license
 -->

@@ -1,6 +1,6 @@
 <!--
   WofhTools
-  File: StatIndexView.vue
+  File: views/Stat/ViewStatIndex.vue
   © 2019-2020 delphinpro <delphinpro@yandex.ru>
   licensed under the MIT license
 -->
@@ -10,7 +10,7 @@ import WorldCard from '@/components/Widgets/WorldCard.vue';
 import { cbSortWorldsByStarted } from '@/utils';
 
 export default {
-  name: 'StatIndexView',
+  name: 'ViewStatIndex',
 
   components: {
     WorldCard,

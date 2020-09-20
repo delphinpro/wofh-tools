@@ -1,6 +1,6 @@
 <!--
   WofhTools
-  View: LoginView.vue
+  View: views/User/ViewLogin.vue
   © 2019-2020 delphinpro <delphinpro@yandex.ru>
   licensed under the MIT license
 -->
@@ -10,7 +10,7 @@ import { AUTH_REQUEST } from '@/store/modules/auth.store';
 import { mdiEmail, mdiKey } from '@quasar/extras/mdi-v5';
 
 export default {
-  name: 'login',
+  name: 'ViewLogin',
 
   components: {
     Box,

@@ -1,6 +1,6 @@
 <!--
   WofhTools
-  View: HomeView.vue
+  View: views/ViewHome.vue
   © 2019-2020 delphinpro <delphinpro@yandex.ru>
   licensed under the MIT license
 -->
@@ -10,7 +10,7 @@ import { mdiCheck, mdiClose, mdiEmoticonSad } from '@quasar/extras/mdi-v5';
 import { cbSortWorldsByStarted } from '@/utils';
 
 export default {
-  name: 'Home',
+  name: 'ViewHome',
 
   data: () => ({
     mdiCheck,

@@ -1,29 +1,28 @@
 <!--
   WofhTools
-  File: ProfileView.vue
+  File: views/User/ViewProfile.vue
   © 2019-2020 delphinpro <delphinpro@yandex.ru>
   licensed under the MIT license
 -->
 <script>
 import { USER_REQUEST } from '@/store/modules/user.store';
 
-
 export default {
-  name: 'ProfileView',
+  name: 'ViewProfile',
 
   data: () => ({
     user: {
-      id: null,
-      email: null,
-      username: null,
+      id       : null,
+      email    : null,
+      username : null,
       createdAt: null,
       updatedAt: null,
-      sex: null,
-      status: null,
-      lang: null,
-      avatar: null,
-      verified: null,
-      password: null,
+      sex      : null,
+      status   : null,
+      lang     : null,
+      avatar   : null,
+      verified : null,
+      password : null,
       password2: null,
     },
 

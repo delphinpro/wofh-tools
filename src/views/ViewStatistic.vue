@@ -1,20 +1,20 @@
 <!--
   WofhTools
-  View: StatisticView.vue
+  View: views/ViewStatistic.vue
   © 2019-2020 delphinpro <delphinpro@yandex.ru>
   licensed under the MIT license
 -->
 <script>
-import StatIndexView from '@/views/Stat/StatIndexView.vue';
+import ViewStatIndex from '@/views/Stat/ViewStatIndex';
 
 
 // const Chart = () => import(/* webpackChunkName: "statistic" */ 'highcharts-vue');
 // const darkTheme = () => import(/* webpackChunkName: "statistic" */ '@/utils/charts-dark-theme');
 export default {
-  name: 'StatisticView',
+  name: 'ViewStatistic',
 
   components: {
-    StatIndexView,
+    StatIndexView: ViewStatIndex,
     // Chart,
   },
 

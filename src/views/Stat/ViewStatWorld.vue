@@ -1,6 +1,6 @@
 <!--
   WofhTools
-  File: StatWorldView.vue
+  File: views/Stat/ViewStatWorld.vue
   © 2019-2020 delphinpro <delphinpro@yandex.ru>
   licensed under the MIT license
 -->

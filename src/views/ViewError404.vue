@@ -1,12 +1,11 @@
 <!--
   WofhTools
-  View: Error404.vue
-  © 2019 delphinpro <delphinpro@yandex.ru>
+  View: views/ViewError404.vue
+  © 2019—2020 delphinpro <delphinpro@yandex.ru>
   licensed under the MIT license
 -->
 <script>
 import ErrorBox from '@/components/Widgets/ErrorBox';
-
 
 export default {
   components: {
@@ -23,7 +22,9 @@ export default {
       code="404"
     >
       <p>Вы перешли на страницу, которой не существует, либо она была удалена.</p>
-      <p><router-link to="/">Перейти на главную</router-link></p>
+      <p>
+        <router-link to="/">Перейти на главную</router-link>
+      </p>
     </ErrorBox>
   </QPage>
 </template>

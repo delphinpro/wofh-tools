@@ -7,8 +7,8 @@
 
 import Vue from 'vue';
 import Router from 'vue-router';
-import HomeView from '@/views/HomeView';
-import Error404 from '@/views/Error404';
+import ViewHome from '@/views/ViewHome';
+import Error404 from '@/views/ViewError404';
 import { userRoutes } from '@/router/groups/user.route';
 import { statRoutes } from '@/router/groups/stat.route.js';
 
@@ -23,7 +23,7 @@ const router = new Router({
     {
       path     : '/',
       name     : 'home',
-      component: HomeView,
+      component: ViewHome,
     },
   ],
 });
