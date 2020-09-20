@@ -57,8 +57,8 @@ export default {
 
 <template>
   <div class="AppNavbar bg-primary text-white">
-    <QToolbar>
-      <QBtn class="q-mr-sm"
+    <q-toolbar>
+      <q-btn class="q-mr-sm"
         flat
         round
         :icon="matMenu"
@@ -66,11 +66,11 @@ export default {
         v-if="lsLeft"
       />
       <AppLogo class="self-stretch"/>
-      <QSeparator class="gt-sm" dark vertical inset=""/>
+      <q-separator class="gt-sm" dark vertical inset=""/>
       <NavMenu class="gt-sm" :items="mainmenu"/>
-      <!--    <QSpace/>-->
+      <!--    <q-space/>-->
       <!--    <UserMenu/>-->
-    </QToolbar>
+    </q-toolbar>
 <!--    <AppBreadcrumbs v-if="$route.name!=='home'"/>-->
   </div>
 </template>

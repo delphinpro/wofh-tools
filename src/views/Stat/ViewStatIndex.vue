@@ -45,7 +45,7 @@ export default {
 </script>
 
 <template>
-  <QPage padding>
+  <q-page padding>
     <PageHeader title="Статистика игровых миров"/>
 
     <div class="q-mt-md"
@@ -60,5 +60,5 @@ export default {
       </div>
     </div>
 
-  </QPage>
+  </q-page>
 </template>

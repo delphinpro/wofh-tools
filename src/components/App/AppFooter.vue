@@ -18,7 +18,7 @@ export default {
 };
 </script>
 <template>
-  <QFooter class="AppFooter">
+  <q-footer class="AppFooter">
     <div class="AppFooter__container q-px-md q-py-sm">
       <div>
         <p>
@@ -31,18 +31,18 @@ export default {
         </p>
       </div>
 <!--
-      <QSeparator class="q-my-sm lt-md"/>
+      <q-separator class="q-my-sm lt-md"/>
       <div class="flex justify-center">
-        <QBtn size="sm" flat no-caps label="Обратная связь" to="/feedback"/>
-        <QBtn size="sm" flat no-caps label="Карта сайта" to="sitemap"/>
+        <q-btn size="sm" flat no-caps label="Обратная связь" to="/feedback"/>
+        <q-btn size="sm" flat no-caps label="Карта сайта" to="sitemap"/>
       </div>
 -->
-      <QSeparator class="q-my-sm lt-md"/>
+      <q-separator class="q-my-sm lt-md"/>
       <div class="flex justify-center">
         <img src="/assets/images/main/counter.png" alt="">
       </div>
     </div>
-  </QFooter>
+  </q-footer>
 </template>
 
 <style lang="scss">

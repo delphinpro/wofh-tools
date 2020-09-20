@@ -37,7 +37,7 @@ export default {
     <div class="ErrorBox__error-code" v-if="code">{{ code }}</div>
     <div class="ErrorBox__body">
       <div class="ErrorBox__title">
-        <QIcon class="ErrorBox__icon" :name="iconName" v-if="icon"/>
+        <q-icon class="ErrorBox__icon" :name="iconName" v-if="icon"/>
         {{ title }}
       </div>
       <div class="ErrorBox__content">

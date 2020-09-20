@@ -40,10 +40,10 @@ export default {
 
 <template>
   <div class="flex self-stretch">
-    <QSeparator vertical/>
-    <QBtn stretch flat no-caps label="Sign Up" :icon="mdiAccountPlus" to="/registration"/>
-    <QSeparator vertical/>
-    <QBtn stretch flat no-caps label="Sign In" :icon="mdiLoginVariant" to="/login"/>
+    <q-separator vertical/>
+    <q-btn stretch flat no-caps label="Sign Up" :icon="mdiAccountPlus" to="/registration"/>
+    <q-separator vertical/>
+    <q-btn stretch flat no-caps label="Sign In" :icon="mdiLoginVariant" to="/login"/>
   </div>
   <!--
     <ul class="nav-menu">

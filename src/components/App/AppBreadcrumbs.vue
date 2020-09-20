@@ -38,18 +38,18 @@ export default {
 </script>
 
 <template>
-  <QToolbar :inset="false" class="AppBreadcrumbs" style="min-height: 24px;">
-    <QBreadcrumbs>
-      <QBreadcrumbsEl label="Главная" :icon="mdiHome" :to="{ name: 'home' }"/>
-      <QBreadcrumbsEl
+  <q-toolbar :inset="false" class="AppBreadcrumbs" style="min-height: 24px;">
+    <q-breadcrumbs>
+      <q-breadcrumbs-el label="Главная" :icon="mdiHome" :to="{ name: 'home' }"/>
+      <q-breadcrumbs-el
         :key="index"
         :label="routerLinkText(route)"
         :to="routerLinkTo(route)"
         v-for="(route, index) in $route.matched"
         v-if="route.meta.crumbsText"
       />
-    </QBreadcrumbs>
-  </QToolbar>
+    </q-breadcrumbs>
+  </q-toolbar>
 </template>
 
 <style lang="scss">

@@ -40,27 +40,27 @@ export default {
 </script>
 
 <template>
-  <QLayout view="hHh LpR lff" id="app">
+  <q-layout view="hHh LpR lff" id="app">
 
-    <QHeader reveal elevated class="bg-primary text-white">
+    <q-header reveal elevated class="bg-primary text-white">
       <AppNavbar
         :ls-left="left"
         @toggle-left-drawer="left=!left"
       />
-    </QHeader>
+    </q-header>
 
-    <QDrawer v-model="left" side="left" overlay bordered v-if="lsEnabled">
-    </QDrawer>
+    <q-drawer v-model="left" side="left" overlay bordered v-if="lsEnabled">
+    </q-drawer>
 
-    <QDrawer v-model="right" side="right" v-if="rsEnabled">
+    <q-drawer v-model="right" side="right" v-if="rsEnabled">
       <router-view name="right"/>
-    </QDrawer>
+    </q-drawer>
 
-    <QPageContainer>
+    <q-page-container>
       <router-view/>
-    </QPageContainer>
+    </q-page-container>
 
     <AppFooter/>
 
-  </QLayout>
+  </q-layout>
 </template>

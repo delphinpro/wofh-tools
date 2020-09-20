@@ -50,37 +50,37 @@ export default {
 </script>
 
 <template>
-  <QCard class="WorldCard" :class="{'WorldCard_closed':!world.working}">
-    <QCardSection horizontal>
-      <QCardSection class="WorldCard__sign">
+  <q-card class="WorldCard" :class="{'WorldCard_closed':!world.working}">
+    <q-card-section horizontal>
+      <q-card-section class="WorldCard__sign">
         {{ world.sign }}
-      </QCardSection>
-      <QCardSection class="col-grow">
+      </q-card-section>
+      <q-card-section class="col-grow">
         <!--<div class="WorldCard__title">{{ world.title }}</div>-->
         <div class="WorldCard__info">
-          <QIcon class="WorldCard__icon" :name="canRegIcon" :color="canRegColor"/>
+          <q-icon class="WorldCard__icon" :name="canRegIcon" :color="canRegColor"/>
           <span v-text="canRegText"></span>
         </div>
         <div class="WorldCard__info" v-if="world.age">
-          <QIcon class="WorldCard__icon" :name="mdiClockOutline" color="positive"/>
+          <q-icon class="WorldCard__icon" :name="mdiClockOutline" color="positive"/>
           <span v-text="ageText"></span>
         </div>
-        <QBadge floating color="blue-grey-10 shadow-1">
+        <q-badge floating color="blue-grey-10 shadow-1">
           <img :src="'/assets/images/icons/'+world.serverCountryFlag+'.svg'" :alt="world.serverCountryFlag" width="30"/>
-        </QBadge>
-      </QCardSection>
-    </QCardSection>
-    <QSeparator/>
-    <QCardActions>
-      <QIcon :name="world.statUpdatedAt ? mdiCalendarRefresh : mdiCalendarRemove" size="1.6em" class="q-mr-sm"/>
+        </q-badge>
+      </q-card-section>
+    </q-card-section>
+    <q-separator/>
+    <q-card-actions>
+      <q-icon :name="world.statUpdatedAt ? mdiCalendarRefresh : mdiCalendarRemove" size="1.6em" class="q-mr-sm"/>
       <i v-if="!world.statUpdatedAt" v-text="noDataText"></i>
       <template v-else>
         <i>{{ world.localStatUpdatedAt }}</i>
-        <QSpace/>
-        <QBtn flat no-caps color="positive" :icon-right="mdiChevronRight" :to="link">Статистика</QBtn>
+        <q-space/>
+        <q-btn flat no-caps color="positive" :icon-right="mdiChevronRight" :to="link">Статистика</q-btn>
       </template>
-    </QCardActions>
-  </QCard>
+    </q-card-actions>
+  </q-card>
 </template>
 
 <style lang="scss">

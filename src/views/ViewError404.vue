@@ -15,7 +15,7 @@ export default {
 </script>
 
 <template>
-  <QPage padding class="flex items-center justify-center">
+  <q-page padding class="flex items-center justify-center">
     <ErrorBox
       theme="info"
       title="Упс! Страница не найдена."
@@ -26,5 +26,5 @@ export default {
         <router-link to="/">Перейти на главную</router-link>
       </p>
     </ErrorBox>
-  </QPage>
+  </q-page>
 </template>

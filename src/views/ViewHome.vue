@@ -44,10 +44,10 @@ export default {
 </script>
 
 <template>
-  <QPage padding>
+  <q-page padding>
     <!--    <PageHeader title="Действующие миры Путей Истории"/>-->
     <div v-if="worlds.length">
-      <QMarkupTable class="table" dense>
+      <q-markup-table class="table" dense>
         <caption>Действующие миры Путей истории</caption>
         <thead>
           <tr>
@@ -72,22 +72,22 @@ export default {
             <td>{{ world.uSign }}</td>
             <td>{{ world.title }}</td>
             <td :class="world.canReg?'text-green':'text-red'" class="text-center">
-              <QIcon :name="world.canReg ? mdiCheck : mdiClose" size="2em"/>
+              <q-icon :name="world.canReg ? mdiCheck : mdiClose" size="2em"/>
             </td>
             <td class="text-right">{{ world.localStartedAt }}</td>
             <td class="text-right">{{ world.localAge }}</td>
             <td class="text-right">
               <a href="#" v-if="world.localStatUpdatedAt">{{ world.localStatUpdatedAt }}</a>
               <div v-else>Отсутствует
-                <QIcon :name="mdiEmoticonSad" size="1.5em"/>
+                <q-icon :name="mdiEmoticonSad" size="1.5em"/>
               </div>
             </td>
           </tr>
         </tbody>
-      </QMarkupTable>
+      </q-markup-table>
     </div>
-    <QBanner v-else inline-actions rounded class="bg-orange-7 text-white">
+    <q-banner v-else inline-actions rounded class="bg-orange-7 text-white">
       Нет данных о действующих мирах
-    </QBanner>
-  </QPage>
+    </q-banner>
+  </q-page>
 </template>

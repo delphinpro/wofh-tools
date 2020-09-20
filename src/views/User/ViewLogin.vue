@@ -62,8 +62,8 @@ export default {
 <template>
   <div class="container page-center">
     <div style="padding: 40px;width: 500px;margin:auto;">
-      <QCard>
-        <QForm>
+      <q-card>
+        <q-form>
           <q-input color="teal" dense filled v-model="username" label="Email">
             <template v-slot:append>
               <q-icon :name="mdiEmail"/>
@@ -74,8 +74,8 @@ export default {
               <q-icon :name="mdiKey"/>
             </template>
           </q-input>
-        </QForm>
-      </QCard>
+        </q-form>
+      </q-card>
     </div>
 
     <div class="col-lg-5 no-gutter">
