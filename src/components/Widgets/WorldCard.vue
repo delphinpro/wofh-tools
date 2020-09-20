@@ -13,6 +13,7 @@ import {
   mdiClose,
   mdiChevronRight,
 } from '@quasar/extras/mdi-v5';
+import { ROUTE_STAT_WORLD } from '@/constants.js';
 
 export default {
   name: 'WorldCard',
@@ -34,7 +35,7 @@ export default {
     link() {
       if (!this.world.statUpdatedAt) return null;
       return {
-        name  : 'statWorld',
+        name  : ROUTE_STAT_WORLD,
         params: {
           sign: this.world.sign,
         },

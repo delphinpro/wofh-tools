@@ -8,18 +8,19 @@
 import ViewLogin from '@/views/User/ViewLogin';
 import ViewProfile from '@/views/User/ViewProfile';
 import { onlyGuest, requireAuthenticated } from '@/router/helpers/authentication';
+import { ROUTE_LOGIN, ROUTE_PROFILE } from '@/constants.js';
 
 /** @var Array<RouteConfig> */
 export const userRoutes = [
   {
     path       : '/login',
-    name       : 'login',
+    name       : ROUTE_LOGIN,
     component  : ViewLogin,
     beforeEnter: onlyGuest,
   },
   {
     path       : '/user/profile',
-    name       : 'profile',
+    name       : ROUTE_PROFILE,
     component  : ViewProfile,
     beforeEnter: requireAuthenticated,
     meta       : {

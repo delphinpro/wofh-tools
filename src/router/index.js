@@ -11,6 +11,7 @@ import ViewHome from '@/views/ViewHome';
 import Error404 from '@/views/ViewError404';
 import { userRoutes } from '@/router/groups/user.route';
 import { statRoutes } from '@/router/groups/stat.route.js';
+import { ROUTE_HOME } from '@/constants.js';
 
 Vue.use(Router);
 
@@ -22,7 +23,7 @@ const router = new Router({
   routes: [
     {
       path     : '/',
-      name     : 'home',
+      name     : ROUTE_HOME,
       component: ViewHome,
     },
   ],

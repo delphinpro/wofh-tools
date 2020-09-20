@@ -9,12 +9,13 @@ import ViewStatistic from '@/views/ViewStatistic';
 import ViewStatWorld from '@/views/Stat/ViewStatWorld';
 import { ucfirst } from '@/utils';
 import ViewSidebarStat from '@/views/Sidebar/ViewSidebarStat.vue';
+import { ROUTE_STAT, ROUTE_STAT_PLAYER, ROUTE_STAT_WORLD } from '@/constants.js';
 
 /** @var Array<RouteConfig> */
 export const statRoutes = [
   {
     path      : '/stat',
-    name      : 'stat',
+    name      : ROUTE_STAT,
     components: {
       default: ViewStatistic,
       // right  : ViewSidebarStat,
@@ -24,8 +25,8 @@ export const statRoutes = [
     },
     children  : [
       {
-        path     : ':sign',
-        name     : 'statWorld',
+        path      : ':sign',
+        name      : ROUTE_STAT_WORLD,
         components: {
           default: ViewStatWorld,
           // right: ViewSidebarStat,
