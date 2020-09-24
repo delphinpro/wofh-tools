@@ -7,7 +7,7 @@
  * @license     licensed under the MIT license
  */
 
-namespace App\Admin\EXtensions\Nav;
+namespace App\Admin\Extensions\Nav;
 
 
 /**
