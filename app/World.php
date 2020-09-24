@@ -81,8 +81,10 @@ class World extends Model
 
     public function toArray()
     {
+        $attributes = $this->attributesToCamelCaseArray();
+        unset($attributes['desc']);
         return array_merge(
-            $this->attributesToCamelCaseArray(),
+            $attributes,
             [
                 'uSign'             => ucfirst($this->sign),
                 'age'               => $this->getAgeAsNumber(),
