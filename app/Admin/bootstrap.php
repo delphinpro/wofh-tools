@@ -19,7 +19,7 @@
  *
  */
 
-use App\Admin\EXtensions\Nav\LinksRight;
+use App\Admin\Extensions\Nav\LinksRight;
 use Encore\Admin\Facades\Admin;
 
 
