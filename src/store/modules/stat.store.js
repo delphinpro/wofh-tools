@@ -14,13 +14,14 @@ const state = {
 };
 
 const getters = {
-  allWorlds     : state => state.worlds,
-  activeWorlds  : state => state.worlds.filter(item => item.working),
-  closedWorlds  : state => state.worlds.filter(item => !item.working),
-  getWorldBySign: state => sign => {
+  allWorlds   : state => state.worlds,
+  activeWorlds: state => state.worlds.filter(item => item.working),
+  closedWorlds: state => state.worlds.filter(item => !item.working),
+  worldBySign : state => sign => {
     let world = [...state.worlds].filter(w => w.sign === sign);
     if (world.length) return world[0];
   },
+  playerById  : state => id => 'Тестовый игрок (' + id + ')',
 };
 
 const mutations = {

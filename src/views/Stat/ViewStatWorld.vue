@@ -28,13 +28,13 @@ export default {
 
   computed: {
     ...mapGetters([
-      'getWorldBySign',
+      'worldBySign',
     ]),
 
     pageTitle() { return this.currentWorld ? `Статистика ${this.currentWorld.uSign}` : ''; },
     worldAge() { return this.currentWorld ? this.currentWorld.age : ''; },
 
-    currentWorld() { return this.getWorldBySign(this.$route.params['sign']); },
+    currentWorld() { return this.worldBySign(this.$route.params['sign']); },
 
     statSkeleton() { return !this.stat; },
     accountsTotal() { return this.stat ? this.stat.accountsTotal : null; },

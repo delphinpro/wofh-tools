@@ -22,6 +22,8 @@ Auth::routes([
 Route::get('/', 'IndexController@show')->name('home');
 Route::get('/stat', 'StatController@index')->name('stat');
 Route::get('/stat/{sign}', 'StatController@world')->name('statWorld');
+Route::get('/stat/{sign}/players', 'StatController@players')->name('statPlayers');
+Route::get('/stat/{sign}/players/{id}', 'StatController@player')->name('statPlayer');
 
 
 /*=========================================================*\
@@ -49,5 +51,6 @@ Route::fallback(function () {
         ], 404);
     }
 
+    resolve(\App\Services\State::class)->pushWt('notFound', true);
     return response()->view('errors.404', [], 404);
 });

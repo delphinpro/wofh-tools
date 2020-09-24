@@ -14,39 +14,23 @@ export default {
     mdiHome,
   }),
 
-  methods: {
-    bcValue(route) { return route.meta.crumbsGetter ? this.$store.getters[route.meta.crumbsGetter] : null; },
-    formattedValue(route) { return route.meta.crumbsText(this.value); },
-    loadingText(route) { return route.meta.crumbsLoadingText || '…?'; },
-    routerLinkText(route) {
-      let text = '';
-      if (!route.meta.crumbsGetter) {
-        text += route.meta.crumbsText;
-      } else {
-        text += this.bcValue(route) ? this.formattedValue(route) : this.loadingText(route);
-      }
-      return text;
-    },
-    routerLinkTo(route) {
-      if (this.last) return null;
-      let to = { name: route.name };
-      if (route.meta.crumbsGetter) to.params = { id: this.$route.params.id };
-      return to;
+  computed: {
+    crumbs() {
+      return this.$crumbs.generate(this.$route, this.$store);
     },
   },
 };
 </script>
 
 <template>
-  <q-toolbar :inset="false" class="AppBreadcrumbs" style="min-height: 24px;">
+  <q-toolbar :inset="false" class="AppBreadcrumbs" style="min-height: 24px;" v-if="crumbs.length">
     <q-breadcrumbs>
-      <q-breadcrumbs-el label="Главная" :icon="mdiHome" :to="{ name: 'home' }"/>
       <q-breadcrumbs-el
         :key="index"
-        :label="routerLinkText(route)"
-        :to="routerLinkTo(route)"
-        v-for="(route, index) in $route.matched"
-        v-if="route.meta.crumbsText"
+        :label="item.label"
+        :icon="item.icon"
+        :to="{name: item.name}"
+        v-for="(item, index) in crumbs"
       />
     </q-breadcrumbs>
   </q-toolbar>

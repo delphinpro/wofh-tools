@@ -7,9 +7,16 @@
 
 import ViewStatistic from '@/views/ViewStatistic';
 import ViewStatWorld from '@/views/Stat/ViewStatWorld';
+import ViewStatPlayers from '@/views/Stat/ViewStatPlayers.vue';
+import ViewStatPlayer from '@/views/Stat/ViewStatPlayer.vue';
 import { ucfirst } from '@/utils';
-import ViewSidebarStat from '@/views/Sidebar/ViewSidebarStat.vue';
-import { ROUTE_STAT, ROUTE_STAT_PLAYER, ROUTE_STAT_WORLD } from '@/constants.js';
+import {
+  ROUTE_STAT,
+  ROUTE_STAT_COUNTRIES, ROUTE_STAT_COUNTRY,
+  ROUTE_STAT_PLAYER,
+  ROUTE_STAT_PLAYERS, ROUTE_STAT_TOWN, ROUTE_STAT_TOWNS,
+  ROUTE_STAT_WORLD,
+} from '@/constants.js';
 
 /** @var Array<RouteConfig> */
 export const statRoutes = [
@@ -20,9 +27,6 @@ export const statRoutes = [
       default: ViewStatistic,
       // right  : ViewSidebarStat,
     },
-    meta      : {
-      crumbsText: 'Статистика',
-    },
     children  : [
       {
         path      : ':sign',
@@ -31,9 +35,53 @@ export const statRoutes = [
           default: ViewStatWorld,
           // right: ViewSidebarStat,
         },
-        meta     : {
-          crumbsGetter: 'currentWorld',
-          crumbsText  : world => ucfirst(world.sign),
+      },
+      {
+        path      : ':sign/countries',
+        name      : ROUTE_STAT_COUNTRIES,
+        components: {
+          default: ViewStatPlayers,
+          // right: ViewSidebarStat,
+        },
+      },
+      {
+        path      : ':sign/countries/:id',
+        name      : ROUTE_STAT_COUNTRY,
+        components: {
+          default: ViewStatPlayer,
+          // right: ViewSidebarStat,
+        },
+      },
+      {
+        path      : ':sign/players',
+        name      : ROUTE_STAT_PLAYERS,
+        components: {
+          default: ViewStatPlayers,
+          // right: ViewSidebarStat,
+        },
+      },
+      {
+        path      : ':sign/players/:id',
+        name      : ROUTE_STAT_PLAYER,
+        components: {
+          default: ViewStatPlayer,
+          // right: ViewSidebarStat,
+        },
+      },
+      {
+        path      : ':sign/towns',
+        name      : ROUTE_STAT_TOWNS,
+        components: {
+          default: ViewStatPlayers,
+          // right: ViewSidebarStat,
+        },
+      },
+      {
+        path      : ':sign/towns/:id',
+        name      : ROUTE_STAT_TOWN,
+        components: {
+          default: ViewStatPlayer,
+          // right: ViewSidebarStat,
         },
       },
     ],

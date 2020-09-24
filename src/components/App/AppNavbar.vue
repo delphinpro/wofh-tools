@@ -71,7 +71,7 @@ export default {
       <!--    <q-space/>-->
       <!--    <UserMenu/>-->
     </q-toolbar>
-<!--    <AppBreadcrumbs v-if="$route.name!=='home'"/>-->
+    <AppBreadcrumbs v-if="$route.name!=='home'"/>
   </div>
 </template>
 

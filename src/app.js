@@ -6,11 +6,13 @@
  */
 
 import Vue from 'vue';
+import quasar, { Dark } from 'quasar';
 import router from '@/router';
 import store from '@/store';
+import breadcrumbs from '@/plugins/breadcrumbs';
+import crumbs from '@/router/breadcrumbs';
 import App from '@/components/App/App.vue';
 import PageHeader from '@/components/App/PageHeader';
-import quasar, { Dark } from 'quasar';
 
 export function createApp({ state, url }, parameters = null) {
 
@@ -36,6 +38,7 @@ export function createApp({ state, url }, parameters = null) {
   }
 
   Vue.use(quasar);
+  Vue.use(breadcrumbs, crumbs);
   Dark.set(true);
 
   return new Vue({

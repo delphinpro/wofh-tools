@@ -15,4 +15,14 @@ class StatController extends Controller
         $this->apiGet('stat.worlds', '/world?active=true');
         return $this->view();
     }
+    public function players()
+    {
+        $this->apiGet('stat.worlds', '/world?active=true');
+        return $this->view();
+    }
+    public function player($sign, $id)
+    {
+        $this->apiGet('stat.worlds', '/world?active=true');
+        return $this->view();
+    }
 }

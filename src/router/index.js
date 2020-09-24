@@ -21,16 +21,16 @@ const router = new Router({
   // base: process.env.BASE_URL,
 
   routes: [
-    {
-      path     : '/',
-      name     : ROUTE_HOME,
-      component: ViewHome,
-    },
+    ...[{
+        path     : '/',
+        name     : ROUTE_HOME,
+        component: ViewHome,
+      }],
+    ...statRoutes
   ],
 });
 
 router.addRoutes(userRoutes);
-router.addRoutes(statRoutes);
 router.addRoutes([
   {
     path     : '*',
