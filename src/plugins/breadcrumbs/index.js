@@ -1,21 +1,21 @@
 /*!
  * WofhTools
- * File:
+ * Breadcrumbs plugin
  * © 2020 delphinpro <delphinpro@yandex.ru>
  * licensed under the MIT license
  */
 
-export default function breadcrumbsPlugin(Vue, crumbs) {
+import { Breadcrumbs } from './Breadcrumbs';
 
-  if (breadcrumbsPlugin.installed) return;
-  breadcrumbsPlugin.installed = true;
+export default {
+  install(Vue, { router, store, elements }) {
 
-  Vue.$crumbs = crumbs;
+    const breadcrumbs = new Breadcrumbs(router, store);
 
-  Object.defineProperties(Vue.prototype, {
-    $crumbs: {
-      get() { return crumbs; },
-    },
-  });
+    if (typeof elements === 'function') {
+      elements.call(breadcrumbs);
+    }
 
-}
+    Vue.prototype.$crumbs = breadcrumbs;
+  },
+};

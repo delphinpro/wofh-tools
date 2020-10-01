@@ -1,7 +1,7 @@
 <!--
   WofhTools
   Component: NavMenu.vue
-  © 2019 delphinpro <delphinpro@yandex.ru>
+  © 2019-2020 delphinpro <delphinpro@yandex.ru>
   licensed under the MIT license
 -->
 <script>

@@ -1,0 +1,22 @@
+//==
+//== WofhTools
+//== File: links.scss
+//==
+//== © 2019-2020 delphinpro <delphinpro@yandex.ru>
+//== licensed under the MIT license
+//== ======================================================
+
+a {
+  transition: 0.3s ease;
+  text-decoration: underline;
+  color: $wt-color-link;
+
+  &:hover,
+  &:focus {
+    color: $wt-color-link-hover;
+  }
+
+  &:focus {
+    //@include tab-focus();
+  }
+}

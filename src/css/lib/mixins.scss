@@ -1,0 +1,39 @@
+//==
+//== WofhTools
+//== File: mixins.scss
+//==
+//== © 2020 delphinpro <delphinpro@yandex.ru>
+//== licensed under the MIT license
+//== ======================================================
+
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+@mixin webkit-scrollbar($color, $background: rgba($color, 0.2), $size: 7px) {
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+  &::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: $background;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $color;
+    border-radius: 100px;
+
+    &:hover {
+      background-color: $color;
+    }
+  }
+  &::-webkit-resizer {
+    display: none;
+  }
+}

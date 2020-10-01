@@ -5,27 +5,25 @@
  * licensed under the MIT license
  */
 
-// import { mapGetters, mapState } from 'vuex';
-// import { AUTH_LOGOUT } from '@/store/modules/store-auth';
+import { matMenu } from '@quasar/extras/material-icons';
 import AppBreadcrumbs from '@/components/App/AppBreadcrumbs.vue';
 import AppLogo from '@/components/App/AppLogo';
 import NavMenu from '@/components/App/NavMenu';
-import UserMenu from '@/components/App/UserMenu';
-
-import { matMenu } from '@quasar/extras/material-icons';
+// import UserMenu from '@/components/App/UserMenu';
 
 export default {
   components: {
     AppBreadcrumbs,
     AppLogo,
     NavMenu,
-    UserMenu,
+    // UserMenu,
   },
 
   props: {
     lsLeft: Boolean,
   },
-  data : () => ({
+
+  data: () => ({
     matMenu,
 
     mainmenu: [
@@ -71,7 +69,7 @@ export default {
       <!--    <q-space/>-->
       <!--    <UserMenu/>-->
     </q-toolbar>
-    <AppBreadcrumbs v-if="$route.name!=='home'"/>
+    <AppBreadcrumbs/>
   </div>
 </template>
 

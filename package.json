@@ -1,37 +1,46 @@
 {
-    "private": true,
-    "scripts": {
-        "start": "cross-env BUNDLE=client NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js --watch",
-        "prod": "cross-env NODE_ENV=production npm run build:server && cross-env NODE_ENV=production npm run build:client",
-        "client:dev": "cross-env NODE_ENV=development npm run build:client",
-        "client:prod": "cross-env NODE_ENV=production npm run build:client",
-        "server:dev": "cross-env NODE_ENV=development npm run build:server",
-        "server:prod": "cross-env NODE_ENV=production npm run build:server",
-        "build:client": "cross-env BUNDLE=client node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-        "build:server": "cross-env BUNDLE=server node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
-    },
-    "devDependencies": {
-        "autoprefixer": "^9.8.6",
-        "browser-sync": "^2.26.12",
-        "browser-sync-webpack-plugin": "^2.2.2",
-        "cross-env": "^7.0",
-        "laravel-mix": "^5.0.1",
-        "resolve-url-loader": "^2.3.1",
-        "sass": "^1.20.1",
-        "sass-loader": "^8.0.0",
-        "sass-resources-loader": "^2.1.1",
-        "vue-server-renderer": "^2.6.11",
-        "vue-template-compiler": "^2.6.10"
-    },
-    "dependencies": {
-        "@quasar/extras": "^1.9.5",
-        "axios": "^0.19",
-        "cxlt-vue2-toastr": "^1.1.1",
-        "highcharts": "^8.1.2",
-        "highcharts-vue": "^1.3.5",
-        "quasar": "^1.14.0",
-        "vue": "^2.6.11",
-        "vue-router": "^3.4.3",
-        "vuex": "^3.5.1"
-    }
+  "name": "wt",
+  "version": "4.0.0",
+  "productName": "WofhTools",
+  "description": "Сайт пользовательских дополнений и инструментов для онлайн игры waysofhistory.com",
+  "author": "delphinpro <delphinpro@yandex.ru>",
+  "private": true,
+  "scripts": {
+    "dev": "node_modules/.bin/quasar dev",
+    "dev:ssr": "node_modules/.bin/quasar dev -m ssr",
+    "build": "node_modules/.bin/quasar build -m ssr",
+    "restart": "pm2 reload all"
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.0.0",
+    "axios": "^0.18.1",
+    "core-js": "^3.6.5",
+    "quasar": "^1.0.0",
+    "vue": "^2.6.12",
+    "vue-i18n": "^8.0.0",
+    "vue-router": "^3.4.4",
+    "vuex": "^3.5.1"
+  },
+  "devDependencies": {
+    "@quasar/app": "^2.0.0",
+    "@quasar/cli": "^1.1.0",
+    "@quasar/quasar-app-extension-dotenv": "^1.0.5",
+    "copy-webpack-plugin": "^6.1.1"
+  },
+  "browserslist": [
+    "last 10 Chrome versions",
+    "last 10 Firefox versions",
+    "last 4 Edge versions",
+    "last 7 Safari versions",
+    "last 8 Android versions",
+    "last 8 ChromeAndroid versions",
+    "last 8 FirefoxAndroid versions",
+    "last 10 iOS versions",
+    "last 5 Opera versions"
+  ],
+  "engines": {
+    "node": ">= 10.18.1",
+    "npm": ">= 6.13.4",
+    "yarn": ">= 1.21.1"
+  }
 }

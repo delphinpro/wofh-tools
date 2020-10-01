@@ -16,14 +16,18 @@ export default {
 
   computed: {
     crumbs() {
-      return this.$crumbs.generate(this.$route, this.$store);
+      return this.$crumbs.generate(this.$route);
     },
   },
 };
 </script>
 
 <template>
-  <q-toolbar :inset="false" class="AppBreadcrumbs" style="min-height: 24px;" v-if="crumbs.length">
+  <q-toolbar :inset="false"
+    class="AppBreadcrumbs"
+    style="min-height: 24px;"
+    v-if="crumbs.length && $route.name !== 'home'"
+  >
     <q-breadcrumbs>
       <q-breadcrumbs-el
         :key="index"
@@ -39,15 +43,14 @@ export default {
 <style lang="scss">
 .AppBreadcrumbs {
   font-size: 12px;
-  background: $background-base-dark;
+  background: $wt-bg-dark;
+  background: $wt-bg-box;
   a {
-    color: $color-link !important;
-    &:hover { color: $color-link-hover !important; }
+    color: $wt-color-link !important;
+    &:hover { color: $wt-color-link-hover !important; }
   }
   .q-breadcrumbs--last {
-    a {
-      color: #fff !important;
-    }
+    a { color: #fff !important; }
   }
 }
 </style>

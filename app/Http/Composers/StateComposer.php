@@ -46,6 +46,6 @@ class StateComposer
     {
         $file = base_path('.git/logs/HEAD');
         if (file_exists($file)) return filemtime($file);
-        return false;
+        return null;
     }
 }

@@ -1,0 +1,19 @@
+//==
+//== WofhTools
+//== File: functions.scss
+//==
+//== © 2020 delphinpro <delphinpro@yandex.ru>
+//== licensed under the MIT license
+//== ======================================================
+
+@function map-get-safe($map, $key, $default: null) {
+  @if map_has_key($map, $key) {
+    @return map_get($map, $key);
+  }
+  @return $default;
+}
+
+@function rem($font-size) {
+  $default-browser-font-size: 16px;
+  @return $font-size / $default-browser-font-size * 1rem,
+}

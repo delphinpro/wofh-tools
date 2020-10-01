@@ -1,50 +1,44 @@
 /*!
  * WofhTools
  * File: store/index.js
- * © 2019-2020 delphinpro <delphinpro@yandex.ru>
+ * © 2020 delphinpro <delphinpro@yandex.ru>
  * licensed under the MIT license
  */
 
 import Vue from 'vue';
 import Vuex from 'vuex';
-import auth from '@/store/modules/auth.store';
-import user from '@/store/modules/user.store';
-import stat from '@/store/modules/stat.store';
-import { isDev } from '@/utils';
+
+import common from './common';
+import stat from './stat';
 
 Vue.use(Vuex);
 
-let state = {
-  projectName: 'Wofh Tools',
-  projectVer : '4.0',
-  loading    : 0,
-};
+/*
+ * If not building with SSR mode, you can
+ * directly export the Store instantiation;
+ *
+ * The function below can be async too; either use
+ * async/await or return a Promise which resolves
+ * with the Store instance.
+ */
 
-const getters = {
-  projectName: state => state.projectName,
-  projectVer : state => state.projectVer,
-  loading    : state => state.loading > 0,
-};
+export default function (/* { ssrContext } */) {
+  const Store = new Vuex.Store({
+    modules: {
+      common,
+      stat,
+    },
 
-const mutations = {
-  loadingUp(state) { state.loading = state.loading + 1; },
-  loadingDown(state) { state.loading = Math.max(state.loading - 1, 0); },
-};
+    // enable strict mode (adds overhead!)
+    // for dev mode only
+    strict: process.env.DEV,
+  });
 
-const actions = {
-  loadingOn({ commit }) { commit('loadingUp'); },
-  loadingOff({ commit }) { commit('loadingDown'); },
-};
+  // noinspection JSUnresolvedVariable
+  if (process.env.DEV && module.hot) {
+    module.hot.accept(['./common'], () => Store.hotUpdate({ modules: { common: require('./common').default } }));
+    module.hot.accept(['./stat'], () => Store.hotUpdate({ modules: { stat: require('./stat').default } }));
+  }
 
-export default new Vuex.Store({
-  strict : isDev(),
-  modules: {
-    auth,
-    user,
-    stat,
-  },
-  state,
-  getters,
-  mutations,
-  actions,
-});
+  return Store;
+}

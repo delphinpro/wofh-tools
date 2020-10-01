@@ -1,0 +1,28 @@
+//==
+//== WofhTools
+//== File: placeholders.scss
+//==
+//== © 2020 delphinpro <delphinpro@yandex.ru>
+//== licensed under the MIT license
+//== ======================================================
+
+%webkit-scrollbar {
+  @include webkit-scrollbar($wt-color-text);
+}
+
+%font-family-base {
+  font-family: $wt-font-family-base;
+}
+
+%font-family-head {
+  font-family: $wt-font-family-head;
+}
+
+%font-family-mono {
+  font-family: $wt-font-family-mono;
+}
+
+%dark-view {
+  color: $wt-color-text;
+  background: $wt-bg;
+}
