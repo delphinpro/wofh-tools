@@ -7,11 +7,10 @@
  * @license     licensed under the MIT license
  */
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 
 use App\Exceptions\JsonServiceException;
-use App\Http\Controllers\Controller;
 use App\Services\Json;
 
 

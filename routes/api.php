@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/info', 'Api\InfoController');
+Route::get('/info', 'InfoController');
 
-Route::resource('/world', 'Api\WorldController')->only(['index']);
+Route::resource('/world', 'WorldController')->only(['index']);
 
-Route::get('/stat/{sign}', 'Api\StatWorldController@index');
-Route::get('/stat/{sign}/last', 'Api\StatWorldController@last');
+Route::get('/stat/{sign}', 'StatWorldController@index');
+Route::get('/stat/{sign}/last', 'StatWorldController@last');

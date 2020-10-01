@@ -13,16 +13,8 @@ import PageStatWorld from '@/pages/PageStatWorld';
 import {
   ROUTE_HOME,
   ROUTE_STAT,
-  ROUTE_STAT_COUNTRIES,
-  ROUTE_STAT_COUNTRY,
-  ROUTE_STAT_PLAYER,
-  ROUTE_STAT_PLAYERS,
-  ROUTE_STAT_TOWN,
-  ROUTE_STAT_TOWNS,
   ROUTE_STAT_WORLD,
 } from '@/constants';
-import PageStatPlayers from '@/pages/PageStatPlayers';
-import PageStatPlayer from '@/pages/PageStatPlayer';
 
 const routes = [
   {
@@ -47,36 +39,6 @@ const routes = [
             path      : ':sign',
             name      : ROUTE_STAT_WORLD,
             components: { default: PageStatWorld },
-          },
-          {
-            path      : ':sign/countries',
-            name      : ROUTE_STAT_COUNTRIES,
-            components: { default: PageStatPlayers },
-          },
-          {
-            path      : ':sign/countries/:id',
-            name      : ROUTE_STAT_COUNTRY,
-            components: { default: PageStatPlayer },
-          },
-          {
-            path      : ':sign/players',
-            name      : ROUTE_STAT_PLAYERS,
-            components: { default: PageStatPlayers },
-          },
-          {
-            path      : ':sign/players/:id',
-            name      : ROUTE_STAT_PLAYER,
-            components: { default: PageStatPlayer },
-          },
-          {
-            path      : ':sign/towns',
-            name      : ROUTE_STAT_TOWNS,
-            components: { default: PageStatPlayers },
-          },
-          {
-            path      : ':sign/towns/:id',
-            name      : ROUTE_STAT_TOWN,
-            components: { default: PageStatPlayer },
           },
         ],
       },

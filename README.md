@@ -10,15 +10,15 @@ Repository of wofh-tools.ru
 |---|---
 | Отладчик | [`recca0120/laravel-tracy`](https://github.com/recca0120/laravel-tracy)
 | Административная панель | [`encore/laravel-admin`](https://github.com/z-song/laravel-admin)
-| Фронтэнд | [`laravel/ui`](https://github.com/laravel/ui)
-| Серверный рендер | [`spatie/laravel-server-side-rendering`](https://github.com/spatie/laravel-server-side-rendering)
+| Аутентификация | [`laravel/ui`](https://github.com/laravel/ui)
+| Фронтэнд | [`Quasar framework`](#)
 
 ## Установка
 
 ```
 git clone git@github.com:delphinpro/wofh-tools.git .
 
-composer install --no-dev
+composer install
 composer dumpautoload
 
 php artisan storage:link
@@ -27,10 +27,9 @@ php artisan migrate:install
 php artisan migrate
 
 npm install
-npm run prod
+npm run build
+pm2 start
 ```
-
-> __Note:__ В development среде устанавливать пакеты без ключа `--no-dev`
 
 Решение проблемы с нехваткой памяти
 ```

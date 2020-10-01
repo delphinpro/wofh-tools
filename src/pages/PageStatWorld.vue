@@ -107,9 +107,5 @@ export default {
         />
       </div>
     </div>
-
-    <q-btn to="/stat/ru45/countries">Countries</q-btn>
-    <q-btn to="/stat/ru45/players">Players</q-btn>
-    <q-btn to="/stat/ru45/towns">Towns</q-btn>
   </q-page>
 </template>
