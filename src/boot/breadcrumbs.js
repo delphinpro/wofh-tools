@@ -51,7 +51,6 @@ export default ({ Vue, router, store }) => {
           });
         });
       });
-      console.table(this.crumbs);
     },
   });
 
