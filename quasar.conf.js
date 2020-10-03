@@ -3,6 +3,7 @@
  * the ES6 features that are supported by your Node version. https://node.green/
  */
 
+const fs = require('fs');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -10,6 +11,22 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
 module.exports = function (/* ctx */) {
+
+  const dir = path.join(__dirname, 'public');
+  const patterns = [
+      ...[
+        { from: 'public/favicon', to: 'favicon' },
+        { from: 'public/images', to: 'images' },
+      ],
+      ...fs.readdirSync(dir).filter(f => {
+        return !fs.statSync(path.join(dir, f)).isDirectory()
+          && path.extname(f) !== ''
+          && path.extname(f) !== '.php'
+          && path.basename(f) !== '.htaccess'
+          ;
+      }).map(f => ({ from: 'public/' + f, to: f })),
+    ]
+  ;
 
   return {
     supportTS: false, // https://quasar.dev/quasar-cli/supporting-ts
@@ -80,11 +97,7 @@ module.exports = function (/* ctx */) {
 
         cfg.plugins.push(
           new CopyWebpackPlugin({
-            patterns: [
-              { from: 'public/favicon.ico', to: 'favicon.ico' },
-              { from: 'public/favicon', to: 'favicon' },
-              { from: 'public/images', to: 'images' },
-            ],
+            patterns,
           }),
         );
       },
