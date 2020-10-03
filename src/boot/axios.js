@@ -59,15 +59,19 @@ function responseSuccess(response) {
 }
 
 function responseFailed(error) {
-
-  let httpStatusCode = error.response.status;
-  let httpStatusText = error.response.statusText;
-  let title = error.response.data.message || '';
+  let httpStatusCode = error.response?.status || '';
+  let httpStatusText = error.response?.statusText || '';
+  let title = error.response?.data?.message || '';
   let message = '';
+
+  if (!httpStatusCode && httpStatusText) {
+    httpStatusCode = error.code;
+    title = error.message;
+  }
 
   if (process.env.DEV) {
 
-    console.log(`%c<Interceptor> Response Error ${httpStatusCode} with message: ${error.response.data.message}`, CONSOLE_WARN);
+    console.log(`%c<Interceptor> Response Error ${httpStatusCode} with message: ${title}`, CONSOLE_WARN);
 
     message = `HTTP: ${httpStatusCode} ${httpStatusText}`
       + `<br>Request: <code>[${error.config.method.toUpperCase()}] ${error.config.url}</code>`;
@@ -88,7 +92,7 @@ function responseFailed(error) {
 
 export default ({ app, Vue, ssrContext }) => {
 
-  const baseURL = ssrContext ? `${process.env.VUE_APP_SSR_AXIOS_BASE_URL??''}/api` : '/api';
+  const baseURL = ssrContext ? `${process.env.VUE_APP_SSR_AXIOS_BASE_URL ?? ''}/api` : '/api';
 
   let axiosInstance = Axios.create({
     baseURL,
