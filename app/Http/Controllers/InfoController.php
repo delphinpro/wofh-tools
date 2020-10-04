@@ -12,11 +12,12 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\JsonServiceException;
 use App\Services\Json;
+use App\Settings;
 
 
 class InfoController extends Controller
 {
-    public function __invoke(Json $json)
+    public function __invoke(Json $json, Settings $settings)
     {
         $pkg = $this->getPackageJson($json);
         return response()->json([
@@ -25,6 +26,8 @@ class InfoController extends Controller
                 'version'   => $pkg['version'],
                 'updatedAt' => $this->getLastUpdateTime(),
             ],
+            'yaCounter'  => $this->getYandexCounterParams($settings),
+            'yaInformer' => $this->getYandexInformerParams($settings),
         ]);
     }
 
@@ -46,4 +49,30 @@ class InfoController extends Controller
         if (file_exists($file)) return filemtime($file);
         return false;
     }
+
+    private function getYandexCounterParams(Settings $settings)
+    {
+        $id = $settings->find('yaCounterId');
+        $src = $settings->find('yaCounterSrc');
+
+        return [
+            'id'  => $id ? $id->value : null,
+            'src' => $src ? $src->value : null,
+        ];
+    }
+
+    /**
+     * @param \App\Settings $settings
+     * @return array
+     */
+    private function getYandexInformerParams(Settings $settings): array
+    {
+        $link = $settings->find('yaInformerLink');
+        $img = $settings->find('yaInformerImg');
+        return [
+            // 'link' => $link ? $link->value : '',
+            'img'  => $img ? $img->value : '',
+        ];
+    }
+
 }
