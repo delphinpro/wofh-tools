@@ -7,14 +7,14 @@
 
 import Vue from 'vue';
 
-export function updateProjectInfo({ commit, state }, data = null) {
+export function updateCommonInfo({ commit }) {
 
   return Vue.axios.get('/info')
     .then(info => {
       commit('updateProjectInfo', {
-        name     : info.name,
-        version  : info.version,
-        updatedAt: info.updatedAt ? info.updatedAt * 1000 : null,
+        name     : info.project.name,
+        version  : info.project.version,
+        updatedAt: info.project.updatedAt ? info.project.updatedAt * 1000 : null,
       });
     });
 

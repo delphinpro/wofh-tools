@@ -20,9 +20,11 @@ class InfoController extends Controller
     {
         $pkg = $this->getPackageJson($json);
         return response()->json([
-            'name'      => $pkg['productName'],
-            'version'   => $pkg['version'],
-            'updatedAt' => $this->getLastUpdateTime(),
+            'project'    => [
+                'name'      => $pkg['productName'],
+                'version'   => $pkg['version'],
+                'updatedAt' => $this->getLastUpdateTime(),
+            ],
         ]);
     }
 

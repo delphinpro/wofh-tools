@@ -10,7 +10,7 @@ export default {
 
   preFetch({ store }) {
     return Promise.all([
-      store.dispatch('updateProjectInfo'),
+      store.dispatch('updateCommonInfo'),
       store.dispatch('updateWorlds'),
     ]);
   },

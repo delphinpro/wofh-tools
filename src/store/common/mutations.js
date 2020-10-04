@@ -5,4 +5,4 @@
  * licensed under the MIT license
  */
 
-export const updateProjectInfo = (state, info) => state.project = info;
+export const updateProjectInfo = (state, payload) => state.project = payload;
