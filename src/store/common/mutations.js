@@ -6,3 +6,5 @@
  */
 
 export const updateProjectInfo = (state, payload) => state.project = payload;
+export const updateYaCounter = (state, payload) => state.yaCounter = payload;
+export const updateYaInformer = (state, payload) => state.yaInformer = payload;

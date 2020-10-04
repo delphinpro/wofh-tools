@@ -10,7 +10,7 @@ import { mapGetters } from 'vuex';
 export default {
   name    : 'AppFooter',
   computed: {
-    ...mapGetters(['projectUpdatedAt']),
+    ...mapGetters(['projectUpdatedAt', 'yaCounter', 'yaInformer']),
     project() { return this.$store.state.common.project; },
   },
 };
@@ -37,7 +37,14 @@ export default {
 -->
       <q-separator class="q-my-sm lt-md"/>
       <div class="flex justify-center">
-        <img src="@/assets/img/counter.png" alt="">
+        <img style="width:88px; height:31px; border:0; vertical-align:top;"
+          title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)"
+          alt="Яндекс.Метрика"
+          :src="yaInformer.img"
+          :data-cid="yaCounter.id"
+          data-lang="ru"
+          v-if="yaInformer.img && yaCounter.id"
+        >
       </div>
     </div>
   </q-footer>

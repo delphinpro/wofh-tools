@@ -16,6 +16,8 @@ export function updateCommonInfo({ commit }) {
         version  : info.project.version,
         updatedAt: info.project.updatedAt ? info.project.updatedAt * 1000 : null,
       });
+      commit('updateYaCounter', info.yaCounter);
+      commit('updateYaInformer', info.yaInformer);
     });
 
 }

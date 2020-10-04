@@ -11,4 +11,13 @@ export default () => ({
     version  : '4',
     updatedAt: null,
   },
+
+  yaCounter : {
+    id : 0,
+    src: null,
+  },
+  yaInformer: {
+    link: '',
+    img : '',
+  },
 });
