@@ -14,7 +14,7 @@ export default () => ({
 
   yaCounter : {
     id : 0,
-    src: null,
+    src: '',
   },
   yaInformer: {
     link: '',

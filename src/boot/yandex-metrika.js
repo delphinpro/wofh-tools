@@ -7,18 +7,23 @@
 
 import VueYandexMetrika from 'vue-yandex-metrika';
 
-export default async ({ app, router, store, Vue, ssrContext }) => {
+export default ({ store, router, Vue, ssrContext }) => {
 
-  if (!ssrContext
-    && store.getters.yaCounter.id
-    && store.getters.yaCounter.src
-  ) {
+  let id = process.env.VUE_APP_COUNTER_ID || 0;
+  let scriptSrc = process.env.VUE_APP_COUNTER_SRC || '';
+  let informerSrc = process.env.VUE_APP_INFORMER_SRC || '';
+
+  if (id && scriptSrc) store.commit('updateYaCounter', { id, src: scriptSrc });
+  if (id && informerSrc) store.commit('updateYaInformer', { link: '', img: informerSrc });
+
+  if (!ssrContext && id && scriptSrc) {
     Vue.use(VueYandexMetrika, {
-      id       : +store.getters.yaCounter.id,
-      scriptSrc: store.getters.yaCounter.src,
-      router   : router,
-      env      : 'production',//process.env.NODE_ENV,
-      options  : {
+      id,
+      scriptSrc,
+      router,
+      env    : process.env.NODE_ENV,
+      debug  : process.env.NODE_ENV === 'development',
+      options: {
         clickmap           : true,
         trackLinks         : true,
         accurateTrackBounce: true,
