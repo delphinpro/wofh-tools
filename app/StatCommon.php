@@ -14,6 +14,9 @@ use App\Traits\ModelAttributesToCamelCaseArray;
 use Illuminate\Database\Eloquent\Model;
 
 
+/**
+ * @mixin IdeHelperStatCommon
+ */
 class StatCommon extends Model
 {
     use ModelAttributesToCamelCaseArray;

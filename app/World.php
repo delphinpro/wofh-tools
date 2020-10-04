@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\Model;
  * Class World
  *
  * @package App
- *
  * @property int            $id
  * @property string         $title
  * @property string         $title_alt
@@ -37,6 +36,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string         $desc
  * @property string         $metainfo
  * @property string         $version
+ * @mixin IdeHelperWorld
  */
 class World extends Model
 {

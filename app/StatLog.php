@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App
  * @property \Carbon\Carbon $created_at
+ * @mixin IdeHelperStatLog
  */
 class StatLog extends Model
 {

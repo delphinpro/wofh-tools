@@ -10,6 +10,9 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 
+/**
+ * @mixin IdeHelperUser
+ */
 class User extends Administrator implements \Illuminate\Contracts\Auth\Authenticatable
 {
     use Notifiable;
