@@ -144,6 +144,13 @@ class AdminSeeder extends Seeder
                 'icon'      => 'fa-folder-open',
                 'uri'       => 'media',
             ],
+            [
+                'parent_id' => 0,
+                'order'     => 5,
+                'title'     => 'Настройки',
+                'icon'      => 'fa-gears',
+                'uri'       => 'settings',
+            ],
         ]);
 
         // add role to menu.
