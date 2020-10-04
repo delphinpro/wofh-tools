@@ -28,20 +28,15 @@ module.exports = function (/* ctx */) {
     ]
   ;
 
+  const boot = fs.readdirSync(path.join(__dirname, 'src/boot'))
+    .map(f => path.basename(f).replace(path.extname(f), ''));
+
   return {
     supportTS: false, // https://quasar.dev/quasar-cli/supporting-ts
 
     preFetch: true, // https://quasar.dev/quasar-cli/prefetch-feature
 
-    boot: [
-      // app boot file (/src/boot)
-      // --> boot files are part of "main.js"
-      // https://quasar.dev/quasar-cli/boot-files
-
-      'i18n',
-      'axios',
-      'breadcrumbs',
-    ],
+    boot, // https://quasar.dev/quasar-cli/boot-files
 
     css: [
       // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
