@@ -83,3 +83,13 @@ a.editable-empty {
 .file-input .glyphicon-folder-open {
     display: inline;
 }
+
+.alert h4 {  margin-bottom: 0; }
+.alert h4 + p {  margin-top: 10px; }
+.alert h4 + p:empty {  margin-top: 0; }
+
+.form-control { font-family: monospace; }
+textarea.form-control {
+  resize: vertical;
+  min-height: 250px;
+}
