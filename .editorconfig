@@ -17,5 +17,5 @@ indent_size = 2
 [*.php]
 indent_size = 4
 
-[{package,composer}.json]
+[composer.json]
 indent_size = 4
