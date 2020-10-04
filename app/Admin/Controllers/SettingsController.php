@@ -16,6 +16,7 @@ class SettingsController extends AdminController
     public function settings(Content $content)
     {
         $forms = [
+            'analytics' => Analytics::class,
         ];
 
         $content->title('Настройки');
