@@ -25,7 +25,8 @@
     "@quasar/app": "^2.0.0",
     "@quasar/cli": "^1.1.0",
     "@quasar/quasar-app-extension-dotenv": "^1.0.5",
-    "copy-webpack-plugin": "^6.1.1"
+    "copy-webpack-plugin": "^6.1.1",
+    "cross-env": "^7.0.2"
   },
   "browserslist": [
     "last 10 Chrome versions",
