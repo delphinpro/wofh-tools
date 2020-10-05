@@ -92,7 +92,7 @@ export default {
 </script>
 
 <template>
-  <q-layout view="hHh LpR lff" id="app">
+  <q-layout view="hHh LpR lff">
     <q-header reveal elevated class="bg-primary text-white">
       <AppNavbar
         :ls-left="lsEnabled"
