@@ -54,6 +54,8 @@ robots.txt
 /public/vendor/laravel-admin/laravel-admin.min.css
 /public/vendor/laravel-admin/laravel-admin.min.js
 /public/vendor/laravel-admin/minify-manifest.json
+/public/yandex*.html
+/public/google*.html
 
 
 #================================================
