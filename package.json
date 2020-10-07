@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "node_modules/.bin/quasar dev",
     "dev:ssr": "node_modules/.bin/quasar dev -m ssr",
+    "upd": "cross-env node_modules/.bin/quasar build -m ssr && pm2 reload all",
     "build": "node_modules/.bin/quasar build -m ssr",
     "restart": "pm2 reload all",
     "ide-helper": "cross-env php artisan ide-helper:eloquent && php artisan ide-helper:generate && php artisan ide-helper:meta && php artisan ide-helper:models -NMp"
