@@ -38,7 +38,7 @@ export default {
 -->
       <q-separator class="q-my-sm lt-md"/>
       <div class="flex justify-center">
-        <img style="width:88px; height:31px; border:0; outline:1px solid #232d32; vertical-align:top;"
+        <img style="width:88px; height:31px; border:0; vertical-align:top;"
           title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)"
           alt="Яндекс.Метрика"
           :src="yaInformer.img"
