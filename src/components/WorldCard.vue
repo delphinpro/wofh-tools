@@ -79,7 +79,7 @@ export default {
     <q-separator/>
     <q-card-actions>
       <q-icon :name="world.statUpdatedAt ? mdiCalendarRefresh : mdiCalendarRemove" size="1.6em" class="q-mr-sm"/>
-      <i v-if="!world.statUpdatedAt" v-text="noDataText"></i>
+      <i v-if="!link" v-text="noDataText"></i>
       <template v-else>
         <i>{{ world.localStatUpdatedAt }}</i>
         <q-space/>

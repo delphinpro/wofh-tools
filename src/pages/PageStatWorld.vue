@@ -5,11 +5,10 @@
   licensed under the MIT license
 -->
 <script>
-import Vue from 'vue';
-import { mapActions, mapGetters } from 'vuex';
-import InfoCard from '@/components/InfoCard.vue';
-import { farClock, fasUsers, fasUserCheck, fasFlag } from '@quasar/extras/fontawesome-v5';
+import { mapGetters } from 'vuex';
+import { farClock, fasFlag, fasUserCheck, fasUsers } from '@quasar/extras/fontawesome-v5';
 import PageHeader from '@/components/App/PageHeader';
+import InfoCard from '@/components/InfoCard.vue';
 
 export default {
   name: 'StatWorldView',
@@ -25,7 +24,6 @@ export default {
     fasUserCheck,
     fasFlag,
 
-    stat     : null,
     countries: [],
   }),
 
@@ -43,27 +41,17 @@ export default {
     accountsTotal() { return this.stat ? this.stat.accountsTotal : null; },
     accountsActive() { return this.stat ? this.stat.accountsActive : null; },
     countriesTotal() { return this.stat ? this.stat.countriesTotal : null; },
+
+    stat() {
+      return this.$store.state.stat.common;
+    },
   },
 
-  mounted() {
-    this.loadData();
-  },
-
-  methods: {
-    ...mapActions([
-      'updateWorlds',
-    ]),
-
-    async loadData() {
-      await this.updateWorlds();
-      this.stat = await this.getCommonStat(this.$route.params['sign']);
-    },
-
-    getCommonStat(sign) {
-      return Vue.axios.get(`/stat/${sign}/last`).catch(e => {
-        console.log(e);
-      });
-    },
+  preFetch({ store, currentRoute }) {
+    return Promise.all([
+      store.dispatch('updateWorlds'),
+      store.dispatch('updateCommonStat', currentRoute.params['sign']),
+    ]);
   },
 };
 </script>

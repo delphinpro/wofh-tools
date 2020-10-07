@@ -1,5 +1,4 @@
 export default () => ({
   worlds: [],
-  // currentWorld: null,
-  common: [],
+  common: null,
 });

@@ -6,14 +6,19 @@
 -->
 <script>
 import ErrorBox from '@/components/ErrorBox';
+
 export default {
-  name: 'Error404',
+  name      : 'Error404',
   components: { ErrorBox },
+  preFetch({ ssrContext }) {
+    if (ssrContext) {
+      return Promise.reject({ code: 404 });
+    }
+  },
 };
 </script>
 
 <template>
-  <div>
   <q-page padding class="flex items-center justify-center">
     <ErrorBox
       theme="info"
@@ -26,5 +31,4 @@ export default {
       </p>
     </ErrorBox>
   </q-page>
-  </div>
 </template>

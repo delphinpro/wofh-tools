@@ -5,11 +5,7 @@
   licensed under the MIT license
 -->
 <script>
-import EssentialLink from '@/components/EssentialLink.vue';
-import AppFooter from '@/components/App/AppFooter';
-import AppNavbar from '@/components/App/AppNavbar';
-import { mdiChat, mdiSchool } from '@quasar/extras/mdi-v5';
-import { fasCode } from '@quasar/extras/fontawesome-v5';
+import { mapGetters } from 'vuex';
 import {
   matChat,
   matCode,
@@ -19,6 +15,10 @@ import {
   matRssFeed,
   matSchool,
 } from '@quasar/extras/material-icons';
+import Error404 from '@/pages/Error404';
+import EssentialLink from '@/components/EssentialLink.vue';
+import AppFooter from '@/components/App/AppFooter';
+import AppNavbar from '@/components/App/AppNavbar';
 
 const linksData = [
   {
@@ -69,6 +69,7 @@ export default {
   name: 'MainLayout',
 
   components: {
+    Error404,
     AppNavbar,
     AppFooter,
     EssentialLink,
@@ -81,6 +82,7 @@ export default {
   }),
 
   computed: {
+    ...mapGetters(['showErrorPage']),
     lsEnabled() {
       return false;// this.$route.meta.left;
     },
@@ -118,7 +120,8 @@ export default {
     </q-drawer>
 
     <q-page-container>
-      <router-view/>
+      <Error404 v-if="showErrorPage"/>
+      <router-view v-else/>
     </q-page-container>
 
     <AppFooter/>

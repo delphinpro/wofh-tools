@@ -20,4 +20,6 @@ export default () => ({
     link: '',
     img : '',
   },
+
+  showErrorPage: false,
 });

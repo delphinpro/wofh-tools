@@ -6,91 +6,9 @@
  */
 
 import Axios from 'axios';
-import { CONSOLE_DANGER, CONSOLE_WARN } from '@/constants';
+import { CONSOLE_WARN } from '@/constants';
 
-/*==
- *== Request interceptors
- *== ======================================= ==*/
-
-function requestSuccess(config) {
-  if (process.env.DEV) {
-    console.log(`%c<Interceptor> Request [${config.baseURL + config.url}]`, CONSOLE_WARN);
-  }
-  return config;
-}
-
-function requestFailed(error) {
-  if (process.env.DEV) {
-    // Todo: Do something with request error
-    console.log('%c<Interceptor> Request Error: ', CONSOLE_DANGER, error);
-  }
-  return Promise.reject(error);
-}
-
-/*==
- *== Response interceptors
- *== ======================================= ==*/
-
-function responseSuccess(response) {
-  if (process.env.DEV) console.log('<Interceptor> Response', `${response.status} ${response.statusText}`);
-
-  if (response.data.status !== false) {
-
-    if (response.data.message) {
-      // Vue.$toast.success({
-      //   title  : 'Success',
-      //   message: response.data.message,
-      // });
-    }
-
-    return response.data;
-
-  } else {
-
-    // Vue.$toast.warn({
-    //   title  : response.data.message,
-    //   message: `Request [${response.config.method.toUpperCase()}] ${response.config.url}`,
-    // });
-
-  }
-
-  if (process.env.DEV) console.log('<Interceptor> Response', response.data);
-  return response;
-}
-
-function responseFailed(error) {
-  let httpStatusCode = error.response?.status || '';
-  let httpStatusText = error.response?.statusText || '';
-  let title = error.response?.data?.message || '';
-  let message = '';
-
-  if (!httpStatusCode && httpStatusText) {
-    httpStatusCode = error.code;
-    title = error.message;
-  }
-
-  if (process.env.DEV) {
-
-    console.log(`%c<Interceptor> Response Error ${httpStatusCode} with message: ${title}`, CONSOLE_WARN);
-
-    message = `HTTP: ${httpStatusCode} ${httpStatusText}`
-      + `<br>Request: <code>[${error.config.method.toUpperCase()}] ${error.config.url}</code>`;
-
-  }
-
-  // Vue.$toast.error({
-  //   title,
-  //   message,
-  // });
-
-  return Promise.reject(error);
-}
-
-/*==
- *== Create instance
- *== ======================================= ==*/
-
-export default ({ app, Vue, ssrContext }) => {
+export default ({ app, Vue, ssrContext, store }) => {
 
   const baseURL = ssrContext ? `${process.env.VUE_APP_SSR_AXIOS_BASE_URL ?? ''}/api` : '/api';
 
@@ -105,15 +23,55 @@ export default ({ app, Vue, ssrContext }) => {
     },
 
     // Reject only if the status code is greater than or equal to specify here
-    validateStatus: status => status < 400,
+    validateStatus: status => status < 500,
   });
 
-  axiosInstance.interceptors.request.use(requestSuccess, requestFailed);
-  axiosInstance.interceptors.response.use(responseSuccess, responseFailed);
+  axiosInstance.interceptors.response.use(
+    /*==
+     *== Response SUCCESS
+     *== ======================================= ==*/
+    response => {
+      let httpStatusCode = response.status;
+      let endpoint = response.config.url.replace(response.config.baseURL, '');
+      if (process.env.DEV) {
+        console.log('<Interceptor> Response', `${httpStatusCode} ${response.statusText} [${endpoint}]`);
+      }
+
+      if (httpStatusCode >= 400 && httpStatusCode < 500) {
+        if (ssrContext) {
+          return Promise.reject({ code: httpStatusCode });
+        } else {
+          store.commit('showErrorPage', httpStatusCode);
+        }
+      }
+
+      return response.data;
+    },
+
+    /*==
+     *== Response FAILED
+     *== ======================================= ==*/
+    error => {
+      let httpStatusCode = error.response?.status || '';
+      let httpStatusText = error.response?.statusText || '';
+      let title = error.response?.data?.message || '';
+      let message = '';
+
+      if (!httpStatusCode && httpStatusText) {
+        httpStatusCode = error.code;
+        title = error.message;
+      }
+
+      if (process.env.DEV) {
+        console.log(`%c<Interceptor> Response Error ${httpStatusCode} with message: ${title}`, CONSOLE_WARN);
+        message = `HTTP: ${httpStatusCode} ${httpStatusText}`
+          + `<br>Request: <code>[${error.config.method.toUpperCase()}] ${error.config.url}</code>`;
+      }
+
+      return Promise.reject(error);
+    },
+  );
 
   Vue.axios = axiosInstance;
   app.axios = axiosInstance;
 }
-
-// let token = localStorage.getItem(LS_KEY_TOKEN);
-// if (token) Vue.axios.defaults.headers.common[HTTP_HEADER_AUTHORIZATION] = `Bearer ${token}`;

@@ -25,8 +25,7 @@ module.exports = function (/* ctx */) {
           && path.basename(f) !== '.htaccess'
           ;
       }).map(f => ({ from: 'public/' + f, to: f })),
-    ]
-  ;
+    ];
 
   const boot = fs.readdirSync(path.join(__dirname, 'src/boot'))
     .map(f => path.basename(f).replace(path.extname(f), ''));
@@ -73,8 +72,8 @@ module.exports = function (/* ctx */) {
 
       // preloadChunks     : true,
       // showProgress      : false,
-      // gzip              : true,
       // analyze           : true,
+      gzip              : true,
       rtl               : false, // https://quasar.dev/options/rtl-support
       ignorePublicFolder: true,
       htmlFilename      : 'index.html',

@@ -11,35 +11,66 @@
  *   "src-ssr/extension.js"
  */
 
-const express = require('express')
-const compression = require('compression')
+const express = require('express');
+const compression = require('compression');
 
-const ssr = require('quasar-ssr')
-const extension = require('./extension')
-const app = express()
-const port = process.env.PORT || 3333
+const ssr = require('quasar-ssr');
+const extension = require('./extension');
+const app = express();
+const port = process.env.PORT || 3333;
+
+const httpCodes = {
+  400: 'Неверный запрос / Bad Request',
+  401: 'Неавторизованный запрос / Unauthorized',
+  402: 'Необходима оплата за запрос / Payment Required',
+  403: 'Доступ к ресурсу запрещен / Forbidden',
+  404: 'Ресурс не найден / Not Found',
+  405: 'Недопустимый метод / Method Not Allowed',
+  406: 'Неприемлемый запрос / Not Acceptable',
+  407: 'Требуется идентификация прокси / Proxy Authentication Required',
+  408: 'Время запроса истекло / Request Timeout',
+  409: 'Конфликт / Conflict',
+  410: 'Ресурс недоступен / Gone',
+  411: 'Необходимо указать длину / Length Required',
+  412: 'Сбой при обработке предварительного условия / Precondition Failed',
+  413: 'Тело запроса превышает допустимый размер / Request Entity Too Large',
+  414: 'Недопустимая длина URI запроса / Request-URI Too Long',
+  415: 'Неподдерживаемый MIME тип / Unsupported Media Type',
+  416: 'Диапазон не может быть обработан / Requested Range Not Satisfiable',
+  417: 'Сбой при ожидании / Expectation Failed',
+  422: 'Необрабатываемый элемент / Unprocessable Entity',
+  423: 'Заблокировано / Locked',
+  424: 'Неверная зависимость / Failed Dependency',
+  426: 'Требуется обновление / Upgrade Required',
+  429: 'Слишком много запросов / Too Many Requests',
+};
+
+function getHttpCodeDescription(code) {
+  if (httpCodes.hasOwnProperty(code)) return httpCodes[code];
+  return '';
+}
 
 const serve = (path, cache) => express.static(ssr.resolveWWW(path), {
-  maxAge: cache ? 1000 * 60 * 60 * 24 * 30 : 0
-})
+  maxAge: cache ? 1000 * 60 * 60 * 24 * 30 : 0,
+});
 
 // gzip
-app.use(compression({ threshold: 0 }))
+app.use(compression({ threshold: 0 }));
 
 // serve this with no cache, if built with PWA:
 if (ssr.settings.pwa) {
-  app.use(ssr.resolveUrl('/service-worker.js'), serve('service-worker.js'))
+  app.use(ssr.resolveUrl('/service-worker.js'), serve('service-worker.js'));
 }
 
 // serve "www" folder
-app.use(ssr.resolveUrl('/'), serve('.', true))
+app.use(ssr.resolveUrl('/'), serve('.', true));
 
 // we extend the custom common dev & prod parts here
-extension.extendApp({ app, ssr })
+extension.extendApp({ app, ssr });
 
 // this should be last get(), rendering with SSR
 app.get(ssr.resolveUrl('*'), (req, res) => {
-  res.setHeader('Content-Type', 'text/html')
+  res.setHeader('Content-Type', 'text/html');
 
   // SECURITY HEADERS
   // read more about headers here: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers
@@ -73,31 +104,29 @@ app.get(ssr.resolveUrl('*'), (req, res) => {
 
   ssr.renderToString({ req, res }, (err, html) => {
     if (err) {
+      const httpCode = err.code;
       if (err.url) {
-        res.redirect(err.url)
-      }
-      else if (err.code === 404) {
-        // Should reach here only if no "catch-all" route
-        // is defined in /src/routes
-        res.status(404).send('404 | Page Not Found')
-      }
-      else {
+        res.redirect(err.url);
+      } else if (httpCode >= 400 && httpCode < 500) {
+        res
+          .status(httpCode)
+          .send(httpCode + ' | ' + getHttpCodeDescription(httpCode) + '<br><a href="/">На главную</a>');
+      } else {
         // Render Error Page or
         // create a route (/src/routes) for an error page and redirect to it
-        res.status(500).send('500 | Internal Server Error')
+        res.status(500).send('500 | Internal Server Error');
         if (ssr.settings.debug) {
-          console.error(`500 on ${req.url}`)
-          console.error(err)
-          console.error(err.stack)
+          console.error(`500 on ${req.url}`);
+          console.error(err);
+          console.error(err.stack);
         }
       }
+    } else {
+      res.send(html);
     }
-    else {
-      res.send(html)
-    }
-  })
-})
+  });
+});
 
 app.listen(port, () => {
-  console.log(`Server listening at port ${port}`)
-})
+  console.log(`Server listening at port ${port}`);
+});
