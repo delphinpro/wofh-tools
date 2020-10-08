@@ -42,9 +42,8 @@ export default {
     accountsActive() { return this.stat ? this.stat.accountsActive : null; },
     countriesTotal() { return this.stat ? this.stat.countriesTotal : null; },
 
-    stat() {
-      return this.$store.state.stat.common;
-    },
+    statList() { return this.$store.state.stat.common; },
+    stat() { return this.statList && this.statList.length ? this.statList[0] : null; },
   },
 
   preFetch({ store, currentRoute }) {

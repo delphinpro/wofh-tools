@@ -12,7 +12,7 @@ export function updateWorlds({ commit, state }, data = null) {
 }
 
 export function updateCommonStat({ commit }, sign) {
-  return Vue.axios.get(`/stat/${sign}/last`)
+  return Vue.axios.get(`/stat/${sign}`)
     .then(stat => {
       commit('setCommonStat', stat);
     });
