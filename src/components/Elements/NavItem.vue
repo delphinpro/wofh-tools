@@ -29,3 +29,16 @@ export default {
     </q-item-section>
   </q-item>
 </template>
+
+<style>
+.q-item.q-router-link--active,
+.q-item--active {
+  color: currentColor;
+}
+
+.q-item.q-router-link--exact-active,
+.q-item--exact-active {
+  color: #3c8dbc;
+  color: var(--q-color-primary);
+}
+</style>

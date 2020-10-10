@@ -56,7 +56,7 @@ export default {
       <AppLogo class="self-stretch"/>
       <q-separator class="gt-sm" dark vertical inset=""/>
       <NavMenu class="gt-sm" :items="mainmenu"/>
-      <!--    <q-space/>-->
+      <q-space/>
       <!--    <UserMenu/>-->
     </q-toolbar>
     <AppBreadcrumbs/>

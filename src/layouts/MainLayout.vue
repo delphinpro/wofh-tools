@@ -1,6 +1,6 @@
 <!--
   WofhTools
-  Component: MainLayout.vue
+  Layout: MainLayout.vue
   © 2020 delphinpro <delphinpro@yandex.ru>
   licensed under the MIT license
 -->
@@ -10,6 +10,7 @@ import AppFooter from '@/components/App/AppFooter';
 import AppNavbar from '@/components/App/AppNavbar';
 import Error404 from '@/pages/Error404';
 import NavItem from '@/components/Elements/NavItem';
+import { mdiHome } from '@quasar/extras/mdi-v5';
 
 export default {
   name: 'MainLayout',
@@ -24,6 +25,12 @@ export default {
   data: () => ({
     left : false,
     right: false,
+
+    home: {
+      title: 'Главная',
+      icon : mdiHome,
+      route: { path: '/' },
+    },
   }),
 
   computed: {
@@ -51,7 +58,8 @@ export default {
     >
       <nav v-if="mainmenu.length">
         <q-list>
-          <q-item-label header class="text-grey-8">Главное меню</q-item-label>
+          <q-item-label header class="text-grey-7">Главное меню</q-item-label>
+          <NavItem :title="home.title" v-bind="home"/>
           <NavItem
             v-for="item in mainmenu"
             :key="item.title"
