@@ -9,3 +9,4 @@ export const projectUpdatedAt = state => state.project.updatedAt ? new Date(stat
 export const yaCounter = state => state.yaCounter ?? {};
 export const yaInformer = state => state.yaInformer ?? {};
 export const showErrorPage = state => state.showErrorPage;
+export const mainmenu = state => state.mainmenu;

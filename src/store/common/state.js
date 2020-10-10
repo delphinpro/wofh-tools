@@ -5,6 +5,17 @@
  * licensed under the MIT license
  */
 
+import { mdiAxisArrow, mdiChartAreaspline, mdiFileTree, mdiTableMultiple } from '@quasar/extras/mdi-v5';
+
+const mainmenu = [
+  {
+    title  : 'Статистика',
+    caption: 'Статистика по игровым мирам',
+    icon   : mdiChartAreaspline,
+    route  : { path: '/stat' },
+  },
+];
+
 export default () => ({
   project: {
     name     : 'WofhTools',
@@ -22,4 +33,5 @@ export default () => ({
   },
 
   showErrorPage: false,
+  mainmenu,
 });

@@ -6,86 +6,28 @@
 -->
 <script>
 import { mapGetters } from 'vuex';
-import {
-  matChat,
-  matCode,
-  matFavorite,
-  matPublic,
-  matRecordVoiceOver,
-  matRssFeed,
-  matSchool,
-} from '@quasar/extras/material-icons';
-import Error404 from '@/pages/Error404';
-import EssentialLink from '@/components/EssentialLink.vue';
 import AppFooter from '@/components/App/AppFooter';
 import AppNavbar from '@/components/App/AppNavbar';
-
-const linksData = [
-  {
-    title  : 'Docs',
-    caption: 'quasar.dev',
-    icon   : matSchool,
-    link   : 'https://quasar.dev',
-  },
-  {
-    title  : 'Github',
-    caption: 'github.com/quasarframework',
-    icon   : matCode,
-    link   : 'https://github.com/quasarframework',
-  },
-  {
-    title  : 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon   : matChat,
-    link   : 'https://chat.quasar.dev',
-  },
-  {
-    title  : 'Forum',
-    caption: 'forum.quasar.dev',
-    icon   : matRecordVoiceOver,
-    link   : 'https://forum.quasar.dev',
-  },
-  {
-    title  : 'Twitter',
-    caption: '@quasarframework',
-    icon   : matRssFeed,
-    link   : 'https://twitter.quasar.dev',
-  },
-  {
-    title  : 'Facebook',
-    caption: '@QuasarFramework',
-    icon   : matPublic,
-    link   : 'https://facebook.quasar.dev',
-  },
-  {
-    title  : 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon   : matFavorite,
-    link   : 'https://awesome.quasar.dev',
-  },
-];
+import Error404 from '@/pages/Error404';
+import NavItem from '@/components/Elements/NavItem';
 
 export default {
   name: 'MainLayout',
 
   components: {
-    Error404,
-    AppNavbar,
     AppFooter,
-    EssentialLink,
+    AppNavbar,
+    Error404,
+    NavItem,
   },
 
   data: () => ({
-    left          : false,
-    right         : false,
-    essentialLinks: linksData,
+    left : false,
+    right: false,
   }),
 
   computed: {
-    ...mapGetters(['showErrorPage']),
-    lsEnabled() {
-      return false;// this.$route.meta.left;
-    },
+    ...mapGetters(['showErrorPage', 'mainmenu']),
     rsEnabled() {
       return false;//!!this.$route.matched[this.$route.matched.length - 1].components.right;
     },
@@ -96,23 +38,28 @@ export default {
 <template>
   <q-layout view="hHh LpR lff">
     <q-header reveal elevated class="bg-primary text-white">
-      <AppNavbar
-        :ls-left="lsEnabled"
-        @toggle-left-drawer="left=!left"
-      />
+      <AppNavbar @toggle-left-drawer="left=!left"/>
     </q-header>
 
-    <q-drawer v-model="left" side="left" overlay bordered v-if="lsEnabled">
-      <q-list>
-        <q-item-label header class="text-grey-8"> Essential Links</q-item-label>
-<!--
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
--->
-      </q-list>
+    <q-drawer
+      v-model="left"
+      side="left"
+      overlay
+      elevated
+      behavior="mobile"
+      :breakpoint="599"
+    >
+      <nav v-if="mainmenu.length">
+        <q-list>
+          <q-item-label header class="text-grey-8">Главное меню</q-item-label>
+          <NavItem
+            v-for="item in mainmenu"
+            :key="item.title"
+            :title="item.title"
+            v-bind="item"
+          />
+        </q-list>
+      </nav>
     </q-drawer>
 
     <q-drawer v-model="right" side="right" v-if="rsEnabled">

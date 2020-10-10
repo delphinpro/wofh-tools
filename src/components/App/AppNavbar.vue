@@ -5,6 +5,7 @@
  * licensed under the MIT license
  */
 
+import { mapGetters } from 'vuex';
 import { matMenu } from '@quasar/extras/material-icons';
 import AppBreadcrumbs from '@/components/App/AppBreadcrumbs.vue';
 import AppLogo from '@/components/App/AppLogo';
@@ -19,27 +20,17 @@ export default {
     // UserMenu,
   },
 
-  props: {
-    lsLeft: Boolean,
-  },
-
   data: () => ({
     matMenu,
-
-    mainmenu: [
-      { id: 1, title: 'Статистика', icon: null, path: '/stat' },
-      // { id: 2, title: 'Науки', icon: null, path: '/technology' },
-      // { id: 3, title: 'Квесты', icon: null, path: '/quests' },
-      // { id: 4, title: 'Таблицы', icon: null, path: 'tables' },
-    ],
   }),
 
   computed: {
-    // ...mapGetters([
-    //     'getProfile',
-    //     'isAuth',
-    //     'isProfileLoaded',
-    // ]),
+    ...mapGetters([
+      'mainmenu',
+      // 'getProfile',
+      // 'isAuth',
+      // 'isProfileLoaded',
+    ]),
     // ...mapState({
     //     name: state => `${state.user.profile.title} ${state.user.profile.name}`,
     // }),
@@ -56,12 +47,11 @@ export default {
 <template>
   <div class="AppNavbar bg-primary text-white">
     <q-toolbar>
-      <q-btn class="q-mr-sm"
+      <q-btn class="q-mr-sm lt-md"
         flat
         round
         :icon="matMenu"
         @click="$emit('toggle-left-drawer')"
-        v-if="lsLeft"
       />
       <AppLogo class="self-stretch"/>
       <q-separator class="gt-sm" dark vertical inset=""/>
