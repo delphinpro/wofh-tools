@@ -5,7 +5,6 @@
  * licensed under the MIT license
  */
 
-import { mdiHome } from '@quasar/extras/mdi-v5';
 import Breadcrumbs from '@/plugins/breadcrumbs';
 import { ucfirst } from '@/helpers';
 import {
@@ -22,7 +21,7 @@ import {
 
 export default ({ Vue, router, store }) => {
 
-  let bcHome = { label: () => 'Главная', icon: mdiHome };
+  let bcHome = { label: () => 'Главная', icon: 'home' };
   let bcStat = { label: 'Статистика' };
   let bcStatWorld = { label: ({ route }) => ucfirst(route.params.sign) };
   let bcStatCountries = { label: 'Страны' };

@@ -10,7 +10,6 @@ import AppFooter from '@/components/App/AppFooter';
 import AppNavbar from '@/components/App/AppNavbar';
 import Error404 from '@/pages/Error404';
 import NavItem from '@/components/Elements/NavItem';
-import { mdiHome } from '@quasar/extras/mdi-v5';
 
 export default {
   name: 'MainLayout',
@@ -28,7 +27,7 @@ export default {
 
     home: {
       title: 'Главная',
-      icon : mdiHome,
+      icon : 'home',
       route: { path: '/' },
     },
   }),

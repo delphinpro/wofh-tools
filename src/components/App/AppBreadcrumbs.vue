@@ -5,14 +5,9 @@
   licensed under the MIT license
 -->
 <script>
-import { mdiHome } from '@quasar/extras/mdi-v5';
 
 export default {
   name: 'AppBreadcrumbs',
-
-  data: () => ({
-    mdiHome,
-  }),
 
   computed: {
     crumbs() {

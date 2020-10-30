@@ -6,7 +6,6 @@
  */
 
 import { mapGetters } from 'vuex';
-import { matMenu } from '@quasar/extras/material-icons';
 import AppBreadcrumbs from '@/components/App/AppBreadcrumbs.vue';
 import AppLogo from '@/components/App/AppLogo';
 import NavMenu from '@/components/App/NavMenu';
@@ -19,10 +18,6 @@ export default {
     NavMenu,
     // UserMenu,
   },
-
-  data: () => ({
-    matMenu,
-  }),
 
   computed: {
     ...mapGetters([
@@ -50,7 +45,7 @@ export default {
       <q-btn class="q-mr-sm lt-md"
         flat
         round
-        :icon="matMenu"
+        icon="menu"
         @click="$emit('toggle-left-drawer')"
       />
       <AppLogo class="self-stretch"/>
