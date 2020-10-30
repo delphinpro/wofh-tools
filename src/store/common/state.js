@@ -34,4 +34,6 @@ export default () => ({
 
   showErrorPage: false,
   mainmenu,
+
+  rightSidebarModel: false,
 });

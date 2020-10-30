@@ -15,6 +15,7 @@ import {
   ROUTE_STAT,
   ROUTE_STAT_WORLD,
 } from '@/constants';
+import SideStat from '@/components/Side/SideStat';
 
 const routes = [
   {
@@ -38,7 +39,7 @@ const routes = [
           {
             path      : ':sign',
             name      : ROUTE_STAT_WORLD,
-            components: { default: PageStatWorld },
+            components: { default: PageStatWorld, right: SideStat },
           },
         ],
       },

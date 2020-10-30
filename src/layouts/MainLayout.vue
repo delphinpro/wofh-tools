@@ -22,8 +22,7 @@ export default {
   },
 
   data: () => ({
-    left : false,
-    right: false,
+    left: false,
 
     home: {
       title: 'Главная',
@@ -34,9 +33,6 @@ export default {
 
   computed: {
     ...mapGetters(['showErrorPage', 'mainmenu']),
-    rsEnabled() {
-      return false;//!!this.$route.matched[this.$route.matched.length - 1].components.right;
-    },
   },
 };
 </script>
@@ -67,10 +63,6 @@ export default {
           />
         </q-list>
       </nav>
-    </q-drawer>
-
-    <q-drawer v-model="right" side="right" v-if="rsEnabled">
-      <router-view name="right"/>
     </q-drawer>
 
     <q-page-container>

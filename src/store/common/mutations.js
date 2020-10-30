@@ -10,3 +10,11 @@ export const updateYaCounter = (state, payload) => state.yaCounter = payload;
 export const updateYaInformer = (state, payload) => state.yaInformer = payload;
 
 export const showErrorPage = (state, show) => state.showErrorPage = show;
+
+export function toggleRightSidebar(state, show = null) {
+  if (typeof show === 'boolean') {
+    state.rightSidebarModel = show;
+  } else {
+    state.rightSidebarModel = !state.rightSidebarModel;
+  }
+}
