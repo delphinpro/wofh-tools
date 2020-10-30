@@ -1,7 +1,9 @@
-/*
-export function someGetter (state) {
-}
-*/
+/*!
+ * WofhTools
+ * File: store/stat/getters.js
+ * © 2020 delphinpro <delphinpro@yandex.ru>
+ * licensed under the MIT license
+ */
 
 export const allWorlds = state => state.worlds;
 export const activeWorlds = state => state.worlds.filter(item => item.working);

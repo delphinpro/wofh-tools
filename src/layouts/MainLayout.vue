@@ -32,7 +32,10 @@ export default {
   }),
 
   computed: {
-    ...mapGetters(['showErrorPage', 'mainmenu']),
+    ...mapGetters(['showErrorPage']),
+    ...mapGetters({
+      menu: 'mainmenu',
+    }),
   },
 };
 </script>
@@ -51,12 +54,12 @@ export default {
       behavior="mobile"
       :breakpoint="599"
     >
-      <nav v-if="mainmenu.length">
+      <nav v-if="menu.length">
         <q-list>
           <q-item-label header class="text-grey-7">Главное меню</q-item-label>
           <NavItem :title="home.title" v-bind="home"/>
           <NavItem
-            v-for="item in mainmenu"
+            v-for="item in menu"
             :key="item.title"
             :title="item.title"
             v-bind="item"

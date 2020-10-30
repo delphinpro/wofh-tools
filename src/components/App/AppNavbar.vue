@@ -9,33 +9,22 @@ import { mapGetters, mapMutations } from 'vuex';
 import AppBreadcrumbs from '@/components/App/AppBreadcrumbs.vue';
 import AppLogo from '@/components/App/AppLogo';
 import NavMenu from '@/components/App/NavMenu';
-// import UserMenu from '@/components/App/UserMenu';
 
 export default {
   components: {
     AppBreadcrumbs,
     AppLogo,
     NavMenu,
-    // UserMenu,
   },
 
   computed: {
     ...mapGetters([
       'mainmenu',
-      // 'getProfile',
-      // 'isAuth',
-      // 'isProfileLoaded',
     ]),
-    // ...mapState({
-    //     name: state => `${state.user.profile.title} ${state.user.profile.name}`,
-    // }),
     showSidebar() { return this.$route.matched.reduce((acc, item) => acc || !!item.components.right, false); },
   },
 
   methods: {
-    logout: function () {
-      // this.$store.dispatch(AUTH_LOGOUT).then(() => this.$router.push('/login'));
-    },
     ...mapMutations({
       toggleRightSidebar: 'toggleRightSidebar',
     }),
@@ -56,7 +45,6 @@ export default {
       <q-separator class="gt-sm" dark vertical inset=""/>
       <NavMenu class="gt-sm" :items="mainmenu"/>
       <q-space/>
-      <!--    <UserMenu/>-->
       <q-btn class="q-mr-sm lt-md"
         v-if="showSidebar"
         flat
