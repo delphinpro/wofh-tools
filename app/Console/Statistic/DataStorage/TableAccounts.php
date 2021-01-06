@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\DB;
  * @package App\Console\Statistic\DataStorage
  * @property \App\Console\Services\Console     console
  * @property \App\Console\Statistic\DataEvents events
- * @property \App\World                        world
+ * @property \App\Models\World                 world
  */
 trait TableAccounts
 {

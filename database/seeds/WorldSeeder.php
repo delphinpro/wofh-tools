@@ -1,6 +1,6 @@
 <?php
 
-use App\World;
+use App\Models\World;
 use Illuminate\Database\Seeder;
 
 

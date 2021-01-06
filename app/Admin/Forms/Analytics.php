@@ -40,7 +40,7 @@ class Analytics extends Form
 
     private function saveSetting($name, $value, $type = 'text')
     {
-        $setting = \App\Settings::findOrNew($name);
+        $setting = \App\Models\Settings::findOrNew($name);
         $setting->name = $name;
         $setting->type = $type;
         $setting->value = $value;
@@ -66,10 +66,10 @@ class Analytics extends Form
     public function data()
     {
         return [
-            'yaCounterId'    => \App\Settings::findOrNew('yaCounterId')->value,
-            'yaCounterSrc'    => \App\Settings::findOrNew('yaCounterSrc')->value,
-            'yaInformerLink' => \App\Settings::findOrNew('yaInformerLink')->value,
-            'yaInformerImg'  => \App\Settings::findOrNew('yaInformerImg')->value,
+            'yaCounterId'    => \App\Models\Settings::findOrNew('yaCounterId')->value,
+            'yaCounterSrc'    => \App\Models\Settings::findOrNew('yaCounterSrc')->value,
+            'yaInformerLink' => \App\Models\Settings::findOrNew('yaInformerLink')->value,
+            'yaInformerImg'  => \App\Models\Settings::findOrNew('yaInformerImg')->value,
         ];
     }
 }

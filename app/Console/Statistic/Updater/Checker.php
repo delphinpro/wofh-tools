@@ -10,7 +10,7 @@
 namespace App\Console\Statistic\Updater;
 
 
-use App\World;
+use App\Models\World;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 

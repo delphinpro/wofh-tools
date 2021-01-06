@@ -7,7 +7,7 @@
  * @license     licensed under the MIT license
  */
 
-namespace App;
+namespace App\Models;
 
 
 use App\Traits\ModelAttributesToCamelCaseArray;

@@ -13,7 +13,7 @@ namespace App\Console\Statistic;
 use App\Console\Services\Console;
 use App\Console\Statistic\Updater\Checker;
 use App\Console\Statistic\Updater\Dumper;
-use App\World;
+use App\Models\World;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
@@ -50,7 +50,7 @@ class Updater
 
     /** @var \Illuminate\Contracts\Filesystem\Filesystem|\Illuminate\Filesystem\FilesystemAdapter */
     protected $fs;
-    /** @var \App\World */
+    /** @var \App\Models\World */
     protected $world;
 
     /** @var string */
@@ -66,8 +66,8 @@ class Updater
     }
 
     /**
-     * @param \App\World $world
-     * @param int        $limit
+     * @param \App\Models\World $world
+     * @param int               $limit
      *
      * @throws \Exception
      */

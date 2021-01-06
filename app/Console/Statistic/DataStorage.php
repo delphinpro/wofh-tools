@@ -18,9 +18,9 @@ use App\Console\Statistic\DataStorage\Normalizer;
 use App\Console\Statistic\DataStorage\TableAccounts;
 use App\Console\Statistic\DataStorage\TableCountries;
 use App\Console\Statistic\DataStorage\TableTowns;
+use App\Models\World;
 use App\Services\Json;
 use App\Services\Wofh;
-use App\World;
 use Carbon\Carbon;
 use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Support\Facades\DB;
@@ -47,7 +47,7 @@ class DataStorage
     /** @var \App\Console\Services\Console */
     private $console;
 
-    /** @var \App\World */
+    /** @var \App\Models\World */
     private $world;
     /** @var \Illuminate\Contracts\Filesystem\Filesystem|\Illuminate\Filesystem\FilesystemAdapter */
     private $fs;

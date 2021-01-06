@@ -11,7 +11,7 @@ namespace App\Repositories;
 
 
 use App\Services\Wofh;
-use App\World;
+use App\Models\World;
 use Illuminate\Support\Collection;
 
 
@@ -43,7 +43,7 @@ class WorldRepository implements Interfaces\WorldRepositoryInterface
     /**
      * @param string[] $columns
      *
-     * @return \App\World[]|\Illuminate\Database\Eloquent\Collection
+     * @return \App\Models\World[]|\Illuminate\Database\Eloquent\Collection
      */
     public function all($columns = ['*'])
     {
@@ -57,7 +57,7 @@ class WorldRepository implements Interfaces\WorldRepositoryInterface
      * @param int      $id      Идентификатор мира
      * @param string[] $columns Столбики для выборки
      *
-     * @return \App\World|\App\World[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+     * @return \App\Models\World|\App\Models\World[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
      */
     public function find(int $id, $columns = ['*'])
     {
@@ -67,7 +67,7 @@ class WorldRepository implements Interfaces\WorldRepositoryInterface
     /**
      * @param int|null $id
      *
-     * @return \App\World[]|\Illuminate\Support\Collection
+     * @return \App\Models\World[]|\Illuminate\Support\Collection
      */
     public function working(int $id = null)
     {
@@ -83,7 +83,7 @@ class WorldRepository implements Interfaces\WorldRepositoryInterface
     }
 
     /**
-     * @return \App\World[]|\Illuminate\Support\Collection
+     * @return \App\Models\World[]|\Illuminate\Support\Collection
      */
     public function active()
     {
@@ -95,7 +95,7 @@ class WorldRepository implements Interfaces\WorldRepositoryInterface
     /**
      * @param string $sign
      *
-     * @return \App\World|\App\World[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|null
+     * @return \App\Models\World|\App\Models\World[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|null
      */
     public function bySign(string $sign)
     {
@@ -111,7 +111,7 @@ class WorldRepository implements Interfaces\WorldRepositoryInterface
     /**
      * @param \Illuminate\Support\Collection $collection
      *
-     * @return \App\World[]|\Illuminate\Support\Collection
+     * @return \App\Models\World[]|\Illuminate\Support\Collection
      */
     private function sort(Collection $collection)
     {

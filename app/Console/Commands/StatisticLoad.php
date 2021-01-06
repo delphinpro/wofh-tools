@@ -13,12 +13,12 @@ namespace App\Console\Commands;
 use App\Console\Color;
 use App\Console\Services\Statistic\StatisticLogger;
 use App\Console\Traits\Helper;
+use App\Models\StatLog;
+use App\Models\World;
 use App\Repositories\WorldRepository;
 use App\Services\Json;
 use App\Services\Wofh;
-use App\StatLog;
 use App\Traits\CliColors;
-use App\World;
 use Carbon\Carbon;
 use Carbon\CarbonTimeZone;
 use Illuminate\Console\Command;
@@ -101,7 +101,7 @@ class StatisticLoad extends Command
 
         $fs = Storage::disk(config('app.stat_disk'));
 
-        /** @var \App\World $world */
+        /** @var \App\Models\World $world */
         foreach ($worlds as $world) {
 
             if ($sign && $sign !== $world->sign) {
@@ -215,7 +215,7 @@ class StatisticLoad extends Command
 
 
     /**
-     * @param \App\World $world
+     * @param \App\Models\World $world
      * @param string     $dataPath
      *
      * @return \Carbon\Carbon|null

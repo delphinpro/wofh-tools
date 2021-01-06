@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
         $roleId = $this->getRoleId(env("USER_{$counter}_ROLE"));
 
         while ($userName && $userEmail && $userPass) {
-            $user = \App\User::firstOrNew(['email' => $userEmail]);
+            $user = \App\Models\User::firstOrNew(['email' => $userEmail]);
             if (!$user->exists) {
                 $user->fill([
                     'username'          => $userName,

@@ -18,7 +18,7 @@ use Illuminate\Support\Collection;
 trait Helper
 {
     /**
-     * @param \App\World[]|\Illuminate\Support\Collection $worlds
+     * @param \App\Models\World[]|\Illuminate\Support\Collection $worlds
      */
     protected function printStatusOfWorlds(Collection $worlds)
     {

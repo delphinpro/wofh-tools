@@ -3,7 +3,7 @@
 namespace App\Admin\Controllers;
 
 
-use App\World;
+use App\Models\World;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;

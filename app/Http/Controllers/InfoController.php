@@ -12,7 +12,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\JsonServiceException;
 use App\Services\Json;
-use App\Settings;
+use App\Models\Settings;
 
 
 class InfoController extends Controller

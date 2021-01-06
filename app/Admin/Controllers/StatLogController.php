@@ -4,8 +4,8 @@ namespace App\Admin\Controllers;
 
 
 use App\Services\Wofh;
-use App\StatLog;
-use App\World;
+use App\Models\StatLog;
+use App\Models\World;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -98,7 +98,7 @@ class StatLogController extends AdminController
         });
         $grid->column('message', __('Message'));
         $grid->column('created_at', __('Time'))->display(function ($value) {
-            /** @var \App\StatLog $this */
+            /** @var \App\Models\StatLog $this */
             return '<tt style="font-size: 0.8em;">'.($this->created_at->format('Y-m-d H:i:s')).'</tt>';
         });
 

@@ -7,9 +7,9 @@ use App\Console\Services\Console;
 use App\Console\Services\Statistic\StatisticLogger;
 use App\Console\Statistic\Updater;
 use App\Console\Traits\Helper;
+use App\Models\StatLog;
 use App\Repositories\WorldRepository;
 use App\Services\Wofh;
-use App\StatLog;
 use Illuminate\Console\Command;
 
 
@@ -124,12 +124,12 @@ class StatisticUpdate extends Command
     /**
      * Получить коллекцию миров для обновления
      *
-     * @return \App\World[]|\Illuminate\Database\Eloquent\Collection
+     * @return \App\Models\World[]|\Illuminate\Database\Eloquent\Collection
      * @throws \Exception
      */
     protected function getWorlds()
     {
-        /** @var \App\World[]|\Illuminate\Database\Eloquent\Collection $worlds */
+        /** @var \App\Models\World[]|\Illuminate\Database\Eloquent\Collection $worlds */
         $worlds = $this->worldRepository->all([
             'id',
             'sign',

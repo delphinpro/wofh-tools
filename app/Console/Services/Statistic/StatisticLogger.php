@@ -11,7 +11,7 @@ namespace App\Console\Services\Statistic;
 
 
 use App\Console\Services\Console;
-use App\StatLog;
+use App\Models\StatLog;
 
 
 /**

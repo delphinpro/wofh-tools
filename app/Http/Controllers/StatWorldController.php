@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 
-use App\StatCommon;
+use App\Models\StatCommon;
 
 
 class StatWorldController extends Controller

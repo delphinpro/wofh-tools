@@ -26,7 +26,7 @@ interface WorldRepositoryInterface
     public function working(int $id = null);
 
     /**
-     * @return \App\World[]|\Illuminate\Support\Collection
+     * @return \App\Models\World[]|\Illuminate\Support\Collection
      */
     public function active();
 
