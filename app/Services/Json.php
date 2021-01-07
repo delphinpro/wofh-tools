@@ -19,10 +19,9 @@ class Json
     /**
      * Возвращает декодированные JSON-данные в виде массива
      *
-     * @param string $json  JSON-строка
-     * @param bool   $assoc Преобразовывать в ассоциативный массив
-     * @param int    $depth Глубина рекурсии
-     *
+     * @param string $json   JSON-строка
+     * @param bool   $assoc  Преобразовывать в ассоциативный массив
+     * @param int    $depth  Глубина рекурсии
      * @return mixed
      * @throws JsonServiceException
      */
@@ -41,10 +40,9 @@ class Json
     /**
      * Возвращает кодированную JSON-строку
      *
-     * @param mixed $value       Данные для кодирования
-     * @param bool  $pretty      Форматировать вывод
-     * @param bool  $forceObject Кодировать массивы как объекты
-     *
+     * @param mixed $value        Данные для кодирования
+     * @param bool  $pretty       Форматировать вывод
+     * @param bool  $forceObject  Кодировать массивы как объекты
      * @return string
      * @throws JsonServiceException
      */

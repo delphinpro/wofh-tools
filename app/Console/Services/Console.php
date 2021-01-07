@@ -109,10 +109,10 @@ class Console
     /**
      * Format input to textual table.
      *
-     * @param  array  $headers
+     * @param  array                                          $headers
      * @param  \Illuminate\Contracts\Support\Arrayable|array  $rows
-     * @param  string  $tableStyle
-     * @param  array  $columnStyles
+     * @param  string                                         $tableStyle
+     * @param  array                                          $columnStyles
      * @return void
      */
     public function table(array $headers, $rows, $tableStyle = 'default', array $columnStyles = [])
@@ -123,7 +123,7 @@ class Console
             $rows = $rows->toArray();
         }
 
-        $table->setHeaders((array) $headers)->setRows($rows)->setStyle($tableStyle);
+        $table->setHeaders((array)$headers)->setRows($rows)->setStyle($tableStyle);
 
         foreach ($columnStyles as $columnIndex => $columnStyle) {
             $table->setColumnStyle($columnIndex, $columnStyle);

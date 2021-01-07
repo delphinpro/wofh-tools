@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 class ThrottleMiddleware extends ThrottleRequests
 {
     /**
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return string|void
      */
     protected function resolveRequestSignature($request)

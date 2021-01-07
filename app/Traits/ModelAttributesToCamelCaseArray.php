@@ -23,7 +23,7 @@ trait ModelAttributesToCamelCaseArray
     /**
      * Преобразует атрибуты времени модели в таймстампы
      *
-     * @param string[] $fieldNames
+     * @param  string[]  $fieldNames
      * @return array
      */
     private function dateFieldsAsTimestamps(array $fieldNames): array

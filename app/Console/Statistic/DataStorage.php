@@ -42,29 +42,37 @@ class DataStorage
 
     /** @var \Illuminate\Filesystem\FilesystemManager */
     private $fsManager;
+
     /** @var \App\Services\Json */
     private $json;
+
     /** @var \App\Console\Services\Console */
     private $console;
 
     /** @var \App\Models\World */
     private $world;
+
     /** @var \Illuminate\Contracts\Filesystem\Filesystem|\Illuminate\Filesystem\FilesystemAdapter */
     private $fs;
 
     /** @var array */
     private $raw;
+
     /** @var \Carbon\Carbon */
     private $time;
+
     /** @var int */
     private $totalAccounts;
 
     /** @var \Illuminate\Support\Collection|\App\Console\Statistic\Data\Town[] */
     public $towns;
+
     /** @var \Illuminate\Support\Collection|\App\Console\Statistic\Data\Account[] */
     public $accounts;
+
     /** @var \Illuminate\Support\Collection|\App\Console\Statistic\Data\Country[] */
     public $countries;
+
     /** @var \App\Console\Statistic\DataEvents */
     private $events;
 
@@ -90,7 +98,6 @@ class DataStorage
 
     /**
      * @param $filename
-     *
      * @throws \App\Exceptions\JsonServiceException
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
@@ -115,19 +122,19 @@ class DataStorage
     public function getTime() { return $this->time; }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return \App\Console\Statistic\Data\Town
      */
     public function getTown(int $id) { return $this->towns->get($id); }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return \App\Console\Statistic\Data\Account
      */
     public function getAccount(int $id) { return $this->accounts->get($id); }
 
     /**
-     * @param int $id
+     * @param  int  $id
      * @return \App\Console\Statistic\Data\Country
      */
     public function getCountry(int $id) { return $this->countries->get($id); }

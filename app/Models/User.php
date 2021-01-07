@@ -3,22 +3,14 @@
 namespace App\Models;
 
 
-use Encore\Admin\Auth\Database\Administrator;
-use Encore\Admin\Auth\Database\HasPermissions;
-use Encore\Admin\Traits\DefaultDatetimeFormat;
-use Illuminate\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 
-/**
- * @mixin IdeHelperUser
- */
-class User extends Administrator implements \Illuminate\Contracts\Auth\Authenticatable
+class User extends Authenticatable
 {
-    use Notifiable;
-    use Authenticatable;
-    use HasPermissions;
-    use DefaultDatetimeFormat;
+    use HasFactory, Notifiable;
 
 
     /**

@@ -18,7 +18,7 @@ use Illuminate\Support\Collection;
 trait Helper
 {
     /**
-     * @param \App\Models\World[]|\Illuminate\Support\Collection $worlds
+     * @param  \App\Models\World[]|\Illuminate\Support\Collection  $worlds
      */
     protected function printStatusOfWorlds(Collection $worlds)
     {
@@ -50,8 +50,7 @@ trait Helper
 
 
     /**
-     * @param bool $printTable Печатать таблицу статуса миров
-     *
+     * @param  bool  $printTable  Печатать таблицу статуса миров
      * @return bool|string
      */
     protected function checkWorlds(bool $printTable = true): bool

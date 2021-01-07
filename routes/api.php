@@ -1,6 +1,9 @@
 <?php
 
 
+use App\Http\Controllers\InfoController;
+use App\Http\Controllers\StatWorldController;
+use App\Http\Controllers\WorldController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -15,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/info', 'InfoController');
+Route::get('/info', InfoController::class);
 
-Route::resource('/world', 'WorldController')->only(['index']);
+Route::resource('/world', WorldController::class)->only(['index']);
 
-Route::get('/stat/{sign}', 'StatWorldController@index');
-Route::get('/stat/{sign}/last', 'StatWorldController@last');
+Route::get('/stat/{sign}', [StatWorldController::class, 'index']);
+Route::get('/stat/{sign}/last', [StatWorldController::class, 'last']);

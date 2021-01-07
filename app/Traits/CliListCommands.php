@@ -24,8 +24,7 @@ trait CliListCommands
     /**
      * List all make commands.
      *
-     * @param string $commandGroup
-     *
+     * @param  string  $commandGroup
      * @return void
      */
     protected function allCommands(string $commandGroup)
@@ -49,8 +48,7 @@ trait CliListCommands
 
 
     /**
-     * @param Command[]|string[] $commands
-     *
+     * @param  Command[]|string[]  $commands
      * @return int
      */
     protected function getColumnWidth(array $commands)
@@ -71,8 +69,7 @@ trait CliListCommands
     /**
      * Returns the length of a string, using mb_strwidth if it is available.
      *
-     * @param string $string The string to check its length
-     *
+     * @param  string  $string  The string to check its length
      * @return int The length of the string
      */
     protected function strlen($string)

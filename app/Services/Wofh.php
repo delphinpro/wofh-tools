@@ -96,10 +96,9 @@ class Wofh
     /**
      * Возвращает уникальный идентификатор мира для внутреннего использования
      *
-     * @param int $langIndex  Индекс языка сервера игры. См. константы класса SERVER_LANG_*
-     * @param int $worldIndex Порядковый номер мира
-     * @param int $typeIndex  Индекс типа сервера игры. См. константы класса SERVER_TYPE_*
-     *
+     * @param int $langIndex   Индекс языка сервера игры. См. константы класса SERVER_LANG_*
+     * @param int $worldIndex  Порядковый номер мира
+     * @param int $typeIndex   Индекс типа сервера игры. См. константы класса SERVER_TYPE_*
      * @return int Уникальный идентификатор
      */
     public function makeWorldId(int $langIndex, int $worldIndex, int $typeIndex = 0): int
@@ -111,8 +110,7 @@ class Wofh
     /**
      * Возвращает уникальный идентификатор мира по его сигнатуре
      *
-     * @param string $sign Условное обозначение мира
-     *
+     * @param string $sign  Условное обозначение мира
      * @return bool|int Уникальный идентификатор
      */
     public function signToId(string $sign): int
@@ -137,8 +135,7 @@ class Wofh
     /**
      * Возвращает сигнатуру мира по его уникальному идентификатору
      *
-     * @param int $id Идентификатор мира
-     *
+     * @param int $id  Идентификатор мира
      * @return string Условное обозначение мира
      */
     public function idToSign(int $id): string
@@ -167,8 +164,7 @@ class Wofh
     /**
      * Возвращает идентификатор мира по домену игрового сервера
      *
-     * @param string $domain Домен игрового сервера
-     *
+     * @param string $domain  Домен игрового сервера
      * @return int Идентификатор мира
      */
     public function domainToId(string $domain): int
@@ -193,9 +189,8 @@ class Wofh
     /**
      * Возвращает домен игрового сервера по идентификатору мира
      *
-     * @param int  $id    Идентификатор мира
-     * @param bool $https Добавить протокол
-     *
+     * @param int  $id     Идентификатор мира
+     * @param bool $https  Добавить протокол
      * @return string Домен игрового сервера
      */
     public function idToDomain(int $id, bool $https = false): string
@@ -209,9 +204,8 @@ class Wofh
     /**
      * Возвращает ссылку на получение данных статистики
      *
-     * @param int    $worldId Идентификатор мира
-     * @param string $lang    Язык получаемых данных
-     *
+     * @param int    $worldId  Идентификатор мира
+     * @param string $lang     Язык получаемых данных
      * @return string
      */
     public function getStatisticLink(int $worldId, $lang = 'ru')
@@ -223,8 +217,7 @@ class Wofh
     /**
      * Возвращает ссылку для получения статуса миров
      *
-     * @param string $lang Язык сервера
-     *
+     * @param string $lang  Язык сервера
      * @return bool|string Ссылка или false для неизвестного языка
      */
     public function makeStatusLink(string $lang)
@@ -260,8 +253,7 @@ class Wofh
     /**
      * Загружаетданные о статусе миров с игровых серверов.
      *
-     * @param array $links Массив ссылок для получения статуса
-     *
+     * @param array $links  Массив ссылок для получения статуса
      * @return array
      * @throws \App\Exceptions\WofhServiceException
      */
@@ -297,7 +289,6 @@ class Wofh
      * Проверка и обновление статуса игровых миров
      *
      * @param array|null $links
-     *
      * @throws \App\Exceptions\WofhServiceException
      */
     public function check(array $links = null): void
@@ -345,7 +336,6 @@ class Wofh
 
     /**
      * @param int $index
-     *
      * @return false|string
      */
     private function getLangOfServer(int $index)
@@ -358,7 +348,6 @@ class Wofh
 
     /**
      * @param int $index
-     *
      * @return false|string
      */
     private function getTypeOfServer(int $index)

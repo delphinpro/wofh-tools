@@ -35,7 +35,7 @@ class StatisticList extends Command
     /**
      * Create a new command instance.
      *
-     * @param \App\Repositories\WorldRepository $worldRepository
+     * @param  \App\Repositories\WorldRepository  $worldRepository
      */
     public function __construct(WorldRepository $worldRepository)
     {

@@ -50,11 +50,13 @@ class Updater
 
     /** @var \Illuminate\Contracts\Filesystem\Filesystem|\Illuminate\Filesystem\FilesystemAdapter */
     protected $fs;
+
     /** @var \App\Models\World */
     protected $world;
 
     /** @var string */
     protected $prevFile;
+
     /** @var \Illuminate\Support\Collection */
     protected $files;
 
@@ -66,9 +68,8 @@ class Updater
     }
 
     /**
-     * @param \App\Models\World $world
-     * @param int               $limit
-     *
+     * @param  \App\Models\World  $world
+     * @param  int                $limit
      * @throws \Exception
      */
     public function updateWorld(World $world, $limit = 0)
@@ -138,7 +139,7 @@ class Updater
     }
 
     /**
-     * @param string $filename
+     * @param  string  $filename
      * @throws \App\Exceptions\JsonServiceException
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
@@ -175,7 +176,7 @@ class Updater
     }
 
     /**
-     * @param string $dataPath
+     * @param  string  $dataPath
      * @throws \Exception
      */
     protected function scanFiles(string $dataPath)

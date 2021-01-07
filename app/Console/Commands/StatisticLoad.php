@@ -60,10 +60,10 @@ class StatisticLoad extends Command
     /**
      * Create a new command instance.
      *
-     * @param \App\Services\Wofh                              $wofh
-     * @param \App\Services\Json                              $json
-     * @param \App\Repositories\WorldRepository               $worldRepository
-     * @param \App\Console\Services\Statistic\StatisticLogger $logger
+     * @param  \App\Services\Wofh                               $wofh
+     * @param  \App\Services\Json                               $json
+     * @param  \App\Repositories\WorldRepository                $worldRepository
+     * @param  \App\Console\Services\Statistic\StatisticLogger  $logger
      */
     public function __construct(Wofh $wofh, Json $json, WorldRepository $worldRepository, StatisticLogger $logger)
     {
@@ -215,9 +215,8 @@ class StatisticLoad extends Command
 
 
     /**
-     * @param \App\Models\World $world
-     * @param string     $dataPath
-     *
+     * @param  \App\Models\World  $world
+     * @param  string             $dataPath
      * @return \Carbon\Carbon|null
      */
     protected function getStatLoadedAt(World $world, string $dataPath)

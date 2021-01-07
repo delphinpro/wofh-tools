@@ -39,8 +39,8 @@ class StatisticCheck extends Command
     /**
      * Create a new command instance.
      *
-     * @param \App\Services\Wofh                $wofh
-     * @param \App\Repositories\WorldRepository $worldRepository
+     * @param  \App\Services\Wofh                 $wofh
+     * @param  \App\Repositories\WorldRepository  $worldRepository
      */
     public function __construct(Wofh $wofh, WorldRepository $worldRepository)
     {

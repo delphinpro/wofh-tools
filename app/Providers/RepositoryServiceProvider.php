@@ -10,9 +10,9 @@
 namespace App\Providers;
 
 
+use App\Repositories\Interfaces\WorldRepositoryInterface;
 use App\Repositories\WorldRepository;
 use Illuminate\Support\ServiceProvider;
-use App\Repositories\Interfaces\WorldRepositoryInterface;
 
 
 /**

@@ -26,32 +26,39 @@ class StatisticUpdate extends Command
 
     /** @var \App\Repositories\WorldRepository */
     protected $worldRepository;
+
     /** @var \App\Services\Wofh */
     protected $wofh;
+
     /** @var \App\Console\Statistic\Updater */
     protected $updater;
+
     /** @var \App\Console\Services\Statistic\StatisticLogger */
     protected $logger;
+
     /** @var \App\Console\Services\Console */
     protected $console;
 
     /** @var string|null Сигнатура мира для обновления */
     protected $sign;
+
     /** @var int Ограничение количества файлов для обработки за один вызов команды */
     protected $limit;
+
     /** @var bool Флаг обработки одного мира или всех доступных */
     protected $single;
+
     /** @var bool Использовать zip-архив для хранения файлов данных */
     protected $zip;
 
     /**
      * Create a new command instance.
      *
-     * @param \App\Repositories\WorldRepository               $worldRepository
-     * @param \App\Services\Wofh                              $wofh
-     * @param \App\Console\Statistic\Updater                  $updater
-     * @param \App\Console\Services\Statistic\StatisticLogger $logger
-     * @param \App\Console\Services\Console                   $console
+     * @param  \App\Repositories\WorldRepository                $worldRepository
+     * @param  \App\Services\Wofh                               $wofh
+     * @param  \App\Console\Statistic\Updater                   $updater
+     * @param  \App\Console\Services\Statistic\StatisticLogger  $logger
+     * @param  \App\Console\Services\Console                    $console
      */
     public function __construct(
         WorldRepository $worldRepository,

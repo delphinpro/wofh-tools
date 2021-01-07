@@ -29,8 +29,7 @@ trait CliColors
     /**
      * Write a string in an alert box.
      *
-     * @param string $string
-     *
+     * @param  string  $string
      * @return void
      */
     public function alert($string)
@@ -46,9 +45,8 @@ trait CliColors
 
 
     /**
-     * @param      $string
-     * @param null $verbosity
-     *
+     * @param        $string
+     * @param  null  $verbosity
      * @noinspection PhpUnusedParameterInspection
      */
     public function error($string, $verbosity = null)

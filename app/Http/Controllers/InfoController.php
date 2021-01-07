@@ -11,8 +11,8 @@ namespace App\Http\Controllers;
 
 
 use App\Exceptions\JsonServiceException;
-use App\Services\Json;
 use App\Models\Settings;
+use App\Services\Json;
 
 
 class InfoController extends Controller
@@ -21,7 +21,7 @@ class InfoController extends Controller
     {
         $pkg = $this->getPackageJson($json);
         return response()->json([
-            'project'    => [
+            'project' => [
                 'name'      => $pkg['productName'],
                 'version'   => $pkg['version'],
                 'updatedAt' => $this->getLastUpdateTime(),

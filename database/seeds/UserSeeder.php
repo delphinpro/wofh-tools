@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
             $userEmail = env("USER_{$counter}_EMAIL");
             $userPass = env("USER_{$counter}_PASS");
             $roleId = $this->getRoleId(env("USER_{$counter}_ROLE"));
-        };
+        }
     }
 
 
