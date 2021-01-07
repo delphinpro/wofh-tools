@@ -43,7 +43,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "JsTokenizer\\": "js-tokenizer/"
         },
         "classmap": [
             "database/seeds",
