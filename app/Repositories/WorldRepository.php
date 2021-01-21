@@ -111,8 +111,8 @@ class WorldRepository implements Interfaces\WorldRepositoryInterface
     private function sort(Collection $collection)
     {
         $sorted = $collection->sort(function ($a, $b) {
-            $countryId1 = floor($a['id'] / 10000);
-            $countryId2 = floor($b['id'] / 10000);
+            $countryId1 = floor($a['id'] / 1000);
+            $countryId2 = floor($b['id'] / 1000);
 
             if ($countryId1 == $countryId2) {
                 if ($a['id'] == $b['id']) {
