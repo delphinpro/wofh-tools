@@ -19,23 +19,6 @@ use Illuminate\Database\Eloquent\Model;
  * Class World
  *
  * @package App
- * @property int            $id
- * @property string         $title
- * @property string         $title_alt
- * @property string         $sign
- * @property boolean        $can_reg
- * @property boolean        $working
- * @property boolean        $statistic
- * @property boolean        $hidden
- * @property \Carbon\Carbon started_at
- * @property \Carbon\Carbon closed_at
- * @property \Carbon\Carbon stat_loaded_at
- * @property \Carbon\Carbon stat_updated_at
- * @property \Carbon\Carbon const_updated_at
- * @property \Carbon\Carbon update_started_at
- * @property string         $desc
- * @property string         $metainfo
- * @property string         $version
  * @mixin IdeHelperWorld
  */
 class World extends Model

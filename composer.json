@@ -18,7 +18,7 @@
         "laravel/tinker": "^2.5"
     },
     "require-dev": {
-        "barryvdh/laravel-ide-helper": "^2.7",
+        "barryvdh/laravel-ide-helper": "^2.9",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
@@ -63,8 +63,9 @@
             "@php artisan key:generate --ansi"
         ],
         "ide": [
-            "@php artisan ide-helper:generate",
-            "@php artisan ide-helper:models -N -M -I"
+            "@php artisan ide-helper:eloquent",
+            "@php artisan ide-helper:generate -H",
+            "@php artisan ide-helper:models -NMIrp"
         ],
         "db:update": [
             "@php artisan migrate:fresh",
