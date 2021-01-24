@@ -1,16 +1,12 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\World;
 use Illuminate\Database\Seeder;
 
-
 class WorldSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
         World::create([
