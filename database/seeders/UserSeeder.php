@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Orchid\Platform\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -27,6 +28,7 @@ class UserSeeder extends Seeder
                     'created_at'        => $carbon,
                     'updated_at'        => $carbon,
                 ])->save();
+                $user->roles()->attach(Role::whereSlug('admin')->first());
             }
         }
 

@@ -15,13 +15,13 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.12",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "orchid/platform": "^9.19"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.9",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
-        "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3.3",
@@ -64,8 +64,8 @@
         ],
         "ide": [
             "@php artisan ide-helper:eloquent",
-            "@php artisan ide-helper:generate -H",
-            "@php artisan ide-helper:models -NMIrp"
+            "@php artisan ide-helper:generate -HW",
+            "@php artisan ide-helper:models -RMrp --dir=vendor/orchid/platform/src/Platform/Models"
         ],
         "db:update": [
             "@php artisan migrate:fresh",

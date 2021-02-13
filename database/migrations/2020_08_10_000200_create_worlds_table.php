@@ -9,11 +9,6 @@ class CreateWorldsTable extends Migration
 {
     private $tableName = 'wt_worlds';
 
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create($this->tableName, function (Blueprint $table) {
@@ -37,12 +32,6 @@ class CreateWorldsTable extends Migration
         });
     }
 
-
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists($this->tableName);

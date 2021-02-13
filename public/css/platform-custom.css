@@ -1,0 +1,35 @@
+/* @formatter:off */
+.persona { min-width: 200px;}
+
+.avatar { flex-shrink: 0;}
+.thumb-sm>.avatar img,
+.thumb-sm.avatar img { width: 40px; height: 40px; object-fit: cover; }
+.thumb-xl>.avatar img,
+.thumb-xl.avatar img { width: 128px; height: 128px; object-fit: cover; }
+
+/* HELPERS */
+
+.no-wrap { white-space: nowrap !important; }
+.text-underline { text-decoration: underline; }
+a.text-underline:hover { text-decoration: none; }
+.hovered:hover { color: #e8070f; }
+.monospace { font-family: monospace !important; }
+
+/* OVERRIDES */
+
+.form-control[readonly] { color: #1c2b36;}
+
+.table tbody tr td[data-column="x"]:last-child {
+  padding-right: 0.5rem !important;
+  padding-left: 0.5rem !important;
+}
+
+button[disabled],
+button:disabled {
+  cursor: default !important;
+  pointer-events: none !important;
+}
+
+hr {
+  width: 100%;
+}

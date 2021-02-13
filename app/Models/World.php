@@ -62,20 +62,20 @@ class World extends Model
         $this->save();
     }
 
-    public function toArray()
-    {
-        $attributes = $this->attributesToCamelCaseArray();
-        unset($attributes['desc']);
-        return array_merge(
-            $attributes,
-            [
-                'uSign'             => ucfirst($this->sign),
-                'age'               => $this->getAgeAsNumber(),
-                'localAge'          => $this->getAgeAsString(),
-                'serverCountryFlag' => $this->getServerFlag(),
-            ]
-        );
-    }
+    // public function toArray()
+    // {
+    //     $attributes = $this->attributesToCamelCaseArray();
+    //     unset($attributes['desc']);
+    //     return array_merge(
+    //         $attributes,
+    //         [
+    //             'uSign'             => ucfirst($this->sign),
+    //             'age'               => $this->getAgeAsNumber(),
+    //             'localAge'          => $this->getAgeAsString(),
+    //             'serverCountryFlag' => $this->getServerFlag(),
+    //         ]
+    //     );
+    // }
 
     public function getServerFlag()
     {
