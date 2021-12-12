@@ -9,21 +9,19 @@
 
 namespace App\Console\Statistic\DataEvents;
 
-
 use App\Console\Statistic\Data\Country;
 use App\Services\Wofh;
-
 
 /**
  * Trait Countries
  *
  * @package App\Console\Statistic\DataEvents
- * @property \App\Console\Services\Console      console
+ * @property \App\Console\Services\Console console
  * @property \App\Console\Statistic\DataStorage curr
  * @property \App\Console\Statistic\DataStorage prev
- * @property array                              insertCountryIds
- * @property array                              updateCountryIds
- * @property array                              deleteCountryIds
+ * @property array insertCountryIds
+ * @property array updateCountryIds
+ * @property array deleteCountryIds
  */
 trait Countries
 {

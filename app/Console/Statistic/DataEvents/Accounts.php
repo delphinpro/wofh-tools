@@ -9,21 +9,19 @@
 
 namespace App\Console\Statistic\DataEvents;
 
-
 use App\Console\Statistic\Data\Account;
 use App\Services\Wofh;
-
 
 /**
  * Trait Accounts
  *
  * @package App\Console\Statistic\DataEvents
- * @property \App\Console\Services\Console      console
+ * @property \App\Console\Services\Console console
  * @property \App\Console\Statistic\DataStorage curr
  * @property \App\Console\Statistic\DataStorage prev
- * @property array                              insertAccountIds
- * @property array                              updateAccountIds
- * @property array                              deleteAccountIds
+ * @property array insertAccountIds
+ * @property array updateAccountIds
+ * @property array deleteAccountIds
  */
 trait Accounts
 {
@@ -31,7 +29,6 @@ trait Accounts
     {
         $time = microtime(true);
         $ids = $this->prev->accounts->keys()->merge($this->curr->accounts->keys())->unique();
-
 
         foreach ($ids as $id) {
             $this->checkEventsAccountCreate($id);
@@ -193,10 +190,7 @@ trait Accounts
                     static::TABLE_ROLE            => 0,
                     static::TABLE_EXTRA           => null,
                 ];
-
-                return;
             }
         }
     }
-
 }

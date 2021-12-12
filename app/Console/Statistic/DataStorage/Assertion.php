@@ -9,25 +9,24 @@
 
 namespace App\Console\Statistic\DataStorage;
 
-
 /**
  * Trait Assertion
  *
  * @package App\Console\Statistic\DataStorage
- * @property \Carbon\Carbon                 time
+ * @property \Carbon\Carbon time
  * @property \Illuminate\Support\Collection towns
  * @property \Illuminate\Support\Collection accounts
  * @property \Illuminate\Support\Collection countries
  */
 trait Assertion
 {
-    public function hasData() { return !is_null($this->time); }
+    public function hasData(): bool { return !is_null($this->time); }
 
-    public function hasTown(int $id) { return $this->towns->has($id); }
+    public function hasTown(int $id): bool { return $this->towns->has($id); }
 
-    public function hasAccount(int $id) { return $this->accounts->has($id); }
+    public function hasAccount(int $id): bool { return $this->accounts->has($id); }
 
-    public function hasCountry(int $id) { return $this->countries->has($id); }
+    public function hasCountry(int $id): bool { return $this->countries->has($id); }
 
-    public function hasCountries() { return $this->countries->count() > 0; }
+    public function hasCountries(): bool { return $this->countries->count() > 0; }
 }

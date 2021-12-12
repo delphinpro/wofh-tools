@@ -9,11 +9,10 @@
 
 namespace App\Console\Statistic\Updater;
 
-
 use App\Models\World;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Schema;
 
 /**
  * Class UpdateChecker
@@ -22,15 +21,14 @@ use Illuminate\Support\Facades\DB;
  */
 trait Checker
 {
-    /** @var string|null */
-    private $savedPrefix;
+    private ?string $savedPrefix;
 
     protected function checkTables(World $world)
     {
         $this->setWorldPrefix($world->sign);
 
-        if (!\Schema::hasTable('towns')) {
-            \Schema::create('towns', function (Blueprint $table) {
+        if (!Schema::hasTable('towns')) {
+            Schema::create('towns', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('title');
                 $table->integer('account_id')->unsigned();
@@ -40,8 +38,8 @@ trait Checker
             });
         }
 
-        if (!\Schema::hasTable('towns_stat')) {
-            \Schema::create('towns_stat', function (Blueprint $table) {
+        if (!Schema::hasTable('towns_stat')) {
+            Schema::create('towns_stat', function (Blueprint $table) {
                 $table->timestamp('state_at');
                 $table->integer('id')->unsigned();
                 $table->mediumInteger('pop')->unsigned();
@@ -54,8 +52,8 @@ trait Checker
             });
         }
 
-        if (!\Schema::hasTable('accounts')) {
-            \Schema::create('accounts', function (Blueprint $table) {
+        if (!Schema::hasTable('accounts')) {
+            Schema::create('accounts', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
                 $table->tinyInteger('race')->unsigned()->default(0);
@@ -70,8 +68,8 @@ trait Checker
             });
         }
 
-        if (!\Schema::hasTable('accounts_stat')) {
-            \Schema::create('accounts_stat', function (Blueprint $table) {
+        if (!Schema::hasTable('accounts_stat')) {
+            Schema::create('accounts_stat', function (Blueprint $table) {
                 $table->timestamp('state_at');
                 $table->integer('id')->unsigned();
                 $table->integer('country_id')->unsigned();
@@ -93,8 +91,8 @@ trait Checker
             });
         }
 
-        if (!\Schema::hasTable('countries')) {
-            \Schema::create('countries', function (Blueprint $table) {
+        if (!Schema::hasTable('countries')) {
+            Schema::create('countries', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
                 $table->string('flag')->nullable()->default(null);
@@ -105,8 +103,8 @@ trait Checker
             });
         }
 
-        if (!\Schema::hasTable('countries_stat')) {
-            \Schema::create('countries_stat', function (Blueprint $table) {
+        if (!Schema::hasTable('countries_stat')) {
+            Schema::create('countries_stat', function (Blueprint $table) {
                 $table->timestamp('state_at');
                 $table->integer('id')->unsigned();
                 $table->integer('pop')->unsigned();
@@ -139,8 +137,8 @@ trait Checker
         //        INDEX `stateAt_id1` (`stateAt`, `id1`)
         //    ) ENGINE=InnoDB;",
 
-        if (!\Schema::hasTable('events')) {
-            \Schema::create('events', function (Blueprint $table) {
+        if (!Schema::hasTable('events')) {
+            Schema::create('events', function (Blueprint $table) {
                 $table->timestamp('state_at');
                 $table->integer('id')->unsigned();
                 $table->integer('town_id')->unsigned()->nullable()->default(null);
@@ -155,8 +153,8 @@ trait Checker
             });
         }
 
-        if (!\Schema::hasTable('common')) {
-            \Schema::create('common', function (Blueprint $table) {
+        if (!Schema::hasTable('common')) {
+            Schema::create('common', function (Blueprint $table) {
                 $table->timestamp('state_at');
 
                 $table->integer('towns_total')->unsigned()->default(0);

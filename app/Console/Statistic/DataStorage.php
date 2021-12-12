@@ -9,7 +9,6 @@
 
 namespace App\Console\Statistic;
 
-
 use App\Console\Services\Console;
 use App\Console\Statistic\Data\Account;
 use App\Console\Statistic\Data\Country;
@@ -25,7 +24,6 @@ use Carbon\Carbon;
 use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Support\Facades\DB;
 
-
 /**
  * Class DataStorage
  *
@@ -39,12 +37,9 @@ class DataStorage
     use TableAccounts;
     use TableCountries;
 
+    private FilesystemManager $fsManager;
 
-    /** @var \Illuminate\Filesystem\FilesystemManager */
-    private $fsManager;
-
-    /** @var \App\Services\Json */
-    private $json;
+    private Json $json;
 
     /** @var \App\Console\Services\Console */
     private $console;
@@ -55,14 +50,11 @@ class DataStorage
     /** @var \Illuminate\Contracts\Filesystem\Filesystem|\Illuminate\Filesystem\FilesystemAdapter */
     private $fs;
 
-    /** @var array */
-    private $raw;
+    private ?array $raw;
 
-    /** @var \Carbon\Carbon */
-    private $time;
+    private ?Carbon $time;
 
-    /** @var int */
-    private $totalAccounts;
+    private ?int $totalAccounts;
 
     /** @var \Illuminate\Support\Collection|\App\Console\Statistic\Data\Town[] */
     public $towns;
@@ -97,7 +89,6 @@ class DataStorage
     }
 
     /**
-     * @param $filename
      * @throws \App\Exceptions\JsonServiceException
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
@@ -116,28 +107,13 @@ class DataStorage
         $this->totalAccounts = count($this->raw['accounts']);
     }
 
-    /**
-     * @return \Carbon\Carbon
-     */
-    public function getTime() { return $this->time; }
+    public function getTime(): ?Carbon { return $this->time; }
 
-    /**
-     * @param  int  $id
-     * @return \App\Console\Statistic\Data\Town
-     */
-    public function getTown(int $id) { return $this->towns->get($id); }
+    public function getTown(int $id): Data\Town { return $this->towns->get($id); }
 
-    /**
-     * @param  int  $id
-     * @return \App\Console\Statistic\Data\Account
-     */
-    public function getAccount(int $id) { return $this->accounts->get($id); }
+    public function getAccount(int $id): Account { return $this->accounts->get($id); }
 
-    /**
-     * @param  int  $id
-     * @return \App\Console\Statistic\Data\Country
-     */
-    public function getCountry(int $id) { return $this->countries->get($id); }
+    public function getCountry(int $id): Country { return $this->countries->get($id); }
 
     public function unsetRaw() { $this->raw = null; }
 
@@ -251,13 +227,13 @@ class DataStorage
             'wonders_activate' => $this->events->count(Wofh::EVENT_WONDER_ACTIVATE),
 
             'accounts_total'  => $this->totalAccounts,
-            'accounts_active' => $this->accounts->filter(function ($acc) { return $acc->pop > 0; })->count(),
-            'accounts_race0'  => $this->accounts->filter(function (Account $acc) { return $acc->race == 0; })->count(),
-            'accounts_race1'  => $this->accounts->filter(function (Account $acc) { return $acc->race == 1; })->count(),
-            'accounts_race2'  => $this->accounts->filter(function (Account $acc) { return $acc->race == 2; })->count(),
-            'accounts_race3'  => $this->accounts->filter(function (Account $acc) { return $acc->race == 3; })->count(),
-            'accounts_sex0'   => $this->accounts->filter(function (Account $acc) { return $acc->sex == 0; })->count(),
-            'accounts_sex1'   => $this->accounts->filter(function (Account $acc) { return $acc->sex == 1; })->count(),
+            'accounts_active' => $this->accounts->filter(fn(Account $acc) => $acc->pop > 0)->count(),
+            'accounts_race0'  => $this->accounts->filter(fn(Account $acc) => $acc->race == 0)->count(),
+            'accounts_race1'  => $this->accounts->filter(fn(Account $acc) => $acc->race == 1)->count(),
+            'accounts_race2'  => $this->accounts->filter(fn(Account $acc) => $acc->race == 2)->count(),
+            'accounts_race3'  => $this->accounts->filter(fn(Account $acc) => $acc->race == 3)->count(),
+            'accounts_sex0'   => $this->accounts->filter(fn(Account $acc) => $acc->sex == 0)->count(),
+            'accounts_sex1'   => $this->accounts->filter(fn(Account $acc) => $acc->sex == 1)->count(),
 
             'accounts_new'            => $this->events->count(Wofh::EVENT_ACCOUNT_CREATE),
             'accounts_country_change' => $this->events->count(Wofh::EVENT_ACCOUNT_COUNTRY_CHANGE),
@@ -276,12 +252,12 @@ class DataStorage
         ]);
     }
 
-    public function getData()
+    public function getData(): array
     {
         return [
-            'countries' => $this->countries->map(function ($item) { return $item->toArray(); }),
-            'accounts'  => $this->accounts->map(function ($item) { return $item->toArray(); }),
-            'towns'     => $this->towns->map(function ($item) { return $item->toArray(); }),
+            'countries' => $this->countries->map(fn($item) => $item->toArray()),
+            'accounts'  => $this->accounts->map(fn($item) => $item->toArray()),
+            'towns'     => $this->towns->map(fn($item) => $item->toArray()),
         ];
     }
 }

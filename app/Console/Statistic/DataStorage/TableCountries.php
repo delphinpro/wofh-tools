@@ -9,17 +9,15 @@
 
 namespace App\Console\Statistic\DataStorage;
 
-
 use Illuminate\Support\Facades\DB;
-
 
 /**
  * Trait TableCountries
  *
  * @package App\Console\Statistic\DataStorage
- * @property \App\Console\Services\Console     console
+ * @property \App\Console\Services\Console console
  * @property \App\Console\Statistic\DataEvents events
- * @property \App\Models\World                 world
+ * @property \App\Models\World world
  */
 trait TableCountries
 {
@@ -45,13 +43,11 @@ trait TableCountries
             'extra',
         ];
 
-
         // INSERT INTO tbl_name (a, b, c) VALUES (1,2,3), (4,5,6), (7,8,9);
         $sql = 'INSERT';
         $sql .= ' INTO `z_'.$this->world->sign.'_countries`';
         $sql .= ' (`'.join('`,`', $columns).'`)';
         $sql .= ' VALUES ';
-
 
         $pdo = DB::getPdo();
         $first = true;
@@ -143,13 +139,11 @@ trait TableCountries
             // 'deltaDefense',
         ];
 
-
         // INSERT INTO tbl_name (a, b, c) VALUES (1,2,3), (4,5,6), (7,8,9);
         $sql = 'INSERT';
         $sql .= ' INTO `z_'.$this->world->sign.'_countries_stat`';
         $sql .= ' (`'.join('`,`', $columns).'`)';
         $sql .= ' VALUES ';
-
 
         $pdo = DB::getPdo();
         $first = true;

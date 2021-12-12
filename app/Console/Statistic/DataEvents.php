@@ -9,7 +9,6 @@
 
 namespace App\Console\Statistic;
 
-
 use App\Console\Services\Console;
 use App\Console\Statistic\DataEvents\Accounts;
 use App\Console\Statistic\DataEvents\Countries;
@@ -17,7 +16,6 @@ use App\Console\Statistic\DataEvents\Towns;
 use App\Services\Wofh;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-
 
 /**
  * Class DataEvents
@@ -29,7 +27,6 @@ class DataEvents
     use Towns;
     use Accounts;
     use Countries;
-
 
     const TABLE_TOWN_ID         = 'town_id';
     const TABLE_ACCOUNT_ID      = 'account_id';
@@ -84,7 +81,6 @@ class DataEvents
             Wofh::EVENT_ACCOUNT_RATING_HIDE    => [],
             Wofh::EVENT_ACCOUNT_RATING_SHOW    => [],
 
-
             Wofh::EVENT_COUNTRY_CREATE  => [],
             Wofh::EVENT_COUNTRY_FLAG    => [],
             Wofh::EVENT_COUNTRY_RENAME  => [],
@@ -136,7 +132,6 @@ class DataEvents
         $sql .= " INTO `z_{$sign}_events`";
         $sql .= " (`".join('`,`', $columns)."`)";
         $sql .= " VALUES ";
-
 
         $pdo = DB::getPdo();
         $first = true;

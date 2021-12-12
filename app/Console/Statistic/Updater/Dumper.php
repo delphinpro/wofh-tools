@@ -9,10 +9,8 @@
 
 namespace App\Console\Statistic\Updater;
 
-
 use App\Console\Statistic\DataStorage;
 use Illuminate\Support\Facades\Storage;
-
 
 trait Dumper
 {

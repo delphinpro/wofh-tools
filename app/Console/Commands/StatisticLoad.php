@@ -9,7 +9,6 @@
 
 namespace App\Console\Commands;
 
-
 use App\Console\Color;
 use App\Console\Services\Statistic\StatisticLogger;
 use App\Console\Traits\Helper;
@@ -25,63 +24,36 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
-
 class StatisticLoad extends Command
 {
     use CliColors;
     use Helper;
 
-
     const FILENAME_PATTERN = '~_(\d+)\.json$~';
 
-
-    /** @var string */
     protected $signature = 'stat:load
                             {world? : Process only for one world (ex. ru23)}';
 
-    /** @var string */
     protected $description = 'Load statistic from server of game';
 
-    /** @var \App\Services\Wofh */
-    private $wofh;
+    private Wofh $wofh;
 
-    /**
-     * @var \App\Services\Json
-     */
-    private $json;
+    private Json $json;
 
-    /** @var \App\Repositories\WorldRepository */
-    protected $worldRepository;
+    protected WorldRepository $worldRepository;
 
-    /** @var \App\Console\Services\Statistic\StatisticLogger */
-    protected $logger;
+    protected StatisticLogger $logger;
 
-
-    /**
-     * Create a new command instance.
-     *
-     * @param  \App\Services\Wofh                               $wofh
-     * @param  \App\Services\Json                               $json
-     * @param  \App\Repositories\WorldRepository                $worldRepository
-     * @param  \App\Console\Services\Statistic\StatisticLogger  $logger
-     */
     public function __construct(Wofh $wofh, Json $json, WorldRepository $worldRepository, StatisticLogger $logger)
     {
         parent::__construct();
-
         $this->wofh = $wofh;
         $this->json = $json;
         $this->worldRepository = $worldRepository;
         $this->logger = $logger;
     }
 
-
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
-    public function handle()
+    public function handle(): int
     {
         $sign = $this->argument('world');
 
@@ -89,8 +61,7 @@ class StatisticLoad extends Command
         $this->line('The download interval is set to '.config('app.stat_load_interval').' hours');
         $this->line('Updating the status of worlds...');
 
-
-        $checkStatus = $this->checkWorlds($printTable = false);
+        $checkStatus = $this->checkWorlds(false);
         if ($checkStatus !== true) {
             $this->logger->error(StatLog::STATISTIC_LOAD, $checkStatus);
             return 1;
@@ -101,7 +72,7 @@ class StatisticLoad extends Command
 
         $fs = Storage::disk(config('app.stat_disk'));
 
-        /** @var \App\Models\World $world */
+        /** @var World $world */
         foreach ($worlds as $world) {
 
             if ($sign && $sign !== $world->sign) {
@@ -155,7 +126,7 @@ class StatisticLoad extends Command
                     // С сервера приходит какой-то странный таймстамп.
                     // Временная метка из будущего.
                     // Или я туплю. В общем пока этот хак здесь побудет
-                    $time->addHours(-1 * ceil($time->diffAsCarbonInterval($now)->totalHours));
+                    $time->subHours(ceil($time->diffAsCarbonInterval($now)->totalHours));
                     $data['time'] = $time->timestamp;
                 }
 
@@ -213,20 +184,16 @@ class StatisticLoad extends Command
         return 0;
     }
 
-
-    /**
-     * @param  \App\Models\World  $world
-     * @param  string             $dataPath
-     * @return \Carbon\Carbon|null
-     */
-    protected function getStatLoadedAt(World $world, string $dataPath)
+    protected function getStatLoadedAt(World $world, string $dataPath): ?Carbon
     {
         $statLoadedAt = $world->stat_loaded_at;
 
         if (!$statLoadedAt) {
             $fs = Storage::disk(config('app.stat_disk'));
             $allFiles = collect($fs->allFiles($dataPath))
-                ->filter(function ($item) { return preg_match(self::FILENAME_PATTERN, $item); })
+                ->filter(function ($item) {
+                    return preg_match(self::FILENAME_PATTERN, $item);
+                })
                 ->sort();
 
             if (!$allFiles->count()) {
@@ -247,8 +214,7 @@ class StatisticLoad extends Command
         return $statLoadedAt;
     }
 
-
-    protected function noDownloadRequired(World $world, string $dataPath)
+    protected function noDownloadRequired(World $world, string $dataPath): bool
     {
         $statLoadedAt = $this->getStatLoadedAt($world, $dataPath);
 
@@ -266,7 +232,7 @@ class StatisticLoad extends Command
 
                 $this->line('Last time download: '.$statLoadedAt->format(Wofh::STD_DATETIME).' '.$statLoadedAt->timezone->getName());
                 $this->line('Current time:       '.$now->format(Wofh::STD_DATETIME).' '.$now->timezone->getName());
-                $this->line('Diff time:          '.$diff->locale('en')->forHumans($short = true).' [ '.$diff->totalHours.'h ]');
+                $this->line('Diff time:          '.$diff->locale('en')->forHumans(true).' [ '.$diff->totalHours.'h ]');
 
             } catch (\Exception $e) {
 

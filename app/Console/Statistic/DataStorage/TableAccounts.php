@@ -9,17 +9,15 @@
 
 namespace App\Console\Statistic\DataStorage;
 
-
 use Illuminate\Support\Facades\DB;
-
 
 /**
  * Trait TableAccounts
  *
  * @package App\Console\Statistic\DataStorage
- * @property \App\Console\Services\Console     console
+ * @property \App\Console\Services\Console console
  * @property \App\Console\Statistic\DataEvents events
- * @property \App\Models\World                 world
+ * @property \App\Models\World world
  */
 trait TableAccounts
 {
@@ -47,13 +45,11 @@ trait TableAccounts
             'extra',
         ];
 
-
         // INSERT INTO tbl_name (a, b, c) VALUES (1,2,3), (4,5,6), (7,8,9);
         $sql = 'INSERT';
         $sql .= ' INTO `z_'.$this->world->sign.'_accounts`';
         $sql .= ' (`'.join('`,`', $columns).'`)';
         $sql .= ' VALUES ';
-
 
         $pdo = DB::getPdo();
         $first = true;
@@ -112,13 +108,11 @@ trait TableAccounts
             // 'deltaDefense',
         ];
 
-
         // INSERT INTO tbl_name (a, b, c) VALUES (1,2,3), (4,5,6), (7,8,9);
         $sql = 'INSERT';
         $sql .= ' INTO `z_'.$this->world->sign.'_accounts_stat`';
         $sql .= ' (`'.join('`,`', $columns).'`)';
         $sql .= ' VALUES ';
-
 
         $pdo = DB::getPdo();
         $first = true;

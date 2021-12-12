@@ -9,22 +9,21 @@
 
 namespace App\Console\Statistic\Data;
 
-
 /**
  * Class Country
  *
  * @package App\Console\Services\Statistic
- * @property int    $id
- * @property string $title
+ * @property int $id
+ * @property string $name
  * @property string $flag
- * @property array  $diplomacy
- * @property int    $pop
- * @property int    $accounts
- * @property int    $towns
- * @property float  $ratingAttack
- * @property float  $ratingDefense
- * @property float  $ratingScience
- * @property float  $ratingProduction
+ * @property array $diplomacy
+ * @property int $pop
+ * @property int $accounts
+ * @property int $towns
+ * @property float $ratingAttack
+ * @property float $ratingDefense
+ * @property float $ratingScience
+ * @property float $ratingProduction
  */
 class Country extends Entry
 {

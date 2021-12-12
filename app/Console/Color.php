@@ -11,7 +11,6 @@
 
 namespace App\Console;
 
-
 class Color
 {
     const COLOR_DEFAULT = 0;

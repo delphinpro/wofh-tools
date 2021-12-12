@@ -9,19 +9,18 @@
 
 namespace App\Console\Statistic\Data;
 
-
 /**
  * Class Town
  *
  * @package App\Console\Services\Statistic
- * @property int    $id
- * @property string $title
- * @property int    $accountId
- * @property int    $pop
- * @property int    $wonder
- * @property int    $wonderId
- * @property int    $wonderLevel
- * @property int    $countryId
+ * @property int $id
+ * @property string $name
+ * @property int $accountId
+ * @property int $pop
+ * @property int $wonder
+ * @property int $wonderId
+ * @property int $wonderLevel
+ * @property int $countryId
  */
 class Town extends Entry
 {

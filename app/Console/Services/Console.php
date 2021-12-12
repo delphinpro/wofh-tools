@@ -9,14 +9,12 @@
 
 namespace App\Console\Services;
 
-
 use Illuminate\Console\OutputStyle;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
-
 
 /**
  * Class Console
@@ -46,10 +44,7 @@ class Console
     const BG_CYAN    = 46;
     const BG_WHITE   = 47;
 
-
-    /** @var \Illuminate\Console\OutputStyle */
-    private $output;
-
+    private OutputStyle $output;
 
     public function __construct()
     {
@@ -109,13 +104,13 @@ class Console
     /**
      * Format input to textual table.
      *
-     * @param  array                                          $headers
-     * @param  \Illuminate\Contracts\Support\Arrayable|array  $rows
-     * @param  string                                         $tableStyle
-     * @param  array                                          $columnStyles
+     * @param array $headers
+     * @param \Illuminate\Contracts\Support\Arrayable|array $rows
+     * @param string $tableStyle
+     * @param array $columnStyles
      * @return void
      */
-    public function table(array $headers, $rows, $tableStyle = 'default', array $columnStyles = [])
+    public function table(array $headers, $rows, string $tableStyle = 'default', array $columnStyles = [])
     {
         $table = new Table($this->output);
 
@@ -123,7 +118,7 @@ class Console
             $rows = $rows->toArray();
         }
 
-        $table->setHeaders((array)$headers)->setRows($rows)->setStyle($tableStyle);
+        $table->setHeaders($headers)->setRows($rows)->setStyle($tableStyle);
 
         foreach ($columnStyles as $columnIndex => $columnStyle) {
             $table->setColumnStyle($columnIndex, $columnStyle);

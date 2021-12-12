@@ -9,10 +9,8 @@
 
 namespace App\Console\Services\Statistic;
 
-
 use App\Console\Services\Console;
 use App\Models\StatLog;
-
 
 /**
  * Class StatisticLogger
@@ -21,15 +19,12 @@ use App\Models\StatLog;
  */
 class StatisticLogger
 {
-    /** @var \App\Console\Services\Console */
-    protected $console;
-
+    protected Console $console;
 
     public function __construct(Console $console)
     {
         $this->console = $console;
     }
-
 
     public function log(array $log)
     {
@@ -40,7 +35,6 @@ class StatisticLogger
             'message'   => $log['message'] ?: '',
         ]);
     }
-
 
     public function ok(int $operation, string $message, $worldId = null)
     {
@@ -54,7 +48,6 @@ class StatisticLogger
         ]);
     }
 
-
     public function error(int $operation, string $message, $worldId = null)
     {
         $message = $this->truncateMessage($message);
@@ -66,7 +59,6 @@ class StatisticLogger
             'message'   => $message,
         ]);
     }
-
 
     public function info(int $operation, string $message, $worldId = null)
     {
@@ -80,7 +72,6 @@ class StatisticLogger
         ]);
     }
 
-
     public function warn(int $operation, string $message, $worldId = null)
     {
         $message = $this->truncateMessage($message);
@@ -92,7 +83,6 @@ class StatisticLogger
             'message'   => $message,
         ]);
     }
-
 
     private function truncateMessage($message)
     {

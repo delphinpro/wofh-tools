@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-
 use App\Console\Services\Console;
 use App\Console\Services\Statistic\StatisticLogger;
 use App\Console\Statistic\Updater;
@@ -12,11 +11,9 @@ use App\Repositories\WorldRepository;
 use App\Services\Wofh;
 use Illuminate\Console\Command;
 
-
 class StatisticUpdate extends Command
 {
     use Helper;
-
 
     protected $signature = 'stat:update
                             {world? : Process only for one world (ex. ru23)}
@@ -24,48 +21,34 @@ class StatisticUpdate extends Command
 
     protected $description = 'Update statistic in database from loaded json-files';
 
-    /** @var \App\Repositories\WorldRepository */
-    protected $worldRepository;
+    protected WorldRepository $worldRepository;
 
-    /** @var \App\Services\Wofh */
-    protected $wofh;
+    protected Wofh $wofh;
 
-    /** @var \App\Console\Statistic\Updater */
-    protected $updater;
+    protected Updater $updater;
 
-    /** @var \App\Console\Services\Statistic\StatisticLogger */
-    protected $logger;
+    protected StatisticLogger $logger;
 
-    /** @var \App\Console\Services\Console */
-    protected $console;
+    protected Console $console;
 
     /** @var string|null Сигнатура мира для обновления */
-    protected $sign;
+    protected ?string $sign;
 
     /** @var int Ограничение количества файлов для обработки за один вызов команды */
-    protected $limit;
+    protected int $limit;
 
     /** @var bool Флаг обработки одного мира или всех доступных */
-    protected $single;
+    protected bool $single;
 
     /** @var bool Использовать zip-архив для хранения файлов данных */
-    protected $zip;
+    protected bool $zip;
 
-    /**
-     * Create a new command instance.
-     *
-     * @param  \App\Repositories\WorldRepository                $worldRepository
-     * @param  \App\Services\Wofh                               $wofh
-     * @param  \App\Console\Statistic\Updater                   $updater
-     * @param  \App\Console\Services\Statistic\StatisticLogger  $logger
-     * @param  \App\Console\Services\Console                    $console
-     */
     public function __construct(
         WorldRepository $worldRepository,
-        Wofh $wofh,
-        Updater $updater,
+        Wofh            $wofh,
+        Updater         $updater,
         StatisticLogger $logger,
-        Console $console
+        Console         $console
     ) {
         parent::__construct();
         $this->worldRepository = $worldRepository;
@@ -76,12 +59,7 @@ class StatisticUpdate extends Command
         app()->instance(Console::class, $console);
     }
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
-    public function handle()
+    public function handle(): int
     {
         $this->console->alert('Update statistic');
         $this->getInput();
@@ -118,7 +96,7 @@ class StatisticUpdate extends Command
     }
 
     /**
-     * Получть входные параметры
+     * Получить входные параметры
      */
     protected function getInput()
     {
@@ -147,7 +125,7 @@ class StatisticUpdate extends Command
 
         if ($this->single) {
             $id = $this->wofh->signToId((string)$this->sign);
-            $worlds = $worlds->filter(function ($world) use ($id) { return $world->id == $id; });
+            $worlds = $worlds->filter(fn($world) => $world->id == $id);
         }
 
         if ($this->single && !$worlds->count()) {

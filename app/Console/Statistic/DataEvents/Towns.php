@@ -9,21 +9,19 @@
 
 namespace App\Console\Statistic\DataEvents;
 
-
 use App\Console\Statistic\Data\Town;
 use App\Services\Wofh;
-
 
 /**
  * Trait Towns
  *
  * @package App\Console\Services\Statistic
- * @property \App\Console\Services\Console      console
+ * @property \App\Console\Services\Console console
  * @property \App\Console\Statistic\DataStorage curr
  * @property \App\Console\Statistic\DataStorage prev
- * @property array                              insertTownIds
- * @property array                              updateTownIds
- * @property array                              lostTownIds
+ * @property array insertTownIds
+ * @property array updateTownIds
+ * @property array lostTownIds
  */
 trait Towns
 {

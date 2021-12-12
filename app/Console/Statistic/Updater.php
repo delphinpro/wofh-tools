@@ -9,27 +9,25 @@
 
 namespace App\Console\Statistic;
 
-
 use App\Console\Services\Console;
 use App\Console\Statistic\Updater\Checker;
 use App\Console\Statistic\Updater\Dumper;
 use App\Models\World;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 
-
-function t($startTime)
+function t($startTime): float
 {
     return round(microtime(true) - $startTime, 3);
 }
 
-function humanize($bytes, $decimals = 2)
+function humanize($bytes, $decimals = 2): string
 {
     if ($bytes < 1024) return $bytes.' B';
     $factor = floor(log($bytes, 1024));
     return sprintf("%.{$decimals}f ", $bytes / pow(1024, $factor)).['B', 'KB', 'MB', 'GB', 'TB', 'PB'][$factor];
 }
-
 
 /**
  * Class Updater
@@ -41,24 +39,18 @@ class Updater
     use Checker;
     use Dumper;
 
+    protected Console $console;
 
-    /** @var \App\Console\Services\Console */
-    protected $console;
-
-    /** @var false */
-    protected $zip;
+    protected bool $zip;
 
     /** @var \Illuminate\Contracts\Filesystem\Filesystem|\Illuminate\Filesystem\FilesystemAdapter */
     protected $fs;
 
-    /** @var \App\Models\World */
-    protected $world;
+    protected World $world;
 
-    /** @var string */
-    protected $prevFile;
+    protected ?string $prevFile;
 
-    /** @var \Illuminate\Support\Collection */
-    protected $files;
+    protected ?Collection $files;
 
     public function __construct(Console $console)
     {
@@ -68,11 +60,9 @@ class Updater
     }
 
     /**
-     * @param  \App\Models\World  $world
-     * @param  int                $limit
      * @throws \Exception
      */
-    public function updateWorld(World $world, $limit = 0)
+    public function updateWorld(World $world, int $limit = 0)
     {
         $this->prevFile = null;
         $this->files = null;
@@ -139,7 +129,7 @@ class Updater
     }
 
     /**
-     * @param  string  $filename
+     * @param string $filename
      * @throws \App\Exceptions\JsonServiceException
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
@@ -176,7 +166,6 @@ class Updater
     }
 
     /**
-     * @param  string  $dataPath
      * @throws \Exception
      */
     protected function scanFiles(string $dataPath)
@@ -191,25 +180,21 @@ class Updater
                     'time' => count($m) > 1 ? (int)$m[1] : 0,
                 ];
             })
-            ->filter(function ($file) {
-                return !!$file['time'];
-            });
+            ->filter(fn($file) => !!$file['time']);
 
         if (!$files->count()) throw new \Exception(sprintf('Data files not found: %s', $pattern));
 
         $timestamp = $this->world->stat_updated_at ? $this->world->stat_updated_at->timestamp : 0;
 
         // Берем только те, которые не внесены в базу
-        $newFiles = $files->filter(function ($file) use ($timestamp) {
-            return ($file['time'] > $timestamp);
-        })->sort();
+        $newFiles = $files->filter(fn($file) => $file['time'] > $timestamp)->sort();
 
-        $previousFile = $files->diffUsing($newFiles, function ($file1, $file2) {
-            return $file1['time'] - $file2['time'];
-        })->sort()->pop();
+        $previousFile = $files->diffUsing($newFiles, fn($file1, $file2) => $file1['time'] - $file2['time'])
+            ->sort()
+            ->pop();
 
-        $this->prevFile = $previousFile['name'];
-        $this->files = $newFiles->map(function ($file) { return $file['name']; });
+        $this->prevFile = $previousFile['name'] ?? null;
+        $this->files = $newFiles->map(fn($file) => $file['name']);
     }
 
     protected function filenamePattern(): string

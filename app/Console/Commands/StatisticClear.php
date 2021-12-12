@@ -9,47 +9,29 @@
 
 namespace App\Console\Commands;
 
-
 use App\Repositories\WorldRepository;
 use App\Traits\CliColors;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-
 class StatisticClear extends Command
 {
     use CliColors;
 
-
-    /** @var string */
     protected $signature = 'stat:clear
                             {world : Process only for one world (ex. ru23)}';
 
-    /** @var string */
     protected $description = 'Clear statistic for one world';
 
-    /** @var \App\Repositories\WorldRepository */
-    protected $worldRepository;
+    protected WorldRepository $worldRepository;
 
-
-    /**
-     * Create a new command instance.
-     *
-     * @param  \App\Repositories\WorldRepository  $worldRepository
-     */
     public function __construct(WorldRepository $worldRepository)
     {
         parent::__construct();
         $this->worldRepository = $worldRepository;
     }
 
-
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
     public function handle()
     {
         $sign = $this->argument('world');

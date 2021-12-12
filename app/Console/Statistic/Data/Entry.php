@@ -9,10 +9,9 @@
 
 namespace App\Console\Statistic\Data;
 
-
 class Entry
 {
-    protected $data = [];
+    protected array $data = [];
 
     public function __get($key)
     {

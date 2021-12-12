@@ -9,11 +9,9 @@
 
 namespace App\Console\Statistic\DataStorage;
 
-
 use App\Console\Statistic\Data\Account;
 use App\Console\Statistic\Data\Country;
 use App\Console\Statistic\Data\Town;
-
 
 /**
  * Trait Normalizer

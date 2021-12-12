@@ -9,23 +9,22 @@
 
 namespace App\Console\Statistic\Data;
 
-
 /**
  * Class Account
  *
  * @package App\Console\Services\Statistic
- * @property int    $id
- * @property string $title
- * @property int    $race
- * @property int    $sex
- * @property int    $countryId
- * @property float  $ratingAttack
- * @property float  $ratingDefense
- * @property float  $ratingScience
- * @property float  $ratingProduction
- * @property int    $role
- * @property int    $pop
- * @property int    $towns
+ * @property int $id
+ * @property string $name
+ * @property int $race
+ * @property int $sex
+ * @property int $countryId
+ * @property float $ratingAttack
+ * @property float $ratingDefense
+ * @property float $ratingScience
+ * @property float $ratingProduction
+ * @property int $role
+ * @property int $pop
+ * @property int $towns
  */
 class Account extends Entry
 {
