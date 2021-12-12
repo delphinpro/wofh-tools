@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'enabled'       => env('APP_DEBUG') === true && env('TRACY_ENABLED', false),
-    'showBar'       => env('APP_ENV') !== 'production' && env('TRACY_SHOW_BAR', false),
-    'showException' => true,
+    'enabled'       => env('TRACY_ENABLED', false),
+    'showBar'       => env('TRACY_SHOW_BAR', true),
+    'showException' => env('TRACY_SHOW_EXCEPTION', false),
     'route'         => [
         'prefix' => 'tracy',
         'as'     => 'tracy.',
