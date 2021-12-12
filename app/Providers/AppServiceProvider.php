@@ -26,8 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(IconFinder $iconFinder)
     {
-        $iconFinder->registerIconDirectory('far', base_path('node_modules/@fortawesome/fontawesome-free/svgs/regular'));
-        $iconFinder->registerIconDirectory('fas', base_path('node_modules/@fortawesome/fontawesome-free/svgs/solid'));
-        $iconFinder->registerIconDirectory('fab', base_path('node_modules/@fortawesome/fontawesome-free/svgs/brands'));
+        // $iconFinder->registerIconDirectory('far', base_path('node_modules/@fortawesome/fontawesome-free/svgs/regular'));
+        // $iconFinder->registerIconDirectory('fas', base_path('node_modules/@fortawesome/fontawesome-free/svgs/solid'));
+        // $iconFinder->registerIconDirectory('fab', base_path('node_modules/@fortawesome/fontawesome-free/svgs/brands'));
     }
 }

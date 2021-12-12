@@ -15,6 +15,11 @@ class PlatformProvider extends OrchidServiceProvider
     {
         $mainmenu = [];
 
+        $mainmenu[] = ItemMenu::label('Worlds')
+            ->title('Wofh')
+            ->icon('fas.globe-americas')
+            ->route('admin.worlds');
+
         if (!config('platform.examples')) return $mainmenu;
 
         $mainmenu[] = ItemMenu::label('Fontawesome icons')

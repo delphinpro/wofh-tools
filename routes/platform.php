@@ -15,6 +15,7 @@ use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
+use App\Orchid\Screens\World\WorldListScreen;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 
@@ -95,6 +96,10 @@ Route::screen('roles', RoleListScreen::class)
             ->parent('platform.systems.index')
             ->push(__('Roles'), route('platform.systems.roles'));
     });
+
+Route::screen('worlds', WorldListScreen::class)
+    ->name('admin.worlds');
+
 
 if (config('platform.examples')) // Example...
 {

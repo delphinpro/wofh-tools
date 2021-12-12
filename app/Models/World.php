@@ -13,6 +13,7 @@ namespace App\Models;
 use App\Traits\ModelAttributesToCamelCaseArray;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Orchid\Screen\AsSource;
 
 
 /**
@@ -24,6 +25,7 @@ use Illuminate\Database\Eloquent\Model;
 class World extends Model
 {
     use ModelAttributesToCamelCaseArray;
+    use AsSource;
 
 
     public $timestamps = false;
