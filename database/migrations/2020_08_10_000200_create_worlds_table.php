@@ -4,10 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-
-class CreateWorldsTable extends Migration
-{
-    private $tableName = 'wt_worlds';
+return new class extends Migration {
+    private string $tableName = 'wt_worlds';
 
     public function up()
     {
@@ -36,4 +34,4 @@ class CreateWorldsTable extends Migration
     {
         Schema::dropIfExists($this->tableName);
     }
-}
+};

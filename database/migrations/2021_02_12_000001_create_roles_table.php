@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrchidRolesTable extends Migration
-{
+return new class extends Migration {
     public function up()
     {
         Schema::create('roles', function (Blueprint $table) {
@@ -21,4 +20,4 @@ class CreateOrchidRolesTable extends Migration
     {
         Schema::dropIfExists('roles');
     }
-}
+};

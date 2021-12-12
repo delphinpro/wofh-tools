@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateStatLogsTable extends Migration
-{
+return new class extends Migration {
     public function up()
     {
         Schema::create('wt_stat_log', function (Blueprint $table) {
@@ -23,4 +22,4 @@ class CreateStatLogsTable extends Migration
     {
         Schema::dropIfExists('wt_stat_log');
     }
-}
+};
