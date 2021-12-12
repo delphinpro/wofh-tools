@@ -6,10 +6,10 @@
   "author": "delphinpro <delphinpro@yandex.ru>",
   "private": true,
   "scripts": {
-    "dev": "node_modules/.bin/quasar dev",
-    "dev:ssr": "node_modules/.bin/quasar dev -m ssr",
+    "dev": "cross-env  node_modules/.bin/quasar dev",
+    "dev:ssr": "cross-env node_modules/.bin/quasar dev -m ssr",
     "upd": "cross-env node_modules/.bin/quasar build -m ssr && pm2 reload all",
-    "build": "node_modules/.bin/quasar build -m ssr",
+    "build": "cross-env node_modules/.bin/quasar build -m ssr",
     "restart": "pm2 reload all"
   },
   "dependencies": {
@@ -32,19 +32,10 @@
     "cross-env": "^7.0.2"
   },
   "browserslist": [
-    "last 10 Chrome versions",
-    "last 10 Firefox versions",
-    "last 4 Edge versions",
-    "last 7 Safari versions",
-    "last 8 Android versions",
-    "last 8 ChromeAndroid versions",
-    "last 8 FirefoxAndroid versions",
-    "last 10 iOS versions",
-    "last 5 Opera versions"
+    "defaults"
   ],
   "engines": {
-    "node": ">= 10.18.1",
-    "npm": ">= 6.13.4",
-    "yarn": ">= 1.21.1"
+    "node": ">= 14.13.0",
+    "npm": ">= 8.0.0"
   }
 }

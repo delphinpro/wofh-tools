@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^7.4|^8.0",
         "ext-curl": "*",
         "ext-json": "*",
         "fideloper/proxy": "^4.4",
@@ -62,14 +62,29 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
+        "da": [
+            "composer dumpautoload"
+        ],
         "ide": [
             "@php artisan ide-helper:eloquent",
             "@php artisan ide-helper:generate -HW",
-            "@php artisan ide-helper:models -RMrp --dir=vendor/orchid/platform/src/Platform/Models"
+            "@php artisan ide-helper:models -RMrp --dir=vendor/orchid/platform/src/Attachment/Models"
+        ],
+        "db:migrate": [
+            "@php artisan migrate --force"
         ],
         "db:update": [
             "@php artisan migrate:fresh",
             "@php artisan db:seed"
+        ],
+        "down": [
+            "@php artisan down --render=\"errors::maintenance\" --retry=60 --status=503"
+        ],
+        "up": [
+            "@php artisan up"
+        ],
+        "clear": [
+            "@php artisan optimize:clear"
         ]
     }
 }
