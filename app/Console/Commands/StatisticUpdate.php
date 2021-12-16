@@ -17,7 +17,7 @@ class StatisticUpdate extends Command
 
     protected $signature = 'stat:update
                             {world? : Process only for one world (ex. ru23)}
-                            {--l|limit= : Set limit processing json-files per call command}';
+                            {--limit= : Set limit processing json-files per call command}';
 
     protected $description = 'Update statistic in database from loaded json-files';
 
