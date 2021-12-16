@@ -27,7 +27,7 @@ trait TableTowns
         $this->insertTowns();
         $this->updateTownsLost();
         $this->insertTownsStatistic();
-        $this->console->line('    towns: '.round(microtime(true) - $time, 3).'s');
+        $this->console->line('    towns: '.t($time).'s');
     }
 
     private function insertTowns()

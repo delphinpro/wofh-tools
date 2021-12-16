@@ -27,7 +27,7 @@ trait TableAccounts
         $this->insertAccounts();
         $this->updateAccountsDeleted();
         $this->insertAccountsStatistic();
-        $this->console->line('    accounts: '.e($time));
+        $this->console->line('    accounts: '.t($time).'s');
     }
 
     private function insertAccounts()

@@ -158,6 +158,6 @@ class DataEvents
             DB::insert($sql);
         }
 
-        $this->console->line('    events: '.e($time));
+        $this->console->line('    events: '.t($time).'s');
     }
 }

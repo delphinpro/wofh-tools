@@ -18,11 +18,6 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
-function t($startTime): float
-{
-    return round(microtime(true) - $startTime, 3);
-}
-
 function humanize($bytes, $decimals = 2): string
 {
     if ($bytes < 1024) return $bytes.' B';

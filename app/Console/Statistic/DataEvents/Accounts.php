@@ -48,7 +48,7 @@ trait Accounts
             }
         }
 
-        $this->console->line('Check events of accounts: '.e($time));
+        $this->console->line('Check events of accounts : '.t($time).'s');
         // $this->console->line('              created   : '.count($this->events[Wofh::EVENT_ACCOUNT_CREATE]));
         // $this->console->line('              deleted   : '.count($this->events[Wofh::EVENT_ACCOUNT_DELETE]));
         // $this->console->line('              renamed   : '.count($this->events[Wofh::EVENT_TOWN_RENAME]));
