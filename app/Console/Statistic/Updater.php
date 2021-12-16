@@ -15,6 +15,7 @@ use App\Console\Statistic\Updater\Dumper;
 use App\Models\World;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 function t($startTime): float
@@ -60,7 +61,7 @@ class Updater
     }
 
     /**
-     * @throws \Exception
+     * @throws \Exception|\Throwable
      */
     public function updateWorld(World $world, int $limit = 0)
     {
@@ -132,37 +133,42 @@ class Updater
      * @param string $filename
      * @throws \App\Exceptions\JsonServiceException
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws \Throwable
      */
     protected function processFile(string $filename)
     {
-        $this->world->beginUpdate();
+        DB::transaction(function () use ($filename) {
 
-        /** @var \App\Console\Statistic\DataStorage $data */
-        $data = resolve(DataStorage::class);
-        $data->setWorld($this->world);
-        $data->loadFromFile($filename);
-        $data->parse();
+            $this->world->beginUpdate();
 
-        /** @var \App\Console\Statistic\DataStorage $dataPrevious */
-        $dataPrevious = resolve(DataStorage::class);
-        $dataPrevious->setWorld($this->world);
-        $dataPrevious->loadFromFile($this->prevFile);
+            /** @var \App\Console\Statistic\DataStorage $data */
+            $data = resolve(DataStorage::class);
+            $data->setWorld($this->world);
+            $data->loadFromFile($filename);
+            $data->parse();
 
-        if ($dataPrevious->hasData()) {
-            $dataPrevious->parse();
-        } else {
-            $this->console->warn('No previous data');
-        }
-        // $this->dump($data, $dataPrevious, $this->world->id);
+            /** @var \App\Console\Statistic\DataStorage $dataPrevious */
+            $dataPrevious = resolve(DataStorage::class);
+            $dataPrevious->setWorld($this->world);
+            $dataPrevious->loadFromFile($this->prevFile);
 
-        /** @var \App\Console\Statistic\DataEvents $events */
-        $events = resolve(DataEvents::class);
-        $events->setData($data, $dataPrevious);
-        $events->checkEvents();
+            if ($dataPrevious->hasData()) {
+                $dataPrevious->parse();
+            } else {
+                $this->console->warn('No previous data');
+            }
+            // $this->dump($data, $dataPrevious, $this->world->id);
 
-        $data->save($events);
+            /** @var \App\Console\Statistic\DataEvents $events */
+            $events = resolve(DataEvents::class);
+            $events->setData($data, $dataPrevious);
+            $events->checkEvents();
 
-        $this->world->endUpdate($data->getTime());
+            $data->save($events);
+
+            $this->world->endUpdate($data->getTime());
+
+        });
     }
 
     /**
