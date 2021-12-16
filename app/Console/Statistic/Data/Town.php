@@ -24,7 +24,7 @@ namespace App\Console\Statistic\Data;
  */
 class Town extends Entry
 {
-    const KEY_TITLE      = 0;
+    const KEY_NAME       = 0;
     const KEY_ACCOUNT_ID = 1;
     const KEY_POP        = 2;
     const KEY_WONDER     = 3;
@@ -35,7 +35,7 @@ class Town extends Entry
 
         $this->data = [
             'id'          => $id,
-            'title'       => $town[Town::KEY_TITLE],
+            'name'        => $town[Town::KEY_NAME],
             'accountId'   => $town[Town::KEY_ACCOUNT_ID],
             'pop'         => $town[Town::KEY_POP],
             'wonder'      => $wonder,

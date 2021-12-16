@@ -30,7 +30,7 @@ trait Checker
         if (!Schema::hasTable('towns')) {
             Schema::create('towns', function (Blueprint $table) {
                 $table->increments('id');
-                $table->string('title');
+                $table->string('name');
                 $table->integer('account_id')->unsigned();
                 $table->tinyInteger('lost')->unsigned()->default(0);
                 $table->tinyInteger('destroy')->unsigned()->default(0);

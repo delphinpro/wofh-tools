@@ -108,7 +108,7 @@ trait Accounts
 
     private function checkEventsAccountRename(Account $accountPrev, Account $account)
     {
-        if ($accountPrev->title != $account->title) {
+        if ($accountPrev->name != $account->name) {
             $this->updateAccountIds[] = $account->id;
             $this->events[Wofh::EVENT_ACCOUNT_RENAME][$account->id] = [
                 static::TABLE_TOWN_ID         => 0,
@@ -117,8 +117,8 @@ trait Accounts
                 static::TABLE_COUNTRY_ID_FROM => 0,
                 static::TABLE_ROLE            => 0,
                 static::TABLE_EXTRA           => [
-                    'prevTitle' => $accountPrev->title,
-                    'currTitle' => $account->title,
+                    'prevName' => $accountPrev->name,
+                    'currName' => $account->name,
                 ],
             ];
         }

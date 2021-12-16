@@ -28,7 +28,7 @@ namespace App\Console\Statistic\Data;
  */
 class Account extends Entry
 {
-    const KEY_TITLE             = 0;
+    const KEY_NAME              = 0;
     const KEY_RACE              = 1;
     const KEY_SEX               = 2;
     const KEY_COUNTRY_ID        = 3;
@@ -42,7 +42,7 @@ class Account extends Entry
     {
         $this->data = [
             'id'               => $id,
-            'title'            => $account[Account::KEY_TITLE],
+            'name'             => $account[Account::KEY_NAME],
             'race'             => $account[Account::KEY_RACE],
             'sex'              => $account[Account::KEY_SEX],
             'countryId'        => $account[Account::KEY_COUNTRY_ID],

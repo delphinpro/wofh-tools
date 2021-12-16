@@ -36,7 +36,7 @@ trait TableTowns
 
         $columns = [
             'id',
-            'title',
+            'name',
             'account_id',
             'lost',
             'destroy',
@@ -63,7 +63,7 @@ trait TableTowns
 
             $sql .= '(';
             $sql .= (intval($id));
-            $sql .= ','.($pdo->quote($town->title));
+            $sql .= ','.($pdo->quote($town->name));
             $sql .= ','.(intval($town->accountId));
             $sql .= ','.'0';
             $sql .= ','.'0';

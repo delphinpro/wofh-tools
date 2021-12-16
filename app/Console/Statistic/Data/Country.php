@@ -27,7 +27,7 @@ namespace App\Console\Statistic\Data;
  */
 class Country extends Entry
 {
-    const KEY_TITLE     = 0;
+    const KEY_NAME      = 0;
     const KEY_FLAG      = 1;
     const KEY_DIPLOMACY = 2;
 
@@ -39,7 +39,7 @@ class Country extends Entry
 
         $this->data = [
             'id'               => $id,
-            'title'            => $country[Country::KEY_TITLE],
+            'name'             => $country[Country::KEY_NAME],
             'flag'             => $country[Country::KEY_FLAG],
             'diplomacy'        => $diplomacy,
             'pop'              => 0,

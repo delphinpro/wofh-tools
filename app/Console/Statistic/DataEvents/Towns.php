@@ -111,7 +111,7 @@ trait Towns
 
     private function checkEventTownRename(Town $townPrev, Town $town)
     {
-        if ($townPrev->title != $town->title) {
+        if ($townPrev->name != $town->name) {
             $this->updateTownIds[] = $town->id;
             $this->events[Wofh::EVENT_TOWN_RENAME][$town->id] = [
                 static::TABLE_TOWN_ID         => $town->id,
@@ -120,8 +120,8 @@ trait Towns
                 static::TABLE_COUNTRY_ID_FROM => 0,
                 static::TABLE_ROLE            => 0,
                 static::TABLE_EXTRA           => [
-                    'prevTitle' => $townPrev->title,
-                    'currTitle' => $town->title,
+                    'prevName' => $townPrev->name,
+                    'currName' => $town->name,
                 ],
             ];
         }

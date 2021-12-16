@@ -109,7 +109,7 @@ trait Countries
 
     private function checkEventsCountryRename(Country $countryPrev, Country $country)
     {
-        if ($countryPrev->title != $country->title) {
+        if ($countryPrev->name != $country->name) {
             $this->updateCountryIds[] = $country->id;
             $this->events[Wofh::EVENT_COUNTRY_RENAME][$country->id] = [
                 static::TABLE_TOWN_ID         => 0,
@@ -118,8 +118,8 @@ trait Countries
                 static::TABLE_COUNTRY_ID_FROM => 0,
                 static::TABLE_ROLE            => 0,
                 static::TABLE_EXTRA           => [
-                    'prevTitle' => $countryPrev->title,
-                    'nextTitle' => $country->title,
+                    'prevName' => $countryPrev->name,
+                    'nextName' => $country->name,
                 ],
             ];
         }
@@ -148,8 +148,8 @@ trait Countries
     {
         if (!array_key_exists($countryId, $this->updateCountryIds)) {
             $this->updateCountryIds[$countryId] = [
-                'prevTitle' => null,
-                'currTitle' => null,
+                'prevName' => null,
+                'currName' => null,
                 'prevFlag'  => null,
                 'currFlag'  => null,
                 'active'    => null,

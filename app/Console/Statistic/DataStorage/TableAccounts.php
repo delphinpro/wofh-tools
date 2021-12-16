@@ -62,7 +62,7 @@ trait TableAccounts
 
             $sql .= '(';
             $sql .= (intval($id));
-            $sql .= ','.($pdo->quote($account->title));
+            $sql .= ','.($pdo->quote($account->name));
             $sql .= ','.(intval($account->race));
             $sql .= ','.(intval($account->sex));
             $sql .= ','.(intval($account->countryId));

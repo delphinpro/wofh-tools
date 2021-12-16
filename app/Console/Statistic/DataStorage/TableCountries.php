@@ -59,12 +59,12 @@ trait TableCountries
 
             $json = "JSON_OBJECT(
               'flags', JSON_ARRAY(JSON_OBJECT('{$this->time->timestamp}', '{$country->flag}')),
-              'titles', JSON_ARRAY(JSON_OBJECT('{$this->time->timestamp}', '{$country->title}'))
+              'names', JSON_ARRAY(JSON_OBJECT('{$this->time->timestamp}', '$country->name'))
             )";
 
             $sql .= '(';
             $sql .= (intval($id));
-            $sql .= ','.($pdo->quote($country->title));
+            $sql .= ','.($pdo->quote($country->name));
             $sql .= ','.($pdo->quote($country->flag));
             $sql .= ','.(intval(1));
             $sql .= ','.$json;
@@ -95,12 +95,12 @@ trait TableCountries
         foreach ($this->events->updateCountryIds as $id => $data) {
             $fields = [];
             $extra = [];
-            if (!is_null($data['currTitle'])) {
-                $fields[] = "`countryTitle` = ".$pdo->quote($data['currTitle']);
-                $extra[] = ",'$.titles', JSON_OBJECT('{$this->time->timestamp}', '{$data['currTitle']}')";
+            if (!is_null($data['currName'])) {
+                $fields[] = "`name` = ".$pdo->quote($data['currName']);
+                $extra[] = ",'$.names', JSON_OBJECT('{$this->time->timestamp}', '{$data['currName']}')";
             }
             if (!is_null($data['currFlag'])) {
-                $fields[] = "`countryFlag` = ".$pdo->quote($data['currFlag']);
+                $fields[] = "`flag` = ".$pdo->quote($data['currFlag']);
                 $extra[] = ",'$.flags', JSON_OBJECT('{$this->time->timestamp}', '{$data['currFlag']}')";
             }
             if (count($extra)) {
