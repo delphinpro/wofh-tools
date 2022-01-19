@@ -73,7 +73,7 @@ trait Checker
                 $table->timestamp('state_at');
                 $table->integer('id')->unsigned();
                 $table->integer('country_id')->unsigned();
-                $table->tinyInteger('role')->unsigned();
+                $table->integer('role')->unsigned();
                 $table->integer('pop')->unsigned();
                 $table->smallInteger('towns')->unsigned();
                 $table->float('science');
