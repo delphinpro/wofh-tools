@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use function Helpers\Statistic\parseFilename;
 
 function humanize($bytes, $decimals = 2): string
 {
@@ -166,14 +167,7 @@ class Updater
     {
         $pattern = $this->filenamePattern();
         $files = collect($this->fs->files($dataPath))
-            ->map(function ($filename) use ($pattern) {
-                // Файлы с именами типа ru44_1598666461.json
-                preg_match($pattern, $filename, $m);
-                return [
-                    'name' => $filename,
-                    'time' => count($m) > 1 ? (int)$m[1] : 0,
-                ];
-            })
+            ->map(fn ($filename) => parseFilename($filename, $pattern))
             ->filter(fn($file) => !!$file['time']);
 
         if (!$files->count()) throw new \Exception(sprintf('Data files not found: %s', $pattern));
@@ -193,6 +187,8 @@ class Updater
 
     protected function filenamePattern(): string
     {
+        // Файлы с именами типа ru44_1598666461.json
+        // 10 цифр – метка времени
         return '~'.$this->world->sign.'_(\d{10})\.json$~';
     }
 }
