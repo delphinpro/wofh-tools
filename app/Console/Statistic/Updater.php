@@ -124,12 +124,7 @@ class Updater
             .' ['.$details.']');
     }
 
-    /**
-     * @param string $filename
-     * @throws \App\Exceptions\JsonServiceException
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
-     * @throws \Throwable
-     */
+    /** @throws \Throwable */
     protected function processFile(string $filename)
     {
         DB::transaction(function () use ($filename) {
@@ -166,9 +161,7 @@ class Updater
         });
     }
 
-    /**
-     * @throws \Exception
-     */
+    /** @throws \Exception */
     protected function scanFiles(string $dataPath)
     {
         $pattern = $this->filenamePattern();

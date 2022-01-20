@@ -25,9 +25,7 @@ trait Normalizer
 {
     private function collectTowns()
     {
-        $this->towns = collect($this->raw['towns'])->map(function ($town, $id) {
-            return new Town($id, $town);
-        });
+        $this->towns = collect($this->raw['towns'])->map(fn($town, $id) => new Town($id, $town));
         // Убрать города с нулевым населением
         // и варварские (аккаунт = 0)
         // if ($this->isTownNullPopulation($town) or $this->isTownBarbarian($town)) {
@@ -37,15 +35,11 @@ trait Normalizer
 
     private function collectAccounts()
     {
-        $this->accounts = collect($this->raw['accounts'])->map(function ($account, $id) {
-            return new Account($id, $account);
-        });
+        $this->accounts = collect($this->raw['accounts'])->map(fn($account, $id) => new Account($id, $account));
     }
 
     private function collectCountries()
     {
-        $this->countries = collect($this->raw['countries'])->map(function ($country, $id) {
-            return new Country($id, $country);
-        });
+        $this->countries = collect($this->raw['countries'])->map(fn($country, $id) => new Country($id, $country));
     }
 }

@@ -46,7 +46,7 @@ class Json
      * @return string
      * @throws JsonServiceException
      */
-    public function encode($value, bool $pretty = false, $forceObject = false): string
+    public function encode($value, bool $pretty = false, bool $forceObject = false): string
     {
         $options = JSON_NUMERIC_CHECK
             | JSON_UNESCAPED_SLASHES

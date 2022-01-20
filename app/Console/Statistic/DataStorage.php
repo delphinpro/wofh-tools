@@ -22,6 +22,7 @@ use App\Services\Json;
 use App\Services\Wofh;
 use Carbon\Carbon;
 use Illuminate\Filesystem\FilesystemManager;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -41,11 +42,9 @@ class DataStorage
 
     private Json $json;
 
-    /** @var \App\Console\Services\Console */
-    private $console;
+    private Console $console;
 
-    /** @var \App\Models\World */
-    private $world;
+    private World $world;
 
     /** @var \Illuminate\Contracts\Filesystem\Filesystem|\Illuminate\Filesystem\FilesystemAdapter */
     private $fs;
@@ -57,16 +56,15 @@ class DataStorage
     private ?int $totalAccounts;
 
     /** @var \Illuminate\Support\Collection|\App\Console\Statistic\Data\Town[] */
-    public $towns;
+    public Collection $towns;
 
     /** @var \Illuminate\Support\Collection|\App\Console\Statistic\Data\Account[] */
-    public $accounts;
+    public Collection $accounts;
 
     /** @var \Illuminate\Support\Collection|\App\Console\Statistic\Data\Country[] */
-    public $countries;
+    public Collection $countries;
 
-    /** @var \App\Console\Statistic\DataEvents */
-    private $events;
+    private DataEvents $events;
 
     public function __construct(FilesystemManager $fsManager, Json $json, Console $console)
     {

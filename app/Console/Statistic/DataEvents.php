@@ -32,29 +32,24 @@ class DataEvents
     const TABLE_ACCOUNT_ID      = 'account_id';
     const TABLE_COUNTRY_ID      = 'country_id';
     const TABLE_COUNTRY_ID_FROM = 'country_id_from';
-    const TABLE_ROLE  = 'role';
-    const TABLE_PROPS = 'props';
+    const TABLE_ROLE            = 'role';
+    const TABLE_PROPS           = 'props';
 
-    /** @var \App\Console\Services\Console */
-    private $console;
-
-    /** @var \App\Console\Statistic\DataStorage */
-    private $curr;
-
-    /** @var \App\Console\Statistic\DataStorage */
-    private $prev;
+    private Console $console;
+    private DataStorage $curr;
+    private DataStorage $prev;
 
     // @formatter:off
 
-    public $insertTownIds = [];
-    public $updateTownIds = [];
-    public $lostTownIds = [];
-    public $insertAccountIds = [];
-    public $updateAccountIds = [];
-    public $deleteAccountIds = [];
-    public $insertCountryIds = [];
-    public $updateCountryIds = [];
-    public $deleteCountryIds = [];
+    public array $insertTownIds = [];
+    public array $updateTownIds = [];
+    public array $lostTownIds = [];
+    public array $insertAccountIds = [];
+    public array $updateAccountIds = [];
+    public array $deleteAccountIds = [];
+    public array $insertCountryIds = [];
+    public array $updateCountryIds = [];
+    public array $deleteCountryIds = [];
 
     // @formatter:on
 

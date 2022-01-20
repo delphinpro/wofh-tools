@@ -23,7 +23,7 @@ class Entry
         $this->data[$key] = $value;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return $this->data;
     }
