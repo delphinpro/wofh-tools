@@ -31,20 +31,20 @@ trait Checker
             Schema::create('towns', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
-                $table->integer('account_id')->unsigned();
-                $table->tinyInteger('lost')->unsigned()->default(0);
-                $table->tinyInteger('destroy')->unsigned()->default(0);
-                $table->json('props')->nullable()->default(null);
+                $table->unsignedInteger('account_id')->nullable();
+                $table->boolean('lost')->nullable()->default(false);
+                $table->boolean('destroy')->nullable()->default(false);
+                $table->json('props')->nullable();
             });
         }
 
         if (!Schema::hasTable('towns_stat')) {
             Schema::create('towns_stat', function (Blueprint $table) {
                 $table->timestamp('state_at');
-                $table->integer('id')->unsigned();
-                $table->mediumInteger('pop')->unsigned();
-                $table->smallInteger('wonder_id')->unsigned()->default(0);
-                $table->tinyInteger('wonder_level')->unsigned()->default(0);
+                $table->unsignedInteger('id');
+                $table->unsignedMediumInteger('pop');
+                $table->unsignedSmallInteger('wonder_id')->nullable();
+                $table->unsignedTinyInteger('wonder_level')->nullable();
                 // $table->smallInteger('delta_pop')->unsigned()->nullable()->default(null);
 
                 $table->primary(['state_at', 'id']);
@@ -56,12 +56,12 @@ trait Checker
             Schema::create('accounts', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
-                $table->tinyInteger('race')->unsigned()->default(0);
-                $table->tinyInteger('sex')->unsigned()->default(0);
-                $table->integer('country_id')->unsigned()->default(0);
-                $table->tinyInteger('role')->unsigned()->default(0);
-                $table->tinyInteger('active')->unsigned()->default(1);
-                $table->json('props')->nullable()->default(null);
+                $table->unsignedTinyInteger('race')->default(0);
+                $table->unsignedTinyInteger('sex')->default(0);
+                $table->unsignedInteger('country_id')->nullable();
+                $table->unsignedInteger('role')->default(0);
+                $table->boolean('active')->default(true);
+                $table->json('props')->nullable();
 
                 $table->index('country_id');
                 $table->index('active');
@@ -71,11 +71,11 @@ trait Checker
         if (!Schema::hasTable('accounts_stat')) {
             Schema::create('accounts_stat', function (Blueprint $table) {
                 $table->timestamp('state_at');
-                $table->integer('id')->unsigned();
-                $table->integer('country_id')->unsigned();
-                $table->integer('role')->unsigned();
-                $table->integer('pop')->unsigned();
-                $table->smallInteger('towns')->unsigned();
+                $table->unsignedInteger('id');
+                $table->unsignedInteger('country_id')->nullable();
+                $table->unsignedInteger('role')->nullable();
+                $table->unsignedInteger('pop')->nullable();
+                $table->unsignedSmallInteger('towns');
                 $table->float('science');
                 $table->float('production');
                 $table->float('attack');
@@ -95,9 +95,9 @@ trait Checker
             Schema::create('countries', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
-                $table->string('flag')->nullable()->default(null);
-                $table->tinyInteger('active')->unsigned()->default(1);
-                $table->json('props')->nullable()->default(null);
+                $table->string('flag')->nullable();
+                $table->boolean('active')->default(true);
+                $table->json('props')->nullable();
 
                 $table->index('active');
             });
@@ -106,10 +106,10 @@ trait Checker
         if (!Schema::hasTable('countries_stat')) {
             Schema::create('countries_stat', function (Blueprint $table) {
                 $table->timestamp('state_at');
-                $table->integer('id')->unsigned();
-                $table->integer('pop')->unsigned();
-                $table->integer('accounts')->unsigned();
-                $table->integer('towns')->unsigned();
+                $table->unsignedInteger('id');
+                $table->unsignedInteger('pop');
+                $table->unsignedInteger('accounts');
+                $table->unsignedInteger('towns');
                 $table->float('science');
                 $table->float('production');
                 $table->float('attack');
@@ -140,13 +140,13 @@ trait Checker
         if (!Schema::hasTable('events')) {
             Schema::create('events', function (Blueprint $table) {
                 $table->timestamp('state_at');
-                $table->integer('id')->unsigned();
-                $table->integer('town_id')->unsigned()->nullable()->default(null);
-                $table->integer('account_id')->unsigned()->default(null);
-                $table->integer('country_id')->unsigned()->default(null);
-                $table->integer('country_id_from')->unsigned()->default(null);
-                $table->integer('role')->unsigned()->default(null);
-                $table->json('props')->nullable()->default(null);
+                $table->unsignedInteger('id');
+                $table->unsignedInteger('town_id')->nullable();
+                $table->unsignedInteger('account_id')->nullable();
+                $table->unsignedInteger('country_id')->nullable();
+                $table->unsignedInteger('country_id_from')->nullable();
+                $table->unsignedInteger('role')->nullable();
+                $table->json('props')->nullable();
 
                 $table->index('id');
                 $table->index('state_at');
@@ -157,39 +157,39 @@ trait Checker
             Schema::create('common', function (Blueprint $table) {
                 $table->timestamp('state_at');
 
-                $table->integer('towns_total')->unsigned()->default(0);
-                $table->integer('towns_new')->unsigned()->default(0);
-                $table->integer('towns_renamed')->unsigned()->default(0);
-                $table->integer('towns_lost')->unsigned()->default(0);
-                $table->integer('towns_destroy')->unsigned()->default(0);
+                $table->unsignedInteger('towns_total')->default(0);
+                $table->unsignedInteger('towns_new')->default(0);
+                $table->unsignedInteger('towns_renamed')->default(0);
+                $table->unsignedInteger('towns_lost')->default(0);
+                $table->unsignedInteger('towns_destroy')->default(0);
 
-                $table->integer('wonders_new')->unsigned()->default(0);
-                $table->integer('wonders_destroy')->unsigned()->default(0);
-                $table->integer('wonders_activate')->unsigned()->default(0);
+                $table->unsignedInteger('wonders_new')->default(0);
+                $table->unsignedInteger('wonders_destroy')->default(0);
+                $table->unsignedInteger('wonders_activate')->default(0);
 
-                $table->integer('accounts_total')->unsigned()->default(0);
-                $table->integer('accounts_active')->unsigned()->default(0);
-                $table->integer('accounts_race0')->unsigned()->default(0);
-                $table->integer('accounts_race1')->unsigned()->default(0);
-                $table->integer('accounts_race2')->unsigned()->default(0);
-                $table->integer('accounts_race3')->unsigned()->default(0);
-                $table->integer('accounts_sex0')->unsigned()->default(0);
-                $table->integer('accounts_sex1')->unsigned()->default(0);
+                $table->unsignedInteger('accounts_total')->default(0);
+                $table->unsignedInteger('accounts_active')->default(0);
+                $table->unsignedInteger('accounts_race0')->default(0);
+                $table->unsignedInteger('accounts_race1')->default(0);
+                $table->unsignedInteger('accounts_race2')->default(0);
+                $table->unsignedInteger('accounts_race3')->default(0);
+                $table->unsignedInteger('accounts_sex0')->default(0);
+                $table->unsignedInteger('accounts_sex1')->default(0);
 
-                $table->integer('accounts_new')->unsigned()->default(0);
-                $table->integer('accounts_country_change')->unsigned()->default(0);
-                $table->integer('accounts_country_in')->unsigned()->default(0);
-                $table->integer('accounts_country_out')->unsigned()->default(0);
-                $table->integer('accounts_deleted')->unsigned()->default(0);
-                $table->integer('accounts_renamed')->unsigned()->default(0);
-                $table->integer('accounts_role_in')->unsigned()->default(0);
-                $table->integer('accounts_role_out')->unsigned()->default(0);
+                $table->unsignedInteger('accounts_new')->default(0);
+                $table->unsignedInteger('accounts_country_change')->default(0);
+                $table->unsignedInteger('accounts_country_in')->default(0);
+                $table->unsignedInteger('accounts_country_out')->default(0);
+                $table->unsignedInteger('accounts_deleted')->default(0);
+                $table->unsignedInteger('accounts_renamed')->default(0);
+                $table->unsignedInteger('accounts_role_in')->default(0);
+                $table->unsignedInteger('accounts_role_out')->default(0);
 
-                $table->integer('countries_total')->unsigned()->default(0);
-                $table->integer('countries_new')->unsigned()->default(0);
-                $table->integer('countries_renamed')->unsigned()->default(0);
-                $table->integer('countries_flag')->unsigned()->default(0);
-                $table->integer('countries_deleted')->unsigned()->default(0);
+                $table->unsignedInteger('countries_total')->default(0);
+                $table->unsignedInteger('countries_new')->default(0);
+                $table->unsignedInteger('countries_renamed')->default(0);
+                $table->unsignedInteger('countries_flag')->default(0);
+                $table->unsignedInteger('countries_deleted')->default(0);
 
                 $table->primary('state_at');
             });
