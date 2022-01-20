@@ -40,7 +40,7 @@ trait TableTowns
             'account_id',
             'lost',
             'destroy',
-            'extra',
+            'props',
         ];
 
         // INSERT INTO tbl_name (a, b, c) VALUES (1,2,3), (4,5,6), (7,8,9);
@@ -53,7 +53,6 @@ trait TableTowns
         $first = true;
 
         foreach ($this->events->insertTownIds as $id) {
-            /** @var \App\Console\Statistic\Data\Town $town */
             $town = $this->getTown($id);
             if (!$first) {
                 $sql .= ',';

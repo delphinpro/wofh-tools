@@ -32,8 +32,8 @@ class DataEvents
     const TABLE_ACCOUNT_ID      = 'account_id';
     const TABLE_COUNTRY_ID      = 'country_id';
     const TABLE_COUNTRY_ID_FROM = 'country_id_from';
-    const TABLE_ROLE            = 'role';
-    const TABLE_EXTRA           = 'extra';
+    const TABLE_ROLE  = 'role';
+    const TABLE_PROPS = 'props';
 
     /** @var \App\Console\Services\Console */
     private $console;
@@ -94,7 +94,7 @@ class DataEvents
         ];
     }
 
-    public function count($eventId)
+    public function count($eventId): int
     {
         return count($this->events[$eventId]);
     }
@@ -124,7 +124,7 @@ class DataEvents
             'country_id',
             'country_id_from',
             'role',
-            'extra',
+            'props',
         ];
 
         // INSERT INTO tbl_name (a, b, c) VALUES (1,2,3), (4,5,6), (7,8,9);

@@ -77,7 +77,7 @@ trait Towns
                     static::TABLE_COUNTRY_ID      => $countryId,
                     static::TABLE_COUNTRY_ID_FROM => 0,
                     static::TABLE_ROLE            => 0,
-                    static::TABLE_EXTRA           => null,
+                    static::TABLE_PROPS           => null,
                 ];
             }
         }
@@ -103,7 +103,7 @@ trait Towns
                     static::TABLE_COUNTRY_ID      => $countryId,
                     static::TABLE_COUNTRY_ID_FROM => 0,
                     static::TABLE_ROLE            => 0,
-                    static::TABLE_EXTRA           => null,
+                    static::TABLE_PROPS           => null,
                 ];
             }
         }
@@ -119,7 +119,7 @@ trait Towns
                 static::TABLE_COUNTRY_ID      => $this->curr->getAccount($town->accountId)->countryId,
                 static::TABLE_COUNTRY_ID_FROM => 0,
                 static::TABLE_ROLE            => 0,
-                static::TABLE_EXTRA           => [
+                static::TABLE_PROPS => [
                     'prevName' => $townPrev->name,
                     'currName' => $town->name,
                 ],
@@ -139,14 +139,14 @@ trait Towns
 
         if ($townPrev->wonderId != $town->wonderId) {
             if ($townPrev->wonderId == 0) {
-                $eventData[static::TABLE_EXTRA] = [
+                $eventData[static::TABLE_PROPS] = [
                     'wonderId'    => $town->wonderId,
                     'wonderLevel' => $town->wonderLevel,
                 ];
                 $this->events[Wofh::EVENT_WONDER_CREATE][] = $eventData;
             }
             if ($town->wonderId == 0) {
-                $eventData[static::TABLE_EXTRA] = [
+                $eventData[static::TABLE_PROPS] = [
                     'wonderId'    => $townPrev->wonderId,
                     'wonderLevel' => $townPrev->wonderLevel,
                 ];
@@ -157,7 +157,7 @@ trait Towns
             && $town->wonderLevel > 20
             && $townPrev->wonderLevel < 21
         ) {
-            $eventData[static::TABLE_EXTRA] = [
+            $eventData[static::TABLE_PROPS] = [
                 'wonderId'    => $town->wonderId,
                 'wonderLevel' => $town->wonderLevel,
             ];

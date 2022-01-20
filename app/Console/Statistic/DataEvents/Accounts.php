@@ -80,7 +80,7 @@ trait Accounts
                 static::TABLE_COUNTRY_ID      => $this->curr->getAccount($accountId)->countryId,
                 static::TABLE_COUNTRY_ID_FROM => 0,
                 static::TABLE_ROLE            => 0,
-                static::TABLE_EXTRA           => null,
+                static::TABLE_PROPS           => null,
             ];
         }
     }
@@ -101,7 +101,7 @@ trait Accounts
                 static::TABLE_COUNTRY_ID      => $this->prev->getAccount($accountId)->countryId,
                 static::TABLE_COUNTRY_ID_FROM => 0,
                 static::TABLE_ROLE            => 0,
-                static::TABLE_EXTRA           => null,
+                static::TABLE_PROPS           => null,
             ];
         }
     }
@@ -116,7 +116,7 @@ trait Accounts
                 static::TABLE_COUNTRY_ID      => $account->countryId,
                 static::TABLE_COUNTRY_ID_FROM => 0,
                 static::TABLE_ROLE            => 0,
-                static::TABLE_EXTRA           => [
+                static::TABLE_PROPS => [
                     'prevName' => $accountPrev->name,
                     'currName' => $account->name,
                 ],
@@ -135,7 +135,7 @@ trait Accounts
                     static::TABLE_COUNTRY_ID      => $account->countryId,
                     static::TABLE_COUNTRY_ID_FROM => 0,
                     static::TABLE_ROLE            => 0,
-                    static::TABLE_EXTRA           => null,
+                    static::TABLE_PROPS           => null,
                 ];
 
                 return;
@@ -147,7 +147,7 @@ trait Accounts
                     static::TABLE_COUNTRY_ID      => 0,
                     static::TABLE_COUNTRY_ID_FROM => $accountPrev->countryId,
                     static::TABLE_ROLE            => 0,
-                    static::TABLE_EXTRA           => null,
+                    static::TABLE_PROPS           => null,
                 ];
 
                 return;
@@ -158,7 +158,7 @@ trait Accounts
                 static::TABLE_COUNTRY_ID      => $account->countryId,
                 static::TABLE_COUNTRY_ID_FROM => $accountPrev->countryId,
                 static::TABLE_ROLE            => 0,
-                static::TABLE_EXTRA           => null,
+                static::TABLE_PROPS           => null,
             ];
         }
     }
@@ -176,7 +176,7 @@ trait Accounts
                     static::TABLE_COUNTRY_ID      => $account->countryId,
                     static::TABLE_COUNTRY_ID_FROM => 0,
                     static::TABLE_ROLE            => 0,
-                    static::TABLE_EXTRA           => null,
+                    static::TABLE_PROPS           => null,
                 ];
 
                 return;
@@ -188,7 +188,7 @@ trait Accounts
                     static::TABLE_COUNTRY_ID      => $account->countryId,
                     static::TABLE_COUNTRY_ID_FROM => 0,
                     static::TABLE_ROLE            => 0,
-                    static::TABLE_EXTRA           => null,
+                    static::TABLE_PROPS           => null,
                 ];
             }
         }

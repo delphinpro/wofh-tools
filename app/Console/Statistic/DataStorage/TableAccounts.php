@@ -42,7 +42,7 @@ trait TableAccounts
             'country_id',
             'role',
             'active',
-            'extra',
+            'props',
         ];
 
         // INSERT INTO tbl_name (a, b, c) VALUES (1,2,3), (4,5,6), (7,8,9);
@@ -55,7 +55,6 @@ trait TableAccounts
         $first = true;
 
         foreach ($this->events->insertAccountIds as $id) {
-            /** @var \App\Console\Statistic\Data\Account $account */
             $account = $this->getAccount($id);
 
             if (!$first) $sql .= ','; else $first = false;

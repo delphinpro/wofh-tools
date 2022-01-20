@@ -81,7 +81,7 @@ trait Countries
                 static::TABLE_COUNTRY_ID      => $countryId,
                 static::TABLE_COUNTRY_ID_FROM => 0,
                 static::TABLE_ROLE            => 0,
-                static::TABLE_EXTRA           => null,
+                static::TABLE_PROPS           => null,
             ];
         }
     }
@@ -102,7 +102,7 @@ trait Countries
                 static::TABLE_COUNTRY_ID      => $countryId,
                 static::TABLE_COUNTRY_ID_FROM => 0,
                 static::TABLE_ROLE            => 0,
-                static::TABLE_EXTRA           => null,
+                static::TABLE_PROPS           => null,
             ];
         }
     }
@@ -117,7 +117,7 @@ trait Countries
                 static::TABLE_COUNTRY_ID      => $country->id,
                 static::TABLE_COUNTRY_ID_FROM => 0,
                 static::TABLE_ROLE            => 0,
-                static::TABLE_EXTRA           => [
+                static::TABLE_PROPS => [
                     'prevName' => $countryPrev->name,
                     'nextName' => $country->name,
                 ],
@@ -128,18 +128,18 @@ trait Countries
     private function checkEventsCountryFlag(Country $countryPrev, Country $country)
     {
         if ($countryPrev->flag != $country->flag) {
-            $extra = [
+            $props = [
                 'prevFlag' => $countryPrev->flag,
                 'currFlag' => $country->flag,
             ];
-            $this->addUpdatedCountry($country->id, $extra);
+            $this->addUpdatedCountry($country->id, $props);
             $this->events[Wofh::EVENT_COUNTRY_FLAG][$country->id] = [
                 static::TABLE_TOWN_ID         => 0,
                 static::TABLE_ACCOUNT_ID      => 0,
                 static::TABLE_COUNTRY_ID      => $country->id,
                 static::TABLE_COUNTRY_ID_FROM => 0,
                 static::TABLE_ROLE            => 0,
-                static::TABLE_EXTRA           => $extra,
+                static::TABLE_PROPS           => $props,
             ];
         }
     }

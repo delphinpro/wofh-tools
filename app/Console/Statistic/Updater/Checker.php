@@ -34,7 +34,7 @@ trait Checker
                 $table->integer('account_id')->unsigned();
                 $table->tinyInteger('lost')->unsigned()->default(0);
                 $table->tinyInteger('destroy')->unsigned()->default(0);
-                $table->json('extra')->nullable()->default(null);
+                $table->json('props')->nullable()->default(null);
             });
         }
 
@@ -61,7 +61,7 @@ trait Checker
                 $table->integer('country_id')->unsigned()->default(0);
                 $table->tinyInteger('role')->unsigned()->default(0);
                 $table->tinyInteger('active')->unsigned()->default(1);
-                $table->json('extra')->nullable()->default(null);
+                $table->json('props')->nullable()->default(null);
 
                 $table->index('country_id');
                 $table->index('active');
@@ -97,7 +97,7 @@ trait Checker
                 $table->string('name');
                 $table->string('flag')->nullable()->default(null);
                 $table->tinyInteger('active')->unsigned()->default(1);
-                $table->json('extra')->nullable()->default(null);
+                $table->json('props')->nullable()->default(null);
 
                 $table->index('active');
             });
@@ -146,7 +146,7 @@ trait Checker
                 $table->integer('country_id')->unsigned()->default(null);
                 $table->integer('country_id_from')->unsigned()->default(null);
                 $table->integer('role')->unsigned()->default(null);
-                $table->json('extra')->nullable()->default(null);
+                $table->json('props')->nullable()->default(null);
 
                 $table->index('id');
                 $table->index('state_at');

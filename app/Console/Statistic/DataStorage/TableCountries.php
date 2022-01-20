@@ -40,7 +40,7 @@ trait TableCountries
             'name',
             'flag',
             'active',
-            'extra',
+            'props',
         ];
 
         // INSERT INTO tbl_name (a, b, c) VALUES (1,2,3), (4,5,6), (7,8,9);
@@ -53,12 +53,11 @@ trait TableCountries
         $first = true;
 
         foreach ($this->events->insertCountryIds as $id) {
-            /** @var \App\Console\Statistic\Data\Country $country */
             $country = $this->getCountry($id);
             if (!$first) $sql .= ','; else $first = false;
 
             $json = "JSON_OBJECT(
-              'flags', JSON_ARRAY(JSON_OBJECT('{$this->time->timestamp}', '{$country->flag}')),
+              'flags', JSON_ARRAY(JSON_OBJECT('{$this->time->timestamp}', '$country->flag')),
               'names', JSON_ARRAY(JSON_OBJECT('{$this->time->timestamp}', '$country->name'))
             )";
 
@@ -94,23 +93,23 @@ trait TableCountries
 
         foreach ($this->events->updateCountryIds as $id => $data) {
             $fields = [];
-            $extra = [];
+            $props = [];
             if (!is_null($data['currName'])) {
                 $fields[] = "`name` = ".$pdo->quote($data['currName']);
-                $extra[] = ",'$.names', JSON_OBJECT('{$this->time->timestamp}', '{$data['currName']}')";
+                $props[] = ",'$.names', JSON_OBJECT('{$this->time->timestamp}', '{$data['currName']}')";
             }
             if (!is_null($data['currFlag'])) {
                 $fields[] = "`flag` = ".$pdo->quote($data['currFlag']);
-                $extra[] = ",'$.flags', JSON_OBJECT('{$this->time->timestamp}', '{$data['currFlag']}')";
+                $props[] = ",'$.flags', JSON_OBJECT('{$this->time->timestamp}', '{$data['currFlag']}')";
             }
-            if (count($extra)) {
-                $fields[] = "`extra` = JSON_ARRAY_APPEND( `extra` ".join($extra)." )";
+            if (count($props)) {
+                $fields[] = "`props` = JSON_ARRAY_APPEND( `props` ".join($props)." )";
             }
             if (count($fields)) {
                 DB::update("
                     UPDATE `z_{$this->world->sign}_countries`
                     SET ".join(', ', $fields)."
-                    WHERE id = {$id}
+                    WHERE id = $id
                 ");
             }
         }
