@@ -35,7 +35,7 @@ class StatisticCheck extends Command
         $this->worldRepository = $worldRepository;
     }
 
-    public function handle()
+    public function handle(): int
     {
         $this->alert('Updating the status of worlds');
         return $this->checkWorlds() === true ? 1 : 0;

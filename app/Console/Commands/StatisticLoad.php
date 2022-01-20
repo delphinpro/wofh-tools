@@ -232,7 +232,7 @@ class StatisticLoad extends Command
 
                 $this->line('Last time download: '.$statLoadedAt->format(Wofh::STD_DATETIME).' '.$statLoadedAt->timezone->getName());
                 $this->line('Current time:       '.$now->format(Wofh::STD_DATETIME).' '.$now->timezone->getName());
-                $this->line('Diff time:          '.$diff->locale('en')->forHumans(true).' [ '.$diff->totalHours.'h ]');
+                $this->line('Diff time:          '.$diff->locale('en')->forHumans(true).' [ '.round($diff->totalHours, 2).'h ]');
 
             } catch (\Exception $e) {
 
