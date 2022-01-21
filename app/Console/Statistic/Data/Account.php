@@ -15,11 +15,11 @@ namespace App\Console\Statistic\Data;
  * @property string $name
  * @property int $race
  * @property int $sex
- * @property int $countryId
- * @property float $ratingAttack
- * @property float $ratingDefense
- * @property float $ratingScience
- * @property float $ratingProduction
+ * @property int $country_id
+ * @property float $rating_attack
+ * @property float $rating_defense
+ * @property float $rating_science
+ * @property float $rating_production
  * @property int $role
  * @property int $pop
  * @property int $towns
@@ -39,18 +39,26 @@ class Account extends Entry
     public function __construct(int $id, array $account)
     {
         $this->data = [
-            'id'               => $id,
-            'name'             => $account[Account::KEY_NAME],
-            'race'             => $account[Account::KEY_RACE],
-            'sex'              => $account[Account::KEY_SEX],
-            'countryId'        => $account[Account::KEY_COUNTRY_ID],
-            'ratingAttack'     => $account[Account::KEY_RATING_ATTACK],
-            'ratingDefense'    => $account[Account::KEY_RATING_DEFENSE],
-            'ratingScience'    => $account[Account::KEY_RATING_SCIENCE],
-            'ratingProduction' => $account[Account::KEY_RATING_PRODUCTION],
-            'role'             => $account[Account::KEY_ROLE],
-            'pop'              => 0,
-            'towns'            => 0,
+            'id'                => $id,
+            'name'              => $account[Account::KEY_NAME],
+            'race'              => $account[Account::KEY_RACE],
+            'sex'               => $account[Account::KEY_SEX],
+            'country_id'        => $account[Account::KEY_COUNTRY_ID],
+            'rating_attack'     => $account[Account::KEY_RATING_ATTACK],
+            'rating_defense'    => $account[Account::KEY_RATING_DEFENSE],
+            'rating_science'    => $account[Account::KEY_RATING_SCIENCE],
+            'rating_production' => $account[Account::KEY_RATING_PRODUCTION],
+            'role'              => $account[Account::KEY_ROLE],
+            'pop'               => 0,
+            'towns'             => 0,
         ];
+    }
+
+    public function rating(): float
+    {
+        return $this->rating_science
+            + $this->rating_production
+            + $this->rating_production
+            + $this->rating_defense;
     }
 }

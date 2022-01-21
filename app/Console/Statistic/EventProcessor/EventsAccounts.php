@@ -75,7 +75,7 @@ trait EventsAccounts
             $this->events[Wofh::EVENT_ACCOUNT_CREATE][$accountId] = [
                 static::TABLE_TOWN_ID         => 0,
                 static::TABLE_ACCOUNT_ID      => $accountId,
-                static::TABLE_COUNTRY_ID      => $this->curr->getAccount($accountId)->countryId,
+                static::TABLE_COUNTRY_ID      => $this->curr->getAccount($accountId)->country_id,
                 static::TABLE_COUNTRY_ID_FROM => 0,
                 static::TABLE_ROLE            => 0,
                 static::TABLE_PROPS           => null,
@@ -96,7 +96,7 @@ trait EventsAccounts
             $this->events[Wofh::EVENT_ACCOUNT_DELETE][$accountId] = [
                 static::TABLE_TOWN_ID         => 0,
                 static::TABLE_ACCOUNT_ID      => $accountId,
-                static::TABLE_COUNTRY_ID      => $this->prev->getAccount($accountId)->countryId,
+                static::TABLE_COUNTRY_ID      => $this->prev->getAccount($accountId)->country_id,
                 static::TABLE_COUNTRY_ID_FROM => 0,
                 static::TABLE_ROLE            => 0,
                 static::TABLE_PROPS           => null,
@@ -111,7 +111,7 @@ trait EventsAccounts
             $this->events[Wofh::EVENT_ACCOUNT_RENAME][$account->id] = [
                 static::TABLE_TOWN_ID         => 0,
                 static::TABLE_ACCOUNT_ID      => $account->id,
-                static::TABLE_COUNTRY_ID      => $account->countryId,
+                static::TABLE_COUNTRY_ID      => $account->country_id,
                 static::TABLE_COUNTRY_ID_FROM => 0,
                 static::TABLE_ROLE            => 0,
                 static::TABLE_PROPS => [
@@ -124,13 +124,13 @@ trait EventsAccounts
 
     private function checkEventsAccountCountry(Account $accountPrev, Account $account)
     {
-        if ($accountPrev->countryId != $account->countryId) {
+        if ($accountPrev->country_id != $account->country_id) {
             $this->updateAccountIds[] = $account->id;
-            if ($accountPrev->countryId == 0) {
+            if ($accountPrev->country_id == 0) {
                 $this->events[Wofh::EVENT_ACCOUNT_COUNTRY_IN][$account->id] = [
                     static::TABLE_TOWN_ID         => 0,
                     static::TABLE_ACCOUNT_ID      => $account->id,
-                    static::TABLE_COUNTRY_ID      => $account->countryId,
+                    static::TABLE_COUNTRY_ID      => $account->country_id,
                     static::TABLE_COUNTRY_ID_FROM => 0,
                     static::TABLE_ROLE            => 0,
                     static::TABLE_PROPS           => null,
@@ -138,12 +138,12 @@ trait EventsAccounts
 
                 return;
             }
-            if ($account->countryId == 0) {
+            if ($account->country_id == 0) {
                 $this->events[Wofh::EVENT_ACCOUNT_COUNTRY_OUT][$account->id] = [
                     static::TABLE_TOWN_ID         => 0,
                     static::TABLE_ACCOUNT_ID      => $account->id,
                     static::TABLE_COUNTRY_ID      => 0,
-                    static::TABLE_COUNTRY_ID_FROM => $accountPrev->countryId,
+                    static::TABLE_COUNTRY_ID_FROM => $accountPrev->country_id,
                     static::TABLE_ROLE            => 0,
                     static::TABLE_PROPS           => null,
                 ];
@@ -153,8 +153,8 @@ trait EventsAccounts
             $this->events[Wofh::EVENT_ACCOUNT_COUNTRY_CHANGE][$account->id] = [
                 static::TABLE_TOWN_ID         => 0,
                 static::TABLE_ACCOUNT_ID      => $account->id,
-                static::TABLE_COUNTRY_ID      => $account->countryId,
-                static::TABLE_COUNTRY_ID_FROM => $accountPrev->countryId,
+                static::TABLE_COUNTRY_ID      => $account->country_id,
+                static::TABLE_COUNTRY_ID_FROM => $accountPrev->country_id,
                 static::TABLE_ROLE            => 0,
                 static::TABLE_PROPS           => null,
             ];
@@ -163,15 +163,15 @@ trait EventsAccounts
 
     private function checkEventsAccountRating(Account $accountPrev, Account $account)
     {
-        $prevRating = $accountPrev->ratingScience + $accountPrev->ratingProduction + $accountPrev->ratingAttack + $accountPrev->ratingDefense;
-        $currRating = $account->ratingScience + $account->ratingProduction + $account->ratingAttack + $account->ratingDefense;
+        $prevRating = $accountPrev->rating();
+        $currRating = $account->rating();
 
         if ($prevRating != $currRating) {
             if ($prevRating == 0) {
                 $this->events[Wofh::EVENT_ACCOUNT_RATING_SHOW][$account->id] = [
                     static::TABLE_TOWN_ID         => 0,
                     static::TABLE_ACCOUNT_ID      => $account->id,
-                    static::TABLE_COUNTRY_ID      => $account->countryId,
+                    static::TABLE_COUNTRY_ID      => $account->country_id,
                     static::TABLE_COUNTRY_ID_FROM => 0,
                     static::TABLE_ROLE            => 0,
                     static::TABLE_PROPS           => null,
@@ -183,7 +183,7 @@ trait EventsAccounts
                 $this->events[Wofh::EVENT_ACCOUNT_RATING_HIDE][$account->id] = [
                     static::TABLE_TOWN_ID         => 0,
                     static::TABLE_ACCOUNT_ID      => $account->id,
-                    static::TABLE_COUNTRY_ID      => $account->countryId,
+                    static::TABLE_COUNTRY_ID      => $account->country_id,
                     static::TABLE_COUNTRY_ID_FROM => 0,
                     static::TABLE_ROLE            => 0,
                     static::TABLE_PROPS           => null,

@@ -179,6 +179,8 @@ trait Checker
                 $table->unsignedInteger('accounts_renamed')->default(0);
                 $table->unsignedInteger('accounts_role_in')->default(0);
                 $table->unsignedInteger('accounts_role_out')->default(0);
+                $table->unsignedInteger('accounts_rating_hide')->default(0);
+                $table->unsignedInteger('accounts_rating_show')->default(0);
 
                 $table->unsignedInteger('countries_total')->default(0);
                 $table->unsignedInteger('countries_new')->default(0);

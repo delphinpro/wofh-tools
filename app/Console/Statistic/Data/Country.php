@@ -18,10 +18,10 @@ namespace App\Console\Statistic\Data;
  * @property int $pop
  * @property int $accounts
  * @property int $towns
- * @property float $ratingAttack
- * @property float $ratingDefense
- * @property float $ratingScience
- * @property float $ratingProduction
+ * @property float $rating_attack
+ * @property float $rating_defense
+ * @property float $rating_science
+ * @property float $rating_production
  */
 class Country extends Entry
 {
@@ -36,17 +36,17 @@ class Country extends Entry
             : [];
 
         $this->data = [
-            'id'               => $id,
-            'name'             => $country[Country::KEY_NAME],
-            'flag'             => $country[Country::KEY_FLAG],
-            'diplomacy'        => $diplomacy,
-            'pop'              => 0,
-            'accounts'         => 0,
-            'towns'            => 0,
-            'ratingAttack'     => 0,
-            'ratingDefense'    => 0,
-            'ratingScience'    => 0,
-            'ratingProduction' => 0,
+            'id'                => $id,
+            'name'              => $country[Country::KEY_NAME],
+            'flag'              => $country[Country::KEY_FLAG],
+            'diplomacy'         => $diplomacy,
+            'pop'               => 0,
+            'accounts'          => 0,
+            'towns'             => 0,
+            'rating_attack'     => 0,
+            'rating_defense'    => 0,
+            'rating_science'    => 0,
+            'rating_production' => 0,
         ];
     }
 }

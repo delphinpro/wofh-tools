@@ -9,7 +9,9 @@
 
 namespace App\Console\Statistic\Data;
 
-class Entry
+use Illuminate\Contracts\Support\Arrayable;
+
+class Entry implements Arrayable
 {
     protected array $data = [];
 

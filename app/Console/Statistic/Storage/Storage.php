@@ -10,9 +10,9 @@
 namespace App\Console\Statistic\Storage;
 
 use App\Console\Services\Console;
-use App\Console\Statistic\Data;
 use App\Console\Statistic\Data\Account;
 use App\Console\Statistic\Data\Country;
+use App\Console\Statistic\Data\Town;
 use App\Console\Statistic\EventProcessor\Events;
 use App\Models\World;
 use App\Services\Json;
@@ -99,7 +99,7 @@ class Storage
 
     public function getTime(): ?Carbon { return $this->time; }
 
-    public function getTown(int $id): Data\Town { return $this->towns->get($id); }
+    public function getTown(int $id): Town { return $this->towns->get($id); }
 
     public function getAccount(int $id): Account { return $this->accounts->get($id); }
 
@@ -118,7 +118,7 @@ class Storage
     {
         // Считаем население и города аккаунтов
         foreach ($this->towns as $town) {
-            $accountId = $town->accountId;
+            $accountId = $town->account_id;
 
             if ($accountId == 0) continue;
 
@@ -128,17 +128,17 @@ class Storage
 
         // Считаем население, аккаунты и города стран
         foreach ($this->accounts as $account) {
-            $countryId = $account->countryId;
+            $countryId = $account->country_id;
 
             if (!$countryId) continue; // Аккаунт вне страны, пропуск.
 
             $this->countries[$countryId]->pop += $account->pop;
             $this->countries[$countryId]->accounts += 1;
             $this->countries[$countryId]->towns += $account->towns;
-            $this->countries[$countryId]->ratingScience += $account->ratingScience;
-            $this->countries[$countryId]->ratingProduction += $account->ratingProduction;
-            $this->countries[$countryId]->ratingAttack += $account->ratingAttack;
-            $this->countries[$countryId]->ratingDefense += $account->ratingDefense;
+            $this->countries[$countryId]->rating_science += $account->rating_science;
+            $this->countries[$countryId]->rating_production += $account->rating_production;
+            $this->countries[$countryId]->rating_attack += $account->rating_attack;
+            $this->countries[$countryId]->rating_defense += $account->rating_defense;
         }
     }
 
@@ -183,7 +183,7 @@ class Storage
         ];
 
         $this->unsetRaw();
-        $this->console->table(['Operation', 'EventsTowns', 'EventsAccounts', 'EventsCountries', 'Time, s'], $rows);
+        $this->console->table(['Operation', 'Towns', 'Accounts', 'Countries', 'Time, s'], $rows);
     }
 
     public function save(Events $events)
@@ -233,6 +233,8 @@ class Storage
             'accounts_renamed'        => $this->events->count(Wofh::EVENT_ACCOUNT_RENAME),
             'accounts_role_in'        => $this->events->count(Wofh::EVENT_ACCOUNT_ROLE_IN),
             'accounts_role_out'       => $this->events->count(Wofh::EVENT_ACCOUNT_ROLE_OUT),
+            'accounts_rating_hide'    => $this->events->count(Wofh::EVENT_ACCOUNT_RATING_HIDE),
+            'accounts_rating_show'    => $this->events->count(Wofh::EVENT_ACCOUNT_RATING_SHOW),
 
             'countries_total'   => count($this->countries),
             'countries_new'     => $this->events->count(Wofh::EVENT_COUNTRY_CREATE),
@@ -245,9 +247,9 @@ class Storage
     public function getData(): array
     {
         return [
-            'countries' => $this->countries->map(fn($item) => $item->toArray()),
-            'accounts'  => $this->accounts->map(fn($item) => $item->toArray()),
-            'towns'     => $this->towns->map(fn($item) => $item->toArray()),
+            'countries' => $this->countries->map(fn(Country $item) => $item->toArray()),
+            'accounts'  => $this->accounts->map(fn(Account $item) => $item->toArray()),
+            'towns'     => $this->towns->map(fn(Town $item) => $item->toArray()),
         ];
     }
 }

@@ -15,9 +15,9 @@ use App\Console\Statistic\Data\Town;
 
 /**
  * Trait Normalizer
- * @property $towns
- * @property $accounts
- * @property $countries
+ * @property \Illuminate\Support\Collection|Town[] $towns
+ * @property \Illuminate\Support\Collection|Account[] $accounts
+ * @property \Illuminate\Support\Collection|Country[] $countries
  */
 trait Normalizer
 {

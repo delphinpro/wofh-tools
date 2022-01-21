@@ -14,7 +14,6 @@ use App\Console\Statistic\Storage\Storage;
 use App\Services\Wofh;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use function t;
 
 class Events
 {
@@ -38,9 +37,11 @@ class Events
     public array $insertTownIds = [];
     public array $updateTownIds = [];
     public array $lostTownIds = [];
+
     public array $insertAccountIds = [];
     public array $updateAccountIds = [];
     public array $deleteAccountIds = [];
+
     public array $insertCountryIds = [];
     public array $updateCountryIds = [];
     public array $deleteCountryIds = [];
