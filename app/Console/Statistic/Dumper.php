@@ -7,9 +7,9 @@
  * @license     licensed under the MIT license
  */
 
-namespace App\Console\Statistic\Updater;
+namespace App\Console\Statistic;
 
-use App\Console\Statistic\DataStorage;
+use App\Console\Statistic\Storage\Storage as DataStorage;
 use Illuminate\Support\Facades\Storage;
 
 trait Dumper

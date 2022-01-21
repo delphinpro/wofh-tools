@@ -11,8 +11,6 @@ namespace App\Console\Statistic\Data;
 
 /**
  * Class Country
- *
- * @package App\Console\Services\Statistic
  * @property int $id
  * @property string $name
  * @property string $flag

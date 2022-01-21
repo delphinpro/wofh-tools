@@ -7,19 +7,17 @@
  * @license     licensed under the MIT license
  */
 
-namespace App\Console\Statistic\DataStorage;
+namespace App\Console\Statistic\Storage;
 
 use Illuminate\Support\Facades\DB;
 
 /**
- * Trait TableCountries
- *
- * @package App\Console\Statistic\DataStorage
+ * Trait StorageCountries
  * @property \App\Console\Services\Console console
- * @property \App\Console\Statistic\DataEvents events
+ * @property \App\Console\Statistic\EventProcessor\Events events
  * @property \App\Models\World world
  */
-trait TableCountries
+trait StorageCountries
 {
     public function updateTableCountries()
     {
@@ -161,13 +159,13 @@ trait TableCountries
             $sql .= ','.(intval($country->ratingProduction));
             $sql .= ','.(intval($country->ratingAttack));
             $sql .= ','.(intval($country->ratingDefense));
-            // $sql .= ','.(intval($country->[DataStorage::COUNTRY_KEY_DELTA_POP]));
-            // $sql .= ','.(intval($country->[DataStorage::COUNTRY_KEY_DELTA_ACCOUNTS]));
-            // $sql .= ','.(intval($country->[DataStorage::COUNTRY_KEY_DELTA_TOWNS]));
-            // $sql .= ','.(intval($country->[DataStorage::COUNTRY_KEY_DELTA_SCIENCE]));
-            // $sql .= ','.(intval($country->[DataStorage::COUNTRY_KEY_DELTA_PRODUCTION]));
-            // $sql .= ','.(intval($country->[DataStorage::COUNTRY_KEY_DELTA_ATTACK]));
-            // $sql .= ','.(intval($country->[DataStorage::COUNTRY_KEY_DELTA_DEFENSE]));
+            // $sql .= ','.(intval($country->[Storage::COUNTRY_KEY_DELTA_POP]));
+            // $sql .= ','.(intval($country->[Storage::COUNTRY_KEY_DELTA_ACCOUNTS]));
+            // $sql .= ','.(intval($country->[Storage::COUNTRY_KEY_DELTA_TOWNS]));
+            // $sql .= ','.(intval($country->[Storage::COUNTRY_KEY_DELTA_SCIENCE]));
+            // $sql .= ','.(intval($country->[Storage::COUNTRY_KEY_DELTA_PRODUCTION]));
+            // $sql .= ','.(intval($country->[Storage::COUNTRY_KEY_DELTA_ATTACK]));
+            // $sql .= ','.(intval($country->[Storage::COUNTRY_KEY_DELTA_DEFENSE]));
             $sql .= ')';
         }
 

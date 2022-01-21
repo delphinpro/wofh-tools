@@ -7,16 +7,13 @@
  * @license     licensed under the MIT license
  */
 
-namespace App\Console\Statistic;
+namespace App\Console\Statistic\Storage;
 
 use App\Console\Services\Console;
+use App\Console\Statistic\Data;
 use App\Console\Statistic\Data\Account;
 use App\Console\Statistic\Data\Country;
-use App\Console\Statistic\DataStorage\Assertion;
-use App\Console\Statistic\DataStorage\Normalizer;
-use App\Console\Statistic\DataStorage\TableAccounts;
-use App\Console\Statistic\DataStorage\TableCountries;
-use App\Console\Statistic\DataStorage\TableTowns;
+use App\Console\Statistic\EventProcessor\Events;
 use App\Models\World;
 use App\Services\Json;
 use App\Services\Wofh;
@@ -25,18 +22,13 @@ use Illuminate\Filesystem\FilesystemManager;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
-/**
- * Class DataStorage
- *
- * @package App\Console\Services\Statistic
- */
-class DataStorage
+class Storage
 {
     use Assertion;
     use Normalizer;
-    use TableTowns;
-    use TableAccounts;
-    use TableCountries;
+    use StorageTowns;
+    use StorageAccounts;
+    use StorageCountries;
 
     private FilesystemManager $fsManager;
 
@@ -64,7 +56,7 @@ class DataStorage
     /** @var \Illuminate\Support\Collection|\App\Console\Statistic\Data\Country[] */
     public Collection $countries;
 
-    private DataEvents $events;
+    private Events $events;
 
     public function __construct(FilesystemManager $fsManager, Json $json, Console $console)
     {
@@ -191,10 +183,10 @@ class DataStorage
         ];
 
         $this->unsetRaw();
-        $this->console->table(['Operation', 'Towns', 'Accounts', 'Countries', 'Time, s'], $rows);
+        $this->console->table(['Operation', 'EventsTowns', 'EventsAccounts', 'EventsCountries', 'Time, s'], $rows);
     }
 
-    public function save(DataEvents $events)
+    public function save(Events $events)
     {
         $time = microtime(true);
         $this->events = $events;

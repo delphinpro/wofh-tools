@@ -11,8 +11,6 @@ namespace App\Console\Statistic\Data;
 
 /**
  * Class Account
- *
- * @package App\Console\Services\Statistic
  * @property int $id
  * @property string $name
  * @property int $race

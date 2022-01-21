@@ -7,19 +7,17 @@
  * @license     licensed under the MIT license
  */
 
-namespace App\Console\Statistic\DataStorage;
+namespace App\Console\Statistic\Storage;
 
 use Illuminate\Support\Facades\DB;
 
 /**
  * Trait TableAccounts
- *
- * @package App\Console\Statistic\DataStorage
  * @property \App\Console\Services\Console console
- * @property \App\Console\Statistic\DataEvents events
+ * @property \App\Console\Statistic\EventProcessor\Events events
  * @property \App\Models\World world
  */
-trait TableAccounts
+trait StorageAccounts
 {
     public function updateTableAccounts()
     {
@@ -131,12 +129,12 @@ trait TableAccounts
             $sql .= ','.(intval($account->ratingProduction));
             $sql .= ','.(intval($account->ratingAttack));
             $sql .= ','.(intval($account->ratingDefense));
-            // $sql .= ','.(intval($account[DataStorage::ACCOUNT_KEY_DELTA_POP]));
-            // $sql .= ','.(intval($account[DataStorage::ACCOUNT_KEY_DELTA_TOWNS]));
-            // $sql .= ','.(intval($account[DataStorage::ACCOUNT_KEY_DELTA_SCIENCE]));
-            // $sql .= ','.(intval($account[DataStorage::ACCOUNT_KEY_DELTA_PRODUCTION]));
-            // $sql .= ','.(intval($account[DataStorage::ACCOUNT_KEY_DELTA_ATTACK]));
-            // $sql .= ','.(intval($account[DataStorage::ACCOUNT_KEY_DELTA_DEFENSE]));
+            // $sql .= ','.(intval($account[Storage::ACCOUNT_KEY_DELTA_POP]));
+            // $sql .= ','.(intval($account[Storage::ACCOUNT_KEY_DELTA_TOWNS]));
+            // $sql .= ','.(intval($account[Storage::ACCOUNT_KEY_DELTA_SCIENCE]));
+            // $sql .= ','.(intval($account[Storage::ACCOUNT_KEY_DELTA_PRODUCTION]));
+            // $sql .= ','.(intval($account[Storage::ACCOUNT_KEY_DELTA_ATTACK]));
+            // $sql .= ','.(intval($account[Storage::ACCOUNT_KEY_DELTA_DEFENSE]));
             $sql .= ')';
         }
 

@@ -7,26 +7,20 @@
  * @license     licensed under the MIT license
  */
 
-namespace App\Console\Statistic;
+namespace App\Console\Statistic\EventProcessor;
 
 use App\Console\Services\Console;
-use App\Console\Statistic\DataEvents\Accounts;
-use App\Console\Statistic\DataEvents\Countries;
-use App\Console\Statistic\DataEvents\Towns;
+use App\Console\Statistic\Storage\Storage;
 use App\Services\Wofh;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use function t;
 
-/**
- * Class DataEvents
- *
- * @package App\Console\Services\Statistic
- */
-class DataEvents
+class Events
 {
-    use Towns;
-    use Accounts;
-    use Countries;
+    use EventsTowns;
+    use EventsAccounts;
+    use EventsCountries;
 
     const TABLE_TOWN_ID         = 'town_id';
     const TABLE_ACCOUNT_ID      = 'account_id';
@@ -36,8 +30,8 @@ class DataEvents
     const TABLE_PROPS           = 'props';
 
     private Console $console;
-    private DataStorage $curr;
-    private DataStorage $prev;
+    private Storage $curr;
+    private Storage $prev;
 
     // @formatter:off
 
@@ -94,7 +88,7 @@ class DataEvents
         return count($this->events[$eventId]);
     }
 
-    public function setData(DataStorage $curr, DataStorage $prev)
+    public function setData(Storage $curr, Storage $prev)
     {
         $this->curr = $curr;
         $this->prev = $prev;

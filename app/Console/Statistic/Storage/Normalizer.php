@@ -7,7 +7,7 @@
  * @license     licensed under the MIT license
  */
 
-namespace App\Console\Statistic\DataStorage;
+namespace App\Console\Statistic\Storage;
 
 use App\Console\Statistic\Data\Account;
 use App\Console\Statistic\Data\Country;
@@ -15,8 +15,6 @@ use App\Console\Statistic\Data\Town;
 
 /**
  * Trait Normalizer
- *
- * @package App\Console\Traits
  * @property $towns
  * @property $accounts
  * @property $countries

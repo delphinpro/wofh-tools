@@ -7,23 +7,21 @@
  * @license     licensed under the MIT license
  */
 
-namespace App\Console\Statistic\DataEvents;
+namespace App\Console\Statistic\EventProcessor;
 
 use App\Console\Statistic\Data\Account;
 use App\Services\Wofh;
 
 /**
- * Trait Accounts
- *
- * @package App\Console\Statistic\DataEvents
+ * Trait EventsAccounts
  * @property \App\Console\Services\Console console
- * @property \App\Console\Statistic\DataStorage curr
- * @property \App\Console\Statistic\DataStorage prev
+ * @property \App\Console\Statistic\Storage\Storage curr
+ * @property \App\Console\Statistic\Storage\Storage prev
  * @property array insertAccountIds
  * @property array updateAccountIds
  * @property array deleteAccountIds
  */
-trait Accounts
+trait EventsAccounts
 {
     public function checkEventsOfAccounts()
     {

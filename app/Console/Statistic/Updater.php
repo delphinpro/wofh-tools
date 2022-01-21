@@ -10,13 +10,12 @@
 namespace App\Console\Statistic;
 
 use App\Console\Services\Console;
-use App\Console\Statistic\Updater\Checker;
-use App\Console\Statistic\Updater\Dumper;
+use App\Console\Statistic\EventProcessor\Events;
+use App\Console\Statistic\Storage\Storage;
 use App\Models\World;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use function Helpers\Statistic\parseFilename;
 
 function humanize($bytes, $decimals = 2): string
@@ -26,11 +25,6 @@ function humanize($bytes, $decimals = 2): string
     return sprintf("%.{$decimals}f ", $bytes / pow(1024, $factor)).['B', 'KB', 'MB', 'GB', 'TB', 'PB'][$factor];
 }
 
-/**
- * Class Updater
- *
- * @package App\Services\Statistic
- */
 class Updater
 {
     use Checker;
@@ -132,14 +126,14 @@ class Updater
 
             $this->world->beginUpdate();
 
-            /** @var \App\Console\Statistic\DataStorage $data */
-            $data = resolve(DataStorage::class);
+            /** @var \App\Console\Statistic\Storage\Storage $data */
+            $data = resolve(Storage::class);
             $data->setWorld($this->world);
             $data->loadFromFile($filename);
             $data->parse();
 
-            /** @var \App\Console\Statistic\DataStorage $dataPrevious */
-            $dataPrevious = resolve(DataStorage::class);
+            /** @var \App\Console\Statistic\Storage\Storage $dataPrevious */
+            $dataPrevious = resolve(Storage::class);
             $dataPrevious->setWorld($this->world);
             $dataPrevious->loadFromFile($this->prevFile);
 
@@ -150,8 +144,8 @@ class Updater
             }
             // $this->dump($data, $dataPrevious, $this->world->id);
 
-            /** @var \App\Console\Statistic\DataEvents $events */
-            $events = resolve(DataEvents::class);
+            /** @var \App\Console\Statistic\EventProcessor\Events $events */
+            $events = resolve(Events::class);
             $events->setData($data, $dataPrevious);
             $events->checkEvents();
 

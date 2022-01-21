@@ -7,19 +7,17 @@
  * @license     licensed under the MIT license
  */
 
-namespace App\Console\Statistic\DataStorage;
+namespace App\Console\Statistic\Storage;
 
 use Illuminate\Support\Facades\DB;
 
 /**
- * Trait TableTowns
- *
- * @package App\Console\Services\Statistic
+ * Trait StorageTowns
  * @property \App\Console\Services\Console console
- * @property \App\Console\Statistic\DataEvents events
+ * @property \App\Console\Statistic\EventProcessor\Events events
  * @property \App\Models\World world
  */
-trait TableTowns
+trait StorageTowns
 {
     public function updateTableTowns()
     {
@@ -119,7 +117,7 @@ trait TableTowns
             $sql .= ','.(intval($town->pop));
             $sql .= ','.(intval($town->wonderId));
             $sql .= ','.(intval($town->wonderLevel));
-            // $sql .= ','.(intval($town[DataStorage::TOWN_KEY_DELTA_POP]));
+            // $sql .= ','.(intval($town[Storage::TOWN_KEY_DELTA_POP]));
             $sql .= ')';
         }
 

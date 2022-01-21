@@ -7,12 +7,10 @@
  * @license     licensed under the MIT license
  */
 
-namespace App\Console\Statistic\DataStorage;
+namespace App\Console\Statistic\Storage;
 
 /**
  * Trait Assertion
- *
- * @package App\Console\Statistic\DataStorage
  * @property \Carbon\Carbon time
  * @property \Illuminate\Support\Collection towns
  * @property \Illuminate\Support\Collection accounts

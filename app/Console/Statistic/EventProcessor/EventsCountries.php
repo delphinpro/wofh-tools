@@ -7,23 +7,21 @@
  * @license     licensed under the MIT license
  */
 
-namespace App\Console\Statistic\DataEvents;
+namespace App\Console\Statistic\EventProcessor;
 
 use App\Console\Statistic\Data\Country;
 use App\Services\Wofh;
 
 /**
- * Trait Countries
- *
- * @package App\Console\Statistic\DataEvents
+ * Trait EventsCountries
  * @property \App\Console\Services\Console console
- * @property \App\Console\Statistic\DataStorage curr
- * @property \App\Console\Statistic\DataStorage prev
+ * @property \App\Console\Statistic\Storage\Storage curr
+ * @property \App\Console\Statistic\Storage\Storage prev
  * @property array insertCountryIds
  * @property array updateCountryIds
  * @property array deleteCountryIds
  */
-trait Countries
+trait EventsCountries
 {
     public function checkEventsOfCountries()
     {

@@ -7,18 +7,13 @@
  * @license     licensed under the MIT license
  */
 
-namespace App\Console\Statistic\Updater;
+namespace App\Console\Statistic;
 
 use App\Models\World;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-/**
- * Class UpdateChecker
- *
- * @package App\Console\Traits
- */
 trait Checker
 {
     private ?string $savedPrefix;

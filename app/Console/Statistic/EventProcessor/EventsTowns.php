@@ -7,23 +7,21 @@
  * @license     licensed under the MIT license
  */
 
-namespace App\Console\Statistic\DataEvents;
+namespace App\Console\Statistic\EventProcessor;
 
 use App\Console\Statistic\Data\Town;
 use App\Services\Wofh;
 
 /**
- * Trait Towns
- *
- * @package App\Console\Services\Statistic
+ * Trait EventsTowns
  * @property \App\Console\Services\Console console
- * @property \App\Console\Statistic\DataStorage curr
- * @property \App\Console\Statistic\DataStorage prev
+ * @property \App\Console\Statistic\Storage\Storage curr
+ * @property \App\Console\Statistic\Storage\Storage prev
  * @property array insertTownIds
  * @property array updateTownIds
  * @property array lostTownIds
  */
-trait Towns
+trait EventsTowns
 {
     public function checkEventsOfTowns()
     {
