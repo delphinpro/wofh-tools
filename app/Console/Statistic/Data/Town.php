@@ -10,6 +10,8 @@
 namespace App\Console\Statistic\Data;
 
 use Carbon\CarbonInterface;
+use function Helpers\Wofh\wonderId;
+use function Helpers\Wofh\wonderLevel;
 
 /**
  * Class Town
@@ -46,9 +48,9 @@ class Town extends Entry
         ];
     }
 
-    public function wonderId(): int { return $this->wonder % 1000; }
+    public function wonderId(): int { return wonderId($this->wonder); }
 
-    public function wonderLevel(): int { return (int)floor($this->wonder / 1000); }
+    public function wonderLevel(): int { return wonderLevel($this->wonder); }
 
     public function isNullPopulation(): bool
     {
