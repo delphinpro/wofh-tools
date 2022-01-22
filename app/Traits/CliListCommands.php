@@ -9,22 +9,19 @@
 
 namespace App\Traits;
 
-
 use App\Console\Color;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 
-
 trait CliListCommands
 {
     use CliColors;
 
-
     /**
      * List all make commands.
      *
-     * @param  string  $commandGroup
+     * @param string $commandGroup
      * @return void
      */
     protected function allCommands(string $commandGroup)
@@ -46,12 +43,11 @@ trait CliListCommands
         }
     }
 
-
     /**
-     * @param  Command[]|string[]  $commands
+     * @param Command[]|string[] $commands
      * @return int
      */
-    protected function getColumnWidth(array $commands)
+    protected function getColumnWidth(array $commands): int
     {
         $widths = [];
 
@@ -65,14 +61,13 @@ trait CliListCommands
         return $widths ? max($widths) + 2 : 0;
     }
 
-
     /**
      * Returns the length of a string, using mb_strwidth if it is available.
      *
-     * @param  string  $string  The string to check its length
+     * @param string $string The string to check its length
      * @return int The length of the string
      */
-    protected function strlen($string)
+    protected function strlen(string $string): int
     {
         if (false === $encoding = mb_detect_encoding($string, null, true)) {
             return strlen($string);

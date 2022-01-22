@@ -33,7 +33,7 @@ class StatisticList extends Command
         $this->worldRepository = $worldRepository;
     }
 
-    public function handle()
+    public function handle(): int
     {
         $this->alert('Status of worlds');
         $this->printStatusOfWorlds($this->worldRepository->all());

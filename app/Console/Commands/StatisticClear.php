@@ -32,7 +32,7 @@ class StatisticClear extends Command
         $this->worldRepository = $worldRepository;
     }
 
-    public function handle()
+    public function handle(): int
     {
         $sign = $this->argument('world');
         $this->alert('Clear statistic for '.$sign);

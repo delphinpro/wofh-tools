@@ -87,7 +87,7 @@ class StatisticUpdate extends Command
                     $this->console->stackTrace($e);
                 }
             }
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             $this->logger->error(StatLog::STATISTIC_UPDATE, $e->getMessage());
             $this->console->stackTrace($e);
             return 1;

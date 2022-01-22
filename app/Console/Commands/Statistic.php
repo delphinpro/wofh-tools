@@ -20,7 +20,7 @@ class Statistic extends Command
 
     protected $description = 'List all stat commands';
 
-    public function handle()
+    public function handle(): int
     {
         $this->comment('');
         $this->comment('Available commands:');
