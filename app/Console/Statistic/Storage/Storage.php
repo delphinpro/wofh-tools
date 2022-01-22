@@ -207,18 +207,18 @@ class Storage
 
     public function updateTableCommon()
     {
-        DB::table("z_{$this->world->sign}_common")->insert([
+        DB::table('common')->insert([
             'state_at' => $this->time,
 
-            'towns_total'   => count($this->towns),
-            'towns_new'     => $this->events->count(Wofh::EVENT_TOWN_CREATE),
-            'towns_renamed' => $this->events->count(Wofh::EVENT_TOWN_RENAME),
-            'towns_lost'    => $this->events->count(Wofh::EVENT_TOWN_LOST),
-            'towns_destroy' => 0,
+            'towns_total'     => count($this->towns),
+            'towns_created'   => $this->events->count(Wofh::EVENT_TOWN_CREATE),
+            'towns_renamed'   => $this->events->count(Wofh::EVENT_TOWN_RENAME),
+            'towns_lost'      => $this->events->count(Wofh::EVENT_TOWN_LOST),
+            'towns_destroyed' => 0,
 
-            'wonders_new'      => $this->events->count(Wofh::EVENT_WONDER_CREATE),
-            'wonders_destroy'  => $this->events->count(Wofh::EVENT_WONDER_DESTROY),
-            'wonders_activate' => $this->events->count(Wofh::EVENT_WONDER_ACTIVATE),
+            'wonders_started'   => $this->events->count(Wofh::EVENT_WONDER_CREATE),
+            'wonders_destroyed' => $this->events->count(Wofh::EVENT_WONDER_DESTROY),
+            'wonders_activated' => $this->events->count(Wofh::EVENT_WONDER_ACTIVATE),
 
             'accounts_total'  => $this->totalAccounts,
             'accounts_active' => $this->accounts->filter(fn(Account $acc) => $acc->pop > 0)->count(),
@@ -241,7 +241,7 @@ class Storage
             'accounts_rating_show'    => $this->events->count(Wofh::EVENT_ACCOUNT_RATING_SHOW),
 
             'countries_total'   => count($this->countries),
-            'countries_new'     => $this->events->count(Wofh::EVENT_COUNTRY_CREATE),
+            'countries_created' => $this->events->count(Wofh::EVENT_COUNTRY_CREATE),
             'countries_renamed' => $this->events->count(Wofh::EVENT_COUNTRY_RENAME),
             'countries_flag'    => $this->events->count(Wofh::EVENT_COUNTRY_FLAG),
             'countries_deleted' => $this->events->count(Wofh::EVENT_COUNTRY_DESTROY),

@@ -22,7 +22,7 @@ use function Helpers\Wofh\wonderLevel;
  * @property int $pop
  * @property int $wonder
  * @property bool $lost
- * @property bool $destroy
+ * @property bool $destroyed
  * @property array $names
  */
 class Town extends Entry
@@ -42,9 +42,9 @@ class Town extends Entry
             'account_id' => $town[Town::KEY_ACCOUNT_ID] ?: null,
             'country_id' => null,
             'pop'        => $town[Town::KEY_POP],
-            'wonder'     => $wonder,
-            'lost'       => false,
-            'destroy'    => false,
+            'wonder'     => $wonder ?: null,
+            'lost'       => !$town[Town::KEY_ACCOUNT_ID],
+            'destroyed'  => false,
         ];
     }
 

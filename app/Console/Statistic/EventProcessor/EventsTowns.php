@@ -120,8 +120,8 @@ trait EventsTowns
                 static::TABLE_COUNTRY_ID_FROM => 0,
                 static::TABLE_ROLE            => 0,
                 static::TABLE_PROPS           => [
-                    'prevName' => $townPrev->name,
-                    'currName' => $town->name,
+                    'prev_name' => $townPrev->name,
+                    'curr_name' => $town->name,
                 ],
             ];
         }
@@ -138,9 +138,9 @@ trait EventsTowns
                 static::TABLE_COUNTRY_ID_FROM => 0,
                 static::TABLE_ROLE            => 0,
                 static::TABLE_PROPS           => [
-                    'wonderId'    => $town->wonderId(),
-                    'wonderLevel' => $town->wonderLevel(),
-                ]
+                    'wonder_id'    => $town->wonderId(),
+                    'wonder_level' => $town->wonderLevel(),
+                ],
             ];
         }
     }
@@ -156,9 +156,9 @@ trait EventsTowns
                 static::TABLE_COUNTRY_ID_FROM => 0,
                 static::TABLE_ROLE            => 0,
                 static::TABLE_PROPS           => [
-                    'wonderId'    => $townPrev->wonderId(),
-                    'wonderLevel' => $townPrev->wonderLevel(),
-                ]
+                    'wonder_id'    => $townPrev->wonderId(),
+                    'wonder_level' => $townPrev->wonderLevel(),
+                ],
             ];
         }
     }
@@ -175,10 +175,10 @@ trait EventsTowns
                 static::TABLE_COUNTRY_ID => $this->curr->getAccount($town->account_id)->country_id,
                 static::TABLE_COUNTRY_ID_FROM => 0,
                 static::TABLE_ROLE            => 0,
-                static::TABLE_PROPS      => [
-                    'wonderId'    => $town->wonderId(),
-                    'wonderLevel' => $town->wonderLevel(),
-                ]
+                static::TABLE_PROPS           => [
+                    'wonder_id'    => $town->wonderId(),
+                    'wonder_level' => $town->wonderLevel(),
+                ],
             ];
         }
     }
