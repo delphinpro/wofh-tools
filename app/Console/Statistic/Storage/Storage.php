@@ -13,7 +13,7 @@ use App\Console\Services\Console;
 use App\Console\Statistic\Data\Account;
 use App\Console\Statistic\Data\Country;
 use App\Console\Statistic\Data\Town;
-use App\Console\Statistic\EventProcessor\Events;
+use App\Console\Statistic\EventProcessor\EventProcessor;
 use App\Models\World;
 use App\Services\Json;
 use App\Services\Wofh;
@@ -56,7 +56,7 @@ class Storage
     /** @var \Illuminate\Support\Collection|\App\Console\Statistic\Data\Country[] */
     public Collection $countries;
 
-    private Events $events;
+    private EventProcessor $events;
 
     public function __construct(FilesystemManager $fsManager, Json $json, Console $console)
     {
@@ -186,7 +186,7 @@ class Storage
         $this->console->table(['Operation', 'Towns', 'Accounts', 'Countries', 'Time, s'], $rows);
     }
 
-    public function save(Events $events)
+    public function save(EventProcessor $events)
     {
         $time = microtime(true);
         $this->events = $events;

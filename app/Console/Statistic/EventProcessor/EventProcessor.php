@@ -15,7 +15,7 @@ use App\Services\Wofh;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class Events
+class EventProcessor
 {
     use EventsTowns;
     use EventsAccounts;
@@ -138,7 +138,7 @@ class Events
                 $sql .= ",".(intval($event[static::TABLE_COUNTRY_ID]));
                 $sql .= ",".(intval($event[static::TABLE_COUNTRY_ID_FROM]));
                 $sql .= ",".(intval($event[static::TABLE_ROLE]));
-                $sql .= ",".('NULL');
+                $sql .= ",".$pdo->quote(json_encode($event[static::TABLE_PROPS]));
                 $sql .= ")";
             }
         }

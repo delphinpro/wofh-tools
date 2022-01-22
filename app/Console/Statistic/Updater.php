@@ -10,8 +10,8 @@
 namespace App\Console\Statistic;
 
 use App\Console\Services\Console;
-use App\Console\Statistic\EventProcessor\Events;
 use App\Console\Statistic\Storage\Storage;
+use App\Console\Statistic\EventProcessor\EventProcessor;
 use App\Models\World;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
@@ -144,8 +144,8 @@ class Updater
             }
             // $this->dump($data, $dataPrevious, $this->world->id);
 
-            /** @var \App\Console\Statistic\EventProcessor\Events $events */
-            $events = resolve(Events::class);
+            /** @var \App\Console\Statistic\EventProcessor\EventProcessor $events */
+            $events = resolve(EventProcessor::class);
             $events->setData($data, $dataPrevious);
             $events->checkEvents();
 

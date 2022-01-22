@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 /**
  * Trait TableAccounts
  * @property \App\Console\Services\Console console
- * @property \App\Console\Statistic\EventProcessor\Events events
+ * @property \App\Console\Statistic\EventProcessor\EventProcessor events
  * @property \App\Models\World world
  */
 trait StorageAccounts
