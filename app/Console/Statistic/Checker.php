@@ -11,16 +11,13 @@ namespace App\Console\Statistic;
 
 use App\Models\World;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 trait Checker
 {
-    private ?string $savedPrefix;
-
     protected function checkTables(World $world)
     {
-        $this->setWorldPrefix($world->sign);
+        $savedPrefix = setStatisticTablePrefix($world->sign);
 
         if (!Schema::hasTable('towns')) {
             Schema::create('towns', function (Blueprint $table) {
@@ -192,17 +189,6 @@ trait Checker
             });
         }
 
-        $this->restorePrefix();
-    }
-
-    private function setWorldPrefix(string $sign)
-    {
-        $this->savedPrefix = DB::getTablePrefix();
-        DB::setTablePrefix('z_'.$sign.'_');
-    }
-
-    private function restorePrefix()
-    {
-        DB::setTablePrefix($this->savedPrefix);
+        setTablePrefix($savedPrefix);
     }
 }

@@ -192,11 +192,15 @@ class Storage
         $this->events = $events;
         $this->console->line('Saving data');
 
+        $savedPrefix = setStatisticTablePrefix($this->world->sign);
+
         $this->updateTableTowns();
         $this->updateTableAccounts();
         $this->updateTableCountries();
         $this->events->updateTableEvents($this->world->sign, $this->time);
         $this->updateTableCommon();
+
+        setTablePrefix($savedPrefix);
 
         $this->console->line('Total saving time: '.t($time));
     }

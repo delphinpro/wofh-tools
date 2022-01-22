@@ -28,12 +28,14 @@ class StatisticLogger
 
     public function log(array $log)
     {
+        $savedPrefix = setTablePrefix();
         StatLog::create([
             'operation' => $log['operation'] ?: 0,
             'status'    => $log['status'] ?: StatLog::STATUS_OK,
             'world_id'  => $log['world_id'] ?: null,
             'message'   => $log['message'] ?: '',
         ]);
+        setTablePrefix($savedPrefix);
     }
 
     public function ok(int $operation, string $message, $worldId = null)
