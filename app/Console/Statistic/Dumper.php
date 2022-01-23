@@ -9,7 +9,7 @@
 
 namespace App\Console\Statistic;
 
-use App\Console\Statistic\Storage\Storage as DataStorage;
+use App\Console\Statistic\Data\DataStorage;
 use Illuminate\Support\Facades\Storage;
 
 trait Dumper

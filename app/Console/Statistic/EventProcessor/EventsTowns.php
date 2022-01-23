@@ -15,8 +15,8 @@ use App\Services\Wofh;
 /**
  * Trait EventsTowns
  * @property \App\Console\Services\Console console
- * @property \App\Console\Statistic\Storage\Storage curr
- * @property \App\Console\Statistic\Storage\Storage prev
+ * @property \App\Console\Statistic\Data\DataStorage curr
+ * @property \App\Console\Statistic\Data\DataStorage prev
  * @property array insertTownIds
  * @property array updateTownIds
  * @property array lostTownIds

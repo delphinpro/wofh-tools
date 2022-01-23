@@ -15,8 +15,8 @@ use App\Services\Wofh;
 /**
  * Trait EventsAccounts
  * @property \App\Console\Services\Console console
- * @property \App\Console\Statistic\Storage\Storage curr
- * @property \App\Console\Statistic\Storage\Storage prev
+ * @property \App\Console\Statistic\Data\DataStorage curr
+ * @property \App\Console\Statistic\Data\DataStorage prev
  * @property array insertAccountIds
  * @property array updateAccountIds
  * @property array deleteAccountIds

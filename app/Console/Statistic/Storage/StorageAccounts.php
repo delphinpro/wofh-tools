@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 /**
  * Trait TableAccounts
  * @property \App\Console\Services\Console console
- * @property \App\Console\Statistic\EventProcessor\EventProcessor events
+ * @property \App\Console\Statistic\EventProcessor\EventProcessor $eventProcessor
  * @property \App\Models\World world
  */
 trait StorageAccounts
@@ -30,7 +30,7 @@ trait StorageAccounts
 
     private function insertAccounts()
     {
-        if (empty($this->events->insertAccountIds)) return;
+        if (empty($this->eventProcessor->insertAccountIds)) return;
 
         $columns = [
             'id',
@@ -52,7 +52,7 @@ trait StorageAccounts
         $pdo = DB::getPdo();
         $first = true;
 
-        foreach ($this->events->insertAccountIds as $id) {
+        foreach ($this->eventProcessor->insertAccountIds as $id) {
             $account = $this->getAccount($id);
 
             if (!$first) $sql .= ','; else $first = false;

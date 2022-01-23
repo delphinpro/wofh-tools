@@ -7,29 +7,18 @@
  * @license     licensed under the MIT license
  */
 
-namespace App\Console\Statistic\Storage;
+namespace App\Console\Statistic\Data;
 
 use App\Console\Services\Console;
-use App\Console\Statistic\Data\Account;
-use App\Console\Statistic\Data\Country;
-use App\Console\Statistic\Data\Town;
-use App\Console\Statistic\EventProcessor\EventProcessor;
 use App\Models\World;
 use App\Services\Json;
-use App\Services\Wofh;
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 
-class Storage
+class DataStorage
 {
-    use Assertion;
-    use Normalizer;
-    use StorageTowns;
-    use StorageAccounts;
-    use StorageCountries;
-
     private Filesystem $fs;
     private Json $json;
     private Console $console;
@@ -50,11 +39,9 @@ class Storage
     /** @var \Illuminate\Support\Collection|\App\Console\Statistic\Data\Country[] */
     public Collection $countries;
 
-    private EventProcessor $events;
-
-    public static function create(World $world, Filesystem $fileSystem, bool $silent = false): Storage
+    public static function create(World $world, Filesystem $fileSystem, bool $silent = false): DataStorage
     {
-        $instance = resolve(Storage::class);
+        $instance = resolve(DataStorage::class);
         $instance->world = $world;
         $instance->fs = $fileSystem;
         $instance->silent = $silent;
@@ -79,7 +66,7 @@ class Storage
      *== Getters
      *== ======================================= ==*/
 
-    public function getTime(): ?Carbon { return $this->time; }
+    public function getTime(): ?CarbonInterface { return $this->time; }
 
     public function getTown(int $id): Town { return $this->towns->get($id); }
 
@@ -97,10 +84,24 @@ class Storage
     }
 
     /*==
+     *== Assertions
+     *== ======================================= ==*/
+
+    public function hasData(): bool { return !is_null($this->time); }
+
+    public function hasTown(int $id): bool { return $this->towns->has($id); }
+
+    public function hasAccount(int $id): bool { return $this->accounts->has($id); }
+
+    public function hasCountry(int $id): bool { return $this->countries->has($id); }
+
+    public function hasCountries(): bool { return $this->countries->count() > 0; }
+
+    /*==
      *== Prepare and Calculation process
      *== ======================================= ==*/
 
-    public function configure(World $world, Filesystem $fileSystem, bool $silent = false)
+    protected function configure(World $world, Filesystem $fileSystem, bool $silent = false)
     {
         $this->world = $world;
         $this->fs = $fileSystem;
@@ -132,7 +133,9 @@ class Storage
 
         $silent = true;
         $time = microtime(true);
-        $this->collectData();
+        $this->collectTowns();
+        $this->collectAccounts();
+        $this->collectCountries();
         $rows[] = [
             'Normalization',
             $this->towns->count(),
@@ -160,7 +163,29 @@ class Storage
         if (!$silent) $this->console->table([$title, 'Towns', 'Accounts', 'Countries', 'Time, s'], $rows);
     }
 
-    public function calculate()
+    protected function collectTowns()
+    {
+        $this->towns = collect($this->raw['towns'])
+            ->map(fn($town, $id) => new Town($id, $town, $this->time))
+            // Убрать города с нулевым населением
+            ->filter(fn(Town $town) => $town->pop > 0);
+        // и варварские (аккаунт = 0)
+        // if ($this->isTownNullPopulation($town) or $this->isTownBarbarian($town)) {
+        //     continue;
+        // }
+    }
+
+    protected function collectAccounts()
+    {
+        $this->accounts = collect($this->raw['accounts'])->map(fn($account, $id) => new Account($id, $account));
+    }
+
+    protected function collectCountries()
+    {
+        $this->countries = collect($this->raw['countries'])->map(fn($country, $id) => new Country($id, $country));
+    }
+
+    protected function calculate()
     {
         // Считаем население и города аккаунтов
         foreach ($this->towns as $town) {
@@ -184,7 +209,7 @@ class Storage
         }
     }
 
-    public function filter()
+    protected function filter()
     {
         $this->accounts = $this->accounts->filter(function (Account $account) {
             return $account->towns != 0
@@ -198,71 +223,5 @@ class Storage
         });
     }
 
-    public function unsetRaw() { $this->raw = null; }
-
-    /*==
-     *== Saving data
-     *== ======================================= ==*/
-
-    public function save(EventProcessor $events)
-    {
-        $time = microtime(true);
-        $this->events = $events;
-        $this->console->line('Saving data');
-
-        $savedPrefix = setStatisticTablePrefix($this->world->sign);
-
-        $this->updateTableTowns();
-        $this->updateTableAccounts();
-        $this->updateTableCountries();
-        $this->events->updateTableEvents($this->world->sign, $this->time);
-        $this->updateTableCommon();
-
-        setTablePrefix($savedPrefix);
-
-        $this->console->line('Total saving time: '.t($time));
-    }
-
-    public function updateTableCommon()
-    {
-        DB::table('common')->insert([
-            'state_at' => $this->time,
-
-            'towns_total'     => count($this->towns),
-            'towns_created'   => $this->events->count(Wofh::EVENT_TOWN_CREATE),
-            'towns_renamed'   => $this->events->count(Wofh::EVENT_TOWN_RENAME),
-            'towns_lost'      => $this->events->count(Wofh::EVENT_TOWN_LOST),
-            'towns_destroyed' => 0,
-
-            'wonders_started'   => $this->events->count(Wofh::EVENT_WONDER_CREATE),
-            'wonders_destroyed' => $this->events->count(Wofh::EVENT_WONDER_DESTROY),
-            'wonders_activated' => $this->events->count(Wofh::EVENT_WONDER_ACTIVATE),
-
-            'accounts_total'  => $this->totalAccounts,
-            'accounts_active' => $this->accounts->filter(fn(Account $acc) => $acc->pop > 0)->count(),
-            'accounts_race0'  => $this->accounts->filter(fn(Account $acc) => $acc->race == 0)->count(),
-            'accounts_race1'  => $this->accounts->filter(fn(Account $acc) => $acc->race == 1)->count(),
-            'accounts_race2'  => $this->accounts->filter(fn(Account $acc) => $acc->race == 2)->count(),
-            'accounts_race3'  => $this->accounts->filter(fn(Account $acc) => $acc->race == 3)->count(),
-            'accounts_sex0'   => $this->accounts->filter(fn(Account $acc) => $acc->sex == 0)->count(),
-            'accounts_sex1'   => $this->accounts->filter(fn(Account $acc) => $acc->sex == 1)->count(),
-
-            'accounts_new'            => $this->events->count(Wofh::EVENT_ACCOUNT_CREATE),
-            'accounts_country_change' => $this->events->count(Wofh::EVENT_ACCOUNT_COUNTRY_CHANGE),
-            'accounts_country_in'     => $this->events->count(Wofh::EVENT_ACCOUNT_COUNTRY_IN),
-            'accounts_country_out'    => $this->events->count(Wofh::EVENT_ACCOUNT_COUNTRY_OUT),
-            'accounts_deleted'        => $this->events->count(Wofh::EVENT_ACCOUNT_DELETE),
-            'accounts_renamed'        => $this->events->count(Wofh::EVENT_ACCOUNT_RENAME),
-            'accounts_role_in'        => $this->events->count(Wofh::EVENT_ACCOUNT_ROLE_IN),
-            'accounts_role_out'       => $this->events->count(Wofh::EVENT_ACCOUNT_ROLE_OUT),
-            'accounts_rating_hide'    => $this->events->count(Wofh::EVENT_ACCOUNT_RATING_HIDE),
-            'accounts_rating_show'    => $this->events->count(Wofh::EVENT_ACCOUNT_RATING_SHOW),
-
-            'countries_total'   => count($this->countries),
-            'countries_created' => $this->events->count(Wofh::EVENT_COUNTRY_CREATE),
-            'countries_renamed' => $this->events->count(Wofh::EVENT_COUNTRY_RENAME),
-            'countries_flag'    => $this->events->count(Wofh::EVENT_COUNTRY_FLAG),
-            'countries_deleted' => $this->events->count(Wofh::EVENT_COUNTRY_DESTROY),
-        ]);
-    }
+    protected function unsetRaw() { $this->raw = null; }
 }

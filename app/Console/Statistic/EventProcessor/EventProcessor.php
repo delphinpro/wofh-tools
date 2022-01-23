@@ -10,9 +10,11 @@
 namespace App\Console\Statistic\EventProcessor;
 
 use App\Console\Services\Console;
-use App\Console\Statistic\Storage\Storage;
+use App\Console\Statistic\Data\DataStorage;
+use App\Console\Statistic\Data\Event;
+use App\Models\World;
 use App\Services\Wofh;
-use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class EventProcessor
@@ -28,9 +30,10 @@ class EventProcessor
     const TABLE_ROLE            = 'role';
     const TABLE_PROPS           = 'props';
 
-    private Console $console;
-    private Storage $curr;
-    private Storage $prev;
+    protected Console $console;
+    protected World $world;
+    protected DataStorage $curr;
+    protected DataStorage $prev;
 
     public array $insertTownIds = [];
     public array $updateTownIds = [];
@@ -45,12 +48,19 @@ class EventProcessor
     public array $updateCountryIds = [];
     public array $deleteCountryIds = [];
 
-    /** @var array[] */
-    private $events;
+    private array $events;
 
-    public static function create(Storage $curr, Storage $prev)
+    /** @var \App\Console\Statistic\Data\Town[]|\Illuminate\Support\Collection */
+    protected Collection $towns;
+    /** @var \App\Console\Statistic\Data\Account[]|\Illuminate\Support\Collection */
+    protected Collection $accounts;
+    /** @var \App\Console\Statistic\Data\Country[]|\Illuminate\Support\Collection */
+    protected Collection $countries;
+
+    public static function create(World $world, DataStorage $curr, DataStorage $prev)
     {
         $instance = resolve(EventProcessor::class);
+        $instance->world = $world;
         $instance->curr = $curr;
         $instance->prev = $prev;
         return $instance;
@@ -91,59 +101,32 @@ class EventProcessor
 
     public function count($eventId): int { return count($this->events[$eventId]); }
 
+    public function getEvents(): array
+    {
+        $result = [];
+        foreach ($this->events as $events) {
+            foreach ($events as $event) {
+                $result[] = $event->toArray();
+            }
+        }
+        return $result;
+    }
+
     public function checkEvents()
     {
+        $savedPrefix = setStatisticTablePrefix($this->world->sign);
+        $this->towns = DB::table('towns')->select()->get()->keyBy('id');
+        $this->accounts = DB::table('accounts')->select()->get()->keyBy('id');
+        $this->countries = DB::table('countries')->select()->get()->keyBy('id');
+        setTablePrefix($savedPrefix);
+
         $this->checkEventsOfTowns();
         $this->checkEventsOfAccounts();
         $this->checkEventsOfCountries();
     }
 
-    public function updateTableEvents(string $sign, Carbon $timestamp)
+    public function push(int $eventId, int $entityId, array $body)
     {
-        $time = microtime(true);
-
-        $columns = [
-            'state_at',
-            'id',
-            'town_id',
-            'account_id',
-            'country_id',
-            'country_id_from',
-            'role',
-            'props',
-        ];
-
-        // INSERT INTO tbl_name (a, b, c) VALUES (1,2,3), (4,5,6), (7,8,9);
-        $sql = "INSERT";
-        $sql .= " INTO `z_{$sign}_events`";
-        $sql .= " (`".join('`,`', $columns)."`)";
-        $sql .= " VALUES ";
-
-        $pdo = DB::getPdo();
-        $first = true;
-
-        foreach ($this->events as $eventId => $events) {
-            foreach ($events as $event) {
-                if (!$first) $sql .= ','; else $first = false;
-
-                $sql .= "(";
-                $sql .= ($pdo->quote($timestamp));
-                $sql .= ",".(intval($eventId));
-                $sql .= ",".(intval($event[static::TABLE_TOWN_ID]));
-                $sql .= ",".(intval($event[static::TABLE_ACCOUNT_ID]));
-                $sql .= ",".(intval($event[static::TABLE_COUNTRY_ID]));
-                $sql .= ",".(intval($event[static::TABLE_COUNTRY_ID_FROM]));
-                $sql .= ",".(intval($event[static::TABLE_ROLE]));
-                $sql .= ",".$pdo->quote(json_encode($event[static::TABLE_PROPS]));
-                $sql .= ")";
-            }
-        }
-
-        // Если есть хоть одно событие
-        if (!$first) {
-            DB::insert($sql);
-        }
-
-        $this->console->line('    events: '.t($time).'s');
+        $this->events[$eventId][$entityId] = new Event($eventId, $this->curr->getTime(), $body);
     }
 }

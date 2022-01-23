@@ -10,8 +10,9 @@
 namespace App\Console\Statistic;
 
 use App\Console\Services\Console;
+use App\Console\Statistic\Data\DataStorage;
 use App\Console\Statistic\EventProcessor\EventProcessor;
-use App\Console\Statistic\Storage\Storage as DataStorage;
+use App\Console\Statistic\StorageProcessor\StorageProcessor;
 use App\Models\World;
 use Carbon\Carbon;
 use Illuminate\Contracts\Filesystem\Filesystem;
@@ -129,10 +130,16 @@ class Updater
 
             if (!$dataPrevious->hasData()) $this->console->warn('No previous data');
 
-            $eventProcessor = EventProcessor::create($data, $dataPrevious);
+            $eventProcessor = EventProcessor::create($this->world, $data, $dataPrevious);
             $eventProcessor->checkEvents();
 
-            $data->save($eventProcessor);
+            (new StorageProcessor(
+                $this->console,
+                $eventProcessor,
+                $this->world,
+                $dataPrevious,
+                $data
+            ))->save();
 
             $this->world->endUpdate($data->getTime());
 

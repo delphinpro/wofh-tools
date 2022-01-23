@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 /**
  * Trait StorageCountries
  * @property \App\Console\Services\Console console
- * @property \App\Console\Statistic\EventProcessor\EventProcessor events
+ * @property \App\Console\Statistic\EventProcessor\EventProcessor $eventProcessor
  * @property \App\Models\World world
  */
 trait StorageCountries
@@ -31,7 +31,7 @@ trait StorageCountries
 
     private function insertCountries()
     {
-        if (empty($this->events->insertCountryIds)) return;
+        if (empty($this->eventProcessor->insertCountryIds)) return;
 
         $columns = [
             'id',
@@ -50,7 +50,7 @@ trait StorageCountries
         $pdo = DB::getPdo();
         $first = true;
 
-        foreach ($this->events->insertCountryIds as $id) {
+        foreach ($this->eventProcessor->insertCountryIds as $id) {
             $country = $this->getCountry($id);
             if (!$first) $sql .= ','; else $first = false;
 
@@ -73,8 +73,7 @@ trait StorageCountries
 
     private function updateCountriesDeleted()
     {
-        if (empty($this->events->deleteCountryIds)) return;
-
+        if (empty($this->eventProcessor->deleteCountryIds)) return;
         // UPDATE TABLE tbl_name SET `lost` = 1 WHERE `id` IN (a, b, c);
         // $sql = "UPDATE `z_{$this->world->sign}_countries`";
         // $sql .= " SET `active` = 0";
@@ -85,11 +84,11 @@ trait StorageCountries
 
     private function updateCountriesData()
     {
-        if (empty($this->events->updateCountryIds)) return;
+        if (empty($this->eventProcessor->updateCountryIds)) return;
 
         $pdo = DB::getPdo();
 
-        foreach ($this->events->updateCountryIds as $id => $data) {
+        foreach ($this->eventProcessor->updateCountryIds as $id => $data) {
             $fields = [];
             $props = [];
             if (!is_null($data['currName'])) {
