@@ -21,10 +21,19 @@ use App\Console\Statistic\Data\Town;
  */
 trait Normalizer
 {
+    public function collectData()
+    {
+        $this->collectTowns();
+        $this->collectAccounts();
+        $this->collectCountries();
+    }
+
     private function collectTowns()
     {
-        $this->towns = collect($this->raw['towns'])->map(fn($town, $id) => new Town($id, $town));
-        // Убрать города с нулевым населением
+        $this->towns = collect($this->raw['towns'])
+            ->map(fn($town, $id) => new Town($id, $town, $this->time))
+            // Убрать города с нулевым населением
+            ->filter(fn(Town $town) => $town->pop > 0);
         // и варварские (аккаунт = 0)
         // if ($this->isTownNullPopulation($town) or $this->isTownBarbarian($town)) {
         //     continue;

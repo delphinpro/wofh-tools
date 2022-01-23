@@ -32,8 +32,6 @@ class EventProcessor
     private Storage $curr;
     private Storage $prev;
 
-    // @formatter:off
-
     public array $insertTownIds = [];
     public array $updateTownIds = [];
     public array $lostTownIds = [];
@@ -45,8 +43,6 @@ class EventProcessor
     public array $insertCountryIds = [];
     public array $updateCountryIds = [];
     public array $deleteCountryIds = [];
-
-    // @formatter:on
 
     /** @var array[] */
     private $events;
@@ -84,10 +80,7 @@ class EventProcessor
         ];
     }
 
-    public function count($eventId): int
-    {
-        return count($this->events[$eventId]);
-    }
+    public function count($eventId): int { return count($this->events[$eventId]); }
 
     public function setData(Storage $curr, Storage $prev)
     {

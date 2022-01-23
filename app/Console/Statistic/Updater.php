@@ -10,10 +10,11 @@
 namespace App\Console\Statistic;
 
 use App\Console\Services\Console;
-use App\Console\Statistic\Storage\Storage;
 use App\Console\Statistic\EventProcessor\EventProcessor;
+use App\Console\Statistic\Storage\Storage as DataStorage;
 use App\Models\World;
 use Carbon\Carbon;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use function Helpers\Statistic\parseFilename;
@@ -31,34 +32,35 @@ class Updater
     use Dumper;
 
     protected Console $console;
-
-    protected bool $zip;
-
-    /** @var \Illuminate\Contracts\Filesystem\Filesystem|\Illuminate\Filesystem\FilesystemAdapter */
-    protected $fs;
+    protected Filesystem $fs;
 
     protected World $world;
 
-    protected ?string $prevFile;
+    protected bool $zip;
+    protected int $limit;
+    protected bool $silent;
 
+    protected ?string $prevFile;
     protected ?Collection $files;
 
     public function __construct(Console $console)
     {
         $this->console = $console;
-        $this->zip = false;
-        $this->fs = Storage::disk(config('app.stat_disk'));
     }
 
-    /**
-     * @throws \Exception|\Throwable
-     */
-    public function updateWorld(World $world, int $limit = 0)
+    /** @throws \Throwable */
+    public function updateWorld(World $world, Filesystem $filesystem, array $params)
     {
         $this->prevFile = null;
         $this->files = null;
         $this->world = $world;
+        $this->fs = $filesystem;
 
+        $this->limit = $params['limit'] ?? 0;
+        $this->zip = $params['zip'] ?? false;
+        $this->silent = $params['silent'] ?? false;
+
+        $time = microtime(true);
         $dataPath = 'statistic/'.$world->sign;
 
         if (!$this->zip && !$this->fs->exists($dataPath)) {
@@ -72,51 +74,42 @@ class Updater
         $counter = 0;
         foreach ($this->files as $filename) {
             $counter++;
-            $this->printHeaderFile($filename, $limit, $counter);
+            $this->printHeaderFile($filename, $this->limit, $counter);
             $this->processFile($filename);
             $this->prevFile = $filename;
 
-            if ($limit && $counter >= $limit) {
+            if ($this->limit && $counter >= $this->limit) {
                 $this->console->line();
-                $this->console->line('Limited count files: '.$limit.'. STOP.', [Console::BG_CYAN, Console::WHITE]);
+                $this->console->line('Limited count files: '.$this->limit.'. STOP.', [Console::BG_CYAN, Console::WHITE]);
                 break;
             }
         }
 
+        $this->console->line('Total time: '.t($time), [Console::CYAN]);
         $this->printMemoryUsage();
     }
 
-    protected function printHeaderFile(string $filename, $limit, $counter)
+    /** @throws \Exception */
+    protected function scanFiles(string $dataPath)
     {
-        preg_match($this->filenamePattern(), $filename, $m);
-        $this->console->section(basename($filename).' // '.Carbon::createFromTimestamp($m[1])->format('d.m.Y H:i:s e'));
-        $none = $this->console->makeString('None', Console::YELLOW);
-        $this->console->line('Previous file   '.(is_null($this->prevFile) ? $none : basename($this->prevFile)));
-        if ($limit) $this->console->success('File: '.$counter.' of '.$limit);
-    }
+        $pattern = $this->filenamePattern();
+        $files = collect($this->fs->files($dataPath))
+            ->map(fn($filename) => parseFilename($filename, $pattern))
+            ->filter(fn($file) => !!$file['time']);
 
-    protected function printHeaderWorld(string $dataPath)
-    {
-        // @formatter:off
-        $this->console->line('SOURCE: '.$this->console->trimPath($this->fs->path($dataPath)));
-        $never = $this->console->makeString('never', Console::YELLOW);
-        $this->console->line('Statistic loaded at   '.($this->world->stat_loaded_at ? $this->console->makeString($this->world->stat_loaded_at->format('d.m.Y H:i:s e'), Console::GREEN) : $never));
-        $this->console->line('Statistic updated at  '.($this->world->stat_updated_at ? $this->console->makeString($this->world->stat_updated_at->format('d.m.Y H:i:s e'), Console::GREEN) : $never));
-        // @formatter:on
-    }
+        if (!$files->count()) throw new \Exception(sprintf('Data files not found: %s', $pattern));
 
-    protected function printMemoryUsage()
-    {
-        $memoryUsage = memory_get_usage(true);
-        $forHuman = humanize($memoryUsage);
-        $available = ini_get('memory_limit');
-        $details = preg_replace('~(\d(?=(?:\d{3})+(?!\d)))~s', "\\1'", $memoryUsage);
+        $timestamp = $this->world->stat_updated_at ? $this->world->stat_updated_at->timestamp : 0;
 
-        $this->console->line(
-            $this->console->makeString("Memory usage : ", Console::BLUE)
-            .$this->console->makeString($forHuman, Console::RED)
-            .$this->console->makeString(" of ".$available, Console::BLUE)
-            .' ['.$details.']');
+        // Берем только те, которые не внесены в базу
+        $newFiles = $files->filter(fn($file) => $file['time'] > $timestamp)->sort();
+
+        $previousFile = $files->diffUsing($newFiles, fn($file1, $file2) => $file1['time'] - $file2['time'])
+            ->sort()
+            ->pop();
+
+        $this->prevFile = $previousFile['name'] ?? null;
+        $this->files = $newFiles->map(fn($file) => $file['name']);
     }
 
     /** @throws \Throwable */
@@ -127,18 +120,18 @@ class Updater
             $this->world->beginUpdate();
 
             /** @var \App\Console\Statistic\Storage\Storage $data */
-            $data = resolve(Storage::class);
-            $data->setWorld($this->world);
+            $data = resolve(DataStorage::class);
+            $data->configure($this->world, $this->fs, $this->silent);
             $data->loadFromFile($filename);
-            $data->parse();
+            $data->parse('Current:');
 
             /** @var \App\Console\Statistic\Storage\Storage $dataPrevious */
-            $dataPrevious = resolve(Storage::class);
-            $dataPrevious->setWorld($this->world);
+            $dataPrevious = resolve(DataStorage::class);
+            $dataPrevious->configure($this->world, $this->fs, $this->silent);
             $dataPrevious->loadFromFile($this->prevFile);
 
             if ($dataPrevious->hasData()) {
-                $dataPrevious->parse();
+                $dataPrevious->parse('Previous:');
             } else {
                 $this->console->warn('No previous data');
             }
@@ -156,27 +149,37 @@ class Updater
         });
     }
 
-    /** @throws \Exception */
-    protected function scanFiles(string $dataPath)
+    protected function printHeaderWorld(string $dataPath)
     {
-        $pattern = $this->filenamePattern();
-        $files = collect($this->fs->files($dataPath))
-            ->map(fn ($filename) => parseFilename($filename, $pattern))
-            ->filter(fn($file) => !!$file['time']);
+        // @formatter:off
+        $this->console->line('SOURCE: '.$this->console->trimPath($this->fs->path($dataPath)));
+        $never = $this->console->makeString('never', Console::YELLOW);
+        $this->console->line('Statistic loaded at   '.($this->world->stat_loaded_at ? $this->console->makeString($this->world->stat_loaded_at->format('d.m.Y H:i:s e'), Console::GREEN) : $never));
+        $this->console->line('Statistic updated at  '.($this->world->stat_updated_at ? $this->console->makeString($this->world->stat_updated_at->format('d.m.Y H:i:s e'), Console::GREEN) : $never));
+        // @formatter:on
+    }
 
-        if (!$files->count()) throw new \Exception(sprintf('Data files not found: %s', $pattern));
+    protected function printHeaderFile(string $filename, $limit, $counter)
+    {
+        preg_match($this->filenamePattern(), $filename, $m);
+        $this->console->section(basename($filename).' // '.Carbon::createFromTimestamp($m[1])->format('d.m.Y H:i:s e'));
+        $none = $this->console->makeString('None', Console::YELLOW);
+        $this->console->line('Previous file   '.(is_null($this->prevFile) ? $none : basename($this->prevFile)));
+        if ($limit) $this->console->success('File: '.$counter.' of '.$limit);
+    }
 
-        $timestamp = $this->world->stat_updated_at ? $this->world->stat_updated_at->timestamp : 0;
+    protected function printMemoryUsage()
+    {
+        $memoryUsage = memory_get_usage(true);
+        $forHuman = humanize($memoryUsage);
+        $available = ini_get('memory_limit');
+        $details = preg_replace('~(\d(?=(?:\d{3})+(?!\d)))~s', "\\1'", $memoryUsage);
 
-        // Берем только те, которые не внесены в базу
-        $newFiles = $files->filter(fn($file) => $file['time'] > $timestamp)->sort();
-
-        $previousFile = $files->diffUsing($newFiles, fn($file1, $file2) => $file1['time'] - $file2['time'])
-            ->sort()
-            ->pop();
-
-        $this->prevFile = $previousFile['name'] ?? null;
-        $this->files = $newFiles->map(fn($file) => $file['name']);
+        $this->console->line(
+            $this->console->makeString("Memory usage : ", Console::BLUE)
+            .$this->console->makeString($forHuman, Console::RED)
+            .$this->console->makeString(" of ".$available, Console::BLUE)
+            .' ['.$details.']');
     }
 
     protected function filenamePattern(): string

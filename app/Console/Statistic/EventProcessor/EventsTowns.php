@@ -46,9 +46,6 @@ trait EventsTowns
         }
 
         $this->console->line('Check events of towns    : '.t($time).'s');
-        // $this->console->line('              created   : '.count($this->events[Wofh::EVENT_TOWN_CREATE]));
-        // $this->console->line('              renamed   : '.count($this->events[Wofh::EVENT_TOWN_RENAME]));
-        // $this->console->line('              lost      : '.count($this->events[Wofh::EVENT_TOWN_LOST]));
     }
 
     private function checkEventTownCreate(int $townId)

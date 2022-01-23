@@ -1,4 +1,5 @@
-<?php
+<?php /** @noinspection PhpUnused */
+
 /**
  * WofhTools
  *
@@ -156,7 +157,7 @@ class Console
         return $string;
     }
 
-    public function trimPath($path)
+    public function trimPath($path): string
     {
         return '~'.str_replace(
                 '\\',

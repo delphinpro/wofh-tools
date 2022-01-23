@@ -7,9 +7,12 @@ use App\Console\Services\Statistic\StatisticLogger;
 use App\Console\Statistic\Updater;
 use App\Console\Traits\Helper;
 use App\Models\StatLog;
+use App\Models\World;
 use App\Repositories\WorldRepository;
 use App\Services\Wofh;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
 
 class StatisticUpdate extends Command
 {
@@ -66,38 +69,39 @@ class StatisticUpdate extends Command
 
         try {
             $worlds = $this->getWorlds();
-
-            $this->console->line('The number of updating worlds: '.$worlds->count());
-            $this->console->line('Limit for update             : '.($this->limit ?: 'none'));
-
-            foreach ($worlds as $world) {
-                $this->console->title(sprintf('Update statistic for %s', $world->sign));
-                if (!$world->statistic) {
-                    $message = 'Statistic off for '.$world->sign.'. SKIP';
-                    $this->logger->warn(StatLog::STATISTIC_UPDATE, $message, $world->id);
-                    continue;
-                }
-
-                try {
-
-                    $this->updater->updateWorld($world, $this->limit);
-
-                } catch (\Throwable $e) {
-                    $this->logger->error(StatLog::STATISTIC_UPDATE, $e->getMessage(), $world->id);
-                    $this->console->stackTrace($e);
-                }
-            }
         } catch (\Throwable $e) {
             $this->logger->error(StatLog::STATISTIC_UPDATE, $e->getMessage());
-            $this->console->stackTrace($e);
             return 1;
+        }
+
+        $this->console->line('The number of updating worlds: '.$worlds->count());
+        $this->console->line('Limit for update             : '.($this->limit ?: 'none'));
+
+        foreach ($worlds as $world) {
+            $this->console->title(sprintf('Update statistic for %s', $world->sign));
+            if (!$world->statistic) {
+                $message = 'Statistic off for '.$world->sign.'. SKIP';
+                $this->logger->warn(StatLog::STATISTIC_UPDATE, $message, $world->id);
+                continue;
+            }
+
+            try {
+
+                $this->updater->updateWorld($world, Storage::disk(config('app.stat_disk')), [
+                    'limit'  => $this->limit,
+                    'zip'    => $this->zip,
+                    'silent' => false,
+                ]);
+
+            } catch (\Throwable $e) {
+                $this->logger->error(StatLog::STATISTIC_UPDATE, $e->getMessage(), $world->id);
+                $this->console->stackTrace($e);
+            }
         }
         return 0;
     }
 
-    /**
-     * Получить входные параметры
-     */
+    /** Получить входные параметры */
     protected function getInput()
     {
         $this->sign = $this->argument('world');
@@ -110,9 +114,9 @@ class StatisticUpdate extends Command
      * Получить коллекцию миров для обновления
      *
      * @return \App\Models\World[]|\Illuminate\Database\Eloquent\Collection
-     * @throws \Exception
+     * @throws \Throwable
      */
-    protected function getWorlds()
+    protected function getWorlds(): Collection
     {
         /** @var \App\Models\World[]|\Illuminate\Database\Eloquent\Collection $worlds */
         $worlds = $this->worldRepository->all([
@@ -125,7 +129,7 @@ class StatisticUpdate extends Command
 
         if ($this->single) {
             $id = $this->wofh->signToId((string)$this->sign);
-            $worlds = $worlds->filter(fn($world) => $world->id == $id);
+            $worlds = $worlds->filter(fn(World $world) => $world->id == $id);
         }
 
         if ($this->single && !$worlds->count()) {

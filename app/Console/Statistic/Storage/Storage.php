@@ -18,7 +18,7 @@ use App\Models\World;
 use App\Services\Json;
 use App\Services\Wofh;
 use Carbon\Carbon;
-use Illuminate\Filesystem\FilesystemManager;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -30,19 +30,13 @@ class Storage
     use StorageAccounts;
     use StorageCountries;
 
-    private FilesystemManager $fsManager;
-
+    private Filesystem $fs;
     private Json $json;
-
     private Console $console;
-
     private World $world;
-
-    /** @var \Illuminate\Contracts\Filesystem\Filesystem|\Illuminate\Filesystem\FilesystemAdapter */
-    private $fs;
+    protected bool $silent;
 
     private ?array $raw;
-
     private ?Carbon $time;
 
     private ?int $totalAccounts;
@@ -58,9 +52,8 @@ class Storage
 
     private EventProcessor $events;
 
-    public function __construct(FilesystemManager $fsManager, Json $json, Console $console)
+    public function __construct(Json $json, Console $console)
     {
-        $this->fsManager = $fsManager;
         $this->console = $console;
         $this->json = $json;
 
@@ -72,17 +65,43 @@ class Storage
         $this->countries = collect([]);
     }
 
-    public function setWorld(World $world)
+    /*==
+     *== Getters
+     *== ======================================= ==*/
+
+    public function getTime(): ?Carbon { return $this->time; }
+
+    public function getTown(int $id): Town { return $this->towns->get($id); }
+
+    public function getAccount(int $id): Account { return $this->accounts->get($id); }
+
+    public function getCountry(int $id): Country { return $this->countries->get($id); }
+
+    public function getData(): array
+    {
+        return [
+            'countries' => $this->countries->map(fn(Country $item) => $item->toArray()),
+            'accounts'  => $this->accounts->map(fn(Account $item) => $item->toArray()),
+            'towns'     => $this->towns->map(fn(Town $item) => $item->toArray()),
+        ];
+    }
+
+    /*==
+     *== Prepare and Calculation process
+     *== ======================================= ==*/
+
+    public function configure(World $world, Filesystem $fileSystem, bool $silent = false)
     {
         $this->world = $world;
-        $this->fs = $this->fsManager->disk(config('app.stat_disk'));
+        $this->fs = $fileSystem;
+        $this->silent = $silent;
     }
 
     /**
      * @throws \App\Exceptions\JsonServiceException
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
-    public function loadFromFile($filename)
+    public function loadFromFile(?string $filename)
     {
         if (is_null($filename)) return;
 
@@ -97,21 +116,36 @@ class Storage
         $this->totalAccounts = count($this->raw['accounts']);
     }
 
-    public function getTime(): ?Carbon { return $this->time; }
-
-    public function getTown(int $id): Town { return $this->towns->get($id); }
-
-    public function getAccount(int $id): Account { return $this->accounts->get($id); }
-
-    public function getCountry(int $id): Country { return $this->countries->get($id); }
-
-    public function unsetRaw() { $this->raw = null; }
-
-    public function collectData()
+    public function parse(string $title = 'Operation')
     {
-        $this->collectTowns();
-        $this->collectAccounts();
-        $this->collectCountries();
+        $silent = true;
+        $time = microtime(true);
+        $this->collectData();
+        $rows[] = [
+            'Normalization',
+            $this->towns->count(),
+            $this->accounts->count(),
+            $this->countries->count(),
+            t($time),
+        ];
+
+        $time = microtime(true);
+        $this->calculate();
+        $rows[] = ['Calculate', '', '', '', t($time)];
+
+        $time = microtime(true);
+        $this->filter();
+        $rows[] = [
+            'Filter',
+            $this->towns->count(),
+            $this->accounts->count(),
+            $this->countries->count(),
+            t($time),
+        ];
+
+        $this->unsetRaw();
+        /** @noinspection PhpConditionAlreadyCheckedInspection */
+        if (!$silent) $this->console->table([$title, 'Towns', 'Accounts', 'Countries', 'Time, s'], $rows);
     }
 
     public function calculate()
@@ -156,35 +190,11 @@ class Storage
         });
     }
 
-    public function parse()
-    {
-        $time = microtime(true);
-        $this->collectData();
-        $rows[] = [
-            'Normalization',
-            $this->towns->count(),
-            $this->accounts->count(),
-            $this->countries->count(),
-            t($time),
-        ];
+    public function unsetRaw() { $this->raw = null; }
 
-        $time = microtime(true);
-        $this->calculate();
-        $rows[] = ['Calculate', '', '', '', t($time)];
-
-        $time = microtime(true);
-        $this->filter();
-        $rows[] = [
-            'Filter',
-            $this->towns->count(),
-            $this->accounts->count(),
-            $this->countries->count(),
-            t($time),
-        ];
-
-        $this->unsetRaw();
-        $this->console->table(['Operation', 'Towns', 'Accounts', 'Countries', 'Time, s'], $rows);
-    }
+    /*==
+     *== Saving data
+     *== ======================================= ==*/
 
     public function save(EventProcessor $events)
     {
@@ -246,14 +256,5 @@ class Storage
             'countries_flag'    => $this->events->count(Wofh::EVENT_COUNTRY_FLAG),
             'countries_deleted' => $this->events->count(Wofh::EVENT_COUNTRY_DESTROY),
         ]);
-    }
-
-    public function getData(): array
-    {
-        return [
-            'countries' => $this->countries->map(fn(Country $item) => $item->toArray()),
-            'accounts'  => $this->accounts->map(fn(Account $item) => $item->toArray()),
-            'towns'     => $this->towns->map(fn(Town $item) => $item->toArray()),
-        ];
     }
 }
