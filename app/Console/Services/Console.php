@@ -132,15 +132,18 @@ class Console
     {
         foreach ($e->getTrace() as $index => $item) {
             $call = '';
+            $color = Console::RED;
             if (array_key_exists('file', $item)) {
                 $file = $this->trimPath($item['file']);
-                if (Str::startsWith($file, '~/vendor')) break;
+                if (Str::startsWith($file, '~/vendor')) $color = Console::COLOR_DEFAULT;
                 $call .= $file.':'.$item['line'].'  ';
             }
             if (array_key_exists('class', $item)) $call .= $item['class'];
             if (array_key_exists('type', $item)) $call .= $item['type'];
             if (array_key_exists('function', $item)) $call .= $item['function'].'()';
-            if ($call) $this->error('[ '.$index.' ] '.$call);
+            if ($call) {
+                $this->line(Str::padLeft('['.$index.'] ', 5).$call, $color);
+            }
         }
     }
 
