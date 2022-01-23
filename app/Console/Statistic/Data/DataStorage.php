@@ -80,6 +80,8 @@ class DataStorage
         return null;
     }
 
+    public function getTotalAccounts(): int { return $this->totalAccounts; }
+
     public function getData(): array
     {
         return [
@@ -170,13 +172,8 @@ class DataStorage
     protected function collectTowns()
     {
         $this->towns = collect($this->raw['towns'])
-            ->map(fn($town, $id) => new Town($id, $town, $this->time))
-            // Убрать города с нулевым населением
-            ->filter(fn(Town $town) => $town->pop > 0);
-        // и варварские (аккаунт = 0)
-        // if ($this->isTownNullPopulation($town) or $this->isTownBarbarian($town)) {
-        //     continue;
-        // }
+            ->map(fn($town, $id) => Town::createFromFile($id, $town))
+            ->filter(fn(Town $town) => $town->pop > 0); // Убрать города с нулевым населением
     }
 
     protected function collectAccounts()

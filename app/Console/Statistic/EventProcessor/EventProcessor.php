@@ -10,8 +10,10 @@
 namespace App\Console\Statistic\EventProcessor;
 
 use App\Console\Services\Console;
+use App\Console\Statistic\Data\Account;
 use App\Console\Statistic\Data\DataStorage;
 use App\Console\Statistic\Data\Event;
+use App\Console\Statistic\Data\Town;
 use App\Models\World;
 use App\Services\Wofh;
 use Carbon\CarbonInterface;
@@ -102,7 +104,11 @@ class EventProcessor
         ];
     }
 
-    public function count($eventId): int { return count($this->events[$eventId]); }
+    /*==
+     *== Getters
+     *== ======================================= ==*/
+
+    public function getCountEvents($eventId): int { return count($this->events[$eventId]); }
 
     public function getEvents(): array
     {
@@ -117,12 +123,99 @@ class EventProcessor
 
     public function getTime(): CarbonInterface { return $this->time; }
 
+    /*==
+     *== Town getters
+     *== ======================================= ==*/
+
+    /** @return \App\Console\Statistic\Data\Town[]|\Illuminate\Support\Collection */
+    public function getTowns() { return $this->curr->towns; }
+
+    public function getCountTowns(): int { return $this->curr->towns->count(); }
+
+    /** @return \App\Console\Statistic\Data\Town[]|\Illuminate\Support\Collection */
+    public function getTownsForInsert()
+    {
+        return $this->curr->towns
+            ->filter(fn(Town $town) => in_array($town->id, $this->insertTownIds))
+            ->map(fn(Town $town) => $town->setNames(DB::raw("JSON_OBJECT('{$this->time->timestamp}', '$town->name')")));
+    }
+
+    /** @return \App\Console\Statistic\Data\Town[]|\Illuminate\Support\Collection */
+    public function getTownsForUpdate()
+    {
+        return $this->curr->towns->filter(fn(Town $town) => in_array($town->id, $this->updateTownIds));
+    }
+
+    public function getDestroyedTownIds(): array { return $this->destroyedTownIds; }
+
+    /*==
+     *== Account getters
+     *== ======================================= ==*/
+
+    /** @return \App\Console\Statistic\Data\Account[]|\Illuminate\Support\Collection */
+    public function getAccounts() { return $this->curr->accounts; }
+
+    public function getCountAccountsTotal(): int { return $this->curr->getTotalAccounts(); }
+
+    public function getCountAccountsActive(): int
+    {
+        return $this->curr->accounts->filter(fn(Account $acc) => $acc->pop > 0)->count();
+    }
+
+    public function getCountAccountsRace0(): int
+    {
+        return $this->curr->accounts->filter(fn(Account $acc) => $acc->race == 0)->count();
+    }
+
+    public function getCountAccountsRace1(): int
+    {
+        return $this->curr->accounts->filter(fn(Account $acc) => $acc->race == 1)->count();
+    }
+
+    public function getCountAccountsRace2(): int
+    {
+        return $this->curr->accounts->filter(fn(Account $acc) => $acc->race == 2)->count();
+    }
+
+    public function getCountAccountsRace3(): int
+    {
+        return $this->curr->accounts->filter(fn(Account $acc) => $acc->race == 3)->count();
+    }
+
+    public function getCountAccountsSex0(): int
+    {
+        return $this->curr->accounts->filter(fn(Account $acc) => $acc->sex == 0)->count();
+    }
+
+    public function getCountAccountsSex1(): int
+    {
+        return $this->curr->accounts->filter(fn(Account $acc) => $acc->sex == 1)->count();
+    }
+
+    /*==
+     *== Country getters
+     *== ======================================= ==*/
+
+    /** @return \App\Console\Statistic\Data\Country[]|\Illuminate\Support\Collection */
+    public function getCountries() { return $this->curr->countries; }
+
+    public function getCountCountries(): int { return $this->curr->countries->count(); }
+
+    /*==
+     *== Methods
+     *== ======================================= ==*/
+
     public function checkEvents()
     {
         withWorldPrefix(function () {
-            $this->towns = DB::table('towns')->select()->get()->keyBy('id');
+
+            $this->towns = DB::table('towns')
+                ->select()->get()->keyBy('id')
+                ->map(fn($obj) => Town::createFromDb($obj));
+
             $this->accounts = DB::table('accounts')->select()->get()->keyBy('id');
             $this->countries = DB::table('countries')->select()->get()->keyBy('id');
+
         }, $this->world);
 
         $this->checkEventsOfTowns();
@@ -130,8 +223,8 @@ class EventProcessor
         $this->checkEventsOfCountries();
     }
 
-    public function push(int $eventId, int $entityId, array $body)
+    public function push(int $eventId, array $body)
     {
-        $this->events[$eventId][$entityId] = new Event($eventId, $this->curr->getTime(), $body);
+        $this->events[$eventId][] = new Event($eventId, $this->curr->getTime(), $body);
     }
 }

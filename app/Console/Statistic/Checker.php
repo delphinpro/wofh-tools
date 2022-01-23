@@ -195,7 +195,7 @@ trait Checker
             $table->unsignedInteger('accounts_sex0')->default(0);
             $table->unsignedInteger('accounts_sex1')->default(0);
 
-            $table->unsignedInteger('accounts_new')->default(0);
+            $table->unsignedInteger('accounts_created')->default(0);
             $table->unsignedInteger('accounts_country_change')->default(0);
             $table->unsignedInteger('accounts_country_in')->default(0);
             $table->unsignedInteger('accounts_country_out')->default(0);

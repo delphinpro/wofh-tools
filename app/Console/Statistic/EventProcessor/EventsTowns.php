@@ -11,6 +11,8 @@ namespace App\Console\Statistic\EventProcessor;
 
 use App\Console\Statistic\Data\Town;
 use App\Services\Wofh;
+use Illuminate\Support\Facades\DB;
+
 trait EventsTowns
 {
     /**
@@ -30,18 +32,18 @@ trait EventsTowns
 
         foreach ($ids as $id) {
             $this->checkEventTownCreate($id);
-            $this->checkEventTownLost($id);
+            $this->checkEventTownDestroy($id, $this->towns->get($id));
 
+            // Город был вчера и есть сегодня
             if ($this->prev->hasTown($id) && $this->curr->hasTown($id)) {
                 $townPrev = $this->prev->getTown($id);
                 $townCurr = $this->curr->getTown($id);
                 // $this->curr['towns'][$id][static::TOWN_KEY_DELTA_POP] = $townCurr[static::TOWN_KEY_POP] - $townPrev[static::TOWN_KEY_POP];
-                if ($townPrev->account_id && $townCurr->account_id) {
-                    $this->checkEventTownRename($townPrev, $townCurr);
-                    $this->checkEventWonderCreate($townPrev, $townCurr);
-                    $this->checkEventWonderDestroy($townPrev, $townCurr);
-                    $this->checkEventWonderActivate($townPrev, $townCurr);
-                }
+                $this->checkEventTownLost($this->towns->get($id), $townCurr);
+                $this->checkEventTownRename($townPrev, $townCurr);
+                $this->checkEventWonderCreate($townPrev, $townCurr);
+                $this->checkEventWonderDestroy($townPrev, $townCurr);
+                $this->checkEventWonderActivate($townPrev, $townCurr);
             }
         }
 
@@ -62,47 +64,58 @@ trait EventsTowns
         ) {
             $this->insertTownIds[] = $townId;
             // $this->curr['towns'][$townId][static::TOWN_KEY_DELTA_POP] = $this->curr['towns'][$townId][static::TOWN_KEY_POP];
-            $accountId = $this->curr->getTown($townId)->account_id;
-
-            // Если город не варварский (оварварился в промежутке между считыванием статистики)
-            if ($accountId) {
-                $countryId = $this->curr->getAccount($accountId)->country_id;
-
-                $this->events[Wofh::EVENT_TOWN_CREATE][$townId] = [
-                    static::TABLE_TOWN_ID         => $townId,
-                    static::TABLE_ACCOUNT_ID      => $accountId,
-                    static::TABLE_COUNTRY_ID      => $countryId,
-                    static::TABLE_COUNTRY_ID_FROM => 0,
-                    static::TABLE_ROLE            => 0,
-                    static::TABLE_PROPS           => null,
-                ];
+            // Если город не варварский, т.е.
+            // оварварился в промежутке между считыванием статистики
+            // или изначально появился варваром (для варваров не создаём события)
+            if ($accountId = $this->curr->getTown($townId)->account_id) {
+                $this->push(Wofh::EVENT_TOWN_CREATE, [
+                    EventProcessor::TABLE_TOWN_ID    => $townId,
+                    EventProcessor::TABLE_ACCOUNT_ID => $accountId,
+                    EventProcessor::TABLE_COUNTRY_ID => $this->curr->getCountryIdForAccount($accountId),
+                ]);
             }
         }
     }
 
-    private function checkEventTownLost(int $townId)
+    private function checkEventTownDestroy(int $townId, ?Town $town)
     {
-        if (!$this->prev->hasData()) return;
+        if (!$this->prev->hasData()) return; // Первый день. События не создаём.
 
         // Вчера этот город был, а сегодня его нет
         if (
             $this->prev->hasTown($townId)
             && !$this->curr->hasTown($townId)
         ) {
-            $this->lostTownIds[] = $townId;
-            // $this->curr['towns'][$townId][static::TOWN_KEY_DELTA_POP] = $this->curr['towns'][$townId][static::TOWN_KEY_POP];
-            $accountId = $this->prev->getTown($townId)->account_id;
-            if ($accountId) {
-                $countryId = $this->prev->getAccount($accountId)->country_id;
-                $this->events[Wofh::EVENT_TOWN_LOST][$townId] = [
-                    static::TABLE_TOWN_ID         => $townId,
-                    static::TABLE_ACCOUNT_ID      => $accountId,
-                    static::TABLE_COUNTRY_ID      => $countryId,
-                    static::TABLE_COUNTRY_ID_FROM => 0,
-                    static::TABLE_ROLE            => 0,
-                    static::TABLE_PROPS           => null,
-                ];
+            $this->destroyedTownIds[] = $townId;
+            // $this->curr->getTown($townId)->[static::TOWN_KEY_DELTA_POP] = $this->curr['towns'][$townId][static::TOWN_KEY_POP];
+            if ($town) {
+                $this->push(Wofh::EVENT_TOWN_DESTROY, [
+                    EventProcessor::TABLE_TOWN_ID    => $townId,
+                    EventProcessor::TABLE_ACCOUNT_ID => $town->account_id,
+                    EventProcessor::TABLE_COUNTRY_ID => $this->prev->getCountryIdForAccount($town->account_id),
+                ]);
             }
+        }
+    }
+
+    private function checkEventTownLost(?Town $townPrev, Town $town)
+    {
+        if (!$this->prev->hasData()) return; // Первый день. События не создаём.
+
+        if (!$townPrev) return; // В базе отсутствует
+
+        // Вчера принадлежал игроку, а сегодня – варвар
+        if (
+            $townPrev->isNotBarbarian()
+            && $town->isBarbarian()
+        ) {
+            $this->updateTownIds[] = $town->id;
+            $town->account_id = $this->towns->get($town->id)->account_id;
+            $this->push(Wofh::EVENT_TOWN_LOST, [
+                EventProcessor::TABLE_TOWN_ID    => $town->id,
+                EventProcessor::TABLE_ACCOUNT_ID => $town->account_id,
+                EventProcessor::TABLE_COUNTRY_ID => $this->prev->getCountryIdForAccount($town->account_id),
+            ]);
         }
     }
 
@@ -110,73 +123,75 @@ trait EventsTowns
     {
         if ($townPrev->name != $town->name) {
             $this->updateTownIds[] = $town->id;
-            $this->events[Wofh::EVENT_TOWN_RENAME][$town->id] = [
-                static::TABLE_TOWN_ID         => $town->id,
-                static::TABLE_ACCOUNT_ID      => $town->account_id,
-                static::TABLE_COUNTRY_ID      => $this->curr->getAccount($town->account_id)->country_id,
-                static::TABLE_COUNTRY_ID_FROM => 0,
-                static::TABLE_ROLE            => 0,
-                static::TABLE_PROPS           => [
+            $name = DB::getPdo()->quote($town->name);
+            $town->setNames(DB::raw("JSON_MERGE_PATCH(`names`, JSON_OBJECT('{$this->time->timestamp}', $name))"));
+            $this->push(Wofh::EVENT_TOWN_RENAME, [
+                EventProcessor::TABLE_TOWN_ID    => $town->id,
+                EventProcessor::TABLE_ACCOUNT_ID => $town->account_id,
+                EventProcessor::TABLE_COUNTRY_ID => $this->curr->getCountryIdForAccount($town->account_id),
+                EventProcessor::TABLE_PROPS      => [
                     'prev_name' => $townPrev->name,
                     'curr_name' => $town->name,
                 ],
-            ];
+            ]);
         }
     }
 
     private function checkEventWonderCreate(Town $townPrev, Town $town)
     {
-        /** @noinspection DuplicatedCode */
-        if ($townPrev->wonderId() != $town->wonderId() && $townPrev->wonderId() == 0) {
-            $this->events[Wofh::EVENT_WONDER_CREATE][] = [
-                static::TABLE_TOWN_ID         => $town->id,
-                static::TABLE_ACCOUNT_ID      => $town->account_id,
-                static::TABLE_COUNTRY_ID      => $this->curr->getAccount($town->account_id)->country_id,
-                static::TABLE_COUNTRY_ID_FROM => 0,
-                static::TABLE_ROLE            => 0,
-                static::TABLE_PROPS           => [
-                    'wonder_id'    => $town->wonderId(),
-                    'wonder_level' => $town->wonderLevel(),
-                ],
-            ];
+        // Сегодня чудо есть
+        // И
+        // Вчера не было ИЛИ было, но другое
+        if ($town->wonderExists() && (
+                $townPrev->wonderNotExists()
+                || ($townPrev->wonderExists() && ($townPrev->wonderId() != $town->wonderId()))
+            )
+        ) {
+            $this->updateTownIds[] = $town->id;
+            $data = makeWonderEvent($town, $this->curr->getCountryIdForAccount($town->account_id));
+            $this->push(Wofh::EVENT_WONDER_CREATE, $data);
         }
     }
 
     private function checkEventWonderDestroy(Town $townPrev, Town $town)
     {
-        /** @noinspection DuplicatedCode */
-        if ($townPrev->wonderId() != $town->wonderId() && $town->wonderId() == 0) {
-            $this->events[Wofh::EVENT_WONDER_DESTROY][] = [
-                static::TABLE_TOWN_ID         => $town->id,
-                static::TABLE_ACCOUNT_ID      => $town->account_id,
-                static::TABLE_COUNTRY_ID      => $this->curr->getAccount($town->account_id)->country_id,
-                static::TABLE_COUNTRY_ID_FROM => 0,
-                static::TABLE_ROLE            => 0,
-                static::TABLE_PROPS           => [
-                    'wonder_id'    => $townPrev->wonderId(),
-                    'wonder_level' => $townPrev->wonderLevel(),
-                ],
-            ];
+        // Вчера чудо было
+        // И
+        // Сегодня его нет ИЛИ есть, но другое
+        if ($townPrev->wonderExists() && (
+                $town->wonderNotExists()
+                || ($town->wonderExists() && ($townPrev->wonderId() != $town->wonderId()))
+            )
+        ) {
+            $this->updateTownIds[] = $town->id;
+            $data = makeWonderEvent($town, $this->curr->getCountryIdForAccount($town->account_id), $townPrev);
+            $this->push(Wofh::EVENT_WONDER_DESTROY, $data);
         }
     }
 
     private function checkEventWonderActivate(Town $townPrev, Town $town)
     {
-        if ($town->wonderId() > 0
-            && $town->wonderLevel() > 20
-            && $townPrev->wonderLevel() < 21
+        if ($town->wonderExists()              // Чудо есть
+            && $town->wonderActivated()        // Сегодня активировано (21)
+            && $townPrev->wonderNotActivated() // Вчера не было активировано (<21)
         ) {
-            $this->events[Wofh::EVENT_WONDER_ACTIVATE][] = [
-                static::TABLE_TOWN_ID    => $town->id,
-                static::TABLE_ACCOUNT_ID => $town->account_id,
-                static::TABLE_COUNTRY_ID => $this->curr->getAccount($town->account_id)->country_id,
-                static::TABLE_COUNTRY_ID_FROM => 0,
-                static::TABLE_ROLE            => 0,
-                static::TABLE_PROPS           => [
-                    'wonder_id'    => $town->wonderId(),
-                    'wonder_level' => $town->wonderLevel(),
-                ],
-            ];
+            $this->updateTownIds[] = $town->id;
+            $data = makeWonderEvent($town, $this->curr->getCountryIdForAccount($town->account_id));
+            $this->push(Wofh::EVENT_WONDER_ACTIVATE, $data);
         }
     }
+}
+
+function makeWonderEvent(Town $town, ?int $countryId, ?Town $townPrev = null): array
+{
+    $townPrev = $townPrev ?? $town;
+    return [
+        EventProcessor::TABLE_TOWN_ID    => $town->id,
+        EventProcessor::TABLE_ACCOUNT_ID => $town->account_id,
+        EventProcessor::TABLE_COUNTRY_ID => $countryId,
+        EventProcessor::TABLE_PROPS      => [
+            'wonder_id'    => $townPrev->wonderId(),
+            'wonder_level' => $townPrev->wonderLevel(),
+        ],
+    ];
 }

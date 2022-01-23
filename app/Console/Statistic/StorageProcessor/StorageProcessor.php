@@ -10,7 +10,6 @@
 namespace App\Console\Statistic\StorageProcessor;
 
 use App\Console\Services\Console;
-use App\Console\Statistic\Data\DataStorage;
 use App\Console\Statistic\EventProcessor\EventProcessor;
 use App\Console\Statistic\Storage\StorageAccounts;
 use App\Console\Statistic\Storage\StorageCommon;
@@ -31,21 +30,15 @@ class StorageProcessor
     protected EventProcessor $eventProcessor;
     protected Console $console;
     protected World $world;
-    protected DataStorage $prev;
-    protected DataStorage $curr;
 
     public function __construct(
         Console        $console,
         World          $world,
-        EventProcessor $eventProcessor,
-        DataStorage    $dataPrevious,
-        DataStorage    $data
+        EventProcessor $eventProcessor
     ) {
         $this->console = $console;
         $this->eventProcessor = $eventProcessor;
         $this->world = $world;
-        $this->prev = $dataPrevious;
-        $this->curr = $data;
     }
 
     public function getTime(): ?CarbonInterface { return $this->eventProcessor->getTime(); }

@@ -17,5 +17,5 @@ function wonderId(?int $wonder): int
 
 function wonderLevel(?int $wonder): int
 {
-    return (int)floor($wonder / 1000);
+    return intval($wonder / 1000);
 }

@@ -9,7 +9,6 @@
 
 namespace App\Console\Statistic\Data;
 
-use Carbon\CarbonInterface;
 use Illuminate\Database\Query\Expression as QueryExpression;
 use Illuminate\Support\Facades\DB;
 use function Helpers\Wofh\wonderId;
@@ -34,23 +33,31 @@ class Town extends Entry
     const KEY_POP        = 2;
     const KEY_WONDER     = 3;
 
-    public function __construct(int $id, array $town, ?CarbonInterface $time = null)
+    public static function createFromFile(int $id, array $townArray): Town
     {
-        $wonder = array_key_exists(Town::KEY_WONDER, $town) ? $town[Town::KEY_WONDER] : null;
-
-        $name = DB::getPdo()->quote($town[Town::KEY_NAME]);
-
-        $this->data = [
+        $wonder = array_key_exists(Town::KEY_WONDER, $townArray) ? $townArray[Town::KEY_WONDER] : null;
+        return new Town([
             'id'         => $id,
-            'name'       => $town[Town::KEY_NAME],
-            'account_id' => $town[Town::KEY_ACCOUNT_ID] ?: null,
+            'name'       => $townArray[Town::KEY_NAME],
+            'account_id' => $townArray[Town::KEY_ACCOUNT_ID] ?: null,
             'country_id' => null,
-            'pop'        => $town[Town::KEY_POP],
+            'pop'        => $townArray[Town::KEY_POP],
             'wonder'     => $wonder ?: null,
-            'lost'       => !$town[Town::KEY_ACCOUNT_ID],
+            'lost'       => !$townArray[Town::KEY_ACCOUNT_ID],
             'destroyed'  => false,
-            'names'      => DB::raw("JSON_MERGE_PATCH(`names`, JSON_OBJECT('{$time->timestamp}', $name))"),
-        ];
+            'names'      => null,
+        ]);
+    }
+
+    public static function createFromDb(object $townObject): Town
+    {
+        return new Town((array)$townObject);
+    }
+
+    protected function __construct(array $town)
+    {
+        $town['names'] = DB::raw("JSON_MERGE_PATCH(`names`, JSON_OBJECT())");
+        $this->data = $town;
     }
 
     public function setNames(QueryExpression $value): Town
@@ -63,9 +70,15 @@ class Town extends Entry
 
     public function wonderLevel(): int { return wonderLevel($this->wonder); }
 
-    public function isNullPopulation(): bool { return $this->pop == 0; }
-
     public function isBarbarian(): bool { return $this->lost; }
 
     public function isNotBarbarian(): bool { return !$this->isBarbarian(); }
+
+    public function wonderExists(): bool { return !!$this->wonder; }
+
+    public function wonderNotExists(): bool { return !$this->wonder; }
+
+    public function wonderActivated(): bool { return $this->wonder > 20999; }
+
+    public function wonderNotActivated(): bool { return $this->wonder < 21000; }
 }

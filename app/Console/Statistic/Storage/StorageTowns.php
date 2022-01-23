@@ -9,6 +9,7 @@
 
 namespace App\Console\Statistic\Storage;
 
+use App\Console\Statistic\Data\Town;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -22,69 +23,37 @@ trait StorageTowns
     public function updateTableTowns()
     {
         $time = microtime(true);
-        $this->insertTowns();
-        $this->updateTownsLost();
+        $this->updateTownsCreated();
+        $this->updateTownsDestroyed();
+        $this->updateTowns();
         $this->insertTownsStatistic();
         $this->console->line('    towns: '.t($time).'s');
     }
 
-    private function insertTowns()
+    private function updateTownsCreated()
     {
-        if (empty($this->events->insertTownIds)) return;
-
-        $columns = [
-            'id',
-            'name',
-            'account_id',
-            'lost',
-            'destroy',
-            'props',
-        ];
-
-        // INSERT INTO tbl_name (a, b, c) VALUES (1,2,3), (4,5,6), (7,8,9);
-        $sql = 'INSERT';
-        $sql .= ' INTO `z_'.$this->world->sign.'_towns`';
-        $sql .= ' (`'.join('`,`', $columns).'`)';
-        $sql .= ' VALUES ';
-
-        $pdo = DB::getPdo();
-        $first = true;
-
-        foreach ($this->events->insertTownIds as $id) {
-            $town = $this->getTown($id);
-            if (!$first) {
-                $sql .= ',';
-            } else {
-                $first = false;
-            }
-
-            $sql .= '(';
-            $sql .= (intval($id));
-            $sql .= ','.($pdo->quote($town->name));
-            $sql .= ','.(intval($town->accountId));
-            $sql .= ','.'0';
-            $sql .= ','.'0';
-            $sql .= ','.'NULL';
-            $sql .= ')';
-        }
-
-        // $this->console->line($sql);
-
-        DB::insert($sql);
+        $towns = $this->eventProcessor->getTownsForInsert()->toArray();
+        DB::table('towns')->insert($towns);
     }
 
-    private function updateTownsLost()
+    private function updateTownsDestroyed()
     {
-        // if (empty($this->lostTownIds)) {
-        //     return;
-        // }
+        DB::table('towns')
+            ->whereIn('id', $this->eventProcessor->getDestroyedTownIds())
+            ->update([
+                'pop'       => 0,
+                'lost'      => 1,
+                'destroyed' => 1,
+            ]);
+    }
 
-        // UPDATE TABLE tbl_name SET `lost` = 1 WHERE `id` IN (a, b, c);
-        // $sql = "UPDATE `z_{$this->world->sign}_towns`";
-        // $sql .= " SET `lost` = 1";
-        // $sql .= " WHERE `townId` IN (".join(',', $this->lostTownIds).")";
-        //
-        // $this->db->statement($sql);
+    private function updateTowns()
+    {
+        $this->eventProcessor->getTownsForUpdate()->each(function(Town $town){
+            DB::table('towns')
+                ->where('id', $town->id)
+                ->update($town->toArray());
+        });
     }
 
     private function insertTownsStatistic()
