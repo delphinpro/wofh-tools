@@ -54,6 +54,8 @@ class Account extends Entry
         ];
     }
 
+    public function inCountry(): bool { return !!$this->country_id; }
+
     public function rating(): float
     {
         return $this->rating_science

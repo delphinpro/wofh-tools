@@ -10,6 +10,7 @@
 namespace App\Console\Statistic\Data;
 
 use Carbon\CarbonInterface;
+use Illuminate\Support\Facades\DB;
 use function Helpers\Wofh\wonderId;
 use function Helpers\Wofh\wonderLevel;
 
@@ -36,6 +37,8 @@ class Town extends Entry
     {
         $wonder = array_key_exists(Town::KEY_WONDER, $town) ? $town[Town::KEY_WONDER] : null;
 
+        $name = DB::getPdo()->quote($town[Town::KEY_NAME]);
+
         $this->data = [
             'id'         => $id,
             'name'       => $town[Town::KEY_NAME],
@@ -45,6 +48,7 @@ class Town extends Entry
             'wonder'     => $wonder ?: null,
             'lost'       => !$town[Town::KEY_ACCOUNT_ID],
             'destroyed'  => false,
+            'names'  => DB::raw("JSON_MERGE_PATCH(`names`, JSON_OBJECT('{$time->timestamp}', $name))"),
         ];
     }
 
@@ -52,13 +56,9 @@ class Town extends Entry
 
     public function wonderLevel(): int { return wonderLevel($this->wonder); }
 
-    public function isNullPopulation(): bool
-    {
-        return $this->pop == 0;
-    }
+    public function isNullPopulation(): bool { return $this->pop == 0; }
 
-    public function isBarbarian(): bool
-    {
-        return $this->account_id == 0;
-    }
+    public function isBarbarian(): bool { return $this->lost; }
+
+    public function isNotBarbarian(): bool { return !$this->isBarbarian(); }
 }

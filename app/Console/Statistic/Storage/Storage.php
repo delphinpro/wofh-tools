@@ -52,6 +52,16 @@ class Storage
 
     private EventProcessor $events;
 
+    public static function create(World $world, Filesystem $fileSystem, bool $silent = false): Storage
+    {
+        $instance = resolve(Storage::class);
+        $instance->world = $world;
+        $instance->fs = $fileSystem;
+        $instance->silent = $silent;
+        return $instance;
+
+    }
+
     public function __construct(Json $json, Console $console)
     {
         $this->console = $console;
@@ -118,6 +128,8 @@ class Storage
 
     public function parse(string $title = 'Operation')
     {
+        if (!$this->hasData()) return;
+
         $silent = true;
         $time = microtime(true);
         $this->collectData();
@@ -152,27 +164,23 @@ class Storage
     {
         // Считаем население и города аккаунтов
         foreach ($this->towns as $town) {
-            $accountId = $town->account_id;
+            if ($town->isBarbarian()) continue;
 
-            if ($accountId == 0) continue;
-
-            $this->accounts[$accountId]->pop += $town->pop;
-            $this->accounts[$accountId]->towns += 1;
+            $this->accounts[$town->account_id]->pop += $town->pop;
+            $this->accounts[$town->account_id]->towns += 1;
         }
 
         // Считаем население, аккаунты и города стран
         foreach ($this->accounts as $account) {
-            $countryId = $account->country_id;
+            if (!$account->inCountry()) continue; // Аккаунт вне страны, пропуск.
 
-            if (!$countryId) continue; // Аккаунт вне страны, пропуск.
-
-            $this->countries[$countryId]->pop += $account->pop;
-            $this->countries[$countryId]->accounts += 1;
-            $this->countries[$countryId]->towns += $account->towns;
-            $this->countries[$countryId]->rating_science += $account->rating_science;
-            $this->countries[$countryId]->rating_production += $account->rating_production;
-            $this->countries[$countryId]->rating_attack += $account->rating_attack;
-            $this->countries[$countryId]->rating_defense += $account->rating_defense;
+            $this->countries[$account->country_id]->pop += $account->pop;
+            $this->countries[$account->country_id]->accounts += 1;
+            $this->countries[$account->country_id]->towns += $account->towns;
+            $this->countries[$account->country_id]->rating_science += $account->rating_science;
+            $this->countries[$account->country_id]->rating_production += $account->rating_production;
+            $this->countries[$account->country_id]->rating_attack += $account->rating_attack;
+            $this->countries[$account->country_id]->rating_defense += $account->rating_defense;
         }
     }
 

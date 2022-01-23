@@ -35,6 +35,7 @@ class EventProcessor
     public array $insertTownIds = [];
     public array $updateTownIds = [];
     public array $lostTownIds = [];
+    public array $destroyedTownIds = [];
 
     public array $insertAccountIds = [];
     public array $updateAccountIds = [];
@@ -46,6 +47,14 @@ class EventProcessor
 
     /** @var array[] */
     private $events;
+
+    public static function create(Storage $curr, Storage $prev)
+    {
+        $instance = resolve(EventProcessor::class);
+        $instance->curr = $curr;
+        $instance->prev = $prev;
+        return $instance;
+    }
 
     public function __construct(Console $console)
     {
@@ -81,12 +90,6 @@ class EventProcessor
     }
 
     public function count($eventId): int { return count($this->events[$eventId]); }
-
-    public function setData(Storage $curr, Storage $prev)
-    {
-        $this->curr = $curr;
-        $this->prev = $prev;
-    }
 
     public function checkEvents()
     {

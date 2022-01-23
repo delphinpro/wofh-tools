@@ -119,30 +119,20 @@ class Updater
 
             $this->world->beginUpdate();
 
-            /** @var \App\Console\Statistic\Storage\Storage $data */
-            $data = resolve(DataStorage::class);
-            $data->configure($this->world, $this->fs, $this->silent);
+            $data = DataStorage::create($this->world, $this->fs, $this->silent);
             $data->loadFromFile($filename);
             $data->parse('Current:');
 
-            /** @var \App\Console\Statistic\Storage\Storage $dataPrevious */
-            $dataPrevious = resolve(DataStorage::class);
-            $dataPrevious->configure($this->world, $this->fs, $this->silent);
+            $dataPrevious = DataStorage::create($this->world, $this->fs, $this->silent);
             $dataPrevious->loadFromFile($this->prevFile);
+            $dataPrevious->parse('Previous:');
 
-            if ($dataPrevious->hasData()) {
-                $dataPrevious->parse('Previous:');
-            } else {
-                $this->console->warn('No previous data');
-            }
-            // $this->dump($data, $dataPrevious, $this->world->id);
+            if (!$dataPrevious->hasData()) $this->console->warn('No previous data');
 
-            /** @var \App\Console\Statistic\EventProcessor\EventProcessor $events */
-            $events = resolve(EventProcessor::class);
-            $events->setData($data, $dataPrevious);
-            $events->checkEvents();
+            $eventProcessor = EventProcessor::create($data, $dataPrevious);
+            $eventProcessor->checkEvents();
 
-            $data->save($events);
+            $data->save($eventProcessor);
 
             $this->world->endUpdate($data->getTime());
 
