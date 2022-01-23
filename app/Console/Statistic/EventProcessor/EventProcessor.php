@@ -3,7 +3,7 @@
  * WofhTools
  *
  * @author      delphinpro <delphinpro@yandex.ru>
- * @copyright   copyright © 2020 delphinpro
+ * @copyright   copyright © 2020–2022 delphinpro
  * @license     licensed under the MIT license
  */
 
@@ -14,6 +14,7 @@ use App\Console\Statistic\Data\DataStorage;
 use App\Console\Statistic\Data\Event;
 use App\Models\World;
 use App\Services\Wofh;
+use Carbon\CarbonInterface;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -34,11 +35,12 @@ class EventProcessor
     protected World $world;
     protected DataStorage $curr;
     protected DataStorage $prev;
+    protected CarbonInterface $time;
 
-    public array $insertTownIds = [];
-    public array $updateTownIds = [];
-    public array $lostTownIds = [];
-    public array $destroyedTownIds = [];
+    protected array $insertTownIds = [];
+    protected array $updateTownIds = [];
+    protected array $lostTownIds = [];
+    protected array $destroyedTownIds = [];
 
     public array $insertAccountIds = [];
     public array $updateAccountIds = [];
@@ -63,6 +65,7 @@ class EventProcessor
         $instance->world = $world;
         $instance->curr = $curr;
         $instance->prev = $prev;
+        $instance->time = $curr->getTime();
         return $instance;
     }
 
@@ -112,13 +115,15 @@ class EventProcessor
         return $result;
     }
 
+    public function getTime(): CarbonInterface { return $this->time; }
+
     public function checkEvents()
     {
-        $savedPrefix = setStatisticTablePrefix($this->world->sign);
-        $this->towns = DB::table('towns')->select()->get()->keyBy('id');
-        $this->accounts = DB::table('accounts')->select()->get()->keyBy('id');
-        $this->countries = DB::table('countries')->select()->get()->keyBy('id');
-        setTablePrefix($savedPrefix);
+        withWorldPrefix(function () {
+            $this->towns = DB::table('towns')->select()->get()->keyBy('id');
+            $this->accounts = DB::table('accounts')->select()->get()->keyBy('id');
+            $this->countries = DB::table('countries')->select()->get()->keyBy('id');
+        }, $this->world);
 
         $this->checkEventsOfTowns();
         $this->checkEventsOfAccounts();

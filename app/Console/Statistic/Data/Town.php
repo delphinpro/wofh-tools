@@ -3,13 +3,14 @@
  * WofhTools
  *
  * @author      delphinpro <delphinpro@yandex.ru>
- * @copyright   copyright © 2020 delphinpro
+ * @copyright   copyright © 2020–2022 delphinpro
  * @license     licensed under the MIT license
  */
 
 namespace App\Console\Statistic\Data;
 
 use Carbon\CarbonInterface;
+use Illuminate\Database\Query\Expression as QueryExpression;
 use Illuminate\Support\Facades\DB;
 use function Helpers\Wofh\wonderId;
 use function Helpers\Wofh\wonderLevel;
@@ -48,8 +49,14 @@ class Town extends Entry
             'wonder'     => $wonder ?: null,
             'lost'       => !$town[Town::KEY_ACCOUNT_ID],
             'destroyed'  => false,
-            'names'  => DB::raw("JSON_MERGE_PATCH(`names`, JSON_OBJECT('{$time->timestamp}', $name))"),
+            'names'      => DB::raw("JSON_MERGE_PATCH(`names`, JSON_OBJECT('{$time->timestamp}', $name))"),
         ];
+    }
+
+    public function setNames(QueryExpression $value): Town
+    {
+        $this->data['names'] = $value;
+        return $this;
     }
 
     public function wonderId(): int { return wonderId($this->wonder); }

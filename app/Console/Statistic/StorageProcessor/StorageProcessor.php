@@ -36,8 +36,8 @@ class StorageProcessor
 
     public function __construct(
         Console        $console,
-        EventProcessor $eventProcessor,
         World          $world,
+        EventProcessor $eventProcessor,
         DataStorage    $dataPrevious,
         DataStorage    $data
     ) {
@@ -48,22 +48,20 @@ class StorageProcessor
         $this->curr = $data;
     }
 
-    public function getTime(): ?CarbonInterface { return $this->curr->getTime(); }
+    public function getTime(): ?CarbonInterface { return $this->eventProcessor->getTime(); }
 
     public function save()
     {
         $time = microtime(true);
         $this->console->line('Saving data');
 
-        $savedPrefix = setStatisticTablePrefix($this->world->sign);
-
-        $this->updateTableTowns();
-        $this->updateTableAccounts();
-        $this->updateTableCountries();
-        $this->eventProcessor->updateTableEvents($this->world->sign, $this->getTime());
-        $this->updateTableCommon();
-
-        setTablePrefix($savedPrefix);
+        withWorldPrefix(function () {
+            $this->updateTableTowns();
+            $this->updateTableAccounts();
+            $this->updateTableCountries();
+            $this->updateTableEvents();
+            $this->updateTableCommon();
+        }, $this->world);
 
         $this->console->line('Total saving time: '.t($time));
     }

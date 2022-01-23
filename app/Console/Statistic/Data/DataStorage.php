@@ -3,7 +3,7 @@
  * WofhTools
  *
  * @author      delphinpro <delphinpro@yandex.ru>
- * @copyright   copyright © 2020 delphinpro
+ * @copyright   copyright © 2020–2022 delphinpro
  * @license     licensed under the MIT license
  */
 
@@ -74,6 +74,12 @@ class DataStorage
 
     public function getCountry(int $id): Country { return $this->countries->get($id); }
 
+    public function getCountryIdForAccount(?int $accountId): ?int
+    {
+        if ($this->hasAccount($accountId)) return $this->getAccount($accountId)->country_id;
+        return null;
+    }
+
     public function getData(): array
     {
         return [
@@ -89,11 +95,11 @@ class DataStorage
 
     public function hasData(): bool { return !is_null($this->time); }
 
-    public function hasTown(int $id): bool { return $this->towns->has($id); }
+    public function hasTown(?int $id): bool { return $this->towns->has($id); }
 
-    public function hasAccount(int $id): bool { return $this->accounts->has($id); }
+    public function hasAccount(?int $id): bool { return $this->accounts->has($id); }
 
-    public function hasCountry(int $id): bool { return $this->countries->has($id); }
+    public function hasCountry(?int $id): bool { return $this->countries->has($id); }
 
     public function hasCountries(): bool { return $this->countries->count() > 0; }
 
@@ -131,7 +137,6 @@ class DataStorage
     {
         if (!$this->hasData()) return;
 
-        $silent = true;
         $time = microtime(true);
         $this->collectTowns();
         $this->collectAccounts();
@@ -159,8 +164,7 @@ class DataStorage
         ];
 
         $this->unsetRaw();
-        /** @noinspection PhpConditionAlreadyCheckedInspection */
-        if (!$silent) $this->console->table([$title, 'Towns', 'Accounts', 'Countries', 'Time, s'], $rows);
+        if (!$this->silent) $this->console->table([$title, 'Towns', 'Accounts', 'Countries', 'Time, s'], $rows);
     }
 
     protected function collectTowns()

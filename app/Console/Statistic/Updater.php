@@ -3,7 +3,7 @@
  * WofhTools
  *
  * @author      delphinpro <delphinpro@yandex.ru>
- * @copyright   copyright © 2020 delphinpro
+ * @copyright   copyright © 2020–2022 delphinpro
  * @license     licensed under the MIT license
  */
 
@@ -30,7 +30,6 @@ function humanize($bytes, $decimals = 2): string
 class Updater
 {
     use Checker;
-    use Dumper;
 
     protected Console $console;
     protected Filesystem $fs;
@@ -68,7 +67,7 @@ class Updater
             throw new \Exception('Data directory not found: '.$dataPath);
         }
 
-        $this->checkTables($world);
+        $this->checkTables();
         $this->scanFiles($dataPath);
         $this->printHeaderWorld($dataPath);
 
@@ -135,10 +134,8 @@ class Updater
 
             (new StorageProcessor(
                 $this->console,
-                $eventProcessor,
                 $this->world,
-                $dataPrevious,
-                $data
+                $eventProcessor,
             ))->save();
 
             $this->world->endUpdate($data->getTime());

@@ -3,7 +3,7 @@
  * WofhTools
  *
  * @author      delphinpro <delphinpro@yandex.ru>
- * @copyright   copyright © 2020 delphinpro
+ * @copyright   copyright © 2020–2022 delphinpro
  * @license     licensed under the MIT license
  */
 

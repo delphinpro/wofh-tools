@@ -23,7 +23,7 @@ class Event extends Entry
             'country_id'      => $data['country_id'] ?? null,
             'country_id_from' => $data['country_id_from'] ?? null,
             'role'            => $data['role'] ?? null,
-            'props'           => json_encode($data['props']),
+            'props'           => json_encode($data['props'] ?? null),
         ];
     }
 }

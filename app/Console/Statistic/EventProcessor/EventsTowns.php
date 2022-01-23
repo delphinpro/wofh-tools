@@ -3,7 +3,7 @@
  * WofhTools
  *
  * @author      delphinpro <delphinpro@yandex.ru>
- * @copyright   copyright © 2020 delphinpro
+ * @copyright   copyright © 2020–2022 delphinpro
  * @license     licensed under the MIT license
  */
 
@@ -11,22 +11,22 @@ namespace App\Console\Statistic\EventProcessor;
 
 use App\Console\Statistic\Data\Town;
 use App\Services\Wofh;
-
-/**
- * Trait EventsTowns
- * @property \App\Console\Services\Console console
- * @property \App\Console\Statistic\Data\DataStorage curr
- * @property \App\Console\Statistic\Data\DataStorage prev
- * @property array insertTownIds
- * @property array updateTownIds
- * @property array lostTownIds
- */
 trait EventsTowns
 {
-    public function checkEventsOfTowns()
+    /**
+     * Данные загружены из файлов
+     * Города с нулевым населением удалены из списка
+     */
+    protected function checkEventsOfTowns()
     {
         $time = microtime(true);
-        $ids = $this->prev->towns->keys()->merge($this->curr->towns->keys())->unique();
+
+        $filter = $this->prev->hasData()
+            ? fn(Town $town) => $town
+            : fn(Town $town) => !!$town->account_id; // Изначально варварские
+
+        $currKeys = $this->curr->towns->filter($filter)->keys();
+        $ids = $this->prev->towns->keys()->merge($currKeys)->unique();
 
         foreach ($ids as $id) {
             $this->checkEventTownCreate($id);
@@ -50,7 +50,7 @@ trait EventsTowns
 
     private function checkEventTownCreate(int $townId)
     {
-        if (!$this->prev->hasData()) {
+        if (!$this->prev->hasData()) { // Первый день. События не создаём.
             $this->insertTownIds[] = $townId;
             return;
         }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\World;
 use Illuminate\Support\Facades\DB;
 
 function t($startTime): float
@@ -7,14 +8,10 @@ function t($startTime): float
     return round(microtime(true) - $startTime, 3);
 }
 
-function setTablePrefix(string $prefix = ''): string
+function withWorldPrefix(Closure $closure, ?World $world = null)
 {
-    $previousPrefix = DB::getTablePrefix();
+    $prefix = DB::getTablePrefix();
+    DB::setTablePrefix($world ? 'z_'.$world->sign.'_' : '');
+    $closure();
     DB::setTablePrefix($prefix);
-    return $previousPrefix;
-}
-
-function setStatisticTablePrefix(string $worldSign): string
-{
-    return setTablePrefix('z_'.$worldSign.'_');
 }

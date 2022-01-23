@@ -3,7 +3,7 @@
  * WofhTools
  *
  * @author      delphinpro <delphinpro@yandex.ru>
- * @copyright   copyright © 2020 delphinpro
+ * @copyright   copyright © 2020–2022 delphinpro
  * @license     licensed under the MIT license
  */
 
@@ -43,7 +43,7 @@ class Account extends Entry
             'name'              => $account[Account::KEY_NAME],
             'race'              => $account[Account::KEY_RACE],
             'sex'               => $account[Account::KEY_SEX],
-            'country_id'        => $account[Account::KEY_COUNTRY_ID],
+            'country_id'        => $account[Account::KEY_COUNTRY_ID] ?: null,
             'rating_attack'     => $account[Account::KEY_RATING_ATTACK],
             'rating_defense'    => $account[Account::KEY_RATING_DEFENSE],
             'rating_science'    => $account[Account::KEY_RATING_SCIENCE],
