@@ -46,11 +46,11 @@ class StatisticClear extends Command
             DB::beginTransaction();
 
             Schema::dropIfExists("z_{$world->sign}_towns");
-            Schema::dropIfExists("z_{$world->sign}_towns_stat");
+            Schema::dropIfExists("z_{$world->sign}_towns_data");
             Schema::dropIfExists("z_{$world->sign}_accounts");
-            Schema::dropIfExists("z_{$world->sign}_accounts_stat");
+            Schema::dropIfExists("z_{$world->sign}_accounts_data");
             Schema::dropIfExists("z_{$world->sign}_countries");
-            Schema::dropIfExists("z_{$world->sign}_countries_stat");
+            Schema::dropIfExists("z_{$world->sign}_countries_data");
             Schema::dropIfExists("z_{$world->sign}_countries_diplomacy");
             Schema::dropIfExists("z_{$world->sign}_events");
             Schema::dropIfExists("z_{$world->sign}_common");
