@@ -33,6 +33,8 @@ class Town extends Entry
     const KEY_POP        = 2;
     const KEY_WONDER     = 3;
 
+    private int $deltaPop = 0;
+
     public static function createFromFile(int $id, array $townArray): Town
     {
         $wonder = array_key_exists(Town::KEY_WONDER, $townArray) ? $townArray[Town::KEY_WONDER] : null;
@@ -65,6 +67,10 @@ class Town extends Entry
         $this->data['names'] = $value;
         return $this;
     }
+
+    public function getDeltaPop(): int { return $this->deltaPop; }
+
+    public function setDeltaPop(int $deltaPop) { $this->deltaPop = $deltaPop; }
 
     public function wonderId(): int { return wonderId($this->wonder); }
 

@@ -27,6 +27,8 @@ class StorageProcessor
     use StorageEvents;
     use StorageCommon;
 
+    public const CHUNK = 5000;
+
     protected EventProcessor $eventProcessor;
     protected Console $console;
     protected World $world;

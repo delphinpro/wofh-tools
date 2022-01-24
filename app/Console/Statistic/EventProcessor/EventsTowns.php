@@ -15,10 +15,8 @@ use Illuminate\Support\Facades\DB;
 
 trait EventsTowns
 {
-    /**
-     * Данные загружены из файлов
-     * Города с нулевым населением удалены из списка
-     */
+    // Данные загружены из файлов
+    // Города с нулевым населением удалены из списка
     protected function checkEventsOfTowns()
     {
         $time = microtime(true);
@@ -38,7 +36,8 @@ trait EventsTowns
             if ($this->prev->hasTown($id) && $this->curr->hasTown($id)) {
                 $townPrev = $this->prev->getTown($id);
                 $townCurr = $this->curr->getTown($id);
-                // $this->curr['towns'][$id][static::TOWN_KEY_DELTA_POP] = $townCurr[static::TOWN_KEY_POP] - $townPrev[static::TOWN_KEY_POP];
+                $townCurr->setDeltaPop($townCurr->pop - $townPrev->pop);
+
                 $this->checkEventTownLost($this->towns->get($id), $townCurr);
                 $this->checkEventTownRename($townPrev, $townCurr);
                 $this->checkEventWonderCreate($townPrev, $townCurr);
@@ -50,29 +49,31 @@ trait EventsTowns
         $this->console->line('Check events of towns    : '.t($time).'s');
     }
 
-    private function checkEventTownCreate(int $townId)
+    private function checkEventTownCreate($townId)
     {
-        if (!$this->prev->hasData()) { // Первый день. События не создаём.
-            $this->insertTownIds[] = $townId;
-            return;
-        }
+        if ($this->curr->hasTown($townId)) {
+            $town = $this->curr->getTown($townId);
+            $town->setDeltaPop($town->pop);
 
-        // Вчера этого города не было, а сегодня есть
-        if (
-            !$this->prev->hasTown($townId)
-            && $this->curr->hasTown($townId)
-        ) {
-            $this->insertTownIds[] = $townId;
-            // $this->curr['towns'][$townId][static::TOWN_KEY_DELTA_POP] = $this->curr['towns'][$townId][static::TOWN_KEY_POP];
-            // Если город не варварский, т.е.
-            // оварварился в промежутке между считыванием статистики
-            // или изначально появился варваром (для варваров не создаём события)
-            if ($accountId = $this->curr->getTown($townId)->account_id) {
-                $this->push(Wofh::EVENT_TOWN_CREATE, [
-                    EventProcessor::TABLE_TOWN_ID    => $townId,
-                    EventProcessor::TABLE_ACCOUNT_ID => $accountId,
-                    EventProcessor::TABLE_COUNTRY_ID => $this->curr->getCountryIdForAccount($accountId),
-                ]);
+            if (!$this->prev->hasData()) { // Первый день. События не создаём.
+                $this->insertTownIds[] = $town->id;
+                return;
+            }
+
+            // По внешнему условию, сюда попадаем только если СЕГОДНЯ город есть
+            // ВЧЕРА этого города не было
+            if (!$this->prev->hasTown($town->id)) {
+                $this->insertTownIds[] = $town->id;
+                // Если город не варварский, т.е.
+                // оварварился в промежутке между считыванием статистики
+                // или изначально появился варваром (для варваров не создаём события)
+                if ($town->isNotBarbarian()) {
+                    $this->push(Wofh::EVENT_TOWN_CREATE, [
+                        EventProcessor::TABLE_TOWN_ID    => $town->id,
+                        EventProcessor::TABLE_ACCOUNT_ID => $town->account_id,
+                        EventProcessor::TABLE_COUNTRY_ID => $this->curr->getCountryIdForAccount($town->account_id),
+                    ]);
+                }
             }
         }
     }
@@ -87,8 +88,12 @@ trait EventsTowns
             && !$this->curr->hasTown($townId)
         ) {
             $this->destroyedTownIds[] = $townId;
-            // $this->curr->getTown($townId)->[static::TOWN_KEY_DELTA_POP] = $this->curr['towns'][$townId][static::TOWN_KEY_POP];
+
             if ($town) {
+
+                $town->setDeltaPop($town->pop * -1);
+                $this->curr->towns->put($townId, $town);
+
                 $this->push(Wofh::EVENT_TOWN_DESTROY, [
                     EventProcessor::TABLE_TOWN_ID    => $townId,
                     EventProcessor::TABLE_ACCOUNT_ID => $town->account_id,

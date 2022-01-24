@@ -10,6 +10,7 @@
 namespace App\Console\Statistic\Storage;
 
 use App\Console\Statistic\Data\Town;
+use App\Console\Statistic\StorageProcessor\StorageProcessor;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -49,7 +50,7 @@ trait StorageTowns
 
     private function updateTowns()
     {
-        $this->eventProcessor->getTownsForUpdate()->each(function(Town $town){
+        $this->eventProcessor->getTownsForUpdate()->each(function (Town $town) {
             DB::table('towns')
                 ->where('id', $town->id)
                 ->update($town->toArray());
@@ -58,38 +59,44 @@ trait StorageTowns
 
     private function insertTownsStatistic()
     {
-        $columns = [
+        $tableName = 'z_'.$this->world->sign.'_towns_data';
+        $columns = collect([
             'state_at',
             'id',
             'pop',
             'wonder_id',
             'wonder_level',
-            // 'deltaPop',
-        ];
+            'delta_pop',
+        ])->map(fn($s) => "`$s`")->join(',');
 
         // INSERT INTO tbl_name (a, b, c) VALUES (1,2,3), (4,5,6), (7,8,9);
-        $sql = 'INSERT';
-        $sql .= ' INTO `z_'.$this->world->sign.'_towns_stat`';
-        $sql .= ' (`'.join('`,`', $columns).'`)';
-        $sql .= ' VALUES ';
+        $queryStringCommon = "INSERT INTO `$tableName` ($columns) VALUES ";
 
-        $pdo = DB::getPdo();
+        $towns = $this->eventProcessor->getTowns();
         $first = true;
+        $counter = 0;
+        $queryStringValues = '';
 
-        /** @var \App\Console\Statistic\Data\Town $town */
-        foreach ($this->towns as $town) {
-            if (!$first) $sql .= ','; else $first = false;
+        foreach ($towns as $town) {
+            if (!$first) $queryStringValues .= ',';
+            $first = false;
 
-            $sql .= '(';
-            $sql .= ($pdo->quote($this->time));
-            $sql .= ','.(intval($town->id));
-            $sql .= ','.(intval($town->pop));
-            $sql .= ','.(intval($town->wonderId));
-            $sql .= ','.(intval($town->wonderLevel));
-            // $sql .= ','.(intval($town[Storage::TOWN_KEY_DELTA_POP]));
-            $sql .= ')';
+            $queryStringValues .= '('."'{$this->getTime()}'";
+            $queryStringValues .= ','.($town->id);
+            $queryStringValues .= ','.($town->pop);
+            $queryStringValues .= ','.($town->wonderId());
+            $queryStringValues .= ','.($town->wonderLevel());
+            $queryStringValues .= ','.$town->getDeltaPop();
+            $queryStringValues .= ')';
+
+            if (++$counter >= StorageProcessor::CHUNK) {
+                DB::insert($queryStringCommon.$queryStringValues);
+                $first = true;
+                $counter = 0;
+                $queryStringValues = '';
+            }
         }
 
-        DB::insert($sql);
+        if ($queryStringValues) DB::insert($queryStringCommon.$queryStringValues);
     }
 }
