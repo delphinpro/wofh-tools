@@ -184,7 +184,8 @@ class DataStorage
 
     protected function collectCountries()
     {
-        $this->countries = collect($this->raw['countries'])->map(fn($country, $id) => new Country($id, $country));
+        $this->countries = collect($this->raw['countries'])
+            ->map(fn($country, $id) => Country::createFromFile($id, $country));
     }
 
     protected function calculate()

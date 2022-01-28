@@ -9,6 +9,9 @@
 
 namespace App\Console\Statistic\Storage;
 
+use App\Console\Statistic\Data\Account;
+use App\Console\Statistic\Data\Country;
+use App\Console\Statistic\StorageProcessor\StorageProcessor;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -22,101 +25,50 @@ trait StorageCountries
     public function updateTableCountries()
     {
         $time = microtime(true);
-        $this->insertCountries();
+        $this->updateCountriesCreated();
         $this->updateCountriesDeleted();
-        $this->updateCountriesData();
+        $this->updateCountries();
         $this->insertCountriesStatistic();
         $this->console->line('    countries: '.round(microtime(true) - $time, 3).'s');
     }
 
-    private function insertCountries()
+    private function updateCountriesCreated()
     {
-        if (empty($this->eventProcessor->insertCountryIds)) return;
-
-        $columns = [
-            'id',
-            'name',
-            'flag',
-            'active',
-            'props',
-        ];
-
-        // INSERT INTO tbl_name (a, b, c) VALUES (1,2,3), (4,5,6), (7,8,9);
-        $sql = 'INSERT';
-        $sql .= ' INTO `z_'.$this->world->sign.'_countries`';
-        $sql .= ' (`'.join('`,`', $columns).'`)';
-        $sql .= ' VALUES ';
-
-        $pdo = DB::getPdo();
-        $first = true;
-
-        foreach ($this->eventProcessor->insertCountryIds as $id) {
-            $country = $this->getCountry($id);
-            if (!$first) $sql .= ','; else $first = false;
-
-            $json = "JSON_OBJECT(
-              'flags', JSON_ARRAY(JSON_OBJECT('{$this->time->timestamp}', '$country->flag')),
-              'names', JSON_ARRAY(JSON_OBJECT('{$this->time->timestamp}', '$country->name'))
-            )";
-
-            $sql .= '(';
-            $sql .= (intval($id));
-            $sql .= ','.($pdo->quote($country->name));
-            $sql .= ','.($pdo->quote($country->flag));
-            $sql .= ','.(intval(1));
-            $sql .= ','.$json;
-            $sql .= ')';
-        }
-
-        DB::insert($sql);
+        $countries = $this->eventProcessor->getCountriesForInsert()->toArray();
+        DB::table('countries')->insert($countries);
     }
 
     private function updateCountriesDeleted()
     {
-        if (empty($this->eventProcessor->deleteCountryIds)) return;
-        // UPDATE TABLE tbl_name SET `lost` = 1 WHERE `id` IN (a, b, c);
-        // $sql = "UPDATE `z_{$this->world->sign}_countries`";
-        // $sql .= " SET `active` = 0";
-        // $sql .= " WHERE `countryId` IN (".join(',', $this->deleteCountryIds).")";
-        //
-        // $this->db->statement($sql);
+        DB::table('countries')
+            ->whereIn('id', $this->eventProcessor->getDeletedCountiesIds())
+            ->update([
+                'diplomacy'  => json_encode(null),
+                'pop'        => 0,
+                'accounts'   => 0,
+                'towns'      => 0,
+                'science'    => 0,
+                'production' => 0,
+                'attack'     => 0,
+                'defense'    => 0,
+                'active'     => 0,
+            ]);
     }
 
-    private function updateCountriesData()
+    private function updateCountries()
     {
-        if (empty($this->eventProcessor->updateCountryIds)) return;
-
-        $pdo = DB::getPdo();
-
-        foreach ($this->eventProcessor->updateCountryIds as $id => $data) {
-            $fields = [];
-            $props = [];
-            if (!is_null($data['currName'])) {
-                $fields[] = "`name` = ".$pdo->quote($data['currName']);
-                $props[] = ",'$.names', JSON_OBJECT('{$this->time->timestamp}', '{$data['currName']}')";
-            }
-            if (!is_null($data['currFlag'])) {
-                $fields[] = "`flag` = ".$pdo->quote($data['currFlag']);
-                $props[] = ",'$.flags', JSON_OBJECT('{$this->time->timestamp}', '{$data['currFlag']}')";
-            }
-            if (count($props)) {
-                $fields[] = "`props` = JSON_ARRAY_APPEND( `props` ".join($props)." )";
-            }
-            if (count($fields)) {
-                DB::update("
-                    UPDATE `z_{$this->world->sign}_countries`
-                    SET ".join(', ', $fields)."
-                    WHERE id = $id
-                ");
-            }
-        }
+        $this->eventProcessor->getCountriesForUpdate()->each(function (Country $country) {
+            DB::table('countries')
+                ->where('id', $country->id)
+                ->update($country->toArray());
+        });
     }
 
+    /** @noinspection DuplicatedCode */
     private function insertCountriesStatistic()
     {
-        if (!$this->hasCountries()) return;
-
-        $columns = [
+        $tableName = 'z_'.$this->world->sign.'_countries_data';
+        $columns = collect([
             'state_at',
             'id',
             'pop',
@@ -126,48 +78,53 @@ trait StorageCountries
             'production',
             'attack',
             'defense',
-            // 'deltaPop',
-            // 'deltaAccounts',
-            // 'deltaTowns',
-            // 'deltaScience',
-            // 'deltaProduction',
-            // 'deltaAttack',
-            // 'deltaDefense',
-        ];
+            'delta_pop',
+            'delta_accounts',
+            'delta_towns',
+            'delta_science',
+            'delta_production',
+            'delta_attack',
+            'delta_defense',
+        ])->map(fn($s) => "`$s`")->join(',');
 
         // INSERT INTO tbl_name (a, b, c) VALUES (1,2,3), (4,5,6), (7,8,9);
-        $sql = 'INSERT';
-        $sql .= ' INTO `z_'.$this->world->sign.'_countries_stat`';
-        $sql .= ' (`'.join('`,`', $columns).'`)';
-        $sql .= ' VALUES ';
+        $queryStringCommon = "INSERT INTO `$tableName` ($columns) VALUES ";
 
-        $pdo = DB::getPdo();
+        $countries = $this->eventProcessor->getCountries();
         $first = true;
+        $counter = 0;
+        $queryStringValues = '';
 
-        /** @var \App\Console\Statistic\Data\Country $country */
-        foreach ($this->countries as $country) {
-            if (!$first) $sql .= ','; else $first = false;
+        foreach ($countries as $country) {
+            if (!$first) $queryStringValues .= ',';
+            $first = false;
 
-            $sql .= '(';
-            $sql .= ($pdo->quote($this->time));
-            $sql .= ','.(intval($country->id));
-            $sql .= ','.(intval($country->pop));
-            $sql .= ','.(intval($country->accounts));
-            $sql .= ','.(intval($country->towns));
-            $sql .= ','.(intval($country->ratingScience));
-            $sql .= ','.(intval($country->ratingProduction));
-            $sql .= ','.(intval($country->ratingAttack));
-            $sql .= ','.(intval($country->ratingDefense));
-            // $sql .= ','.(intval($country->[Storage::COUNTRY_KEY_DELTA_POP]));
-            // $sql .= ','.(intval($country->[Storage::COUNTRY_KEY_DELTA_ACCOUNTS]));
-            // $sql .= ','.(intval($country->[Storage::COUNTRY_KEY_DELTA_TOWNS]));
-            // $sql .= ','.(intval($country->[Storage::COUNTRY_KEY_DELTA_SCIENCE]));
-            // $sql .= ','.(intval($country->[Storage::COUNTRY_KEY_DELTA_PRODUCTION]));
-            // $sql .= ','.(intval($country->[Storage::COUNTRY_KEY_DELTA_ATTACK]));
-            // $sql .= ','.(intval($country->[Storage::COUNTRY_KEY_DELTA_DEFENSE]));
-            $sql .= ')';
+            $queryStringValues .= '('."'{$this->getTime()}'";
+            $queryStringValues .= ','.$country->id;
+            $queryStringValues .= ','.$country->pop;
+            $queryStringValues .= ','.$country->accounts;
+            $queryStringValues .= ','.$country->towns;
+            $queryStringValues .= ','.$country->science;
+            $queryStringValues .= ','.$country->production;
+            $queryStringValues .= ','.$country->attack;
+            $queryStringValues .= ','.$country->defense;
+            $queryStringValues .= ','.$country->getDeltaPop();
+            $queryStringValues .= ','.$country->getDeltaAccounts();
+            $queryStringValues .= ','.$country->getDeltaTowns();
+            $queryStringValues .= ','.$country->getDeltaScience();
+            $queryStringValues .= ','.$country->getDeltaProduction();
+            $queryStringValues .= ','.$country->getDeltaAttack();
+            $queryStringValues .= ','.$country->getDeltaDefence();
+            $queryStringValues .= ')';
+
+            if (++$counter >= StorageProcessor::CHUNK) {
+                DB::insert($queryStringCommon.$queryStringValues);
+                $first = true;
+                $counter = 0;
+                $queryStringValues = '';
+            }
         }
 
-        DB::insert($sql);
+        if ($queryStringValues) DB::insert($queryStringCommon.$queryStringValues);
     }
 }

@@ -62,6 +62,7 @@ trait StorageAccounts
         });
     }
 
+    /** @noinspection DuplicatedCode */
     private function insertAccountsStatistic()
     {
         $tableName = 'z_'.$this->world->sign.'_accounts_data';

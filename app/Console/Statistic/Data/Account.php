@@ -86,17 +86,17 @@ class Account extends Entry
     public function setNames(QueryExpression $value): Account { $this->data['names'] = $value; return $this; }
     public function setCountries(QueryExpression $value): Account { $this->data['countries'] = $value; return $this; }
     public function getDeltaPop(): int { return $this->deltaPop; }
-    public function setDeltaPop(int $deltaPop): Account { $this->deltaPop = $deltaPop; return $this; }
+    public function setDeltaPop(int $delta): Account { $this->deltaPop = $delta; return $this; }
     public function getDeltaTowns(): int { return $this->deltaTowns; }
-    public function setDeltaTowns(int $deltaTowns): Account { $this->deltaTowns = $deltaTowns; return $this; }
+    public function setDeltaTowns(int $delta): Account { $this->deltaTowns = $delta; return $this; }
     public function getDeltaScience(): float { return $this->deltaScience; }
-    public function setDeltaScience(float $deltaScience): Account { $this->deltaScience = $deltaScience; return $this; }
+    public function setDeltaScience(float $delta): Account { $this->deltaScience = $delta; return $this; }
     public function getDeltaProduction(): float { return $this->deltaProduction; }
-    public function setDeltaProduction(float $deltaProduction): Account { $this->deltaProduction = $deltaProduction; return $this; }
+    public function setDeltaProduction(float $delta): Account { $this->deltaProduction = $delta; return $this; }
     public function getDeltaAttack(): float { return $this->deltaAttack; }
-    public function setDeltaAttack(float $deltaAttack): Account { $this->deltaAttack = $deltaAttack; return $this; }
+    public function setDeltaAttack(float $delta): Account { $this->deltaAttack = $delta; return $this; }
     public function getDeltaDefence(): float { return $this->deltaDefence; }
-    public function setDeltaDefence(float $deltaDefence): Account { $this->deltaDefence = $deltaDefence; return $this; }
+    public function setDeltaDefence(float $delta): Account { $this->deltaDefence = $delta; return $this; }
     public function isActive(): bool { return !!$this->active; }
     public function inCountry(): bool { return !!$this->country_id; }
     public function isHiddenRating(): bool { return $this->hiddenRating; }

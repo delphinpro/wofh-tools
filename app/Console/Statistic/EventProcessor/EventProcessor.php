@@ -11,6 +11,7 @@ namespace App\Console\Statistic\EventProcessor;
 
 use App\Console\Services\Console;
 use App\Console\Statistic\Data\Account;
+use App\Console\Statistic\Data\Country;
 use App\Console\Statistic\Data\DataStorage;
 use App\Console\Statistic\Data\Event;
 use App\Console\Statistic\Data\Town;
@@ -193,6 +194,25 @@ class EventProcessor
 
     public function getCountCountries(): int { return $this->curr->countries->count(); }
 
+    /** @return \App\Console\Statistic\Data\Country[]|\Illuminate\Support\Collection */
+    public function getCountriesForInsert(): Collection
+    {
+        return $this->curr->countries
+            ->filter(fn(Country $country) => in_array($country->id, $this->insertCountryIds))
+            ->map(fn(Country $country) => $country
+                ->setNames(DB::raw("JSON_OBJECT('{$this->time->timestamp}', ".DB::getPdo()->quote($country->name).")"))
+                ->setFlags(DB::raw("JSON_OBJECT('{$this->time->timestamp}', ".DB::getPdo()->quote($country->flag).")"))
+            );
+    }
+
+    /** @return \App\Console\Statistic\Data\Country[]|\Illuminate\Support\Collection */
+    public function getCountriesForUpdate(): Collection
+    {
+        return $this->curr->countries->filter(fn(Country $country) => in_array($country->id, $this->updateCountryIds));
+    }
+
+    public function getDeletedCountiesIds(): array { return $this->deleteCountryIds; }
+
     /*==
      *== Methods
      *== ======================================= ==*/
@@ -209,7 +229,9 @@ class EventProcessor
                 ->select()->get()->keyBy('id')
                 ->map(fn($obj) => Account::createFromDb($obj));
 
-            $this->countries = DB::table('countries')->select()->get()->keyBy('id');
+            $this->countries = DB::table('countries')
+                ->select()->get()->keyBy('id')
+                ->map(fn($obj) => Country::createFromDb($obj));
 
         }, $this->world);
 

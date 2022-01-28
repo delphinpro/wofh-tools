@@ -125,11 +125,19 @@ trait Checker
         if (Schema::hasTable('countries')) return;
         Schema::create('countries', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
             $table->string('flag')->nullable();
+            $table->json('diplomacy')->nullable();
             $table->boolean('active')->default(true);
-            $table->json('props')->nullable();
-
+            $table->unsignedInteger('pop')->nullable();
+            $table->unsignedInteger('accounts')->nullable();
+            $table->unsignedInteger('towns')->nullable();
+            $table->float('attack', 12)->nullable();
+            $table->float('defense', 12)->nullable();
+            $table->float('science', 12)->nullable();
+            $table->float('production', 12)->nullable();
+            $table->string('name');
+            $table->json('names')->nullable();
+            $table->json('flags')->nullable();
             $table->index('active');
         });
     }

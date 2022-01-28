@@ -69,7 +69,9 @@ trait EventsAccounts
             }
 
             // Вчера аккаунта не было, а сегодня есть
-            if (!$this->prev->hasAccount($accountId)) {
+            if (!$this->prev->hasAccount($accountId)
+                && !$this->accounts->get($accountId) // В базе тоже проверим наличие
+            ) {
                 $this->insertAccountIds[] = $accountId;
 
                 $this->push(Wofh::EVENT_ACCOUNT_CREATE, [
