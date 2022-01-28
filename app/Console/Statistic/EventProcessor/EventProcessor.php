@@ -41,7 +41,6 @@ class EventProcessor
 
     protected array $insertTownIds = [];
     protected array $updateTownIds = [];
-    protected array $lostTownIds = [];
     protected array $destroyedTownIds = [];
 
     public array $insertAccountIds = [];
@@ -128,12 +127,12 @@ class EventProcessor
      *== ======================================= ==*/
 
     /** @return \App\Console\Statistic\Data\Town[]|\Illuminate\Support\Collection */
-    public function getTowns() { return $this->curr->towns; }
+    public function getTowns(): Collection { return $this->curr->towns; }
 
     public function getCountTowns(): int { return $this->curr->towns->count(); }
 
     /** @return \App\Console\Statistic\Data\Town[]|\Illuminate\Support\Collection */
-    public function getTownsForInsert()
+    public function getTownsForInsert(): Collection
     {
         return $this->curr->towns
             ->filter(fn(Town $town) => in_array($town->id, $this->insertTownIds))
@@ -141,7 +140,7 @@ class EventProcessor
     }
 
     /** @return \App\Console\Statistic\Data\Town[]|\Illuminate\Support\Collection */
-    public function getTownsForUpdate()
+    public function getTownsForUpdate(): Collection
     {
         return $this->curr->towns->filter(fn(Town $town) => in_array($town->id, $this->updateTownIds));
     }
@@ -153,44 +152,37 @@ class EventProcessor
      *== ======================================= ==*/
 
     /** @return \App\Console\Statistic\Data\Account[]|\Illuminate\Support\Collection */
-    public function getAccounts() { return $this->curr->accounts; }
+    public function getAccounts(): Collection { return $this->curr->accounts; }
 
-    public function getCountAccountsTotal(): int { return $this->curr->getTotalAccounts(); }
+    // @formatter:off
+    public function getCountAccountsTotal(): int  { return $this->curr->getTotalAccounts(); }
+    public function getCountAccountsActive(): int { return $this->curr->accounts->filter(fn(Account $acc) => $acc->pop  >  0)->count(); }
+    public function getCountAccountsRace0(): int  { return $this->curr->accounts->filter(fn(Account $acc) => $acc->race == 0)->count(); }
+    public function getCountAccountsRace1(): int  { return $this->curr->accounts->filter(fn(Account $acc) => $acc->race == 1)->count(); }
+    public function getCountAccountsRace2(): int  { return $this->curr->accounts->filter(fn(Account $acc) => $acc->race == 2)->count(); }
+    public function getCountAccountsRace3(): int  { return $this->curr->accounts->filter(fn(Account $acc) => $acc->race == 3)->count(); }
+    public function getCountAccountsSex0(): int   { return $this->curr->accounts->filter(fn(Account $acc) => $acc->sex  == 0)->count(); }
+    public function getCountAccountsSex1(): int   { return $this->curr->accounts->filter(fn(Account $acc) => $acc->sex  == 1)->count(); }
+    // @formatter:on
 
-    public function getCountAccountsActive(): int
+    /** @return \App\Console\Statistic\Data\Account[]|\Illuminate\Support\Collection */
+    public function getAccountsForInsert(): Collection
     {
-        return $this->curr->accounts->filter(fn(Account $acc) => $acc->pop > 0)->count();
+        return $this->curr->accounts
+            ->filter(fn(Account $account) => in_array($account->id, $this->insertAccountIds))
+            ->map(fn(Account $account) => $account
+                ->setNames(DB::raw("JSON_OBJECT('{$this->time->timestamp}', ".DB::getPdo()->quote($account->name).")"))
+                ->setCountries(DB::raw("JSON_OBJECT()"))
+            );
     }
 
-    public function getCountAccountsRace0(): int
+    /** @return \App\Console\Statistic\Data\Account[]|\Illuminate\Support\Collection */
+    public function getAccountsForUpdate(): Collection
     {
-        return $this->curr->accounts->filter(fn(Account $acc) => $acc->race == 0)->count();
+        return $this->curr->accounts->filter(fn(Account $account) => in_array($account->id, $this->updateAccountIds));
     }
 
-    public function getCountAccountsRace1(): int
-    {
-        return $this->curr->accounts->filter(fn(Account $acc) => $acc->race == 1)->count();
-    }
-
-    public function getCountAccountsRace2(): int
-    {
-        return $this->curr->accounts->filter(fn(Account $acc) => $acc->race == 2)->count();
-    }
-
-    public function getCountAccountsRace3(): int
-    {
-        return $this->curr->accounts->filter(fn(Account $acc) => $acc->race == 3)->count();
-    }
-
-    public function getCountAccountsSex0(): int
-    {
-        return $this->curr->accounts->filter(fn(Account $acc) => $acc->sex == 0)->count();
-    }
-
-    public function getCountAccountsSex1(): int
-    {
-        return $this->curr->accounts->filter(fn(Account $acc) => $acc->sex == 1)->count();
-    }
+    public function getDeletedAccountIds(): array { return $this->deleteAccountIds; }
 
     /*==
      *== Country getters
@@ -213,7 +205,10 @@ class EventProcessor
                 ->select()->get()->keyBy('id')
                 ->map(fn($obj) => Town::createFromDb($obj));
 
-            $this->accounts = DB::table('accounts')->select()->get()->keyBy('id');
+            $this->accounts = DB::table('accounts')
+                ->select()->get()->keyBy('id')
+                ->map(fn($obj) => Account::createFromDb($obj));
+
             $this->countries = DB::table('countries')->select()->get()->keyBy('id');
 
         }, $this->world);

@@ -178,7 +178,8 @@ class DataStorage
 
     protected function collectAccounts()
     {
-        $this->accounts = collect($this->raw['accounts'])->map(fn($account, $id) => new Account($id, $account));
+        $this->accounts = collect($this->raw['accounts'])
+            ->map(fn($account, $id) => Account::createFromFile($id, $account));
     }
 
     protected function collectCountries()
@@ -203,10 +204,10 @@ class DataStorage
             $this->countries[$account->country_id]->pop += $account->pop;
             $this->countries[$account->country_id]->accounts += 1;
             $this->countries[$account->country_id]->towns += $account->towns;
-            $this->countries[$account->country_id]->rating_science += $account->rating_science;
-            $this->countries[$account->country_id]->rating_production += $account->rating_production;
-            $this->countries[$account->country_id]->rating_attack += $account->rating_attack;
-            $this->countries[$account->country_id]->rating_defense += $account->rating_defense;
+            $this->countries[$account->country_id]->science += $account->science;
+            $this->countries[$account->country_id]->production += $account->production;
+            $this->countries[$account->country_id]->attack += $account->attack;
+            $this->countries[$account->country_id]->defense += $account->defense;
         }
     }
 

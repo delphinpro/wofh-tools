@@ -75,13 +75,20 @@ trait Checker
         if (Schema::hasTable('accounts')) return;
         Schema::create('accounts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
             $table->unsignedTinyInteger('race')->default(0);
             $table->unsignedTinyInteger('sex')->default(0);
             $table->unsignedInteger('country_id')->nullable();
             $table->unsignedInteger('role')->default(0);
+            $table->unsignedInteger('pop')->default(0);
+            $table->unsignedSmallInteger('towns')->default(0);
+            $table->float('science', 12)->default(0);
+            $table->float('production', 12)->default(0);
+            $table->float('attack', 12)->default(0);
+            $table->float('defense', 12)->default(0);
             $table->boolean('active')->default(true);
-            $table->json('props')->nullable();
+            $table->string('name');
+            $table->json('names')->nullable();
+            $table->json('countries')->nullable();
 
             $table->index('country_id');
             $table->index('active');
@@ -98,16 +105,16 @@ trait Checker
             $table->unsignedInteger('role')->nullable();
             $table->unsignedInteger('pop')->nullable();
             $table->unsignedSmallInteger('towns');
-            $table->float('science');
-            $table->float('production');
-            $table->float('attack');
-            $table->float('defense');
-            $table->integer('delta_pop')->nullable();
-            $table->smallInteger('delta_towns')->nullable();
-            $table->float('delta_science')->nullable();
-            $table->float('delta_production')->nullable();
-            $table->float('delta_attack')->nullable();
-            $table->float('delta_defense')->nullable();
+            $table->float('science', 12);
+            $table->float('production', 12);
+            $table->float('attack', 12);
+            $table->float('defense', 12);
+            $table->integer('delta_pop');
+            $table->smallInteger('delta_towns');
+            $table->float('delta_science');
+            $table->float('delta_production');
+            $table->float('delta_attack');
+            $table->float('delta_defense');
 
             $table->primary(['state_at', 'id']);
         });
@@ -136,17 +143,17 @@ trait Checker
             $table->unsignedInteger('pop');
             $table->unsignedInteger('accounts');
             $table->unsignedInteger('towns');
-            $table->float('science');
-            $table->float('production');
-            $table->float('attack');
-            $table->float('defense');
+            $table->float('science', 12);
+            $table->float('production', 12);
+            $table->float('attack', 12);
+            $table->float('defense', 12);
             $table->integer('delta_pop')->nullable();
             $table->integer('delta_accounts')->nullable();
             $table->mediumInteger('delta_towns')->nullable();
-            $table->float('delta_science')->nullable();
-            $table->float('delta_production')->nullable();
-            $table->float('delta_attack')->nullable();
-            $table->float('delta_defense')->nullable();
+            $table->float('delta_science', 12)->nullable();
+            $table->float('delta_production', 12)->nullable();
+            $table->float('delta_attack', 12)->nullable();
+            $table->float('delta_defense', 12)->nullable();
 
             $table->primary(['state_at', 'id']);
         });

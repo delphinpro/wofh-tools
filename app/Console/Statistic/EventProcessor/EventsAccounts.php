@@ -31,164 +31,151 @@ trait EventsAccounts
         foreach ($ids as $id) {
             $this->checkEventsAccountCreate($id);
             $this->checkEventsAccountDelete($id);
+
             if ($this->prev->hasAccount($id) && $this->curr->hasAccount($id)) {
-                $accountPrev = $this->prev->getAccount($id);
-                $accountCurr = $this->curr->getAccount($id);
-                // $this->curr['accounts'][$id][static::ACCOUNT_KEY_DELTA_POP] = $accountCurr[static::ACCOUNT_KEY_POP] - $accountPrev[static::ACCOUNT_KEY_POP];
-                // $this->curr['accounts'][$id][static::ACCOUNT_KEY_DELTA_TOWNS] = $accountCurr[static::ACCOUNT_KEY_TOWNS] - $accountPrev[static::ACCOUNT_KEY_TOWNS];
-                // $this->curr['accounts'][$id][static::ACCOUNT_KEY_DELTA_ATTACK] = $accountCurr[static::ACCOUNT_KEY_RATING_ATTACK] - $accountPrev[static::ACCOUNT_KEY_RATING_ATTACK];
-                // $this->curr['accounts'][$id][static::ACCOUNT_KEY_DELTA_DEFENSE] = $accountCurr[static::ACCOUNT_KEY_RATING_DEFENSE] - $accountPrev[static::ACCOUNT_KEY_RATING_DEFENSE];
-                // $this->curr['accounts'][$id][static::ACCOUNT_KEY_DELTA_SCIENCE] = $accountCurr[static::ACCOUNT_KEY_RATING_SCIENCE] - $accountPrev[static::ACCOUNT_KEY_RATING_SCIENCE];
-                // $this->curr['accounts'][$id][static::ACCOUNT_KEY_DELTA_PRODUCTION] = $accountCurr[static::ACCOUNT_KEY_RATING_PRODUCTION] - $accountPrev[static::ACCOUNT_KEY_RATING_PRODUCTION];
-                $this->checkEventsAccountRename($accountPrev, $accountCurr);
-                $this->checkEventsAccountCountry($accountPrev, $accountCurr);
-                $this->checkEventsAccountRating($accountPrev, $accountCurr);
+                $prevAccount = $this->prev->getAccount($id);
+                $currAccount = $this->curr->getAccount($id);
+                $currAccount->setDeltaPop($currAccount->pop - $prevAccount->pop);
+                $currAccount->setDeltaTowns($currAccount->towns - $prevAccount->towns);
+                $currAccount->setDeltaAttack($currAccount->attack - $prevAccount->attack);
+                $currAccount->setDeltaDefence($currAccount->defense - $prevAccount->defense);
+                $currAccount->setDeltaScience($currAccount->science - $prevAccount->science);
+                $currAccount->setDeltaProduction($currAccount->production - $prevAccount->production);
+
+                $this->checkEventsAccountRename($prevAccount, $currAccount);
+                $this->checkEventsAccountCountry($prevAccount, $currAccount);
+                $this->checkEventsAccountRating($prevAccount, $currAccount);
             }
         }
 
         $this->console->line('Check events of accounts : '.t($time).'s');
-        // $this->console->line('              created   : '.count($this->events[Wofh::EVENT_ACCOUNT_CREATE]));
-        // $this->console->line('              deleted   : '.count($this->events[Wofh::EVENT_ACCOUNT_DELETE]));
-        // $this->console->line('              renamed   : '.count($this->events[Wofh::EVENT_TOWN_RENAME]));
-        // $this->console->line('              lost      : '.count($this->events[Wofh::EVENT_TOWN_LOST]));
     }
 
     private function checkEventsAccountCreate(int $accountId)
     {
-        if (!$this->prev->hasData()) {
-            $this->insertAccountIds[] = $accountId;
-            return;
-        }
+        // СЕГОДНЯ аккаунт есть
+        if ($this->curr->hasAccount($accountId)) {
+            ($account = $this->curr->getAccount($accountId))
+                ->setDeltaPop($account->pop)
+                ->setDeltaTowns($account->towns)
+                ->setDeltaScience($account->science)
+                ->setDeltaProduction($account->production)
+                ->setDeltaAttack($account->attack)
+                ->setDeltaDefence($account->defense);
 
-        // Вчера аккаунта не было, а сегодня есть
-        if (
-            !$this->prev->hasAccount($accountId)
-            && $this->curr->hasAccount($accountId)
-        ) {
-            $this->insertAccountIds[] = $accountId;
-            // $this->curr['accounts'][$accountId][static::ACCOUNT_KEY_DELTA_POP] = $this->curr['accounts'][$accountId][static::ACCOUNT_KEY_POP];
-            // $this->curr['accounts'][$accountId][static::ACCOUNT_KEY_DELTA_TOWNS] = $this->curr['accounts'][$accountId][static::ACCOUNT_KEY_TOWNS];
-            // $this->curr['accounts'][$accountId][static::ACCOUNT_KEY_DELTA_ATTACK] = $this->curr['accounts'][$accountId][static::ACCOUNT_KEY_RATING_ATTACK];
-            // $this->curr['accounts'][$accountId][static::ACCOUNT_KEY_DELTA_DEFENSE] = $this->curr['accounts'][$accountId][static::ACCOUNT_KEY_RATING_DEFENSE];
-            // $this->curr['accounts'][$accountId][static::ACCOUNT_KEY_DELTA_SCIENCE] = $this->curr['accounts'][$accountId][static::ACCOUNT_KEY_RATING_SCIENCE];
-            // $this->curr['accounts'][$accountId][static::ACCOUNT_KEY_DELTA_PRODUCTION] = $this->curr['accounts'][$accountId][static::ACCOUNT_KEY_RATING_PRODUCTION];
-            $this->events[Wofh::EVENT_ACCOUNT_CREATE][$accountId] = [
-                static::TABLE_TOWN_ID         => 0,
-                static::TABLE_ACCOUNT_ID      => $accountId,
-                static::TABLE_COUNTRY_ID      => $this->curr->getAccount($accountId)->country_id,
-                static::TABLE_COUNTRY_ID_FROM => 0,
-                static::TABLE_ROLE            => 0,
-                static::TABLE_PROPS           => null,
-            ];
+            if (!$this->prev->hasData()) { // Первый день. События не создаём.
+                $this->insertAccountIds[] = $accountId;
+                return;
+            }
+
+            // Вчера аккаунта не было, а сегодня есть
+            if (!$this->prev->hasAccount($accountId)) {
+                $this->insertAccountIds[] = $accountId;
+
+                $this->push(Wofh::EVENT_ACCOUNT_CREATE, [
+                    static::TABLE_ACCOUNT_ID => $accountId,
+                    static::TABLE_COUNTRY_ID => $this->curr->getCountryIdForAccount($accountId),
+                ]);
+            }
         }
     }
 
     private function checkEventsAccountDelete(int $accountId)
     {
-        if (!$this->prev->hasData()) return;
+        if (!$this->prev->hasData()) return; // Первый день. События не создаём.
 
         // Вчера аккаунт был, а сегодня его нет
         if (
             $this->prev->hasAccount($accountId)
             && !$this->curr->hasAccount($accountId)
         ) {
+            $this->curr->accounts->put($accountId,
+                ($account = $this->prev->getAccount($accountId))
+                    ->setDeltaPop(-$account->pop)
+                    ->setDeltaTowns(-$account->towns)
+                    ->setDeltaScience(-$account->science)
+                    ->setDeltaProduction(-$account->production)
+                    ->setDeltaAttack(-$account->attack)
+                    ->setDeltaDefence(-$account->defense)
+            );
+
             $this->deleteAccountIds[] = $accountId;
-            $this->events[Wofh::EVENT_ACCOUNT_DELETE][$accountId] = [
-                static::TABLE_TOWN_ID         => 0,
-                static::TABLE_ACCOUNT_ID      => $accountId,
-                static::TABLE_COUNTRY_ID      => $this->prev->getAccount($accountId)->country_id,
-                static::TABLE_COUNTRY_ID_FROM => 0,
-                static::TABLE_ROLE            => 0,
-                static::TABLE_PROPS           => null,
-            ];
+            $this->push(Wofh::EVENT_ACCOUNT_DELETE, [
+                static::TABLE_ACCOUNT_ID => $accountId,
+                static::TABLE_COUNTRY_ID => $this->prev->getCountryIdForAccount($accountId),
+            ]);
         }
     }
 
-    private function checkEventsAccountRename(Account $accountPrev, Account $account)
+    private function checkEventsAccountRename(Account $prevAccount, Account $account)
     {
-        if ($accountPrev->name != $account->name) {
+        if ($prevAccount->name != $account->name) {
             $this->updateAccountIds[] = $account->id;
-            $this->events[Wofh::EVENT_ACCOUNT_RENAME][$account->id] = [
-                static::TABLE_TOWN_ID         => 0,
-                static::TABLE_ACCOUNT_ID      => $account->id,
-                static::TABLE_COUNTRY_ID      => $account->country_id,
-                static::TABLE_COUNTRY_ID_FROM => 0,
-                static::TABLE_ROLE            => 0,
-                static::TABLE_PROPS => [
-                    'prevName' => $accountPrev->name,
+            $account->mergeJsonField('names', [$this->time->timestamp => $account->name]);
+            $this->push(Wofh::EVENT_ACCOUNT_RENAME, [
+                static::TABLE_ACCOUNT_ID => $account->id,
+                static::TABLE_COUNTRY_ID => $account->country_id,
+                static::TABLE_PROPS      => [
+                    'prevName' => $prevAccount->name,
                     'currName' => $account->name,
                 ],
-            ];
+            ]);
         }
     }
 
-    private function checkEventsAccountCountry(Account $accountPrev, Account $account)
+    private function checkEventsAccountCountry(Account $prevAccount, Account $account)
     {
-        if ($accountPrev->country_id != $account->country_id) {
+        // Страна сменилась
+        if ($prevAccount->country_id != $account->country_id) {
             $this->updateAccountIds[] = $account->id;
-            if ($accountPrev->country_id == 0) {
-                $this->events[Wofh::EVENT_ACCOUNT_COUNTRY_IN][$account->id] = [
-                    static::TABLE_TOWN_ID         => 0,
-                    static::TABLE_ACCOUNT_ID      => $account->id,
-                    static::TABLE_COUNTRY_ID      => $account->country_id,
-                    static::TABLE_COUNTRY_ID_FROM => 0,
-                    static::TABLE_ROLE            => 0,
-                    static::TABLE_PROPS           => null,
-                ];
-
+            // Вчера был вне страны
+            if (!$prevAccount->inCountry()) {
+                $account->mergeJsonField('countries', [$this->time->timestamp => $account->country_id]);
+                $this->push(Wofh::EVENT_ACCOUNT_COUNTRY_IN, [
+                    static::TABLE_ACCOUNT_ID => $account->id,
+                    static::TABLE_COUNTRY_ID => $account->country_id,
+                ]);
                 return;
             }
-            if ($account->country_id == 0) {
-                $this->events[Wofh::EVENT_ACCOUNT_COUNTRY_OUT][$account->id] = [
-                    static::TABLE_TOWN_ID         => 0,
-                    static::TABLE_ACCOUNT_ID      => $account->id,
-                    static::TABLE_COUNTRY_ID      => 0,
-                    static::TABLE_COUNTRY_ID_FROM => $accountPrev->country_id,
-                    static::TABLE_ROLE            => 0,
-                    static::TABLE_PROPS           => null,
-                ];
 
+            // Сегодня вне страны
+            if (!$account->inCountry()) {
+                $account->mergeJsonField('countries', [$this->time->timestamp => null]);
+                $this->push(Wofh::EVENT_ACCOUNT_COUNTRY_OUT, [
+                    static::TABLE_ACCOUNT_ID      => $account->id,
+                    static::TABLE_COUNTRY_ID_FROM => $prevAccount->country_id,
+                ]);
                 return;
             }
-            $this->events[Wofh::EVENT_ACCOUNT_COUNTRY_CHANGE][$account->id] = [
-                static::TABLE_TOWN_ID         => 0,
+
+            // И вчера и сегодня в стране, но в другой
+            $account->mergeJsonField('countries', [$this->time->timestamp => $account->country_id]);
+            $this->push(Wofh::EVENT_ACCOUNT_COUNTRY_CHANGE, [
                 static::TABLE_ACCOUNT_ID      => $account->id,
                 static::TABLE_COUNTRY_ID      => $account->country_id,
-                static::TABLE_COUNTRY_ID_FROM => $accountPrev->country_id,
-                static::TABLE_ROLE            => 0,
-                static::TABLE_PROPS           => null,
-            ];
+                static::TABLE_COUNTRY_ID_FROM => $prevAccount->country_id,
+            ]);
         }
     }
 
-    private function checkEventsAccountRating(Account $accountPrev, Account $account)
+    private function checkEventsAccountRating(Account $prevAccount, Account $account)
     {
-        $prevRating = $accountPrev->rating();
-        $currRating = $account->rating();
+        // Нулевая сумма рейтингов означает, что рейтинг скрыт
 
-        if ($prevRating != $currRating) {
-            if ($prevRating == 0) {
-                $this->events[Wofh::EVENT_ACCOUNT_RATING_SHOW][$account->id] = [
-                    static::TABLE_TOWN_ID         => 0,
-                    static::TABLE_ACCOUNT_ID      => $account->id,
-                    static::TABLE_COUNTRY_ID      => $account->country_id,
-                    static::TABLE_COUNTRY_ID_FROM => 0,
-                    static::TABLE_ROLE            => 0,
-                    static::TABLE_PROPS           => null,
-                ];
+        // Вчера рейтинг нулевой, сегодня нет
+        if ($prevAccount->isHiddenRating() && $account->isShownRating()) {
+            $this->push(Wofh::EVENT_ACCOUNT_RATING_SHOW, [
+                static::TABLE_ACCOUNT_ID => $account->id,
+                static::TABLE_COUNTRY_ID => $account->country_id,
+            ]);
+        }
 
-                return;
-            }
-            if ($currRating == 0) {
-                $this->events[Wofh::EVENT_ACCOUNT_RATING_HIDE][$account->id] = [
-                    static::TABLE_TOWN_ID         => 0,
-                    static::TABLE_ACCOUNT_ID      => $account->id,
-                    static::TABLE_COUNTRY_ID      => $account->country_id,
-                    static::TABLE_COUNTRY_ID_FROM => 0,
-                    static::TABLE_ROLE            => 0,
-                    static::TABLE_PROPS           => null,
-                ];
-            }
+        // Вчера рейтинг  был не нулевой, сегодня по нулям
+        if ($prevAccount->isShownRating() && $account->isHiddenRating()) {
+            $this->push(Wofh::EVENT_ACCOUNT_RATING_HIDE, [
+                static::TABLE_ACCOUNT_ID => $account->id,
+                static::TABLE_COUNTRY_ID => $account->country_id,
+            ]);
         }
     }
 }

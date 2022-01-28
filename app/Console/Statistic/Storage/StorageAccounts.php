@@ -9,6 +9,8 @@
 
 namespace App\Console\Statistic\Storage;
 
+use App\Console\Statistic\Data\Account;
+use App\Console\Statistic\StorageProcessor\StorageProcessor;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -22,71 +24,48 @@ trait StorageAccounts
     public function updateTableAccounts()
     {
         $time = microtime(true);
-        $this->insertAccounts();
+        $this->updateAccountsCreated();
         $this->updateAccountsDeleted();
+        $this->updateAccounts();
         $this->insertAccountsStatistic();
         $this->console->line('    accounts: '.t($time).'s');
     }
 
-    private function insertAccounts()
+    private function updateAccountsCreated()
     {
-        if (empty($this->eventProcessor->insertAccountIds)) return;
-
-        $columns = [
-            'id',
-            'name',
-            'race',
-            'sex',
-            'country_id',
-            'role',
-            'active',
-            'props',
-        ];
-
-        // INSERT INTO tbl_name (a, b, c) VALUES (1,2,3), (4,5,6), (7,8,9);
-        $sql = 'INSERT';
-        $sql .= ' INTO `z_'.$this->world->sign.'_accounts`';
-        $sql .= ' (`'.join('`,`', $columns).'`)';
-        $sql .= ' VALUES ';
-
-        $pdo = DB::getPdo();
-        $first = true;
-
-        foreach ($this->eventProcessor->insertAccountIds as $id) {
-            $account = $this->getAccount($id);
-
-            if (!$first) $sql .= ','; else $first = false;
-
-            $sql .= '(';
-            $sql .= (intval($id));
-            $sql .= ','.($pdo->quote($account->name));
-            $sql .= ','.(intval($account->race));
-            $sql .= ','.(intval($account->sex));
-            $sql .= ','.(intval($account->countryId));
-            $sql .= ','.(intval($account->role));
-            $sql .= ','.'0';
-            $sql .= ','.'NULL';
-            $sql .= ')';
-        }
-
-        DB::insert($sql);
+        $accounts = $this->eventProcessor->getAccountsForInsert()->toArray();
+        DB::table('accounts')->insert($accounts);
     }
 
     private function updateAccountsDeleted()
     {
-        // if (empty($this->deleteAccountIds)) return;
-        //
-        // // UPDATE TABLE tbl_name SET `lost` = 1 WHERE `id` IN (a, b, c);
-        // $sql = "UPDATE `z_{$this->world->sign}_accounts`";
-        // $sql .= " SET `active` = 0";
-        // $sql .= " WHERE `accountId` IN (".join(',', $this->deleteAccountIds).")";
+        DB::table('accounts')
+            ->whereIn('id', $this->eventProcessor->getDeletedAccountIds())
+            ->update([
+                'role'       => 0,
+                'pop'        => 0,
+                'towns'      => 0,
+                'science'    => 0,
+                'production' => 0,
+                'attack'     => 0,
+                'defense'    => 0,
+                'active'     => 0,
+            ]);
+    }
 
-        // $this->db->statement($sql);
+    private function updateAccounts()
+    {
+        $this->eventProcessor->getAccountsForUpdate()->each(function (Account $account) {
+            DB::table('accounts')
+                ->where('id', $account->id)
+                ->update($account->toArray());
+        });
     }
 
     private function insertAccountsStatistic()
     {
-        $columns = [
+        $tableName = 'z_'.$this->world->sign.'_accounts_data';
+        $columns = collect([
             'state_at',
             'id',
             'country_id',
@@ -97,47 +76,52 @@ trait StorageAccounts
             'production',
             'attack',
             'defense',
-            // 'deltaPop',
-            // 'deltaTowns',
-            // 'deltaScience',
-            // 'deltaProduction',
-            // 'deltaAttack',
-            // 'deltaDefense',
-        ];
+            'delta_pop',
+            'delta_towns',
+            'delta_science',
+            'delta_production',
+            'delta_attack',
+            'delta_defense',
+        ])->map(fn($s) => "`$s`")->join(',');
 
         // INSERT INTO tbl_name (a, b, c) VALUES (1,2,3), (4,5,6), (7,8,9);
-        $sql = 'INSERT';
-        $sql .= ' INTO `z_'.$this->world->sign.'_accounts_stat`';
-        $sql .= ' (`'.join('`,`', $columns).'`)';
-        $sql .= ' VALUES ';
+        $queryStringCommon = "INSERT INTO `$tableName` ($columns) VALUES ";
 
-        $pdo = DB::getPdo();
+        $accounts = $this->eventProcessor->getAccounts();
         $first = true;
+        $counter = 0;
+        $queryStringValues = '';
 
-        /** @var \App\Console\Statistic\Data\Account $account */
-        foreach ($this->accounts as $account) {
-            if (!$first) $sql .= ','; else $first = false;
+        foreach ($accounts as $account) {
+            if (!$first) $queryStringValues .= ',';
+            $first = false;
 
-            $sql .= '(';
-            $sql .= ($pdo->quote($this->time));
-            $sql .= ','.(intval($account->id));
-            $sql .= ','.(intval($account->countryId));
-            $sql .= ','.(intval($account->role));
-            $sql .= ','.(intval($account->pop));
-            $sql .= ','.(intval($account->towns));
-            $sql .= ','.(intval($account->ratingScience));
-            $sql .= ','.(intval($account->ratingProduction));
-            $sql .= ','.(intval($account->ratingAttack));
-            $sql .= ','.(intval($account->ratingDefense));
-            // $sql .= ','.(intval($account[Storage::ACCOUNT_KEY_DELTA_POP]));
-            // $sql .= ','.(intval($account[Storage::ACCOUNT_KEY_DELTA_TOWNS]));
-            // $sql .= ','.(intval($account[Storage::ACCOUNT_KEY_DELTA_SCIENCE]));
-            // $sql .= ','.(intval($account[Storage::ACCOUNT_KEY_DELTA_PRODUCTION]));
-            // $sql .= ','.(intval($account[Storage::ACCOUNT_KEY_DELTA_ATTACK]));
-            // $sql .= ','.(intval($account[Storage::ACCOUNT_KEY_DELTA_DEFENSE]));
-            $sql .= ')';
+            $queryStringValues .= '('."'{$this->getTime()}'";
+            $queryStringValues .= ','.$account->id;
+            $queryStringValues .= ','.($account->country_id ?? DB::raw('NULL'));
+            $queryStringValues .= ','.$account->role;
+            $queryStringValues .= ','.$account->pop;
+            $queryStringValues .= ','.$account->towns;
+            $queryStringValues .= ','.$account->science;
+            $queryStringValues .= ','.$account->production;
+            $queryStringValues .= ','.$account->attack;
+            $queryStringValues .= ','.$account->defense;
+            $queryStringValues .= ','.$account->getDeltaPop();
+            $queryStringValues .= ','.$account->getDeltaTowns();
+            $queryStringValues .= ','.$account->getDeltaScience();
+            $queryStringValues .= ','.$account->getDeltaProduction();
+            $queryStringValues .= ','.$account->getDeltaAttack();
+            $queryStringValues .= ','.$account->getDeltaDefence();
+            $queryStringValues .= ')';
+
+            if (++$counter >= StorageProcessor::CHUNK) {
+                DB::insert($queryStringCommon.$queryStringValues);
+                $first = true;
+                $counter = 0;
+                $queryStringValues = '';
+            }
         }
 
-        DB::insert($sql);
+        if ($queryStringValues) DB::insert($queryStringCommon.$queryStringValues);
     }
 }
