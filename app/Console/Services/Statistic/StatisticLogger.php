@@ -88,7 +88,7 @@ class StatisticLogger
 
     private function truncateMessage($message)
     {
-        $length = 500;
+        $length = 1000;
         if (mb_strlen($message) > $length) $message = mb_substr($message, 0, $length);
         return $message;
     }
