@@ -126,6 +126,7 @@ class StatisticLoad extends Command
                     // С сервера приходит какой-то странный таймстамп.
                     // Временная метка из будущего.
                     // Или я туплю. В общем пока этот хак здесь побудет
+                    // TODO проверить MSK -4
                     $time->subHours(ceil($time->diffAsCarbonInterval($now)->totalHours));
                     $data['time'] = $time->timestamp;
                 }
